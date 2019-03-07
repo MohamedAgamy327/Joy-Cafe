@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F18F752B-ACAD-4887-9F9E-9C7FB5F70042}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BLL</RootNamespace>
+    <AssemblyName>BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DTO">
+      <HintPath>..\DTO\bin\Debug\DTO.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BillDeviceService\BillDeviceRepository.cs" />
+    <Compile Include="BillDeviceService\IBillDeviceRepository.cs" />
+    <Compile Include="BillItemService\BillItemRepository.cs" />
+    <Compile Include="BillItemService\IBillItemRepository.cs" />
+    <Compile Include="BillService\BillRepository.cs" />
+    <Compile Include="BillService\IBillRepository.cs" />
+    <Compile Include="ClientMembershipMinuteService\ClientMembershipMinuteRepository.cs" />
+    <Compile Include="ClientMembershipMinuteService\IClientMembershipMinuteRepository.cs" />
+    <Compile Include="ClientMembershipService\ClientMembershipRepository.cs" />
+    <Compile Include="ClientMembershipService\IClientMembershipRepository.cs" />
+    <Compile Include="ClientService\ClientRepository.cs" />
+    <Compile Include="ClientService\IClientRepository.cs" />
+    <Compile Include="DeviceService\DeviceRepository.cs" />
+    <Compile Include="DeviceService\IDeviceRepository.cs" />
+    <Compile Include="DeviceTypeService\DeviceTypeRepository.cs" />
+    <Compile Include="DeviceTypeService\IDeviceTypeRepository.cs" />
+    <Compile Include="ItemService\IItemRepository.cs" />
+    <Compile Include="ItemService\ItemRepository.cs" />
+    <Compile Include="MembershipService\IMembershipRepository.cs" />
+    <Compile Include="MembershipService\MembershipRepository.cs" />
+    <Compile Include="RoleService\IRoleRepository.cs" />
+    <Compile Include="RoleService\RoleRepository.cs" />
+    <Compile Include="SafeService\ISafeRepository.cs" />
+    <Compile Include="SafeService\SafeRepository.cs" />
+    <Compile Include="ShiftService\IShiftRepository.cs" />
+    <Compile Include="ShiftService\ShiftRepository.cs" />
+    <Compile Include="SpendingService\ISpendingRepository.cs" />
+    <Compile Include="SpendingService\SpendingRepository.cs" />
+    <Compile Include="UserService\UserRepository.cs" />
+    <Compile Include="UserService\IUserRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryService\GenericRepository.cs" />
+    <Compile Include="RepositoryService\IGenericRepository.cs" />
+    <Compile Include="UnitOfWorkService\IUnitOfWork.cs" />
+    <Compile Include="UnitOfWorkService\UnitOfWork.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{0A0C238E-AA0D-4CCD-8F0A-91E7A37C5321}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

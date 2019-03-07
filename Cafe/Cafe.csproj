@@ -1,0 +1,723 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D3784763-3F18-4AD6-9472-76961992838F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cafe</RootNamespace>
+    <AssemblyName>Cafe</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>SalesICO.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.3\lib\net45\CommonServiceLocator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="DTO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DTO\bin\Debug\DTO.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro.IconPacks, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.1.9.0\lib\net45\MahApps.Metro.IconPacks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ReachFramework" />
+    <Reference Include="sapbusinessobjects.wpf.viewer, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="SAPBusinessObjects.WPF.ViewerShared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFTextBoxAutoComplete, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFTextBoxAutoComplete.1.0.5\lib\net40\WPFTextBoxAutoComplete.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helpers\CurrencyInfo.cs" />
+    <Compile Include="Helpers\EnterKeyHelpers.cs" />
+    <Compile Include="Helpers\EnumConvert.cs" />
+    <Compile Include="Helpers\FocusExtension.cs" />
+    <Compile Include="Helpers\Secure.cs" />
+    <Compile Include="Helpers\ToWord.cs" />
+    <Compile Include="Reports\BillItemsReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\ItemsReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\BillReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\DS.cs">
+      <DependentUpon>DS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ReportWindow.xaml.cs">
+      <DependentUpon>ReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SplashScreen\DispatcherHelper.cs" />
+    <Compile Include="SplashScreen\MessageListener.cs" />
+    <Compile Include="SplashScreen\Splasher.cs" />
+    <Compile Include="SplashScreen\SplashScreenWindow.xaml.cs">
+      <DependentUpon>SplashScreenWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\BillViewModels\BillItemsViewModel.cs" />
+    <Compile Include="ViewModels\BillViewModels\BillViewModel.cs" />
+    <Compile Include="ViewModels\BillViewModels\DevicesViewModel.cs" />
+    <Compile Include="ViewModels\BillViewModels\ItemsViewModel.cs" />
+    <Compile Include="ViewModels\BillViewModels\SpendingShiftViewModel.cs" />
+    <Compile Include="ViewModels\ClientViewModels\ClientDisplayViewModel.cs" />
+    <Compile Include="ViewModels\MembershipViewModels\ClientMembershipMinuteViewModel.cs" />
+    <Compile Include="ViewModels\MembershipViewModels\ClientMembershipViewModel.cs" />
+    <Compile Include="ViewModels\ClientViewModels\ClientPointViewModel.cs" />
+    <Compile Include="ViewModels\ClientViewModels\ClientViewModel.cs" />
+    <Compile Include="ViewModels\MembershipViewModels\MembershipDisplayViewModel.cs" />
+    <Compile Include="ViewModels\DeviceViewModels\DeviceDisplayViewModel.cs" />
+    <Compile Include="ViewModels\DeviceViewModels\DeviceTypeDisplayViewModel.cs" />
+    <Compile Include="ViewModels\DeviceViewModels\DeviceViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MembershipViewModels\MembershipViewModel.cs" />
+    <Compile Include="ViewModels\SafeViewModels\SafeDisplayViewModel.cs" />
+    <Compile Include="ViewModels\SafeViewModels\SafeReportViewModel.cs" />
+    <Compile Include="ViewModels\SafeViewModels\SafeViewModel.cs" />
+    <Compile Include="ViewModels\ShiftViewModels\ShiftDisplayViewModel.cs" />
+    <Compile Include="ViewModels\ShiftViewModels\ShiftViewModel.cs" />
+    <Compile Include="ViewModels\SpendingViewModels\SpendingDisplayViewModel.cs" />
+    <Compile Include="ViewModels\SpendingViewModels\SpendingReportViewModel.cs" />
+    <Compile Include="ViewModels\SpendingViewModels\SpendingViewModel.cs" />
+    <Compile Include="ViewModels\ItemViewModels\ItemDisplayViewModel.cs" />
+    <Compile Include="ViewModels\ItemViewModels\ItemViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModels\UserDisplayViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModels\UserViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="Views\BillViews\AccountPaidDialog.xaml.cs">
+      <DependentUpon>AccountPaidDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillViews\BillItemAddDialog.xaml.cs">
+      <DependentUpon>BillItemAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillViews\BillItemsWindow.xaml.cs">
+      <DependentUpon>BillItemsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillViews\ItemAddDialog.xaml.cs">
+      <DependentUpon>ItemAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillViews\BillWindow.xaml.cs">
+      <DependentUpon>BillWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillViews\ClientAddDialog.xaml.cs">
+      <DependentUpon>ClientAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillViews\ClientCheckDialog.xaml.cs">
+      <DependentUpon>ClientCheckDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillViews\DevicesUserControl.xaml.cs">
+      <DependentUpon>DevicesUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillViews\FinishShiftDialog.xaml.cs">
+      <DependentUpon>FinishShiftDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillViews\ItemsWindow.xaml.cs">
+      <DependentUpon>ItemsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillViews\SpendingAddDialog.xaml.cs">
+      <DependentUpon>SpendingAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillViews\SpendingShiftWindow.xaml.cs">
+      <DependentUpon>SpendingShiftWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillViews\SpendingUpdateDialog.xaml.cs">
+      <DependentUpon>SpendingUpdateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClientViews\ClientAddDialog.xaml.cs">
+      <DependentUpon>ClientAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClientViews\ClientDisplayUserControl.xaml.cs">
+      <DependentUpon>ClientDisplayUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MembershipViews\ClientMembershipAddDialog.xaml.cs">
+      <DependentUpon>ClientMembershipAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MembershipViews\ClientMembershipMinuteUserControl.xaml.cs">
+      <DependentUpon>ClientMembershipMinuteUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MembershipViews\ClientMembershipUserControl.xaml.cs">
+      <DependentUpon>ClientMembershipUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClientViews\ClientPointUserControl.xaml.cs">
+      <DependentUpon>ClientPointUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClientViews\ClientUpdateDialog.xaml.cs">
+      <DependentUpon>ClientUpdateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClientViews\ClientWindow.xaml.cs">
+      <DependentUpon>ClientWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MembershipViews\MembershipWindow.xaml.cs">
+      <DependentUpon>MembershipWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MembershipViews\MembershipAddDialog.xaml.cs">
+      <DependentUpon>MembershipAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MembershipViews\MembershipUpdateDialog.xaml.cs">
+      <DependentUpon>MembershipUpdateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MembershipViews\MembershipDisplayUserControl.xaml.cs">
+      <DependentUpon>MembershipDisplayUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceViews\DeviceAddDialog.xaml.cs">
+      <DependentUpon>DeviceAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceViews\DeviceDisplayUserControl.xaml.cs">
+      <DependentUpon>DeviceDisplayUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceViews\DeviceTypeAddDialog.xaml.cs">
+      <DependentUpon>DeviceTypeAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceViews\DeviceTypeDisplayUserControl.xaml.cs">
+      <DependentUpon>DeviceTypeDisplayUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceViews\DeviceTypeUpdateDialog.xaml.cs">
+      <DependentUpon>DeviceTypeUpdateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceViews\DeviceUpdateDialog.xaml.cs">
+      <DependentUpon>DeviceUpdateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceViews\DeviceWindow.xaml.cs">
+      <DependentUpon>DeviceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainViews\BackupDialog.xaml.cs">
+      <DependentUpon>BackupDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainViews\LoginDialog.xaml.cs">
+      <DependentUpon>LoginDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainViews\RestoreBackupDialog.xaml.cs">
+      <DependentUpon>RestoreBackupDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainViews\StartShiftDialog.xaml.cs">
+      <DependentUpon>StartShiftDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SafeViews\SafeAddDialog.xaml.cs">
+      <DependentUpon>SafeAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SafeViews\SafeDisplayUserControl.xaml.cs">
+      <DependentUpon>SafeDisplayUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SafeViews\SafeReportUserControl.xaml.cs">
+      <DependentUpon>SafeReportUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SafeViews\SafeWindow.xaml.cs">
+      <DependentUpon>SafeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShiftViews\ShiftDisplayUserControl.xaml.cs">
+      <DependentUpon>ShiftDisplayUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShiftViews\ShiftShowDialog.xaml.cs">
+      <DependentUpon>ShiftShowDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShiftViews\ShiftWindow.xaml.cs">
+      <DependentUpon>ShiftWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SpendingViews\SpendingAddDialog.xaml.cs">
+      <DependentUpon>SpendingAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SpendingViews\SpendingDisplayUserControl.xaml.cs">
+      <DependentUpon>SpendingDisplayUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SpendingViews\SpendingReportUserControl.xaml.cs">
+      <DependentUpon>SpendingReportUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SpendingViews\SpendingWindow.xaml.cs">
+      <DependentUpon>SpendingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemViews\ItemAddDialog.xaml.cs">
+      <DependentUpon>ItemAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemViews\ItemUpdateDialog.xaml.cs">
+      <DependentUpon>ItemUpdateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemViews\ItemDisplayUserControl.xaml.cs">
+      <DependentUpon>ItemDisplayUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemViews\ItemWindow.xaml.cs">
+      <DependentUpon>ItemWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserViews\UserAddDialog.xaml.cs">
+      <DependentUpon>UserAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserViews\UserDisplayUserControl.xaml.cs">
+      <DependentUpon>UserDisplayUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserViews\UserUpdateDialog.xaml.cs">
+      <DependentUpon>UserUpdateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserViews\UserWindow.xaml.cs">
+      <DependentUpon>UserWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Reports\ReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SplashScreen\SplashScreenWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BillViews\AccountPaidDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BillViews\BillItemAddDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BillViews\BillItemsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BillViews\ItemAddDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BillViews\BillWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BillViews\ClientAddDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BillViews\ClientCheckDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BillViews\DevicesUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BillViews\FinishShiftDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BillViews\ItemsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BillViews\SpendingAddDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BillViews\SpendingShiftWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BillViews\SpendingUpdateDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClientViews\ClientAddDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ClientViews\ClientDisplayUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MembershipViews\ClientMembershipAddDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MembershipViews\ClientMembershipMinuteUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MembershipViews\ClientMembershipUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClientViews\ClientPointUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClientViews\ClientUpdateDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ClientViews\ClientWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MembershipViews\MembershipWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MembershipViews\MembershipAddDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MembershipViews\MembershipUpdateDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MembershipViews\MembershipDisplayUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceViews\DeviceAddDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceViews\DeviceDisplayUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceViews\DeviceTypeAddDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DeviceViews\DeviceTypeDisplayUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DeviceViews\DeviceTypeUpdateDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DeviceViews\DeviceUpdateDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceViews\DeviceWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainViews\BackupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainViews\LoginDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainViews\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\MainViews\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Skins\MainSkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainViews\RestoreBackupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainViews\StartShiftDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SafeViews\SafeAddDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SafeViews\SafeDisplayUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SafeViews\SafeReportUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SafeViews\SafeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShiftViews\ShiftDisplayUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShiftViews\ShiftShowDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShiftViews\ShiftWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SpendingViews\SpendingAddDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SpendingViews\SpendingDisplayUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SpendingViews\SpendingReportUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SpendingViews\SpendingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ItemViews\ItemAddDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ItemViews\ItemUpdateDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ItemViews\ItemDisplayUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ItemViews\ItemWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserViews\UserAddDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserViews\UserDisplayUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserViews\UserUpdateDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserViews\UserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\BillItemsReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\BillReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ItemsReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="Reports\DS.xsc">
+      <DependentUpon>DS.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reports\DS.xss">
+      <DependentUpon>DS.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\dark_bg.jpg" />
+    <Resource Include="Resources\Logo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="SalesICO.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{F18F752B-ACAD-4887-9F9E-9C7FB5F70042}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{0A0C238E-AA0D-4CCD-8F0A-91E7A37C5321}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{4585EEDF-98F5-4B53-A60C-5C3CAA963FA5}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

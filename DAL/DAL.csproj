@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0A0C238E-AA0D-4CCD-8F0A-91E7A37C5321}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DAL</RootNamespace>
+    <AssemblyName>DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net45\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BindableBaseService\BindableBase.cs" />
+    <Compile Include="BindableBaseService\ValidatableBindableBase.cs" />
+    <Compile Include="ConstString\CaseText.cs" />
+    <Compile Include="ConstString\GamePlayTypeText.cs" />
+    <Compile Include="ConstString\GeneralText.cs" />
+    <Compile Include="ConstString\RoleText.cs" />
+    <Compile Include="ConstString\VisibilityText.cs" />
+    <Compile Include="GeneralDBContext.cs" />
+    <Compile Include="Entities\Bill.cs" />
+    <Compile Include="Entities\BillIDevice.cs" />
+    <Compile Include="Entities\BillItem.cs" />
+    <Compile Include="Entities\Client.cs" />
+    <Compile Include="Entities\ClientMembership.cs" />
+    <Compile Include="Entities\ClientMembershipMinute.cs" />
+    <Compile Include="Entities\Device.cs" />
+    <Compile Include="Entities\DeviceType.cs" />
+    <Compile Include="Entities\Item.cs" />
+    <Compile Include="Entities\Membership.cs" />
+    <Compile Include="Entities\Role.cs" />
+    <Compile Include="Entities\Safe.cs" />
+    <Compile Include="Entities\Shift.cs" />
+    <Compile Include="Entities\Spending.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Migrations\201811200214342_StartDB.cs" />
+    <Compile Include="Migrations\201811200214342_StartDB.Designer.cs">
+      <DependentUpon>201811200214342_StartDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902231858471_newUpdate.cs" />
+    <Compile Include="Migrations\201902231858471_newUpdate.Designer.cs">
+      <DependentUpon>201902231858471_newUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902262117558_client.cs" />
+    <Compile Include="Migrations\201902262117558_client.Designer.cs">
+      <DependentUpon>201902262117558_client.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902262129153_client_telephone.cs" />
+    <Compile Include="Migrations\201902262129153_client_telephone.Designer.cs">
+      <DependentUpon>201902262129153_client_telephone.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903040637103_updateBill.cs" />
+    <Compile Include="Migrations\201903040637103_updateBill.Designer.cs">
+      <DependentUpon>201903040637103_updateBill.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903042253143_updateBillDevice.cs" />
+    <Compile Include="Migrations\201903042253143_updateBillDevice.Designer.cs">
+      <DependentUpon>201903042253143_updateBillDevice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903060711177_updateBillItem.cs" />
+    <Compile Include="Migrations\201903060711177_updateBillItem.Designer.cs">
+      <DependentUpon>201903060711177_updateBillItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201811200214342_StartDB.resx">
+      <DependentUpon>201811200214342_StartDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902231858471_newUpdate.resx">
+      <DependentUpon>201902231858471_newUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902262117558_client.resx">
+      <DependentUpon>201902262117558_client.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902262129153_client_telephone.resx">
+      <DependentUpon>201902262129153_client_telephone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903040637103_updateBill.resx">
+      <DependentUpon>201903040637103_updateBill.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903042253143_updateBillDevice.resx">
+      <DependentUpon>201903042253143_updateBillDevice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903060711177_updateBillItem.resx">
+      <DependentUpon>201903060711177_updateBillItem.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
