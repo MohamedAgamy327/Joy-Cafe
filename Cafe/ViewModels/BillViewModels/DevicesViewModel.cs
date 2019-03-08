@@ -4,10 +4,11 @@ using DAL;
 using DAL.BindableBaseService;
 using DAL.ConstString;
 using DAL.Entities;
+using DTO.BillDeviceDataModel;
+using DTO.BillItemDataModel;
 using DTO.DeviceDataModel;
 using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -148,32 +149,35 @@ namespace Cafe.ViewModels.BillViewModels
             set { SetProperty(ref _availableDevices, value); }
         }
 
-        //private decimal _devicesSum;
-        //public decimal DevicesSum
-        //{
-        //    get
-        //    {
-        //        return _devicesSum = BillDevices.Sum(s => Convert.ToDecimal(s.Total));
-        //    }
-        //}
+        private decimal _devicesSum;
+        public decimal DevicesSum
+        {
+            get
+            {
+                if (BillDevices != null)
+                    return _devicesSum = BillDevices.Sum(s => Convert.ToDecimal(s.Total));
+                else
+                    return 0;
+            }
+        }
 
-        //private decimal _itemsSum;
-        //public decimal ItemsSum
-        //{
-        //    get { return _itemsSum = BillItems.Sum(s => Convert.ToDecimal(s.Total)); }
-        //}
+        private decimal _itemsSum;
+        public decimal ItemsSum
+        {
+            get
+            {
+                if (BillItems != null)
+                    return _itemsSum = BillItems.Sum(s => Convert.ToDecimal(s.BillItem.Total));
+                else
+                    return 0;
+            }
+        }
 
-        //private int _itemsNumber;
-        //public int ItemsNumber
-        //{
-        //    get { return _itemsNumber = BillItems.Sum(s => (int)s.Qty); }
-        //}
-
-        //private decimal _totalSum;
-        //public decimal TotalSum
-        //{
-        //    get { return _totalSum = ItemsSum + DevicesSum; }
-        //}
+        private decimal _totalSum;
+        public decimal TotalSum
+        {
+            get { return _totalSum = ItemsSum + DevicesSum; }
+        }
 
         private Shift _newShift;
         public Shift NewShift
@@ -208,13 +212,6 @@ namespace Cafe.ViewModels.BillViewModels
         {
             get { return _newBillDevice; }
             set { SetProperty(ref _newBillDevice, value); }
-        }
-
-        private DeviceFreeDataModel _selectedFreeDevice;
-        public DeviceFreeDataModel SelectedFreeDevice
-        {
-            get { return _selectedFreeDevice; }
-            set { SetProperty(ref _selectedFreeDevice, value); }
         }
 
         private Client _selectedClient;
@@ -252,30 +249,29 @@ namespace Cafe.ViewModels.BillViewModels
             set { SetProperty(ref _devices, value); }
         }
 
-        private ObservableCollection<BillItem> _billItems;
-        public ObservableCollection<BillItem> BillItems
+        private ObservableCollection<BillItemsDisplayDataModel> _billItems;
+        public ObservableCollection<BillItemsDisplayDataModel> BillItems
         {
             get { return _billItems; }
             set
             {
                 SetProperty(ref _billItems, value);
                 OnPropertyChanged("ItemsSum");
-                OnPropertyChanged("ItemsNumber");
                 OnPropertyChanged("TotalSum");
             }
         }
 
-        //private ObservableCollection<BillDevicesVM> _billDevices;
-        //public ObservableCollection<BillDevicesVM> BillDevices
-        //{
-        //    get { return _billDevices; }
-        //    set
-        //    {
-        //        SetProperty(ref _billDevices, value);
-        //        OnPropertyChanged("DevicesSum");
-        //        OnPropertyChanged("TotalSum");
-        //    }
-        //}
+        private ObservableCollection<BillDevicesDisplayDataModel> _billDevices;
+        public ObservableCollection<BillDevicesDisplayDataModel> BillDevices
+        {
+            get { return _billDevices; }
+            set
+            {
+                SetProperty(ref _billDevices, value);
+                OnPropertyChanged("DevicesSum");
+                OnPropertyChanged("TotalSum");
+            }
+        }
 
         private ObservableCollection<Client> _clients;
         public ObservableCollection<Client> Clients
@@ -726,22 +722,19 @@ namespace Cafe.ViewModels.BillViewModels
             }
         }
 
-        private RelayCommand _moveTo;
-        public RelayCommand MoveTo
+        private RelayCommand<DeviceFreeDataModel> _moveTo;
+        public RelayCommand<DeviceFreeDataModel> MoveTo
         {
             get
             {
                 return _moveTo
-                    ?? (_moveTo = new RelayCommand(ExecuteMoveTo));
+                    ?? (_moveTo = new RelayCommand<DeviceFreeDataModel>(ExecuteMoveTo));
             }
         }
-        private void ExecuteMoveTo()
+        private void ExecuteMoveTo(DeviceFreeDataModel selectedFreeDevice)
         {
             try
             {
-                if (SelectedFreeDevice == null)
-                    return;
-
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
                     if (_selectedDevice.Device.Case == CaseText.Busy)
@@ -756,9 +749,9 @@ namespace Cafe.ViewModels.BillViewModels
                         _billDevice = unitOfWork.BillsDevices.GetLast((int)_selectedDevice.Device.BillID);
                     }
 
-                    _selectedFreeDevice.Device.Case = CaseText.Busy;
-                    _selectedFreeDevice.Device.BillID = _selectedDevice.Device.BillID;
-                    unitOfWork.Devices.Edit(_selectedFreeDevice.Device);
+                    selectedFreeDevice.Device.Case = CaseText.Busy;
+                    selectedFreeDevice.Device.BillID = _selectedDevice.Device.BillID;
+                    unitOfWork.Devices.Edit(selectedFreeDevice.Device);
                     _selectedDevice.Device.Case = CaseText.Free;
                     _selectedDevice.Device.BillID = null;
                     unitOfWork.Devices.Edit(_selectedDevice.Device);
@@ -771,9 +764,9 @@ namespace Cafe.ViewModels.BillViewModels
                             {
                                 StartDate = DateTime.Now,
                                 GameType = GamePlayTypeText.Single,
-                                MinutePrice = _selectedFreeDevice.DeviceType.SingleMinutePrice,
-                                BillID = Convert.ToInt32(_selectedFreeDevice.Device.BillID),
-                                DeviceID = _selectedFreeDevice.Device.ID
+                                MinutePrice = selectedFreeDevice.DeviceType.SingleMinutePrice,
+                                BillID = Convert.ToInt32(selectedFreeDevice.Device.BillID),
+                                DeviceID = selectedFreeDevice.Device.ID
                             };
                             break;
 
@@ -782,9 +775,9 @@ namespace Cafe.ViewModels.BillViewModels
                             {
                                 StartDate = DateTime.Now,
                                 GameType = GamePlayTypeText.Multiplayer,
-                                MinutePrice = _selectedFreeDevice.DeviceType.MultiMinutePrice,
-                                BillID = Convert.ToInt32(_selectedFreeDevice.Device.BillID),
-                                DeviceID = _selectedFreeDevice.Device.ID
+                                MinutePrice = selectedFreeDevice.DeviceType.MultiMinutePrice,
+                                BillID = Convert.ToInt32(selectedFreeDevice.Device.BillID),
+                                DeviceID = selectedFreeDevice.Device.ID
                             };
                             break;
 
@@ -793,9 +786,9 @@ namespace Cafe.ViewModels.BillViewModels
                             {
                                 StartDate = DateTime.Now,
                                 GameType = GamePlayTypeText.Birthday,
-                                MinutePrice = _selectedFreeDevice.DeviceType.BirthdayMinutePrice,
-                                BillID = Convert.ToInt32(_selectedFreeDevice.Device.BillID),
-                                DeviceID = _selectedFreeDevice.Device.ID
+                                MinutePrice = selectedFreeDevice.DeviceType.BirthdayMinutePrice,
+                                BillID = Convert.ToInt32(selectedFreeDevice.Device.BillID),
+                                DeviceID = selectedFreeDevice.Device.ID
                             };
                             break;
 
@@ -844,38 +837,57 @@ namespace Cafe.ViewModels.BillViewModels
             }
         }
 
-        //private RelayCommand<string> _showAccount;
-        //public RelayCommand<string> ShowAccount
-        //{
-        //    get
-        //    {
-        //        return _showAccount
-        //            ?? (_showAccount = new RelayCommand<string>(ShowAccountMethod));
-        //    }
-        //}
-        //private void ShowAccountMethod(string billID)
-        //{
-        //    try
-        //    {
-        //        IsAccount = VisibilityText.Collapsed;
-        //        AccountColumn = "0";
-        //        AccountLineColumn = "0";
-        //        if (billID == null)
-        //            return;
+        private RelayCommand<string> _showAccount;
+        public RelayCommand<string> ShowAccount
+        {
+            get
+            {
+                return _showAccount
+                    ?? (_showAccount = new RelayCommand<string>(ShowAccountMethod));
+            }
+        }
+        private void ShowAccountMethod(string billID)
+        {
+            try
+            {
+                if (billID == null)
+                    return;
+                AccountVisibility = VisibilityText.Collapsed;
+                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                {
+                    BillDevices = new ObservableCollection<BillDevicesDisplayDataModel>(unitOfWork.BillsDevices.GetBillDevices(Convert.ToInt32(billID)));
+                    BillItems = new ObservableCollection<BillItemsDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(Convert.ToInt32(billID)));
+                }
+                AvailableDevicesVisibility = VisibilityText.Collapsed;
+                AccountVisibility = VisibilityText.Visible;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
 
-        //        BillDevices = new ObservableCollection<BillDevicesVM>(_billDeviceServ.GetBillDevices(Convert.ToInt32(billID)));
-        //        BillItems = new ObservableCollection<BillItem>(_billItemServ.GetBillItems(Convert.ToInt32(billID)));
-        //        AccountLineColumn = "0.1*";
-        //        AccountColumn = "4*";
-        //        IsAccount = VisibilityText.Visible;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.ToString());
-        //    }
-        //}
-
-
+        private RelayCommand _cancelAccount;
+        public RelayCommand CancelAccount
+        {
+            get
+            {
+                return _cancelAccount
+                    ?? (_cancelAccount = new RelayCommand(CancelAccountMethod));
+            }
+        }
+        private void CancelAccountMethod()
+        {
+            try
+            {
+                AccountVisibility = VisibilityText.Collapsed;
+                AvailableDevicesVisibility = VisibilityText.Visible;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
 
         //private RelayCommand _stop;
         //public RelayCommand Stop

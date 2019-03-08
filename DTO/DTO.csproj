@@ -57,8 +57,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BillDeviceDataModel\BillDevicesDisplayDataModel.cs" />
     <Compile Include="BillItemDataModel\BillItemAddDataModel.cs" />
-    <Compile Include="BillItemDataModel\BillItemDisplayDataModel.cs" />
+    <Compile Include="BillItemDataModel\BillItemsDisplayDataModel.cs" />
     <Compile Include="ClientDataModel\ClientAddDataModel.cs" />
     <Compile Include="ClientDataModel\ClientDisplayDataModel.cs" />
     <Compile Include="ClientDataModel\ClientPointDataModel.cs" />

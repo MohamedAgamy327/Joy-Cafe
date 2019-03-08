@@ -26,7 +26,7 @@ namespace Cafe.ViewModels.BillViewModels
         {
             using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
             {
-                BillItems = new ObservableCollection<BillItemDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(BillID));
+                BillItems = new ObservableCollection<BillItemsDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(BillID));
             }
         }
 
@@ -82,8 +82,8 @@ namespace Cafe.ViewModels.BillViewModels
             set { SetProperty(ref _newBillItem, value); }
         }
 
-        private BillItemDisplayDataModel _selectedBillItem;
-        public BillItemDisplayDataModel SelectedBillItem
+        private BillItemsDisplayDataModel _selectedBillItem;
+        public BillItemsDisplayDataModel SelectedBillItem
         {
             get { return _selectedBillItem; }
             set { SetProperty(ref _selectedBillItem, value); }
@@ -96,8 +96,8 @@ namespace Cafe.ViewModels.BillViewModels
             set { SetProperty(ref _items, value); }
         }
 
-        private ObservableCollection<BillItemDisplayDataModel> _billItems;
-        public ObservableCollection<BillItemDisplayDataModel> BillItems
+        private ObservableCollection<BillItemsDisplayDataModel> _billItems;
+        public ObservableCollection<BillItemsDisplayDataModel> BillItems
         {
             get { return _billItems; }
             set
@@ -162,31 +162,44 @@ namespace Cafe.ViewModels.BillViewModels
 
         }
 
-        private RelayCommand _qtyChanged;
-        public RelayCommand QtyChanged
+        private RelayCommand<BillItemsDisplayDataModel> _qtyChanged;
+        public RelayCommand<BillItemsDisplayDataModel> QtyChanged
         {
             get
             {
                 return _qtyChanged
-                    ?? (_qtyChanged = new RelayCommand(QtyChangedMethod));
+                    ?? (_qtyChanged = new RelayCommand<BillItemsDisplayDataModel>(QtyChangedMethodAsync));
             }
         }
-        private void QtyChangedMethod()
+        private async void QtyChangedMethodAsync(BillItemsDisplayDataModel selectedBillItem)
         {
             try
             {
-                if (SelectedBillItem == null || SelectedBillItem.BillItem.Qty == null)
+                if (selectedBillItem.BillItem.Qty == null)
                     return;
 
-                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                MessageDialogResult result = await _currentWindow.ShowMessageAsync("تأكيد العملية", "هل تـريــد تغير هـذه الكمية؟", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings()
                 {
-                    _selectedBillItem.BillItem.Total = _selectedBillItem.BillItem.Qty * _selectedBillItem.BillItem.Price;
-                    unitOfWork.BillsItems.Edit(_selectedBillItem.BillItem);
-                    unitOfWork.Complete();
-                    //Load();
+                    AffirmativeButtonText = "موافق",
+                    NegativeButtonText = "الغاء",
+                    DialogMessageFontSize = 25,
+                    DialogTitleFontSize = 30
+                });
+                if (result == MessageDialogResult.Affirmative)
+                {
+                    using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                    {
+                        selectedBillItem.BillItem.Total = selectedBillItem.BillItem.Qty * selectedBillItem.BillItem.Price;
+                        unitOfWork.BillsItems.Edit(selectedBillItem.BillItem);
+                        unitOfWork.Complete();
+                    }
+                    OnPropertyChanged("ItemsSum");
+                    OnPropertyChanged("ItemsNumber");
                 }
-                OnPropertyChanged("ItemsSum");
-                OnPropertyChanged("ItemsNumber");
+                else
+                {
+                    Load();
+                }
 
             }
             catch (Exception ex)

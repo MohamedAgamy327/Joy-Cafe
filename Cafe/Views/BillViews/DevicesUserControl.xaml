@@ -39,6 +39,8 @@
                 <ColumnDefinition Width="7*" />
             </Grid.ColumnDefinitions>
 
+            <!-- slider -->
+            
             <StackPanel Margin="5">
 
                 <Button Command="{Binding ShowAddItems}"  Margin="5,10" Style="{StaticResource SquareButtonStyle}" >
@@ -63,23 +65,13 @@
                 </Button>
 
             </StackPanel>
-
+            
+            <!-- slider -->
+            
             <Grid Grid.Column="1"  >
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="6*" />
-                </Grid.RowDefinitions>
-
                 <!--Devices-->
-
                 <ListBox Grid.Row="0" Visibility="{Binding AvailableDevicesVisibility}" ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice,UpdateSourceTrigger=PropertyChanged}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  >
-
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonUp">
-                            <i:InvokeCommandAction Command="{Binding DataContext.ShowAccount,
-                        RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
 
                     <ListBox.ContextMenu>
                         <ContextMenu >
@@ -192,27 +184,37 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+                <!--Devices-->
 
                 <!--Account-->
 
-                <Separator Visibility="{Binding IsAccount}" Grid.Row="1"  VerticalAlignment="Top"/>
-
-                <Grid Grid.Row="2" Visibility="Collapsed">
+                <Grid  Visibility="{Binding AccountVisibility}">
+                    
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="6*" />
-                        <ColumnDefinition Width=".2*" />
                         <ColumnDefinition Width="4*" />
                     </Grid.ColumnDefinitions>
+                    
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="9*"/>
-                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="9*" />
                     </Grid.RowDefinitions>
 
+                    <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center"  Margin="0,8">
+                        <Button IsCancel="True" Command="{Binding CancelAccount}" Style="{StaticResource SquareButtonStyle}" Width="150" HorizontalAlignment="Center"  Margin="10,5" >
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock  Text="رجوع"  Style="{StaticResource TextBlockStyle}" Margin="10,0"></TextBlock>
+                                <iconPacks:PackIconEntypo Kind="Back" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    
                     <!--Bill Devices-->
 
                     <DataGrid
-                        Margin="5,0,0,0"
+                        Margin="10,0,10,0"
                         Grid.Column="0"
+                        Grid.Row="1"
                 ItemsSource="{Binding BillDevices}"
             SelectedItem="{Binding SelectedBillDevice}"
                   HeadersVisibility="All"
@@ -242,11 +244,9 @@
 
                     </DataGrid>
 
-                    <Separator Grid.Column="1"  Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="5,0" />
-
                     <!--Bill Items-->
 
-                    <DataGrid Grid.Column="2"
+                    <DataGrid   Margin="10,0,10,0" Grid.Column="1" Grid.Row="1"
                 ItemsSource="{Binding BillItems}"
             SelectedItem="{Binding SelectedBillItem}"
                   HeadersVisibility="All"
@@ -261,109 +261,89 @@
                             <DataGridTextColumn IsReadOnly="True"  Header="الصنف" Width="2*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
                                     Binding="{Binding Item.Name}"  />
                             <DataGridTextColumn IsReadOnly="True"  Header="السعر" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
-                                    Binding="{Binding Price}"  />
+                                    Binding="{Binding BillItem.Price}"  />
                             <DataGridTextColumn IsReadOnly="True"  Header="الكمية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
-                                    Binding="{Binding Qty}"  />
+                                    Binding="{Binding BillItem.Qty}"  />
                             <DataGridTextColumn IsReadOnly="True"  Header="الإجمالى" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
-                                    Binding="{Binding Total,StringFormat={}{0:0.00;(0.00)}}"  />
+                                    Binding="{Binding  BillItem.Total,StringFormat={}{0:0.00;(0.00)}}"  />
 
                         </DataGrid.Columns>
+
+                        <DataGrid.Style>
+                            <Style BasedOn="{StaticResource MetroDataGrid}"
+                       TargetType="{x:Type DataGrid}">
+                                <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource GrayBrush10}" />
+                            </Style>
+                        </DataGrid.Style>
+
                     </DataGrid>
-
-                    <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal">
-
-                        <TextBlock Style="{StaticResource TextBlockAddUpdateStyle}" Margin="5,0" FontSize="16">
-                            إجمالى الأجهزة:
-                        </TextBlock>
-
-                        <TextBlock FontSize="16" Text="{Binding DevicesSum,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockAddUpdateStyle}" Margin="5,0"/>
-                        <TextBlock Style="{StaticResource TextBlockAddUpdateStyle}" Margin="5,0" FontSize="16">جنيهاً</TextBlock>
-
-                        <TextBlock FontSize="16" Style="{StaticResource TextBlockAddUpdateStyle}" Margin="5,0">
-                            عدد الطلبات:
-                        </TextBlock>
-
-                        <TextBlock FontSize="16" Text="{Binding ItemsNumber,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockAddUpdateStyle}" Margin="5,0"/>
-                        <TextBlock Style="{StaticResource TextBlockAddUpdateStyle}" Margin="5,0" FontSize="16">طلب</TextBlock>
-
-                        <TextBlock FontSize="16" Style="{StaticResource TextBlockAddUpdateStyle}" Margin="5,0">
-                            إجمالى الطلبات:
-                        </TextBlock>
-
-                        <TextBlock FontSize="16" Text="{Binding ItemsSum,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockAddUpdateStyle}" Margin="5,0"/>
-                        <TextBlock Style="{StaticResource TextBlockAddUpdateStyle}" Margin="5,0" FontSize="16">جنيهاً</TextBlock>
-
-                        <TextBlock FontSize="16" Style="{StaticResource TextBlockAddUpdateStyle}" Margin="5,0">
-                            الإجمالى:
-                        </TextBlock>
-
-                        <TextBlock FontSize="16" Text="{Binding TotalSum,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockAddUpdateStyle}" Margin="5,0"/>
-
-                        <TextBlock Style="{StaticResource TextBlockAddUpdateStyle}" Margin="5,0" FontSize="16">جنيهاً</TextBlock>
-
-                    </StackPanel>
 
                 </Grid>
 
-            </Grid>
+                <!--Account-->
 
-            <!--Move-->
+                <!--Move-->
 
-            <Grid Grid.Column="1" Visibility="{Binding FreeDevicesVisibility}" >
+                <Grid Grid.Column="1" Visibility="{Binding FreeDevicesVisibility}" >
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="9*" />
-                </Grid.RowDefinitions>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Margin="0,8">
-                
-                    <Button IsCancel="True" Command="{Binding CancelMove}" CommandParameter="Add" Style="{StaticResource SquareButtonStyle}" Width="150" HorizontalAlignment="Center"  Margin="10,5" >
-                        <StackPanel Orientation="Horizontal" >
-                            <TextBlock  Text="إلغاء النقل"  Style="{StaticResource TextBlockStyle}" Margin="10,0"></TextBlock>
-                            <iconPacks:PackIconModern Kind="Cancel" />
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-                <ListBox Grid.Row="1" ItemsSource="{Binding FreeDevices}" SelectedItem="{Binding SelectedFreeDevice}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="9*" />
+                    </Grid.RowDefinitions>
 
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonUp">
-                            <i:InvokeCommandAction Command="{Binding DataContext.MoveTo,
-                        RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel IsItemsHost="True" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-
-                    <ListBox.ItemTemplate>
-                     
-                        <DataTemplate>
-                                         
-                            <StackPanel Margin="10">
-
-                                <Button    Style="{DynamicResource MetroCircleButtonStyle}" BorderThickness="0" Width="100" Height="100">
-                                    <iconPacks:PackIconModern Kind="{Binding DeviceTypeIcon}" Width="80" Height="80" Foreground="#E577B900"  />
-
-                                </Button>
-
-                                <TextBlock Style="{StaticResource TextBlockAddUpdateStyle}" Text="{Binding Device.Name}"></TextBlock>
-
-                                <TextBlock Style="{StaticResource TextBlockAddUpdateStyle}" Text="{Binding DeviceType.Name}"></TextBlock>
-
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Margin="0,8">
+                        <Button IsCancel="True" Command="{Binding CancelMove}" Style="{StaticResource SquareButtonStyle}" Width="150" HorizontalAlignment="Center"  Margin="10,5" >
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock  Text="إلغاء النقل"  Style="{StaticResource TextBlockStyle}" Margin="10,0"></TextBlock>
+                                <iconPacks:PackIconModern Kind="Cancel" />
                             </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                        </Button>
+                    </StackPanel>
+                    
+                    <ListBox Grid.Row="1" ItemsSource="{Binding FreeDevices}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel IsItemsHost="True" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+
+                        <ListBox.ItemTemplate>
+
+                            <DataTemplate>
+
+                                <StackPanel Margin="10">
+
+                                    <Button  Command="{Binding DataContext.MoveTo,
+         RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" Style="{DynamicResource MetroCircleButtonStyle}" BorderThickness="0" Width="100" Height="100">
+                                        <iconPacks:PackIconModern Kind="{Binding DeviceTypeIcon}" Width="80" Height="80" Foreground="#E577B900"  />
+
+                                    </Button>
+
+                                    <TextBlock Style="{StaticResource TextBlockAddUpdateStyle}" Text="{Binding Device.Name}"></TextBlock>
+
+                                    <TextBlock Style="{StaticResource TextBlockAddUpdateStyle}" Text="{Binding DeviceType.Name}"></TextBlock>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                </Grid>
+
+                <!--Move-->
+
 
             </Grid>
 
+
+            
         </Grid>
 
-        <StatusBar  VerticalAlignment="Bottom" Grid.Row="1" >
+        <!--Devices-->
+
+        <StatusBar Visibility="{Binding AvailableDevicesVisibility}" VerticalAlignment="Bottom" Grid.Row="1" >
             <StatusBarItem Content="الأجهزة المشغولة" Style="{StaticResource StatusBarItemStyle}"/>
             <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
             <StatusBarItem  Content="{Binding BusyDevices}" Style="{StaticResource StatusBarItemStyle}"/>
@@ -374,6 +354,32 @@
             <StatusBarItem Content="الأجهزة المتاحة" Style="{StaticResource StatusBarItemStyle}"/>
             <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
             <StatusBarItem  Content="{Binding AvailableDevices}" Style="{StaticResource StatusBarItemStyle}"/>
+        </StatusBar>
+
+        <!--Move-->
+        
+        <StatusBar Visibility="{Binding FreeDevicesVisibility}" VerticalAlignment="Bottom" Grid.Row="1" >
+            <StatusBarItem Content="الأجهزة المتاحة" Style="{StaticResource StatusBarItemStyle}"/>
+            <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
+            <StatusBarItem  Content="{Binding FreeDevices.Count}" Style="{StaticResource StatusBarItemStyle}"/>
+        </StatusBar>
+
+        <!-- Account -->
+
+        <StatusBar Visibility="{Binding AccountVisibility}" VerticalAlignment="Bottom" Grid.Row="1" >
+            <StatusBarItem Content="  إجمالى الأجهزة:" Style="{StaticResource StatusBarItemStyle}"/>
+            <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
+            <StatusBarItem  Content="{Binding DevicesSum,StringFormat={}{0:0;(0)}}" Style="{StaticResource StatusBarItemStyle}"/>
+            <StatusBarItem Content=" حنيهاً " Style="{StaticResource StatusBarItemStyle}"/>
+            <StatusBarItem Content=" إجمالى الطلبات:" Style="{StaticResource StatusBarItemStyle}"/>
+            <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
+            <StatusBarItem  Content="{Binding ItemsSum,StringFormat={}{0:0;(0)}}" Style="{StaticResource StatusBarItemStyle}"/>
+            <StatusBarItem Content=" حنيهاً " Style="{StaticResource StatusBarItemStyle}"/>
+            <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
+            <StatusBarItem Content=" الإجمالى:" Style="{StaticResource StatusBarItemStyle}"/>
+            <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
+            <StatusBarItem  Content="{Binding TotalSum,StringFormat={}{0:0;(0)}}" Style="{StaticResource StatusBarItemStyle}"/>
+            <StatusBarItem Content=" حنيهاً " Style="{StaticResource StatusBarItemStyle}"/>
         </StatusBar>
 
     </Grid>

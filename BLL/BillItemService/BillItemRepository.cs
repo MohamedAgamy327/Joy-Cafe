@@ -20,9 +20,9 @@ namespace BLL.BillItemService
             get { return Context as GeneralDBContext; }
         }
 
-        public List<BillItemDisplayDataModel> GetBillItems(int billID)
+        public List<BillItemsDisplayDataModel> GetBillItems(int billID)
         {
-            return GeneralDBContext.BillsItems.AsNoTracking().Where(w => w.BillID == billID).Select(s => new BillItemDisplayDataModel
+            return GeneralDBContext.BillsItems.AsNoTracking().Where(w => w.BillID == billID).Select(s => new BillItemsDisplayDataModel
             {
                 BillItem=s,
                 Item=s.Item

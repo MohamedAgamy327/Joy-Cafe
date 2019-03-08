@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-D:\Work\Project\Now\Cafe\Cafe\Cafe\obj\Debug\
+D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\
 Cafe
 none
 false
 CODE_ANALYSIS;DEBUG;TRACE
-D:\Work\Project\Now\Cafe\Cafe\Cafe\App.xaml
+D:\Work\Project\Now\Joy-Cafe\Cafe\App.xaml
 59-1179197541
 
 1061963809957
-93-1927066779
+93-970783356
 Reports\ReportWindow.xaml;SplashScreen\SplashScreenWindow.xaml;Views\BillViews\AccountPaidDialog.xaml;Views\BillViews\BillItemAddDialog.xaml;Views\BillViews\BillItemsWindow.xaml;Views\BillViews\ItemAddDialog.xaml;Views\BillViews\BillWindow.xaml;Views\BillViews\ClientAddDialog.xaml;Views\BillViews\ClientCheckDialog.xaml;Views\BillViews\DevicesUserControl.xaml;Views\BillViews\FinishShiftDialog.xaml;Views\BillViews\ItemsWindow.xaml;Views\BillViews\SpendingAddDialog.xaml;Views\BillViews\SpendingShiftWindow.xaml;Views\BillViews\SpendingUpdateDialog.xaml;Views\ClientViews\ClientAddDialog.xaml;Views\ClientViews\ClientDisplayUserControl.xaml;Views\MembershipViews\ClientMembershipAddDialog.xaml;Views\MembershipViews\ClientMembershipMinuteUserControl.xaml;Views\MembershipViews\ClientMembershipUserControl.xaml;Views\ClientViews\ClientPointUserControl.xaml;Views\ClientViews\ClientUpdateDialog.xaml;Views\ClientViews\ClientWindow.xaml;Views\MembershipViews\MembershipWindow.xaml;Views\MembershipViews\MembershipAddDialog.xaml;Views\MembershipViews\MembershipUpdateDialog.xaml;Views\MembershipViews\MembershipDisplayUserControl.xaml;Views\DeviceViews\DeviceAddDialog.xaml;Views\DeviceViews\DeviceDisplayUserControl.xaml;Views\DeviceViews\DeviceTypeAddDialog.xaml;Views\DeviceViews\DeviceTypeDisplayUserControl.xaml;Views\DeviceViews\DeviceTypeUpdateDialog.xaml;Views\DeviceViews\DeviceUpdateDialog.xaml;Views\DeviceViews\DeviceWindow.xaml;Views\MainViews\BackupDialog.xaml;Views\MainViews\LoginDialog.xaml;Views\MainViews\MainWindow.xaml;Skins\MainSkin.xaml;Views\MainViews\RestoreBackupDialog.xaml;Views\MainViews\StartShiftDialog.xaml;Views\SafeViews\SafeAddDialog.xaml;Views\SafeViews\SafeDisplayUserControl.xaml;Views\SafeViews\SafeReportUserControl.xaml;Views\SafeViews\SafeWindow.xaml;Views\ShiftViews\ShiftDisplayUserControl.xaml;Views\ShiftViews\ShiftShowDialog.xaml;Views\ShiftViews\ShiftWindow.xaml;Views\SpendingViews\SpendingAddDialog.xaml;Views\SpendingViews\SpendingDisplayUserControl.xaml;Views\SpendingViews\SpendingReportUserControl.xaml;Views\SpendingViews\SpendingWindow.xaml;Views\ItemViews\ItemAddDialog.xaml;Views\ItemViews\ItemUpdateDialog.xaml;Views\ItemViews\ItemDisplayUserControl.xaml;Views\ItemViews\ItemWindow.xaml;Views\UserViews\UserAddDialog.xaml;Views\UserViews\UserDisplayUserControl.xaml;Views\UserViews\UserUpdateDialog.xaml;Views\UserViews\UserWindow.xaml;
 
 False
