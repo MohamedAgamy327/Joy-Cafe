@@ -952,7 +952,7 @@ namespace Cafe.ViewModels.BillViewModels
                     });
                     return;
                 }
-                new SpendingShiftWindow().ShowDialog();
+                new ShiftSpendingWindow().ShowDialog();
             }
             catch (Exception ex)
             {

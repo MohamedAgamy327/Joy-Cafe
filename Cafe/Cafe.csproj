@@ -165,7 +165,7 @@
     <Compile Include="ViewModels\BillViewModels\BillViewModel.cs" />
     <Compile Include="ViewModels\BillViewModels\DevicesViewModel.cs" />
     <Compile Include="ViewModels\BillViewModels\ShiftItemsViewModel.cs" />
-    <Compile Include="ViewModels\BillViewModels\SpendingShiftViewModel.cs" />
+    <Compile Include="ViewModels\BillViewModels\ShiftSpendingViewModel.cs" />
     <Compile Include="ViewModels\ClientViewModels\ClientDisplayViewModel.cs" />
     <Compile Include="ViewModels\MembershipViewModels\ClientMembershipMinuteViewModel.cs" />
     <Compile Include="ViewModels\MembershipViewModels\ClientMembershipViewModel.cs" />
@@ -220,14 +220,14 @@
     <Compile Include="Views\BillViews\ShiftItemsViews\ShiftItemsWindow.xaml.cs">
       <DependentUpon>ShiftItemsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BillViews\ShiftSpendingViews\SpendingAddDialog.xaml.cs">
-      <DependentUpon>SpendingAddDialog.xaml</DependentUpon>
+    <Compile Include="Views\BillViews\ShiftSpendingViews\ShiftSpendingAddDialog.xaml.cs">
+      <DependentUpon>ShiftSpendingAddDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BillViews\ShiftSpendingViews\SpendingShiftWindow.xaml.cs">
-      <DependentUpon>SpendingShiftWindow.xaml</DependentUpon>
+    <Compile Include="Views\BillViews\ShiftSpendingViews\ShiftSpendingWindow.xaml.cs">
+      <DependentUpon>ShiftSpendingWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BillViews\ShiftSpendingViews\SpendingUpdateDialog.xaml.cs">
-      <DependentUpon>SpendingUpdateDialog.xaml</DependentUpon>
+    <Compile Include="Views\BillViews\ShiftSpendingViews\ShiftSpendingUpdateDialog.xaml.cs">
+      <DependentUpon>ShiftSpendingUpdateDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ClientViews\ClientAddDialog.xaml.cs">
       <DependentUpon>ClientAddDialog.xaml</DependentUpon>
@@ -403,15 +403,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\BillViews\ShiftSpendingViews\SpendingAddDialog.xaml">
+    <Page Include="Views\BillViews\ShiftSpendingViews\ShiftSpendingAddDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\BillViews\ShiftSpendingViews\SpendingShiftWindow.xaml">
+    <Page Include="Views\BillViews\ShiftSpendingViews\ShiftSpendingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\BillViews\ShiftSpendingViews\SpendingUpdateDialog.xaml">
+    <Page Include="Views\BillViews\ShiftSpendingViews\ShiftSpendingUpdateDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -93,6 +93,7 @@
     <Compile Include="SpendingDataModel\SpendingAddDataModel.cs" />
     <Compile Include="SpendingDataModel\SpendingDisplayDataModel.cs" />
     <Compile Include="SpendingDataModel\SpendingReportDataModel.cs" />
+    <Compile Include="SpendingDataModel\SpendingUpdateDataModel.cs" />
     <Compile Include="UserDataModel\UserAddDataModel.cs" />
     <Compile Include="UserDataModel\UserData.cs" />
     <Compile Include="UserDataModel\UserDisplayDataModel.cs" />
