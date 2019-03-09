@@ -7,6 +7,7 @@ namespace BLL.BillItemService
 {
     public interface IBillItemRepository : IGenericRepository<BillItem>
     {
+        List<BillItemsDisplayDataModel> GetBillItems();
         List<BillItemsDisplayDataModel> GetBillItems(int billID);
     }
 }

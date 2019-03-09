@@ -43,7 +43,7 @@ namespace Cafe.ViewModels
             SimpleIoc.Default.Register<SafeReportViewModel>();
             SimpleIoc.Default.Register<BillViewModel>();
             SimpleIoc.Default.Register<DevicesViewModel>();
-            SimpleIoc.Default.Register<ItemsViewModel>();
+            SimpleIoc.Default.Register<ShiftItemsViewModel>();
             SimpleIoc.Default.Register<SpendingShiftViewModel>();         
             SimpleIoc.Default.Register<BillItemsViewModel>();
            
@@ -265,11 +265,11 @@ namespace Cafe.ViewModels
             }
         }
 
-        public ItemsViewModel Items
+        public ShiftItemsViewModel ShiftItems
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<ItemsViewModel>();
+                return ServiceLocator.Current.GetInstance<ShiftItemsViewModel>();
             }
         }
 
@@ -409,10 +409,10 @@ namespace Cafe.ViewModels
                 SimpleIoc.Default.Unregister<SpendingShiftViewModel>();
                 SimpleIoc.Default.Register<SpendingShiftViewModel>();
             }
-            else if (viewModel == "Items")
+            else if (viewModel == "ShiftItems")
             {
-                SimpleIoc.Default.Unregister<ItemsViewModel>();
-                SimpleIoc.Default.Register<ItemsViewModel>();
+                SimpleIoc.Default.Unregister<ShiftItemsViewModel>();
+                SimpleIoc.Default.Register<ShiftItemsViewModel>();
             }
         }
     }

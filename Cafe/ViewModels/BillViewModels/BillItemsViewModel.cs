@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using Cafe.Views.BillViews;
 using MahApps.Metro.Controls;
 using System.Windows;
 using System.Linq;
@@ -11,6 +10,7 @@ using DAL.Entities;
 using DTO.BillItemDataModel;
 using BLL.UnitOfWorkService;
 using DAL;
+using Cafe.Views.BillViews.BillItemsViews;
 
 namespace Cafe.ViewModels.BillViewModels
 {
@@ -56,18 +56,6 @@ namespace Cafe.ViewModels.BillViewModels
             }
         }
 
-        private int _itemsNumber;
-        public int ItemsNumber
-        {
-            get
-            {
-                if (BillItems != null && BillItems.Count > 0)
-                    return _itemsNumber = BillItems.Sum(s => (int)s.BillItem.Qty);
-                else
-                    return 0;
-            }
-        }
-
         private Item _selectedItem;
         public Item SelectedItem
         {
@@ -104,7 +92,6 @@ namespace Cafe.ViewModels.BillViewModels
             {
                 SetProperty(ref _billItems, value);
                 OnPropertyChanged("ItemsSum");
-                OnPropertyChanged("ItemsNumber");
             }
         }
 

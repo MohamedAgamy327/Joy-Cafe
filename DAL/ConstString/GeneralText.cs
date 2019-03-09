@@ -6,5 +6,7 @@
         public const string NotWork = "لا يعمل";
         public const string Available = "متاح";
         public const string Unavailable = "غير متاح";
+        public const string Items = "Items";
+        public const string Devices = "Devices";
     }
 }

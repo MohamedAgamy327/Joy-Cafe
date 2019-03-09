@@ -108,7 +108,7 @@
                          Value="true">
                 <Setter Property="ToolTip"
                             Value="{Binding RelativeSource={x:Static RelativeSource.Self}, 
-                                    Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                                   Path=AdornedElement.(Validation.Errors)/ErrorContent}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -126,7 +126,7 @@
                          Value="true">
                 <Setter Property="ToolTip"
                             Value="{Binding RelativeSource={x:Static RelativeSource.Self}, 
-                                    Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                                   Path=AdornedElement.(Validation.Errors)/ErrorContent}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -144,7 +144,7 @@
                          Value="true">
                 <Setter Property="ToolTip"
                             Value="{Binding RelativeSource={x:Static RelativeSource.Self}, 
-                                    Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                                    Path=AdornedElement.(Validation.Errors)/ErrorContent}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -162,7 +162,7 @@
                          Value="true">
                 <Setter Property="ToolTip"
                             Value="{Binding RelativeSource={x:Static RelativeSource.Self}, 
-                                    Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                                    Path=AdornedElement.(Validation.Errors)/ErrorContent}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -179,7 +179,7 @@
                          Value="true">
                 <Setter Property="ToolTip"
                             Value="{Binding RelativeSource={x:Static RelativeSource.Self}, 
-                                    Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                                    Path=AdornedElement.(Validation.Errors)/ErrorContent}" />
             </Trigger>
         </Style.Triggers>
     </Style>

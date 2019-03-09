@@ -1,5 +1,8 @@
 ﻿using BLL.UnitOfWorkService;
 using Cafe.Views.BillViews;
+using Cafe.Views.BillViews.BillItemsViews;
+using Cafe.Views.BillViews.ShiftItemsViews;
+using Cafe.Views.BillViews.ShiftSpendingViews;
 using DAL;
 using DAL.BindableBaseService;
 using DAL.ConstString;
@@ -7,8 +10,10 @@ using DAL.Entities;
 using DTO.BillDeviceDataModel;
 using DTO.BillItemDataModel;
 using DTO.DeviceDataModel;
+using DTO.UserDataModel;
 using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -398,7 +403,7 @@ namespace Cafe.ViewModels.BillViewModels
                     _bill = new Bill
                     {
                         StartDate = DateTime.Now,
-                        Type = "Devices"
+                        Type = GeneralText.Devices
                     };
                     unitOfWork.Bills.Add(_bill);
 
@@ -889,6 +894,73 @@ namespace Cafe.ViewModels.BillViewModels
             }
         }
 
+        // Items
+
+        private RelayCommand _showAddItems;
+        public RelayCommand ShowAddItems
+        {
+            get
+            {
+                return _showAddItems
+                    ?? (_showAddItems = new RelayCommand(ShowAddItemsMethod));
+            }
+        }
+        private async void ShowAddItemsMethod()
+        {
+            try
+            {
+                if (UserData.Role == RoleText.Admin)
+                {
+                    await _currentWindow.ShowMessageAsync("تنبيه", "الكاشير فقط من له الصلاحية فى الدخول", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                    {
+                        AffirmativeButtonText = "موافق",
+                        DialogMessageFontSize = 25,
+                        DialogTitleFontSize = 30
+                    });
+                    return;
+                }
+                new ShiftItemsWindow().Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        // Spending
+
+        private RelayCommand _showSpending;
+        public RelayCommand ShowSpending
+        {
+            get
+            {
+                return _showSpending
+                    ?? (_showSpending = new RelayCommand(ShowSpendingMethod));
+            }
+        }
+        private async void ShowSpendingMethod()
+        {
+            try
+            {
+               if (UserData.Role == RoleText.Admin)
+                {
+                    await _currentWindow.ShowMessageAsync("تنبيه", "الكاشير فقط من له الصلاحية فى الدخول", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                    {
+                        AffirmativeButtonText = "موافق",
+                        DialogMessageFontSize = 25,
+                        DialogTitleFontSize = 30
+                    });
+                    return;
+                }
+                new SpendingShiftWindow().ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+
         //private RelayCommand _stop;
         //public RelayCommand Stop
         //{
@@ -1281,75 +1353,7 @@ namespace Cafe.ViewModels.BillViewModels
         //    }
         //}
 
-        //// Items
 
-        //private RelayCommand _showAddItems;
-        //public RelayCommand ShowAddItems
-        //{
-        //    get
-        //    {
-        //        return _showAddItems
-        //            ?? (_showAddItems = new RelayCommand(ShowAddItemsMethod));
-        //    }
-        //}
-        //private async void ShowAddItemsMethod()
-        //{
-        //    try
-        //    {
-        //        if (MainViewModel.UserRole == "ادمن")
-        //        {
-        //            await _currentWindow.ShowMessageAsync("تنبيه", "الكاشير فقط من له الصلاحية فى الدخول", MessageDialogStyle.Affirmative, new MetroDialogSettings()
-        //            {
-        //                AffirmativeButtonText = "موافق",
-        //                DialogMessageFontSize = 25,
-        //                DialogTitleFontSize = 30
-        //            });
-        //            return;
-        //        }
-        //        _currentWindow.Hide();
-        //        new ItemsWindow().ShowDialog();
-        //        _currentWindow.ShowDialog();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.ToString());
-        //    }
-        //}
-
-        //// Spending
-
-        //private RelayCommand _showSpending;
-        //public RelayCommand ShowSpending
-        //{
-        //    get
-        //    {
-        //        return _showSpending
-        //            ?? (_showSpending = new RelayCommand(ShowSpendingMethod));
-        //    }
-        //}
-        //private async void ShowSpendingMethod()
-        //{
-        //    try
-        //    {
-        //        if (MainViewModel.UserRole == "ادمن")
-        //        {
-        //            await _currentWindow.ShowMessageAsync("تنبيه", "الكاشير فقط من له الصلاحية فى الدخول", MessageDialogStyle.Affirmative, new MetroDialogSettings()
-        //            {
-        //                AffirmativeButtonText = "موافق",
-        //                DialogMessageFontSize = 25,
-        //                DialogTitleFontSize = 30
-        //            });
-        //            return;
-        //        }
-        //        _currentWindow.Hide();
-        //        new SpendingShiftWindow().ShowDialog();
-        //        _currentWindow.ShowDialog();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.ToString());
-        //    }
-        //}
 
         //// Finish Shift
 
