@@ -12,6 +12,7 @@ using BLL.UnitOfWorkService;
 using DAL;
 using DTO.UserDataModel;
 using DAL.Entities;
+using DAL.ConstString;
 
 namespace Cafe.ViewModels.UserViewModels
 {
@@ -367,7 +368,25 @@ namespace Cafe.ViewModels.UserViewModels
                     var user = unitOfWork.Users.SingleOrDefault(s => s.Name == UserUpdate.Name && s.ID != UserUpdate.ID);
                     if (user != null)
                     {
-                        await _currentWindow.ShowMessageAsync("فشل الإضافة", "هذا المستخدم موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        await _currentWindow.ShowMessageAsync("فشل التعديل", "هذا المستخدم موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        {
+                            AffirmativeButtonText = "موافق",
+                            DialogMessageFontSize = 25,
+                            DialogTitleFontSize = 30
+                        });
+                    }
+                    else if (UserUpdate.IsWorked == false && UserUpdate.Role.Name == RoleText.Admin && unitOfWork.Users.Find(f => f.Role.Name == RoleText.Admin && f.IsWorked == true).Count() == 1)
+                    {
+                        await _currentWindow.ShowMessageAsync("فشل التعديل", "لا يوجد مستخدم آخر لديه نفس الصلاحيات يجب اضافة مستخدم اخر بنفس الصلاحيات ثم تعديل هذا المستخدم", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        {
+                            AffirmativeButtonText = "موافق",
+                            DialogMessageFontSize = 25,
+                            DialogTitleFontSize = 30
+                        });
+                    }
+                    else if (UserUpdate.IsWorked == false && UserUpdate.Role.Name == RoleText.Cashier && unitOfWork.Users.Find(f => f.Role.Name == RoleText.Cashier && f.IsWorked == true).Count() == 2)
+                    {
+                        await _currentWindow.ShowMessageAsync("فشل التعديل", "يجب ان يكون لديك مستخدمين على الاقل لهم نفس الصلاحيات لكى تستطيع تعديل هذا المستخدم", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
                             AffirmativeButtonText = "موافق",
                             DialogMessageFontSize = 25,

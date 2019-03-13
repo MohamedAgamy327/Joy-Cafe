@@ -81,13 +81,13 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
 
-                            <MenuItem  Header="الطلبات" Visibility="{Binding IsStop}"  Command="{Binding ShowBillItems}"    >
+                            <MenuItem  Header="الطلبات" Visibility="{Binding StopVisibility}"  Command="{Binding ShowBillItems}"    >
                                 <MenuItem.Icon>
                                     <iconPacks:PackIconMaterial Kind="FoodForkDrink" Margin="10,0,5,0" />
                                 </MenuItem.Icon>
                             </MenuItem>
 
-                            <MenuItem Header="تشغيل" Visibility="{Binding IsStart}"  >
+                            <MenuItem Header="تشغيل" Visibility="{Binding StartVisibility}"  >
 
                                 <MenuItem  Header="فردى"   Command="{Binding Start}" CommandParameter="Single"   >
                                     <MenuItem.Icon>
@@ -99,7 +99,7 @@
                                         <iconPacks:PackIconModern Kind="PeopleMultiple" Margin="10,0,5,0" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem  Header="عيد ميلاد" Visibility="{Binding IsBirthday}"  Command="{Binding Start}" CommandParameter="Birthday"     >
+                                <MenuItem  Header="عيد ميلاد" Visibility="{Binding BirthdayVisibility}"  Command="{Binding Start}" CommandParameter="Birthday"     >
                                     <MenuItem.Icon>
                                         <iconPacks:PackIconFontAwesome Kind="BirthdayCake" Margin="10,0,5,0" />
                                     </MenuItem.Icon>
@@ -110,19 +110,19 @@
                                 </MenuItem.Icon>
                             </MenuItem>
 
-                            <MenuItem Header="تغير النوع" Visibility="{Binding IsStop}"  >
+                            <MenuItem Header="تغير النوع" Visibility="{Binding StopVisibility}"  >
 
-                                <MenuItem  Header="فردى"   Command="{Binding Change}" CommandParameter="Single" Visibility="{Binding IsSingle}"  >
+                                <MenuItem  Header="فردى"   Command="{Binding Change}" CommandParameter="Single" Visibility="{Binding SingleVisibility}"  >
                                     <MenuItem.Icon>
                                         <iconPacks:PackIconMaterial Kind="AccountMultiple" Margin="10,0,5,0" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem  Header="مالتى" Visibility="{Binding IsMulti}"  Command="{Binding Change}" CommandParameter="Multiplayer"    >
+                                <MenuItem  Header="مالتى" Visibility="{Binding MultiVisibility}"  Command="{Binding Change}" CommandParameter="Multiplayer"    >
                                     <MenuItem.Icon>
                                         <iconPacks:PackIconModern Kind="PeopleMultiple" Margin="10,0,5,0" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem  Header="عيد ميلاد" Visibility="{Binding IsBirthday}"  Command="{Binding Change}" CommandParameter="Birthday"     >
+                                <MenuItem  Header="عيد ميلاد" Visibility="{Binding BirthdayVisibility}"  Command="{Binding Change}" CommandParameter="Birthday"     >
                                     <MenuItem.Icon>
                                         <iconPacks:PackIconFontAwesome Kind="BirthdayCake" Margin="10,0,5,0" />
                                     </MenuItem.Icon>
@@ -133,26 +133,26 @@
                                 </MenuItem.Icon>
                             </MenuItem>
 
-                            <MenuItem  Header="إيقاف مؤقت"   Command="{Binding TemporaryStop}"  Visibility="{Binding IsTemporary}"  >
+                            <MenuItem  Header="إيقاف مؤقت"   Command="{Binding TemporaryStop}"  Visibility="{Binding TemporaryVisibility}"  >
                                 <MenuItem.Icon>
                                     <iconPacks:PackIconModern Kind="SignStop"  Margin="10,0,5,0" />
                                 </MenuItem.Icon>
                             </MenuItem>
 
-                            <MenuItem  Header="إستئناف التشغيل"   Command="{Binding Resume}"  Visibility="{Binding IsResume}"  >
+                            <MenuItem  Header="إستئناف التشغيل"   Command="{Binding Resume}"  Visibility="{Binding ResumeVisibility}"  >
                                 <MenuItem.Icon>
                                     <iconPacks:PackIconModern Kind="ControlResume"  Margin="10,0,5,0" />
                                 </MenuItem.Icon>
                             </MenuItem>
 
-                            <MenuItem  Header="نقل"   Command="{Binding MoveFrom}"  Visibility="{Binding IsStop}"  >
+                            <MenuItem  Header="نقل"   Command="{Binding MoveFrom}"  Visibility="{Binding StopVisibility}"  >
                                 <MenuItem.Icon>
                                     <iconPacks:PackIconMaterial Kind="FolderMove"  Margin="10,0,5,0" />
 
                                 </MenuItem.Icon>
                             </MenuItem>
 
-                            <MenuItem Header="إنهاء ودفع الحساب"  Visibility="{Binding IsStop}"   Command="{Binding Stop}">
+                            <MenuItem Header="إنهاء ودفع الحساب"  Visibility="{Binding StopVisibility}"   Command="{Binding Stop}">
                                 <MenuItem.Icon>
                                     <iconPacks:PackIconMaterial Kind="StopCircleOutline" Margin="10,0,5,0" />
                                 </MenuItem.Icon>
@@ -231,7 +231,7 @@
                             <DataGridTextColumn IsReadOnly="True"  Header="الجهاز" Width="1.2*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
                                     Binding="{Binding Device.Name}"  />
                             <DataGridTextColumn IsReadOnly="True"  Header="اللعب" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
-                                    Binding="{Binding BillDevice.Type}"  />
+                                    Binding="{Binding BillDevice.GameType}"  />
                             <DataGridTextColumn IsReadOnly="True"  Header="البداية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
                                     Binding="{Binding BillDevice.StartDate, StringFormat={}\{0:hh:mm tt \}}"  />
                             <DataGridTextColumn IsReadOnly="True"  Header="النهاية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"

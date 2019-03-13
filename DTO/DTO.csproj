@@ -57,10 +57,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BillDataModel\BillData.cs" />
+    <Compile Include="BillDataModel\BillPaidDataModel.cs" />
     <Compile Include="BillDeviceDataModel\BillDevicesDisplayDataModel.cs" />
     <Compile Include="BillItemDataModel\BillItemAddDataModel.cs" />
     <Compile Include="BillItemDataModel\BillItemsDisplayDataModel.cs" />
     <Compile Include="ClientDataModel\ClientAddDataModel.cs" />
+    <Compile Include="ClientDataModel\ClientBillAddDataModel.cs" />
+    <Compile Include="ClientDataModel\ClientCheckDataModel.cs" />
     <Compile Include="ClientDataModel\ClientDisplayDataModel.cs" />
     <Compile Include="ClientDataModel\ClientPointDataModel.cs" />
     <Compile Include="ClientDataModel\ClientUpdateDataModel.cs" />
@@ -81,6 +85,7 @@
     <Compile Include="MainDataModel\BackupDataModel.cs" />
     <Compile Include="MainDataModel\LoginDataModel.cs" />
     <Compile Include="MainDataModel\RestoreBackupDataModel.cs" />
+    <Compile Include="ShiftDataModel\FinishShiftDataModel.cs" />
     <Compile Include="ShiftDataModel\ShiftDisplayDataModel.cs" />
     <Compile Include="ShiftDataModel\StartShiftDataModel.cs" />
     <Compile Include="MembershipDataModel\MembershipAddDataModel.cs" />

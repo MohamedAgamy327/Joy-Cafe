@@ -55,5 +55,10 @@ namespace BLL.ClientService
                    }).OrderByDescending(o => o.Points)
                      .ToList();
         }
+
+        public List<string> GetTelephoneSuggetions()
+        {
+            return GeneralDBContext.Clients.AsNoTracking().OrderBy(o => o.Telephone).Select(s => s.Telephone).Distinct().ToList();
+        }
     }
 }

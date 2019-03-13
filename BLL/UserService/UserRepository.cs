@@ -38,7 +38,7 @@ namespace BLL.UserService
                 User = s,
                 Role = s.Role,
                 Status = s.IsWorked == true ? GeneralText.Work : GeneralText.NotWork,
-                CanDelete = s.Bills.Count > 0 || s.Spendings.Count > 0 || s.Safes.Count > 0 ? false : true
+                CanDelete = s.Bills.Count > 0 || s.Spendings.Count > 0 || s.Safes.Count > 0 || s.Shifts.Count > 0 || s.ID == 1 || s.ID == 2 || s.ID == 3 ? false : true
             }).ToList();
         }
     }

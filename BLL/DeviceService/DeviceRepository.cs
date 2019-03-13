@@ -49,12 +49,12 @@ namespace BLL.DeviceService
                 DeviceType = s.DeviceType,
                 Color = s.Case == CaseText.Busy ? "#CCD24726" :
                     s.Case == CaseText.Free ? "#E577B900" : "#000000",
-                DeviceTypeIcon = s.DeviceType.Name == "PlayStation 3" ? "MonitorPlay" :
-                    s.DeviceType.Name == "PlayStation 4" ? "SocialPlaystation" :
-                    s.DeviceType.Name == "VIP ROOM" ? "Vip" :
-                    s.DeviceType.Name == "PremiuM RooM" ? "AdobePremierpro" :
-                    s.DeviceType.Name == "Royal RooM" ? "SocialSpotify" :
-                    s.DeviceType.Name == "VR ROOM" ? "SmileyGlasses" : "Xbox",
+                DeviceTypeIcon = s.DeviceType.Name == DeviceTypeText.PlayStation3 ? "MonitorPlay" :
+                    s.DeviceType.Name == DeviceTypeText.PlayStation4 ? "SocialPlaystation" :
+                    s.DeviceType.Name == DeviceTypeText.VIP ? "Vip" :
+                    s.DeviceType.Name == DeviceTypeText.Premium ? "AdobePremierpro" :
+                    s.DeviceType.Name == DeviceTypeText.Royal ? "SocialSpotify" :
+                    s.DeviceType.Name == DeviceTypeText.VR ? "SmileyGlasses" : "Xbox",
                 GameType = s.Case != CaseText.Free ? s.BillsDevices.OrderByDescending(o => o.StartDate).FirstOrDefault().GameType : ""
             }).ToList();
         }
@@ -66,24 +66,24 @@ namespace BLL.DeviceService
                 {
                     Device = s,
                     DeviceType = s.DeviceType,
-                    DeviceTypeIcon = s.DeviceType.Name == "PlayStation 3" ? "MonitorPlay" :
-                          s.DeviceType.Name == "PlayStation 4" ? "SocialPlaystation" :
-                          s.DeviceType.Name == "VIP ROOM" ? "Vip" :
-                          s.DeviceType.Name == "PremiuM RooM" ? "AdobePremierpro" :
-                          s.DeviceType.Name == "Royal RooM" ? "SocialSpotify" :
-                          s.DeviceType.Name == "VR ROOM" ? "SmileyGlasses" : "Xbox"
+                    DeviceTypeIcon = s.DeviceType.Name == DeviceTypeText.PlayStation3 ? "MonitorPlay" :
+                          s.DeviceType.Name == DeviceTypeText.PlayStation4 ? "SocialPlaystation" :
+                          s.DeviceType.Name == DeviceTypeText.VIP ? "Vip" :
+                          s.DeviceType.Name == DeviceTypeText.Premium ? "AdobePremierpro" :
+                          s.DeviceType.Name == DeviceTypeText.Royal ? "SocialSpotify" :
+                          s.DeviceType.Name == DeviceTypeText.VR ? "SmileyGlasses" : "Xbox"
                 }).ToList();
             else
                 return GeneralDBContext.Devices.AsNoTracking().Where(w => w.IsAvailable == true && w.Case == CaseText.Free).OrderBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Select(s => new DeviceFreeDataModel
                 {
                     Device = s,
                     DeviceType = s.DeviceType,
-                    DeviceTypeIcon = s.DeviceType.Name == "PlayStation 3" ? "MonitorPlay" :
-                   s.DeviceType.Name == "PlayStation 4" ? "SocialPlaystation" :
-                   s.DeviceType.Name == "VIP ROOM" ? "Vip" :
-                   s.DeviceType.Name == "PremiuM RooM" ? "AdobePremierpro" :
-                   s.DeviceType.Name == "Royal RooM" ? "SocialSpotify" :
-                   s.DeviceType.Name == "VR ROOM" ? "SmileyGlasses" : "Xbox"
+                    DeviceTypeIcon = s.DeviceType.Name == DeviceTypeText.PlayStation3 ? "MonitorPlay" :
+                          s.DeviceType.Name == DeviceTypeText.PlayStation4 ? "SocialPlaystation" :
+                          s.DeviceType.Name == DeviceTypeText.VIP ? "Vip" :
+                          s.DeviceType.Name == DeviceTypeText.Premium ? "AdobePremierpro" :
+                          s.DeviceType.Name == DeviceTypeText.Royal ? "SocialSpotify" :
+                          s.DeviceType.Name == DeviceTypeText.VR ? "SmileyGlasses" : "Xbox"
                 }).ToList();
         }
     }

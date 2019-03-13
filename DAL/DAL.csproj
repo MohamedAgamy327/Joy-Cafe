@@ -70,6 +70,7 @@
     <Compile Include="BindableBaseService\BindableBase.cs" />
     <Compile Include="BindableBaseService\ValidatableBindableBase.cs" />
     <Compile Include="ConstString\CaseText.cs" />
+    <Compile Include="ConstString\DeviceTypeText.cs" />
     <Compile Include="ConstString\GamePlayTypeText.cs" />
     <Compile Include="ConstString\GeneralText.cs" />
     <Compile Include="ConstString\RoleText.cs" />

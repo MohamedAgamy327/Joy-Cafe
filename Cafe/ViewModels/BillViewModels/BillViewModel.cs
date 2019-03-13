@@ -1,4 +1,5 @@
 ﻿using DAL.BindableBaseService;
+using DAL.ConstString;
 using DTO.UserDataModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -34,10 +35,9 @@ namespace Cafe.ViewModels.BillViewModels
         {
             try
             {
-                if (UserData.Role == "كاشير")
+                if (UserData.Role == RoleText.Cashier)
                 {
-                    MainViewModel main = new MainViewModel();
-                    main.ExecuteShutdown();
+                    new MainViewModel().ExecuteShutdown();
                 }
             }
             catch (Exception ex)

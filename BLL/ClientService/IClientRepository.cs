@@ -10,7 +10,7 @@ namespace BLL.ClientService
     {
         int GetRecordsNumber(bool isNew, string key);
         int GetRecordsNumber(string key);
-
+        List<string> GetTelephoneSuggetions();
         List<ClientDisplayDataModel> Search(string key, int pageNumber, int pageSize);
         List<ClientPointDataModel> Search(string key, int pageNumber, int pageSize, DateTime dtFrom, DateTime dtTo);
     }

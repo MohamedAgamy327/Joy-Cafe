@@ -46,7 +46,7 @@ namespace Cafe.ViewModels
             SimpleIoc.Default.Register<ShiftItemsViewModel>();
             SimpleIoc.Default.Register<ShiftSpendingViewModel>();         
             SimpleIoc.Default.Register<BillItemsViewModel>();
-           
+            SimpleIoc.Default.Register<AccountPaidViewModel>();
         }
 
         public MainViewModel Main
@@ -273,6 +273,14 @@ namespace Cafe.ViewModels
             }
         }
 
+        public AccountPaidViewModel AccountPaid
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AccountPaidViewModel>();
+            }
+        }
+
         public static void Cleanup(string viewModel)
         {
             if (viewModel == "Main")
@@ -413,6 +421,11 @@ namespace Cafe.ViewModels
             {
                 SimpleIoc.Default.Unregister<ShiftItemsViewModel>();
                 SimpleIoc.Default.Register<ShiftItemsViewModel>();
+            }
+            else if (viewModel == "AccountPaid")
+            {
+                SimpleIoc.Default.Unregister<AccountPaidViewModel>();
+                SimpleIoc.Default.Register<AccountPaidViewModel>();
             }
         }
     }

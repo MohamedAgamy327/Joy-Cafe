@@ -86,11 +86,21 @@
     </Style>
 
     <!--TextBlock-->
+    
     <Style  x:Key="TextBlockStyle"  TargetType="TextBlock" >
         <Setter Property="FontFamily" Value="calibri"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="14"/>
     </Style>
+
+    <Style  x:Key="TextBlockWindowStyle"  TargetType="TextBlock" >
+        <Setter Property="FontFamily" Value="calibri"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+
     <Style  x:Key="TextBlockAddUpdateStyle" BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock" >
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>

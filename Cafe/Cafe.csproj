@@ -88,8 +88,8 @@
       <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.1.6.5\lib\net45\MahApps.Metro.dll</HintPath>
+    <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro.IconPacks, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.IconPacks.1.9.0\lib\net45\MahApps.Metro.IconPacks.dll</HintPath>
@@ -107,7 +107,9 @@
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -161,6 +163,7 @@
     <Compile Include="SplashScreen\SplashScreenWindow.xaml.cs">
       <DependentUpon>SplashScreenWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\BillViewModels\AccountPaidViewModel.cs" />
     <Compile Include="ViewModels\BillViewModels\BillItemsViewModel.cs" />
     <Compile Include="ViewModels\BillViewModels\BillViewModel.cs" />
     <Compile Include="ViewModels\BillViewModels\DevicesViewModel.cs" />
@@ -193,6 +196,9 @@
     <Compile Include="Views\BillViews\AccountPaidDialog.xaml.cs">
       <DependentUpon>AccountPaidDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\BillViews\AccountPaidViews\AccountPaidWindow.xaml.cs">
+      <DependentUpon>AccountPaidWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BillViews\BillItemsViews\BillItemAddDialog.xaml.cs">
       <DependentUpon>BillItemAddDialog.xaml</DependentUpon>
     </Compile>
@@ -205,16 +211,16 @@
     <Compile Include="Views\BillViews\BillWindow.xaml.cs">
       <DependentUpon>BillWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BillViews\ClientAddDialog.xaml.cs">
+    <Compile Include="Views\BillViews\BillClientViews\ClientAddDialog.xaml.cs">
       <DependentUpon>ClientAddDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BillViews\ClientCheckDialog.xaml.cs">
+    <Compile Include="Views\BillViews\BillClientViews\ClientCheckDialog.xaml.cs">
       <DependentUpon>ClientCheckDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BillViews\DevicesUserControl.xaml.cs">
       <DependentUpon>DevicesUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BillViews\FinishShiftDialog.xaml.cs">
+    <Compile Include="Views\BillViews\FinishShiftViews\FinishShiftDialog.xaml.cs">
       <DependentUpon>FinishShiftDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BillViews\ShiftItemsViews\ShiftItemsWindow.xaml.cs">
@@ -367,6 +373,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\BillViews\AccountPaidViews\AccountPaidWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BillViews\BillItemsViews\BillItemAddDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -383,11 +393,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\BillViews\ClientAddDialog.xaml">
+    <Page Include="Views\BillViews\BillClientViews\ClientAddDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\BillViews\ClientCheckDialog.xaml">
+    <Page Include="Views\BillViews\BillClientViews\ClientCheckDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -395,7 +405,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\BillViews\FinishShiftDialog.xaml">
+    <Page Include="Views\BillViews\FinishShiftViews\FinishShiftDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

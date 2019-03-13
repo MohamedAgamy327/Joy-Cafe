@@ -363,7 +363,7 @@ namespace Cafe.ViewModels.ClientViewModels
         }
         private bool CanExecuteSave()
         {
-            return !NewClient.HasErrors && !HasErrors;
+            return !NewClient.HasErrors;
         }
 
         // Update Account

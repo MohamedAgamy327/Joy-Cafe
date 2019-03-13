@@ -21,7 +21,7 @@
         </StackPanel.Resources>
 
         <TextBlock Style="{StaticResource TextBlockStyle}" Margin="0,5">النوع</TextBlock>
-        <TextBox  Text="{Binding DeviceTypeUpdate.Name, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource TextBoxStyle}"></TextBox>
+        <TextBox IsEnabled="False" Text="{Binding DeviceTypeUpdate.Name, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource TextBoxStyle}"></TextBox>
         <TextBlock Style="{StaticResource TextBlockStyle}" Margin="0,5">سعر الساعة الفردى</TextBlock>
         <Controls:NumericUpDown  Value="{Binding DeviceTypeUpdate.SingleHourPrice, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle}" Minimum="0.01">
         </Controls:NumericUpDown>
