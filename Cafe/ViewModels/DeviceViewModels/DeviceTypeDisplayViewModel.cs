@@ -17,15 +17,15 @@ namespace Cafe.ViewModels.DeviceViewModels
 {
     public class DeviceTypeDisplayViewModel : ValidatableBindableBase
     {
-        MetroWindow _currentWindow;
-        private readonly DeviceTypeAddDialog _deviceTypeAddDialog;
-        private readonly DeviceTypeUpdateDialog _deviceTypeUpdateDialog;
+        MetroWindow currentWindow;
+        private readonly DeviceTypeAddDialog deviceTypeAddDialog;
+        private readonly DeviceTypeUpdateDialog deviceTypeUpdateDialog;
 
-        private void Load(bool isNew)
+        private void Load()
         {
             using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
             {
-                Paging.TotalRecords = unitOfWork.DevicesTypes.GetRecordsNumber(isNew, _key);
+                Paging.TotalRecords = unitOfWork.DevicesTypes.GetRecordsNumber(_key);
                 Paging.GetFirst();
                 DevicesTypes = new ObservableCollection<DeviceTypeDisplayDataModel>(unitOfWork.DevicesTypes.Search(_key, Paging.CurrentPage, PagingWPF.PageSize));
             }
@@ -36,9 +36,9 @@ namespace Cafe.ViewModels.DeviceViewModels
             _key = "";
             _isFocused = true;
             _paging = new PagingWPF();
-            _deviceTypeAddDialog = new DeviceTypeAddDialog();
-            _deviceTypeUpdateDialog = new DeviceTypeUpdateDialog();       
-            _currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
+            deviceTypeAddDialog = new DeviceTypeAddDialog();
+            deviceTypeUpdateDialog = new DeviceTypeUpdateDialog();
+            currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
         private bool _isFocused;
@@ -108,7 +108,7 @@ namespace Cafe.ViewModels.DeviceViewModels
         {
             try
             {
-                Load(true);
+                Load();
             }
             catch (Exception ex)
             {
@@ -129,7 +129,7 @@ namespace Cafe.ViewModels.DeviceViewModels
         {
             try
             {
-                Load(false);
+                Load();
             }
             catch (Exception ex)
             {
@@ -205,7 +205,7 @@ namespace Cafe.ViewModels.DeviceViewModels
                     unitOfWork.DevicesTypes.Remove(_selectedDeviceType.DeviceType);
                     unitOfWork.Complete();
                 }
-                Load(true);
+                Load();
             }
             catch (Exception ex)
             {
@@ -229,8 +229,8 @@ namespace Cafe.ViewModels.DeviceViewModels
             try
             {
                 NewDeviceType = new DeviceTypeAddDataModel();
-                _deviceTypeAddDialog.DataContext = this;
-                await _currentWindow.ShowMetroDialogAsync(_deviceTypeAddDialog);
+                deviceTypeAddDialog.DataContext = this;
+                await currentWindow.ShowMetroDialogAsync(deviceTypeAddDialog);
             }
             catch (Exception ex)
             {
@@ -260,7 +260,7 @@ namespace Cafe.ViewModels.DeviceViewModels
 
                     if (deviceType != null)
                     {
-                        await _currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالنوع موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        await currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالنوع موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
                             AffirmativeButtonText = "موافق",
                             DialogMessageFontSize = 25,
@@ -287,7 +287,7 @@ namespace Cafe.ViewModels.DeviceViewModels
                         });
                         unitOfWork.Complete();
                         NewDeviceType = new DeviceTypeAddDataModel();
-                        Load(true);
+                        Load();
                     }
                 }
             }
@@ -319,7 +319,7 @@ namespace Cafe.ViewModels.DeviceViewModels
         {
             try
             {
-                _deviceTypeUpdateDialog.DataContext = this;
+                deviceTypeUpdateDialog.DataContext = this;
                 DeviceTypeUpdate = new DeviceTypeUpdateDataModel
                 {
                     ID = _selectedDeviceType.DeviceType.ID,
@@ -332,7 +332,7 @@ namespace Cafe.ViewModels.DeviceViewModels
                     SingleHourPrice = _selectedDeviceType.DeviceType.SingleHourPrice,
                     SingleMinutePrice = _selectedDeviceType.DeviceType.SingleMinutePrice
                 };
-                await _currentWindow.ShowMetroDialogAsync(_deviceTypeUpdateDialog);
+                await currentWindow.ShowMetroDialogAsync(deviceTypeUpdateDialog);
             }
             catch (Exception ex)
             {
@@ -367,7 +367,7 @@ namespace Cafe.ViewModels.DeviceViewModels
 
                     if (deviceType != null)
                     {
-                        await _currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالنوع موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        await currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالنوع موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
                             AffirmativeButtonText = "موافق",
                             DialogMessageFontSize = 25,
@@ -387,8 +387,8 @@ namespace Cafe.ViewModels.DeviceViewModels
                         SelectedDeviceType.DeviceType.SingleMinutePrice = _deviceTypeUpdate.SingleMinutePrice;
                         unitOfWork.DevicesTypes.Edit(SelectedDeviceType.DeviceType);
                         unitOfWork.Complete();
-                        await _currentWindow.HideMetroDialogAsync(_deviceTypeUpdateDialog);
-                        Load(true);
+                        await currentWindow.HideMetroDialogAsync(deviceTypeUpdateDialog);
+                        Load();
                     }
                 }
             }
@@ -425,10 +425,10 @@ namespace Cafe.ViewModels.DeviceViewModels
                 switch (parameter)
                 {
                     case "Add":
-                        await _currentWindow.HideMetroDialogAsync(_deviceTypeAddDialog);
+                        await currentWindow.HideMetroDialogAsync(deviceTypeAddDialog);
                         break;
                     case "Update":
-                        await _currentWindow.HideMetroDialogAsync(_deviceTypeUpdateDialog);
+                        await currentWindow.HideMetroDialogAsync(deviceTypeUpdateDialog);
                         break;
                     default:
                         break;

@@ -193,9 +193,6 @@
     <Compile Include="ViewModels\UserViewModels\UserDisplayViewModel.cs" />
     <Compile Include="ViewModels\UserViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
-    <Compile Include="Views\BillViews\AccountPaidDialog.xaml.cs">
-      <DependentUpon>AccountPaidDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\BillViews\AccountPaidViews\AccountPaidWindow.xaml.cs">
       <DependentUpon>AccountPaidWindow.xaml</DependentUpon>
     </Compile>
@@ -366,10 +363,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SplashScreen\SplashScreenWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BillViews\AccountPaidDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

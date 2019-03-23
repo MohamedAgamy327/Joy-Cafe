@@ -9,8 +9,6 @@ namespace BLL.ClientMembershipMinuteService
 {
     public class ClientMembershipMinuteRepository : GenericRepository<ClientMembershipMinute>, IClientMembershipMinuteRepository
     {
-        static List<ClientMembershipMinute> clientMembershipMinutes { get; set; }
-
         public ClientMembershipMinuteRepository(GeneralDBContext context)
             : base(context)
         {
@@ -21,16 +19,14 @@ namespace BLL.ClientMembershipMinuteService
             get { return Context as GeneralDBContext; }
         }
 
-        public int GetRecordsNumber(bool isNew, string key)
+        public int GetRecordsNumber(string key)
         {
-            if (isNew)
-                clientMembershipMinutes = GetAll().ToList();
-            return clientMembershipMinutes.Where(w => (w.Client.Name + w.DeviceType.Name).Contains(key)).OrderBy(o => o.Client.Name).Count();
+            return GeneralDBContext.ClientMembershipMinutes.Where(w => (w.Client.Name + w.DeviceType.Name).Contains(key)).OrderBy(o => o.Client.Name).Count();
         }
 
         public List<ClientMembershipMinutesDisplayDataModel> Search(string key, int pageNumber, int pageSize)
         {
-            return clientMembershipMinutes.Where(w => (w.Client.Name + w.DeviceType.Name).Contains(key)).OrderBy(o => o.Client.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize)
+            return GeneralDBContext.ClientMembershipMinutes.Where(w => (w.Client.Name + w.DeviceType.Name).Contains(key)).OrderBy(o => o.Client.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize)
                 .Select(s => new ClientMembershipMinutesDisplayDataModel
                 {
                     Client = s.Client,

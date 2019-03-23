@@ -11,11 +11,8 @@ using DTO.UserDataModel;
 using GalaSoft.MvvmLight.Command;
 using MahApps.Metro.Controls;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -23,12 +20,12 @@ namespace Cafe.ViewModels.BillViewModels
 {
     public class AccountPaidViewModel : ValidatableBindableBase
     {
-        MetroWindow _currentWindow;
+        MetroWindow currentWindow;
 
         public AccountPaidViewModel()
         {
             _billPaid = new BillPaidDataModel();
-            _currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
+            currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
         private string _isMembership;
@@ -141,6 +138,7 @@ namespace Cafe.ViewModels.BillViewModels
                         SelectedBill.DevicesSum = BillDevices.Sum(s => Convert.ToDecimal(s.Total));
 
                     SelectedBill.Total = _selectedBill.DevicesSum + _selectedBill.ItemsSum;
+                    SelectedBill.TotalAfterDiscount = SelectedBill.Total;
                 }
             }
             catch (Exception ex)
@@ -238,7 +236,8 @@ namespace Cafe.ViewModels.BillViewModels
                             CanDelete = false,
                             Statement = "فاتورة للجهاز  " + device.Name,
                             UserID = UserData.ID,
-                            RegistrationDate = BillData.EndDate
+                            RegistrationDate = BillData.EndDate,
+                            Type=true
                         };
                         unitOfWork.Safes.Add(safe);
                         _selectedBill.Minimum = BillPaid.Minimum;
@@ -271,7 +270,8 @@ namespace Cafe.ViewModels.BillViewModels
                                 CanDelete = false,
                                 Statement = "فاتورة للجهاز  " + device.Name,
                                 UserID = UserData.ID,
-                                RegistrationDate = BillData.EndDate
+                                RegistrationDate = BillData.EndDate,
+                                Type = true
                             };
                             unitOfWork.Safes.Add(safe);
                         }
@@ -279,7 +279,7 @@ namespace Cafe.ViewModels.BillViewModels
 
                     }
                     unitOfWork.Complete();
-                    _currentWindow.Close();
+                    currentWindow.Close();
                 }
             }
             catch (Exception ex)
@@ -308,7 +308,11 @@ namespace Cafe.ViewModels.BillViewModels
         {
             try
             {
+                if (BillPaid.Minimum == null && (SelectedBill.TotalAfterDiscount == null || BillPaid.Discount > SelectedBill.Total))
+                    return;
+
                 SaveMethod();
+
                 // Account Print
 
                 Mouse.OverrideCursor = Cursors.Wait;
@@ -352,6 +356,7 @@ namespace Cafe.ViewModels.BillViewModels
                         rpt.crv.ViewerCore.ReportSource = billReport;
                         Mouse.OverrideCursor = null;
                         rpt.ShowDialog();
+                        //billReport.PrintToPrinter(1, false, 0, 15);
                     }
                     else
                     {
@@ -362,13 +367,19 @@ namespace Cafe.ViewModels.BillViewModels
                         rpt.crv.ViewerCore.ReportSource = billItemsReport;
                         Mouse.OverrideCursor = null;
                         rpt.ShowDialog();
+
+                      //  billItemsReport.PrintToPrinter(1, false, 0, 15);
                     }
                 }
-                Mouse.OverrideCursor = null;
+          
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
             }
         }
 

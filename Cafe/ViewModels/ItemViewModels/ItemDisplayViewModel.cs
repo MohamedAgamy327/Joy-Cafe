@@ -16,15 +16,15 @@ namespace Cafe.ViewModels.ItemViewModels
 {
     public class ItemDisplayViewModel : ValidatableBindableBase
     {
-        MetroWindow _currentWindow;
-        private readonly ItemAddDialog _itemAddDialog;
-        private readonly ItemUpdateDialog _itemUpdateDialog;
+        MetroWindow currentWindow;
+        private readonly ItemAddDialog itemAddDialog;
+        private readonly ItemUpdateDialog itemUpdateDialog;
 
-        private void Load(bool isNew)
+        private void Load()
         {
             using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
             {
-                Paging.TotalRecords = unitOfWork.Items.GetRecordsNumber(isNew, _key);
+                Paging.TotalRecords = unitOfWork.Items.GetRecordsNumber( _key);
                 Paging.GetFirst();
                 Items = new ObservableCollection<ItemDisplayDataModel>(unitOfWork.Items.Search(_key, Paging.CurrentPage, PagingWPF.PageSize));
             }
@@ -35,9 +35,9 @@ namespace Cafe.ViewModels.ItemViewModels
             _key = "";
             _isFocused = true;
             _paging = new PagingWPF();
-            _itemAddDialog = new ItemAddDialog();
-            _itemUpdateDialog = new ItemUpdateDialog();
-            _currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
+            itemAddDialog = new ItemAddDialog();
+            itemUpdateDialog = new ItemUpdateDialog();
+            currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
         private bool _isFocused;
@@ -114,7 +114,7 @@ namespace Cafe.ViewModels.ItemViewModels
         {
             try
             {
-                Load(true);
+                Load();
             }
             catch (Exception ex)
             {
@@ -135,7 +135,7 @@ namespace Cafe.ViewModels.ItemViewModels
         {
             try
             {
-                Load(false);
+                Load();
             }
             catch (Exception ex)
             {
@@ -210,7 +210,7 @@ namespace Cafe.ViewModels.ItemViewModels
                 {
                     unitOfWork.Items.Remove(_selectedItem.Item);
                     unitOfWork.Complete();
-                    Load(true);
+                    Load();
                 }
             }
             catch (Exception ex)
@@ -235,8 +235,8 @@ namespace Cafe.ViewModels.ItemViewModels
             try
             {
                 NewItem = new ItemAddDataModel();
-                _itemAddDialog.DataContext = this;
-                await _currentWindow.ShowMetroDialogAsync(_itemAddDialog);
+                itemAddDialog.DataContext = this;
+                await currentWindow.ShowMetroDialogAsync(itemAddDialog);
             }
             catch (Exception ex)
             {
@@ -266,7 +266,7 @@ namespace Cafe.ViewModels.ItemViewModels
 
                     if (item != null)
                     {
-                        await _currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالصنف موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        await currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالصنف موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
                             AffirmativeButtonText = "موافق",
                             DialogMessageFontSize = 25,
@@ -283,7 +283,7 @@ namespace Cafe.ViewModels.ItemViewModels
                         });
                         unitOfWork.Complete();
                         NewItem = new ItemAddDataModel();
-                        Load(true);
+                        Load();
                     }
                 }
             }
@@ -315,14 +315,14 @@ namespace Cafe.ViewModels.ItemViewModels
         {
             try
             {
-                _itemUpdateDialog.DataContext = this;
+                itemUpdateDialog.DataContext = this;
                 ItemUpdate = new ItemUpdateDataModel();
                 ItemUpdate.Name = _selectedItem.Item.Name;
                 ItemUpdate.IsAvailable = _selectedItem.Item.IsAvailable;
                 ItemUpdate.Price = _selectedItem.Item.Price;
                 ItemUpdate.ID = _selectedItem.Item.ID;
 
-                await _currentWindow.ShowMetroDialogAsync(_itemUpdateDialog);
+                await currentWindow.ShowMetroDialogAsync(itemUpdateDialog);
             }
             catch (Exception ex)
             {
@@ -352,7 +352,7 @@ namespace Cafe.ViewModels.ItemViewModels
                     var item = unitOfWork.Items.SingleOrDefault(s => s.Name == ItemUpdate.Name && s.ID != ItemUpdate.ID);
                     if (item != null)
                     {
-                        await _currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالصنف موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        await currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالصنف موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
                             AffirmativeButtonText = "موافق",
                             DialogMessageFontSize = 25,
@@ -366,8 +366,8 @@ namespace Cafe.ViewModels.ItemViewModels
                         SelectedItem.Item.IsAvailable = ItemUpdate.IsAvailable;
                         unitOfWork.Items.Edit(_selectedItem.Item);
                         unitOfWork.Complete();
-                        await _currentWindow.HideMetroDialogAsync(_itemUpdateDialog);
-                        Load(true);
+                        await currentWindow.HideMetroDialogAsync(itemUpdateDialog);
+                        Load();
                     }
                 }
             }
@@ -404,10 +404,10 @@ namespace Cafe.ViewModels.ItemViewModels
                 switch (parameter)
                 {
                     case "Add":
-                        await _currentWindow.HideMetroDialogAsync(_itemAddDialog);
+                        await currentWindow.HideMetroDialogAsync(itemAddDialog);
                         break;
                     case "Update":
-                        await _currentWindow.HideMetroDialogAsync(_itemUpdateDialog);
+                        await currentWindow.HideMetroDialogAsync(itemUpdateDialog);
                         break;
                     default:
                         break;

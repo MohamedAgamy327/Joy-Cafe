@@ -7,7 +7,7 @@ namespace BLL.MembershipService
 {
     public interface IMembershipRepository : IGenericRepository<Membership>
     {
-        int GetRecordsNumber(bool isNew, string key);
+        int GetRecordsNumber(string key);
 
         List<MembershipDisplayDataModel> Search(string key, int pageNumber, int pageSize);
     }

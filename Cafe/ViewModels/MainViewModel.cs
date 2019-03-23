@@ -32,22 +32,22 @@ namespace Cafe.ViewModels
 {
     public class MainViewModel : ValidatableBindableBase
     {
-        MetroWindow _currentWindow;
+        MetroWindow currentWindow;
 
-        private readonly BackupDialog _backupDialog;
-        private readonly RestoreBackupDialog _restoreBackupDialog;
-        private readonly Views.MainViews.LoginDialog _loginDialog;
-        private readonly StartShiftDialog _startShiftDialog;
+        private readonly BackupDialog backupDialog;
+        private readonly RestoreBackupDialog restoreBackupDialog;
+        private readonly Views.MainViews.LoginDialog loginDialog;
+        private readonly StartShiftDialog startShiftDialog;
 
         public MainViewModel()
         {
             _isFocused = true;
             _loginModel = new LoginDataModel();
-            _currentWindow = System.Windows.Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
-            _backupDialog = new BackupDialog();
-            _restoreBackupDialog = new RestoreBackupDialog();
-            _loginDialog = new Views.MainViews.LoginDialog();
-            _startShiftDialog = new StartShiftDialog();
+            currentWindow = System.Windows.Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
+            backupDialog = new BackupDialog();
+            restoreBackupDialog = new RestoreBackupDialog();
+            loginDialog = new Views.MainViews.LoginDialog();
+            startShiftDialog = new StartShiftDialog();
         }
 
         private bool _isFocused;
@@ -104,56 +104,56 @@ namespace Cafe.ViewModels
                 {
                     case "Backup":
                         BackupModel = new BackupDataModel();
-                        _backupDialog.DataContext = this;
-                        await _currentWindow.ShowMetroDialogAsync(_backupDialog);
+                        backupDialog.DataContext = this;
+                        await currentWindow.ShowMetroDialogAsync(backupDialog);
                         break;
 
                     case "BackupRestore":
                         RestoreBackupModel = new RestoreBackupDataModel();
-                        _restoreBackupDialog.DataContext = this;
-                        await _currentWindow.ShowMetroDialogAsync(_restoreBackupDialog);
+                        restoreBackupDialog.DataContext = this;
+                        await currentWindow.ShowMetroDialogAsync(restoreBackupDialog);
                         break;
 
                     case "User":
-                        _currentWindow.Hide();
+                        currentWindow.Hide();
                         new UserWindow().ShowDialog();
-                        _currentWindow.Show();
+                        currentWindow.Show();
                         break;
 
                     case "Shifts":
-                        _currentWindow.Hide();
+                        currentWindow.Hide();
                         new ShiftWindow().ShowDialog();
-                        _currentWindow.Show();
+                        currentWindow.Show();
                         break;
 
                     case "SignOut":
                         LoginModel = new LoginDataModel();
-                        _loginDialog.DataContext = this;
-                        await _currentWindow.ShowMetroDialogAsync(_loginDialog);
+                        loginDialog.DataContext = this;
+                        await currentWindow.ShowMetroDialogAsync(loginDialog);
                         break;
 
                     case "Device":
-                        _currentWindow.Hide();
+                        currentWindow.Hide();
                         new DeviceWindow().ShowDialog();
-                        _currentWindow.Show();
+                        currentWindow.Show();
                         break;
 
                     case "Item":
-                        _currentWindow.Hide();
+                        currentWindow.Hide();
                         new ItemWindow().ShowDialog();
-                        _currentWindow.Show();
+                        currentWindow.Show();
                         break;
 
                     case "Client":
-                        _currentWindow.Hide();
+                        currentWindow.Hide();
                         new ClientWindow().ShowDialog();
-                        _currentWindow.Show();
+                        currentWindow.Show();
                         break;
 
                     case "Membership":
-                        _currentWindow.Hide();
+                        currentWindow.Hide();
                         new MembershipWindow().ShowDialog();
-                        _currentWindow.Show();
+                        currentWindow.Show();
                         break;
 
                     case "Bill":
@@ -161,7 +161,7 @@ namespace Cafe.ViewModels
                         {
                             if (unitOfWork.DevicesTypes.FirstOrDefault(f => f.SingleHourPrice == 0) != null)
                             {
-                                await _currentWindow.ShowMessageAsync("تنبيه", "يجب وضع اسعار الانواع اولاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                                await currentWindow.ShowMessageAsync("تنبيه", "يجب وضع اسعار الانواع اولاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                                 {
                                     AffirmativeButtonText = "موافق",
                                     DialogMessageFontSize = 25,
@@ -172,21 +172,21 @@ namespace Cafe.ViewModels
                                 return;
                             }
                         }
-                        _currentWindow.Hide();
+                        currentWindow.Hide();
                         new BillWindow().ShowDialog();
-                        _currentWindow.Show();
+                        currentWindow.Show();
                         break;
 
                     case "Spending":
-                        _currentWindow.Hide();
+                        currentWindow.Hide();
                         new SpendingWindow().ShowDialog();
-                        _currentWindow.Show();
+                        currentWindow.Show();
                         break;
 
                     case "Safe":
-                        _currentWindow.Hide();
+                        currentWindow.Hide();
                         new SafeWindow().ShowDialog();
-                        _currentWindow.Show();
+                        currentWindow.Show();
                         break;
 
                     default:
@@ -214,8 +214,8 @@ namespace Cafe.ViewModels
         {
             try
             {
-                _loginDialog.DataContext = this;
-                await _currentWindow.ShowMetroDialogAsync(_loginDialog);
+                loginDialog.DataContext = this;
+                await currentWindow.ShowMetroDialogAsync(loginDialog);
             }
             catch (Exception ex)
             {
@@ -240,6 +240,7 @@ namespace Cafe.ViewModels
             {
                 if (LoginModel.Name == null || LoginModel.Password == null)
                     return;
+                Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
 
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
@@ -253,47 +254,49 @@ namespace Cafe.ViewModels
 
                         if (UserData.Role == RoleText.Admin)
                         {
-                            await _currentWindow.HideMetroDialogAsync(_loginDialog);
+                            await currentWindow.HideMetroDialogAsync(loginDialog);
                         }
 
                         else
                         {
                             if (unitOfWork.Shifts.SingleOrDefault(s => s.UserID == user.ID && s.EndDate == null) != null)
                             {
-                                await _currentWindow.HideMetroDialogAsync(_loginDialog);
+                                await currentWindow.HideMetroDialogAsync(loginDialog);
                                 NavigateToViewMethodAsync("Bill");
                             }
                             else if (unitOfWork.Shifts.SingleOrDefault(s => s.UserID != user.ID && s.EndDate == null) != null)
                             {
-                                await _currentWindow.HideMetroDialogAsync(_loginDialog);
-                                await _currentWindow.ShowMessageAsync("فشل الدخول", "يجب انهاء الشفت اولاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                                await currentWindow.HideMetroDialogAsync(loginDialog);
+                                await currentWindow.ShowMessageAsync("فشل الدخول", "يجب انهاء الشفت اولاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                                 {
                                     AffirmativeButtonText = "موافق",
                                     DialogMessageFontSize = 25,
                                     DialogTitleFontSize = 30
                                 });
-                                await _currentWindow.ShowMetroDialogAsync(_loginDialog);
+                                await currentWindow.ShowMetroDialogAsync(loginDialog);
                             }
                             else
                             {
-                                await _currentWindow.HideMetroDialogAsync(_loginDialog);
+                                Mouse.OverrideCursor = null;
+                                await currentWindow.HideMetroDialogAsync(loginDialog);
                                 NewShiftModel = new StartShiftDataModel();
-                                _startShiftDialog.DataContext = this;
-                                await _currentWindow.ShowMetroDialogAsync(_startShiftDialog);
+                                startShiftDialog.DataContext = this;
+                                await currentWindow.ShowMetroDialogAsync(startShiftDialog);
                             }
                         }
                     }
 
                     else
                     {
-                        await _currentWindow.HideMetroDialogAsync(_loginDialog);
-                        await _currentWindow.ShowMessageAsync("فشل الدخول", "يوجد خطأ فى الاسم أو الرقم السرى يرجى التأكد من البيانات", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        Mouse.OverrideCursor = null;
+                        await currentWindow.HideMetroDialogAsync(loginDialog);
+                        await currentWindow.ShowMessageAsync("فشل الدخول", "يوجد خطأ فى الاسم أو الرقم السرى يرجى التأكد من البيانات", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
                             AffirmativeButtonText = "موافق",
                             DialogMessageFontSize = 25,
                             DialogTitleFontSize = 30
                         });
-                        await _currentWindow.ShowMetroDialogAsync(_loginDialog);
+                        await currentWindow.ShowMetroDialogAsync(loginDialog);
                     }
                 }
 
@@ -302,6 +305,10 @@ namespace Cafe.ViewModels
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
             }
         }
         private bool CanExecuteSignIn()
@@ -338,7 +345,7 @@ namespace Cafe.ViewModels
                     });
                     unitOfWork.Complete();
                 }
-                await _currentWindow.HideMetroDialogAsync(_startShiftDialog);
+                await currentWindow.HideMetroDialogAsync(startShiftDialog);
                 NavigateToViewMethodAsync("Bill");
             }
             catch (Exception ex)
@@ -408,14 +415,14 @@ namespace Cafe.ViewModels
                     catch
                     {
                         Mouse.OverrideCursor = null;
-                        await _currentWindow.HideMetroDialogAsync(_backupDialog);
-                        await _currentWindow.ShowMessageAsync("فشل الحفظ", "يجب إختيار مكان آخر لحفظ النسخة الإحتياطية", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        await currentWindow.HideMetroDialogAsync(backupDialog);
+                        await currentWindow.ShowMessageAsync("فشل الحفظ", "يجب إختيار مكان آخر لحفظ النسخة الإحتياطية", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
                             AffirmativeButtonText = "موافق",
                             DialogMessageFontSize = 25,
                             DialogTitleFontSize = 30
                         });
-                        await _currentWindow.ShowMetroDialogAsync(_backupDialog);
+                        await currentWindow.ShowMetroDialogAsync(backupDialog);
                         return;
                     }
                 }
@@ -517,24 +524,24 @@ namespace Cafe.ViewModels
                 switch (parameter)
                 {
                     case "Backup":
-                        await _currentWindow.HideMetroDialogAsync(_backupDialog);
+                        await currentWindow.HideMetroDialogAsync(backupDialog);
                         break;
                     case "Restore":
-                        await _currentWindow.HideMetroDialogAsync(_restoreBackupDialog);
+                        await currentWindow.HideMetroDialogAsync(restoreBackupDialog);
                         break;
                     case "startShift":
-                        await _currentWindow.HideMetroDialogAsync(_startShiftDialog);
-                        _currentWindow.Close();
+                        await currentWindow.HideMetroDialogAsync(startShiftDialog);
+                        currentWindow.Close();
                         break;
                     case "back":
-                        await _currentWindow.HideMetroDialogAsync(_startShiftDialog);
+                        await currentWindow.HideMetroDialogAsync(startShiftDialog);
                         LoginModel = new LoginDataModel();
-                        _loginDialog.DataContext = this;
-                        await _currentWindow.ShowMetroDialogAsync(_loginDialog);
+                        loginDialog.DataContext = this;
+                        await currentWindow.ShowMetroDialogAsync(loginDialog);
                         break;
                     case "Login":
-                        await _currentWindow.HideMetroDialogAsync(_loginDialog);
-                        _currentWindow.Close();
+                        await currentWindow.HideMetroDialogAsync(loginDialog);
+                        currentWindow.Close();
                         break;
                     default:
                         break;
@@ -560,14 +567,14 @@ namespace Cafe.ViewModels
         {
             try
             {
-                string _path = "";
-                bool _exists;
+                string path = "";
+                bool exists;
                 try
                 {
-                    _path = @"D:\JoyDB";
-                    _exists = Directory.Exists(_path);
-                    if (!_exists)
-                        Directory.CreateDirectory(_path);
+                    path = @"D:\JoyDB";
+                    exists = Directory.Exists(path);
+                    if (!exists)
+                        Directory.CreateDirectory(path);
                 }
                 catch
                 {
@@ -575,20 +582,20 @@ namespace Cafe.ViewModels
                 }
                 try
                 {
-                    _path = @"E:\JoyDB";
-                    _exists = Directory.Exists(_path);
-                    if (!_exists)
-                        Directory.CreateDirectory(_path);
+                    path = @"E:\JoyDB";
+                    exists = Directory.Exists(path);
+                    if (!exists)
+                        Directory.CreateDirectory(path);
                 }
                 catch
                 {
-                    _path = @"D:\JoyDB";
+                    path = @"D:\JoyDB";
                 }
                 using (GeneralDBContext db = new GeneralDBContext())
                 {
                     try
                     {
-                        string fileName = _path + "\\JoyDB " + DateTime.Now.ToShortDateString().Replace('/', '-')
+                        string fileName = path + "\\JoyDB " + DateTime.Now.ToShortDateString().Replace('/', '-')
                                                 + " - " + DateTime.Now.ToLongTimeString().Replace(':', '-');
                         string dbname = db.Database.Connection.Database;
                         string sqlCommand = @"BACKUP DATABASE [{0}] TO  DISK = N'" + fileName + ".bak' WITH NOFORMAT, NOINIT,NAME = N'MyAir-Full Database Backup', SKIP, NOREWIND, NOUNLOAD,  STATS = 10";

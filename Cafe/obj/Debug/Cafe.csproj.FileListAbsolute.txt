@@ -402,11 +402,8 @@ D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\CrystalDecisions.ReportAppServer.Com
 D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\stdole.dll
 D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\ShockwaveFlashObjects.dll
 D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\BLL.pdb
-D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\BLL.dll.config
 D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\DAL.pdb
-D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\DAL.dll.config
 D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\Utilities.pdb
-D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\Utilities.dll.config
 D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\ControlzEx.pdb
 D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\DTO.pdb
 D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\EntityFramework.xml
@@ -422,7 +419,6 @@ D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\MahApps.Metro.xml
 D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\MahApps.Metro.IconPacks.pdb
 D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\MahApps.Metro.IconPacks.xml
 D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\WPFTextBoxAutoComplete.pdb
-D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Cafe.csprojAssemblyReference.cache
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.ResolveComReference.cache
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Reports\ReportWindow.baml
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Views\BillViews\DevicesUserControl.baml
@@ -450,7 +446,6 @@ D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Views\ItemViews\ItemDisplayUserContr
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Views\UserViews\UserDisplayUserControl.baml
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Reports\ReportWindow.g.cs
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\SplashScreen\SplashScreenWindow.g.cs
-D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Views\BillViews\AccountPaidDialog.g.cs
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Views\BillViews\BillWindow.g.cs
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Views\BillViews\DevicesUserControl.g.cs
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Views\ClientViews\ClientAddDialog.g.cs
@@ -502,7 +497,6 @@ D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Cafe_MarkupCompile.cache
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Cafe_MarkupCompile.lref
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\App.baml
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\SplashScreen\SplashScreenWindow.baml
-D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Views\BillViews\AccountPaidDialog.baml
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Views\BillViews\BillWindow.baml
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Views\ClientViews\ClientAddDialog.baml
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Views\MembershipViews\ClientMembershipAddDialog.baml
@@ -529,8 +523,6 @@ D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Views\UserViews\UserWindow.baml
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Cafe.g.resources
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Cafe.Properties.Resources.resources
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.GenerateResource.cache
-D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.CoreCompileInputs.cache
-D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.CopyComplete
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Cafe.exe
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Cafe.pdb
 D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\Microsoft.Expression.Interactions.dll
@@ -566,3 +558,9 @@ D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Views\BillViews\BillClientViews\Clie
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Views\BillViews\FinishShiftViews\FinishShiftDialog.g.cs
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Views\BillViews\BillClientViews\ClientCheckDialog.baml
 D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Views\BillViews\FinishShiftViews\FinishShiftDialog.baml
+D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\BLL.dll.config
+D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\DAL.dll.config
+D:\Work\Project\Now\Joy-Cafe\Cafe\bin\Debug\Utilities.dll.config
+D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Cafe.csprojAssemblyReference.cache
+D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.CoreCompileInputs.cache
+D:\Work\Project\Now\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.CopyComplete

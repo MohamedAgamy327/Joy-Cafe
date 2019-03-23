@@ -19,8 +19,8 @@ namespace Cafe.ViewModels.SpendingViewModels
 {
     public class SpendingDisplayViewModel : ValidatableBindableBase
     {
-        private MetroWindow _currentWindow;
-        private readonly SpendingAddDialog _spendingAddDialog;
+        private MetroWindow currentWindow;
+        private readonly SpendingAddDialog spendingAddDialog;
 
         private void Load()
         {
@@ -37,8 +37,8 @@ namespace Cafe.ViewModels.SpendingViewModels
             _key = "";
             _isFocused = true;
             _paging = new PagingWPF();
-            _spendingAddDialog = new SpendingAddDialog();
-            _currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
+            spendingAddDialog = new SpendingAddDialog();
+            currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
         private bool _isFocused;
@@ -235,8 +235,8 @@ namespace Cafe.ViewModels.SpendingViewModels
             try
             {
                 NewSpending = new SpendingAddDataModel();
-                _spendingAddDialog.DataContext = this;
-                await _currentWindow.ShowMetroDialogAsync(_spendingAddDialog);
+                spendingAddDialog.DataContext = this;
+                await currentWindow.ShowMetroDialogAsync(spendingAddDialog);
             }
             catch (Exception ex)
             {
@@ -311,7 +311,7 @@ namespace Cafe.ViewModels.SpendingViewModels
                 switch (parameter)
                 {
                     case "Add":
-                        await _currentWindow.HideMetroDialogAsync(_spendingAddDialog);
+                        await currentWindow.HideMetroDialogAsync(spendingAddDialog);
                         break;
                     default:
                         break;

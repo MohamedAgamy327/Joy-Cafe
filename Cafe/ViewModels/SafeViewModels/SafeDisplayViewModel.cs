@@ -19,8 +19,8 @@ namespace Cafe.ViewModels.SafeViewModels
 {
     public class SafeDisplayViewModel : ValidatableBindableBase
     {
-        MetroWindow _currentWindow;
-        private readonly SafeAddDialog _safeAddDialog;
+        MetroWindow currentWindow;
+        private readonly SafeAddDialog safeAddDialog;
 
         private void Load()
         {
@@ -37,8 +37,8 @@ namespace Cafe.ViewModels.SafeViewModels
             _key = "";
             _isFocused = true;
             _paging = new PagingWPF();
-            _safeAddDialog = new SafeAddDialog();
-            _currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();         
+            safeAddDialog = new SafeAddDialog();
+            currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();         
         }
 
         private bool _isFocused;
@@ -233,8 +233,8 @@ namespace Cafe.ViewModels.SafeViewModels
             try
             {
                 NewSafe = new SafeAddDataModel();
-                _safeAddDialog.DataContext = this;
-                await _currentWindow.ShowMetroDialogAsync(_safeAddDialog);
+                safeAddDialog.DataContext = this;
+                await currentWindow.ShowMetroDialogAsync(safeAddDialog);
             }
             catch (Exception ex)
             {
@@ -303,7 +303,7 @@ namespace Cafe.ViewModels.SafeViewModels
                 switch (parameter)
                 {
                     case "Add":
-                        await _currentWindow.HideMetroDialogAsync(_safeAddDialog);
+                        await currentWindow.HideMetroDialogAsync(safeAddDialog);
                         break;
                     default:
                         break;

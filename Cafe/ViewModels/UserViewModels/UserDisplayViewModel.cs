@@ -18,15 +18,15 @@ namespace Cafe.ViewModels.UserViewModels
 {
     public class UserDisplayViewModel : ValidatableBindableBase
     {
-        MetroWindow _currentWindow;
-        private readonly UserAddDialog _userAddDialog;
-        private readonly UserUpdateDialog _userUpdateDialog;
+        MetroWindow currentWindow;
+        private readonly UserAddDialog userAddDialog;
+        private readonly UserUpdateDialog userUpdateDialog;
 
-        private void Load(bool isNew)
+        private void Load()
         {
             using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
             {
-                Paging.TotalRecords = unitOfWork.Users.GetRecordsNumber(isNew, _key);
+                Paging.TotalRecords = unitOfWork.Users.GetRecordsNumber(_key);
                 Paging.GetFirst();
                 Users = new ObservableCollection<UserDisplayDataModel>(unitOfWork.Users.Search(_key, Paging.CurrentPage, PagingWPF.PageSize));
             }
@@ -37,9 +37,9 @@ namespace Cafe.ViewModels.UserViewModels
             _key = "";
             _isFocused = true;
             _paging = new PagingWPF();
-            _userAddDialog = new UserAddDialog();
-            _userUpdateDialog = new UserUpdateDialog();
-            _currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
+            userAddDialog = new UserAddDialog();
+            userUpdateDialog = new UserUpdateDialog();
+            currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
         private bool _isFocused;
@@ -127,7 +127,7 @@ namespace Cafe.ViewModels.UserViewModels
                 {
                     _roles = new ObservableCollection<Role>(unitOfWork.Roles.GetAll());
                 }
-                Load(true);
+                Load();
             }
             catch (Exception ex)
             {
@@ -148,7 +148,7 @@ namespace Cafe.ViewModels.UserViewModels
         {
             try
             {
-                Load(false);
+                Load();
             }
             catch (Exception ex)
             {
@@ -224,7 +224,7 @@ namespace Cafe.ViewModels.UserViewModels
                     unitOfWork.Users.Remove(_selectedUser.User);
                     unitOfWork.Complete();
                 }
-                Load(true);
+                Load();
             }
             catch (Exception ex)
             {
@@ -249,8 +249,8 @@ namespace Cafe.ViewModels.UserViewModels
             {
                 SelectedRole = new Role();
                 NewUser = new UserAddDataModel();
-                _userAddDialog.DataContext = this;
-                await _currentWindow.ShowMetroDialogAsync(_userAddDialog);
+                userAddDialog.DataContext = this;
+                await currentWindow.ShowMetroDialogAsync(userAddDialog);
             }
             catch (Exception ex)
             {
@@ -281,7 +281,7 @@ namespace Cafe.ViewModels.UserViewModels
 
                     if (user != null)
                     {
-                        await _currentWindow.ShowMessageAsync("فشل الإضافة", "هذا المستخدم موجودة مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        await currentWindow.ShowMessageAsync("فشل الإضافة", "هذا المستخدم موجودة مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
                             AffirmativeButtonText = "موافق",
                             DialogMessageFontSize = 25,
@@ -299,7 +299,7 @@ namespace Cafe.ViewModels.UserViewModels
                         });
                         unitOfWork.Complete();
                         NewUser = new UserAddDataModel();
-                        Load(true);
+                        Load();
                     }
                 }
 
@@ -330,7 +330,7 @@ namespace Cafe.ViewModels.UserViewModels
         {
             try
             {
-                _userUpdateDialog.DataContext = this;
+                userUpdateDialog.DataContext = this;
                 UserUpdate = new UserUpdateDataModel();
                 UserUpdate.ID = SelectedUser.User.ID;
                 UserUpdate.IsWorked = SelectedUser.User.IsWorked;
@@ -338,7 +338,7 @@ namespace Cafe.ViewModels.UserViewModels
                 UserUpdate.Password = SelectedUser.User.Password;
                 UserUpdate.RoleID = SelectedUser.User.RoleID;
                 UserUpdate.Role = SelectedUser.Role;
-                await _currentWindow.ShowMetroDialogAsync(_userUpdateDialog);
+                await currentWindow.ShowMetroDialogAsync(userUpdateDialog);
             }
             catch (Exception ex)
             {
@@ -368,7 +368,7 @@ namespace Cafe.ViewModels.UserViewModels
                     var user = unitOfWork.Users.SingleOrDefault(s => s.Name == UserUpdate.Name && s.ID != UserUpdate.ID);
                     if (user != null)
                     {
-                        await _currentWindow.ShowMessageAsync("فشل التعديل", "هذا المستخدم موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        await currentWindow.ShowMessageAsync("فشل التعديل", "هذا المستخدم موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
                             AffirmativeButtonText = "موافق",
                             DialogMessageFontSize = 25,
@@ -377,7 +377,7 @@ namespace Cafe.ViewModels.UserViewModels
                     }
                     else if (UserUpdate.IsWorked == false && UserUpdate.Role.Name == RoleText.Admin && unitOfWork.Users.Find(f => f.Role.Name == RoleText.Admin && f.IsWorked == true).Count() == 1)
                     {
-                        await _currentWindow.ShowMessageAsync("فشل التعديل", "لا يوجد مستخدم آخر لديه نفس الصلاحيات يجب اضافة مستخدم اخر بنفس الصلاحيات ثم تعديل هذا المستخدم", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        await currentWindow.ShowMessageAsync("فشل التعديل", "لا يوجد مستخدم آخر لديه نفس الصلاحيات يجب اضافة مستخدم اخر بنفس الصلاحيات ثم تعديل هذا المستخدم", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
                             AffirmativeButtonText = "موافق",
                             DialogMessageFontSize = 25,
@@ -386,7 +386,7 @@ namespace Cafe.ViewModels.UserViewModels
                     }
                     else if (UserUpdate.IsWorked == false && UserUpdate.Role.Name == RoleText.Cashier && unitOfWork.Users.Find(f => f.Role.Name == RoleText.Cashier && f.IsWorked == true).Count() == 2)
                     {
-                        await _currentWindow.ShowMessageAsync("فشل التعديل", "يجب ان يكون لديك مستخدمين على الاقل لهم نفس الصلاحيات لكى تستطيع تعديل هذا المستخدم", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        await currentWindow.ShowMessageAsync("فشل التعديل", "يجب ان يكون لديك مستخدمين على الاقل لهم نفس الصلاحيات لكى تستطيع تعديل هذا المستخدم", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
                             AffirmativeButtonText = "موافق",
                             DialogMessageFontSize = 25,
@@ -402,8 +402,8 @@ namespace Cafe.ViewModels.UserViewModels
                         SelectedUser.User.IsWorked = UserUpdate.IsWorked;
                         unitOfWork.Users.Edit(SelectedUser.User);
                         unitOfWork.Complete();
-                        await _currentWindow.HideMetroDialogAsync(_userUpdateDialog);
-                        Load(true);
+                        await currentWindow.HideMetroDialogAsync(userUpdateDialog);
+                        Load();
                     }
                 }
 
@@ -441,10 +441,10 @@ namespace Cafe.ViewModels.UserViewModels
                 switch (parameter)
                 {
                     case "Add":
-                        await _currentWindow.HideMetroDialogAsync(_userAddDialog);
+                        await currentWindow.HideMetroDialogAsync(userAddDialog);
                         break;
                     case "Update":
-                        await _currentWindow.HideMetroDialogAsync(_userUpdateDialog);
+                        await currentWindow.HideMetroDialogAsync(userUpdateDialog);
                         break;
                     default:
                         break;

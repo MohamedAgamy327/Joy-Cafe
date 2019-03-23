@@ -18,8 +18,8 @@ namespace Cafe.ViewModels.MembershipViewModels
 {
     public class ClientMembershipViewModel : ValidatableBindableBase
     {
-        MetroWindow _currentWindow;
-        private readonly ClientMembershipAddDialog _clientMembershipAddDialog;
+        MetroWindow currentWindow;
+        private readonly ClientMembershipAddDialog clientMembershipAddDialog;
 
         private void Load()
         {
@@ -36,10 +36,10 @@ namespace Cafe.ViewModels.MembershipViewModels
             _key = "";
             _isFocused = true;
             _paging = new PagingWPF();
-            _clientMembershipAddDialog = new ClientMembershipAddDialog();
+            clientMembershipAddDialog = new ClientMembershipAddDialog();
             _dateTo = Convert.ToDateTime(DateTime.Now.ToShortDateString());
             _dateFrom = Convert.ToDateTime(DateTime.Now.ToShortDateString());                   
-            _currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
+            currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
         private bool _isFocused;
@@ -289,8 +289,8 @@ namespace Cafe.ViewModels.MembershipViewModels
             try
             {
                 NewClientMembership = new ClientMembershipAddDataModel();
-                _clientMembershipAddDialog.DataContext = this;
-                await _currentWindow.ShowMetroDialogAsync(_clientMembershipAddDialog);
+                clientMembershipAddDialog.DataContext = this;
+                await currentWindow.ShowMetroDialogAsync(clientMembershipAddDialog);
             }
             catch (Exception ex)
             {
@@ -367,7 +367,7 @@ namespace Cafe.ViewModels.MembershipViewModels
                         unitOfWork.ClientMembershipMinutes.Edit(clientMembershipMinute);
                     }
 
-                    Safe _safe = new Safe
+                    Safe safe = new Safe
                     {
                         Amount = _selectedMembership.Price,
                         CanDelete = false,
@@ -376,7 +376,7 @@ namespace Cafe.ViewModels.MembershipViewModels
                         Type = true,
                         Statement = "اشتراك فى العضوية " + _selectedMembership.Name + " ل " + _selectedDeviceType.Name + " للعميل " + _selectedClient.Name
                     };
-                    unitOfWork.Safes.Add(_safe);
+                    unitOfWork.Safes.Add(safe);
 
                     ClientMembership cm = new ClientMembership
                     {
@@ -429,7 +429,7 @@ namespace Cafe.ViewModels.MembershipViewModels
                 switch (parameter)
                 {
                     case "Add":
-                        await _currentWindow.HideMetroDialogAsync(_clientMembershipAddDialog);
+                        await currentWindow.HideMetroDialogAsync(clientMembershipAddDialog);
                         break;
                     default:
                         break;

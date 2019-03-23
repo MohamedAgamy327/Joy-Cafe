@@ -24,5 +24,12 @@ namespace DTO.BillDataModel
             get { return _minimum; }
             set { SetProperty(ref _minimum, value); }
         }
+
+        public BillPaidDataModel()
+        {
+            Discount = 0;
+            Ratio = 0;
+        }
+
     }
 }

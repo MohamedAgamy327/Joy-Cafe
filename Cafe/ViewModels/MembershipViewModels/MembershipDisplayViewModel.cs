@@ -17,15 +17,15 @@ namespace Cafe.ViewModels.MembershipViewModels
 {
     public class MembershipDisplayViewModel : ValidatableBindableBase
     {
-        MetroWindow _currentWindow;
-        private readonly MembershipAddDialog _membershipAddDialog;
-        private readonly MembershipUpdateDialog _membershipUpdateDialog;
+        MetroWindow currentWindow;
+        private readonly MembershipAddDialog membershipAddDialog;
+        private readonly MembershipUpdateDialog membershipUpdateDialog;
 
         private void Load(bool isNew)
         {
             using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
             {
-                Paging.TotalRecords = unitOfWork.Memberships.GetRecordsNumber(isNew, _key);
+                Paging.TotalRecords = unitOfWork.Memberships.GetRecordsNumber(_key);
                 Paging.GetFirst();
                 Memberships = new ObservableCollection<MembershipDisplayDataModel>(unitOfWork.Memberships.Search(_key, Paging.CurrentPage, PagingWPF.PageSize));
             }
@@ -36,9 +36,9 @@ namespace Cafe.ViewModels.MembershipViewModels
             _key = "";
             _isFocused = true;
             _paging = new PagingWPF();
-            _membershipAddDialog = new MembershipAddDialog();
-            _membershipUpdateDialog = new MembershipUpdateDialog();
-            _currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
+            membershipAddDialog = new MembershipAddDialog();
+            membershipUpdateDialog = new MembershipUpdateDialog();
+            currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
         private bool _isFocused;
@@ -247,8 +247,8 @@ namespace Cafe.ViewModels.MembershipViewModels
             try
             {
                 NewMembership = new MembershipAddDataModel();
-                _membershipAddDialog.DataContext = this;
-                await _currentWindow.ShowMetroDialogAsync(_membershipAddDialog);
+                membershipAddDialog.DataContext = this;
+                await currentWindow.ShowMetroDialogAsync(membershipAddDialog);
             }
             catch (Exception ex)
             {
@@ -277,7 +277,7 @@ namespace Cafe.ViewModels.MembershipViewModels
                     var membership = unitOfWork.Memberships.SingleOrDefault(s => s.Name == _newMembership.Name && s.DeviceTypeID == _newMembership.DeviceTypeID);
                     if (membership != null)
                     {
-                        await _currentWindow.ShowMessageAsync("فشل الإضافة", "هذه العضوية موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        await currentWindow.ShowMessageAsync("فشل الإضافة", "هذه العضوية موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
                             AffirmativeButtonText = "موافق",
                             DialogMessageFontSize = 25,
@@ -325,7 +325,7 @@ namespace Cafe.ViewModels.MembershipViewModels
         {
             try
             {
-                _membershipUpdateDialog.DataContext = this;
+                membershipUpdateDialog.DataContext = this;
                 MembershipUpdate = new MembershipUpdateDataModel();
                 MembershipUpdate.ID = _selectedMembership.Membership.ID;
                 MembershipUpdate.Name = _selectedMembership.Membership.Name;
@@ -335,7 +335,7 @@ namespace Cafe.ViewModels.MembershipViewModels
                 MembershipUpdate.Minutes = _selectedMembership.Membership.Minutes;
                 MembershipUpdate.DeviceType = _selectedMembership.DeviceType;
                 MembershipUpdate.IsAvailable = _selectedMembership.Membership.IsAvailable;
-                await _currentWindow.ShowMetroDialogAsync(_membershipUpdateDialog);
+                await currentWindow.ShowMetroDialogAsync(membershipUpdateDialog);
             }
             catch (Exception ex)
             {
@@ -364,7 +364,7 @@ namespace Cafe.ViewModels.MembershipViewModels
                     var membership = unitOfWork.Devices.SingleOrDefault(s => s.Name == _membershipUpdate.Name && s.DeviceTypeID == _membershipUpdate.DeviceTypeID && s.ID != _membershipUpdate.ID);
                     if (membership != null)
                     {
-                        await _currentWindow.ShowMessageAsync("فشل الإضافة", "هذه العضوية موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        await currentWindow.ShowMessageAsync("فشل الإضافة", "هذه العضوية موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
                             AffirmativeButtonText = "موافق",
                             DialogMessageFontSize = 25,
@@ -378,7 +378,7 @@ namespace Cafe.ViewModels.MembershipViewModels
                         SelectedMembership.Membership.Price = _membershipUpdate.Price;
                         unitOfWork.Memberships.Edit(SelectedMembership.Membership);
                         unitOfWork.Complete();
-                        await _currentWindow.HideMetroDialogAsync(_membershipUpdateDialog);
+                        await currentWindow.HideMetroDialogAsync(membershipUpdateDialog);
                         Load(true);
                     }
                 }
@@ -416,10 +416,10 @@ namespace Cafe.ViewModels.MembershipViewModels
                 switch (parameter)
                 {
                     case "Add":
-                        await _currentWindow.HideMetroDialogAsync(_membershipAddDialog);
+                        await currentWindow.HideMetroDialogAsync(membershipAddDialog);
                         break;
                     case "Update":
-                        await _currentWindow.HideMetroDialogAsync(_membershipUpdateDialog);
+                        await currentWindow.HideMetroDialogAsync(membershipUpdateDialog);
                         break;
                     default:
                         break;

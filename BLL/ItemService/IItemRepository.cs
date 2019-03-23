@@ -7,7 +7,7 @@ namespace BLL.ItemService
 {
     public interface IItemRepository : IGenericRepository<Item>
     {
-        int GetRecordsNumber(bool isNew, string key);
+        int GetRecordsNumber(string key);
 
         List<ItemDisplayDataModel> Search(string key, int pageNumber, int pageSize);
     }

@@ -11,7 +11,6 @@ namespace BLL.ClientService
 {
     public class ClientRepository : GenericRepository<Client>, IClientRepository
     {
-        static List<Client> clients { get; set; }
 
         public ClientRepository(GeneralDBContext context)
             : base(context)
@@ -25,19 +24,12 @@ namespace BLL.ClientService
 
         public int GetRecordsNumber(string key)
         {
-            return clients.Where(s => (s.Name + s.Telephone + s.Code).Contains(key)).Count();
-        }
-
-        public int GetRecordsNumber(bool isNew, string key)
-        {
-            if (isNew)
-                clients = GetAll().ToList();
-            return clients.Where(s => (s.Name + s.Telephone + s.Code).Contains(key)).Count();
+            return GeneralDBContext.Clients.Where(s => (s.Name + s.Telephone + s.Code).Contains(key)).Count();
         }
 
         public List<ClientDisplayDataModel> Search(string key, int pageNumber, int pageSize)
         {
-            return clients.Where(w => (w.Name + w.Telephone + w.Code).Contains(key)).OrderBy(o => o.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).
+            return GeneralDBContext.Clients.Where(w => (w.Name + w.Telephone + w.Code).Contains(key)).OrderBy(o => o.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).
       Select(s => new ClientDisplayDataModel
       {
           Client = s,
@@ -47,7 +39,7 @@ namespace BLL.ClientService
 
         public List<ClientPointDataModel> Search(string key, int pageNumber, int pageSize, DateTime dtFrom, DateTime dtTo)
         {
-            return GeneralDBContext.Clients.AsNoTracking().Where(w => (w.Name + w.Telephone + w.Code).Contains(key)).Skip((pageNumber - 1) * pageSize).Take(pageSize)
+            return GeneralDBContext.Clients.AsNoTracking().Where(w => (w.Name + w.Telephone + w.Code).Contains(key)).OrderBy(o => o.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize)
                    .Select(s => new ClientPointDataModel
                    {
                        Client = s,

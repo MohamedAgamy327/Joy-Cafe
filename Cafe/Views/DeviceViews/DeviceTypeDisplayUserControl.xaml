@@ -4,8 +4,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:Custom="http://www.galasoft.ch/mvvmlight"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     mc:Ignorable="d" 
@@ -68,11 +67,9 @@
                         </Style.Triggers>
                     </Style>
                 </TextBox.Style>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="TextChanged">
-                        <Custom:EventToCommand Command="{Binding Search}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding Path=Search}" Key="Enter" />
+                </TextBox.InputBindings>
             </TextBox>
 
             <DataGrid 

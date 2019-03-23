@@ -7,7 +7,7 @@ namespace BLL.ClientMembershipMinuteService
 {
     public interface IClientMembershipMinuteRepository : IGenericRepository<ClientMembershipMinute>
     {
-        int GetRecordsNumber(bool isNew, string key);
+        int GetRecordsNumber(string key);
 
         List<ClientMembershipMinutesDisplayDataModel> Search(string key, int pageNumber, int pageSize);
     }

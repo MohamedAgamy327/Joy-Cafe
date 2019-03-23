@@ -17,8 +17,7 @@ namespace Cafe.ViewModels.BillViewModels
 {
     public class ShiftItemsViewModel : ValidatableBindableBase
     {
-        Bill _bill;
-        MetroWindow _currentWindow;
+        MetroWindow currentWindow;
 
         private readonly ShiftItemAddDialog _shiftItemAddDialog;
 
@@ -34,7 +33,7 @@ namespace Cafe.ViewModels.BillViewModels
         {
             _isFocused = true;
             _shiftItemAddDialog = new ShiftItemAddDialog();
-            _currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
+            currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
         private bool _isFocused;
@@ -165,7 +164,7 @@ namespace Cafe.ViewModels.BillViewModels
                 if (selectedBillItem.BillItem.Qty == null)
                     return;
 
-                MessageDialogResult result = await _currentWindow.ShowMessageAsync("تأكيد العملية", "هل تـريــد تغير هـذه الكمية؟", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings()
+                MessageDialogResult result = await currentWindow.ShowMessageAsync("تأكيد العملية", "هل تـريــد تغير هـذه الكمية؟", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings()
                 {
                     AffirmativeButtonText = "موافق",
                     NegativeButtonText = "الغاء",
@@ -212,7 +211,7 @@ namespace Cafe.ViewModels.BillViewModels
             {
                 NewBillItem = new BillItemAddDataModel();
                 _shiftItemAddDialog.DataContext = this;
-                await _currentWindow.ShowMetroDialogAsync(_shiftItemAddDialog);
+                await currentWindow.ShowMetroDialogAsync(_shiftItemAddDialog);
             }
             catch (Exception ex)
             {
@@ -238,20 +237,20 @@ namespace Cafe.ViewModels.BillViewModels
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    _bill = unitOfWork.Bills.FirstOrDefault(f => f.Type == GeneralText.Items && f.EndDate == null);
-                    if (_bill == null)
+                    var bill = unitOfWork.Bills.FirstOrDefault(f => f.Type == GeneralText.Items && f.EndDate == null);
+                    if (bill == null)
                     {
-                        _bill = new Bill
+                        bill = new Bill
                         {
                             StartDate = DateTime.Now,
                             Type = GeneralText.Items
                         };
-                        unitOfWork.Bills.Add(_bill);
+                        unitOfWork.Bills.Add(bill);
                     }
 
                     unitOfWork.BillsItems.Add(new BillItem
                     {
-                        BillID = _bill.ID,
+                        BillID = bill.ID,
                         ItemID = _newBillItem.ItemID,
                         Price = _selectedItem.Price,
                         Qty = _newBillItem.Qty,
@@ -298,7 +297,7 @@ namespace Cafe.ViewModels.BillViewModels
                 switch (parameter)
                 {
                     case "Add":
-                        await _currentWindow.HideMetroDialogAsync(_shiftItemAddDialog);
+                        await currentWindow.HideMetroDialogAsync(_shiftItemAddDialog);
                         break;
                     default:
                         break;

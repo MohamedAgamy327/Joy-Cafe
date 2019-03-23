@@ -7,7 +7,7 @@ namespace BLL.DeviceService
 {
     public interface IDeviceRepository : IGenericRepository<Device>
     {
-        int GetRecordsNumber(bool isNew, string key);
+        int GetRecordsNumber(string key);
         List<DeviceDisplayDataModel> Search(string key, int pageNumber, int pageSize);
         List<DevicePlayDataModel> GetAvailable();
         List<DeviceFreeDataModel> GetFree(string gameType);

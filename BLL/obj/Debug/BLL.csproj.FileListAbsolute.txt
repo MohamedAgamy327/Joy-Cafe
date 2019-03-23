@@ -42,14 +42,14 @@ D:\Work\Project\Now\Joy-Cafe\BLL\bin\Debug\EntityFramework.dll
 D:\Work\Project\Now\Joy-Cafe\BLL\bin\Debug\EntityFramework.SqlServer.dll
 D:\Work\Project\Now\Joy-Cafe\BLL\bin\Debug\Utilities.dll
 D:\Work\Project\Now\Joy-Cafe\BLL\bin\Debug\DAL.pdb
-D:\Work\Project\Now\Joy-Cafe\BLL\bin\Debug\DAL.dll.config
 D:\Work\Project\Now\Joy-Cafe\BLL\bin\Debug\DTO.pdb
 D:\Work\Project\Now\Joy-Cafe\BLL\bin\Debug\EntityFramework.xml
 D:\Work\Project\Now\Joy-Cafe\BLL\bin\Debug\EntityFramework.SqlServer.xml
 D:\Work\Project\Now\Joy-Cafe\BLL\bin\Debug\Utilities.pdb
+D:\Work\Project\Now\Joy-Cafe\BLL\obj\Debug\BLL.dll
+D:\Work\Project\Now\Joy-Cafe\BLL\obj\Debug\BLL.pdb
+D:\Work\Project\Now\Joy-Cafe\BLL\bin\Debug\DAL.dll.config
 D:\Work\Project\Now\Joy-Cafe\BLL\bin\Debug\Utilities.dll.config
 D:\Work\Project\Now\Joy-Cafe\BLL\obj\Debug\BLL.csprojAssemblyReference.cache
 D:\Work\Project\Now\Joy-Cafe\BLL\obj\Debug\BLL.csproj.CoreCompileInputs.cache
 D:\Work\Project\Now\Joy-Cafe\BLL\obj\Debug\BLL.csproj.CopyComplete
-D:\Work\Project\Now\Joy-Cafe\BLL\obj\Debug\BLL.dll
-D:\Work\Project\Now\Joy-Cafe\BLL\obj\Debug\BLL.pdb

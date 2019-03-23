@@ -17,8 +17,8 @@ namespace Cafe.ViewModels.ShiftViewModels
 {
     public class ShiftDisplayViewModel : ValidatableBindableBase
     {
-        private MetroWindow _currentWindow;
-        private readonly ShiftShowDialog _shiftShowDialog;
+        private MetroWindow currentWindow;
+        private readonly ShiftShowDialog shiftShowDialog;
 
         private void Load()
         {
@@ -36,8 +36,8 @@ namespace Cafe.ViewModels.ShiftViewModels
             _dateTo = DateTime.Now;
             _dateFrom = DateTime.Now;
             _paging = new PagingWPF();
-            _shiftShowDialog = new ShiftShowDialog();          
-            _currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
+            shiftShowDialog = new ShiftShowDialog();          
+            currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
         private string _key;
@@ -193,8 +193,8 @@ namespace Cafe.ViewModels.ShiftViewModels
         {
             try
             {
-                _shiftShowDialog.DataContext = this;
-                await _currentWindow.ShowMetroDialogAsync(_shiftShowDialog);
+                shiftShowDialog.DataContext = this;
+                await currentWindow.ShowMetroDialogAsync(shiftShowDialog);
             }
             catch (Exception ex)
             {
@@ -218,7 +218,7 @@ namespace Cafe.ViewModels.ShiftViewModels
                 switch (parameter)
                 {
                     case "show":
-                        await _currentWindow.HideMetroDialogAsync(_shiftShowDialog);
+                        await currentWindow.HideMetroDialogAsync(shiftShowDialog);
                         break;
                     default:
                         break;

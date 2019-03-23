@@ -11,8 +11,6 @@ namespace BLL.MembershipService
 {
     public class MembershipRepository : GenericRepository<Membership>, IMembershipRepository
     {
-        static List<Membership> memberships { get; set; }
-
         public MembershipRepository(GeneralDBContext context)
             : base(context)
         {
@@ -23,16 +21,14 @@ namespace BLL.MembershipService
             get { return Context as GeneralDBContext; }
         }
 
-        public int GetRecordsNumber(bool isNew, string key)
+        public int GetRecordsNumber(string key)
         {
-            if (isNew)
-                memberships = GetAll().ToList();
-            return memberships.Where(s => s.Name.Contains(key)).Count();
+            return GeneralDBContext.Memberships.Where(s => s.Name.Contains(key)).Count();
         }
 
         public List<MembershipDisplayDataModel> Search(string key, int pageNumber, int pageSize)
         {
-            return memberships.Where(w => (w.Name).Contains(key)).OrderBy(o => o.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new MembershipDisplayDataModel
+            return GeneralDBContext.Memberships.Where(w => (w.Name).Contains(key)).OrderBy(o => o.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new MembershipDisplayDataModel
             {
                 Membership = s,
                 DeviceType = s.DeviceType,

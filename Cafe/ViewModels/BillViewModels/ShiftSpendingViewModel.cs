@@ -18,9 +18,9 @@ namespace Cafe.ViewModels.BillViewModels
 {
     public class ShiftSpendingViewModel : ValidatableBindableBase
     {
-        MetroWindow _currentWindow;
-        private readonly ShiftSpendingAddDialog _shiftSpendingAddDialog;
-        private readonly ShiftSpendingUpdateDialog _shiftSpendingUpdateDialog;
+        MetroWindow currentWindow;
+        private readonly ShiftSpendingAddDialog shiftSpendingAddDialog;
+        private readonly ShiftSpendingUpdateDialog shiftSpendingUpdateDialog;
 
         private void Load()
         {
@@ -34,9 +34,9 @@ namespace Cafe.ViewModels.BillViewModels
         {
             _key = "";
             _isFocused = true;
-            _shiftSpendingAddDialog = new ShiftSpendingAddDialog();
-            _shiftSpendingUpdateDialog = new ShiftSpendingUpdateDialog();
-            _currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
+            shiftSpendingAddDialog = new ShiftSpendingAddDialog();
+            shiftSpendingUpdateDialog = new ShiftSpendingUpdateDialog();
+            currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
         private bool _isFocused;
@@ -211,8 +211,8 @@ namespace Cafe.ViewModels.BillViewModels
             try
             {
                 NewSpending = new SpendingAddDataModel();
-                _shiftSpendingAddDialog.DataContext = this;
-                await _currentWindow.ShowMetroDialogAsync(_shiftSpendingAddDialog);
+                shiftSpendingAddDialog.DataContext = this;
+                await currentWindow.ShowMetroDialogAsync(shiftSpendingAddDialog);
             }
             catch (Exception ex)
             {
@@ -289,8 +289,8 @@ namespace Cafe.ViewModels.BillViewModels
                 SpendingUpdate = new SpendingUpdateDataModel();
                 SpendingUpdate.Statement = _selectedSpending.Spending.Statement;
                 SpendingUpdate.Amount = _selectedSpending.Spending.Amount;
-                _shiftSpendingUpdateDialog.DataContext = this;
-                await _currentWindow.ShowMetroDialogAsync(_shiftSpendingUpdateDialog);
+                shiftSpendingUpdateDialog.DataContext = this;
+                await currentWindow.ShowMetroDialogAsync(shiftSpendingUpdateDialog);
             }
             catch (Exception ex)
             {
@@ -324,7 +324,7 @@ namespace Cafe.ViewModels.BillViewModels
                     safe.Statement = _spendingUpdate.Statement;
                     unitOfWork.Safes.Edit(safe);
                     unitOfWork.Complete();
-                    await _currentWindow.HideMetroDialogAsync(_shiftSpendingUpdateDialog);
+                    await currentWindow.HideMetroDialogAsync(shiftSpendingUpdateDialog);
                     Load();
                 }
             }
@@ -361,10 +361,10 @@ namespace Cafe.ViewModels.BillViewModels
                 switch (parameter)
                 {
                     case "Add":
-                        await _currentWindow.HideMetroDialogAsync(_shiftSpendingAddDialog);
+                        await currentWindow.HideMetroDialogAsync(shiftSpendingAddDialog);
                         break;
                     case "Update":
-                        await _currentWindow.HideMetroDialogAsync(_shiftSpendingUpdateDialog);
+                        await currentWindow.HideMetroDialogAsync(shiftSpendingUpdateDialog);
                         break;
                     default:
                         break;

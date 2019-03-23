@@ -119,6 +119,14 @@
     <Compile Include="Migrations\201903060711177_updateBillItem.Designer.cs">
       <DependentUpon>201903060711177_updateBillItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903161323374_billItems.cs" />
+    <Compile Include="Migrations\201903161323374_billItems.Designer.cs">
+      <DependentUpon>201903161323374_billItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903161325264_billItems2.cs" />
+    <Compile Include="Migrations\201903161325264_billItems2.Designer.cs">
+      <DependentUpon>201903161325264_billItems2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -147,6 +155,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903060711177_updateBillItem.resx">
       <DependentUpon>201903060711177_updateBillItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903161323374_billItems.resx">
+      <DependentUpon>201903161323374_billItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903161325264_billItems2.resx">
+      <DependentUpon>201903161325264_billItems2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

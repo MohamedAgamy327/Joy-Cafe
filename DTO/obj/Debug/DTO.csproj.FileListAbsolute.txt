@@ -35,9 +35,7 @@ D:\Work\Project\Now\Joy-Cafe\DTO\bin\Debug\System.Windows.Interactivity.dll
 D:\Work\Project\Now\Joy-Cafe\DTO\bin\Debug\Utilities.dll
 D:\Work\Project\Now\Joy-Cafe\DTO\bin\Debug\EntityFramework.dll
 D:\Work\Project\Now\Joy-Cafe\DTO\bin\Debug\DAL.pdb
-D:\Work\Project\Now\Joy-Cafe\DTO\bin\Debug\DAL.dll.config
 D:\Work\Project\Now\Joy-Cafe\DTO\bin\Debug\Utilities.pdb
-D:\Work\Project\Now\Joy-Cafe\DTO\bin\Debug\Utilities.dll.config
 D:\Work\Project\Now\Joy-Cafe\DTO\bin\Debug\GalaSoft.MvvmLight.pdb
 D:\Work\Project\Now\Joy-Cafe\DTO\bin\Debug\GalaSoft.MvvmLight.xml
 D:\Work\Project\Now\Joy-Cafe\DTO\bin\Debug\GalaSoft.MvvmLight.Extras.pdb
@@ -45,8 +43,10 @@ D:\Work\Project\Now\Joy-Cafe\DTO\bin\Debug\GalaSoft.MvvmLight.Extras.xml
 D:\Work\Project\Now\Joy-Cafe\DTO\bin\Debug\GalaSoft.MvvmLight.Platform.pdb
 D:\Work\Project\Now\Joy-Cafe\DTO\bin\Debug\GalaSoft.MvvmLight.Platform.xml
 D:\Work\Project\Now\Joy-Cafe\DTO\bin\Debug\EntityFramework.xml
+D:\Work\Project\Now\Joy-Cafe\DTO\obj\Debug\DTO.dll
+D:\Work\Project\Now\Joy-Cafe\DTO\obj\Debug\DTO.pdb
+D:\Work\Project\Now\Joy-Cafe\DTO\bin\Debug\DAL.dll.config
+D:\Work\Project\Now\Joy-Cafe\DTO\bin\Debug\Utilities.dll.config
 D:\Work\Project\Now\Joy-Cafe\DTO\obj\Debug\DTO.csprojAssemblyReference.cache
 D:\Work\Project\Now\Joy-Cafe\DTO\obj\Debug\DTO.csproj.CoreCompileInputs.cache
 D:\Work\Project\Now\Joy-Cafe\DTO\obj\Debug\DTO.csproj.CopyComplete
-D:\Work\Project\Now\Joy-Cafe\DTO\obj\Debug\DTO.dll
-D:\Work\Project\Now\Joy-Cafe\DTO\obj\Debug\DTO.pdb

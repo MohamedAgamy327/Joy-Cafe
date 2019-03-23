@@ -1,7 +1,6 @@
 ﻿using BLL.UnitOfWorkService;
 using DAL;
 using DAL.BindableBaseService;
-using DAL.Entities;
 using DTO.ClientMembershipMinutesDataModel;
 using GalaSoft.MvvmLight.CommandWpf;
 using System;
@@ -13,12 +12,11 @@ namespace Cafe.ViewModels.MembershipViewModels
 {
     public class ClientMembershipMinuteViewModel : ValidatableBindableBase
     {
-
-        private void Load(bool isNew)
+        private void Load()
         {
             using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
             {
-                Paging.TotalRecords = unitOfWork.ClientMembershipMinutes.GetRecordsNumber(isNew, _key);
+                Paging.TotalRecords = unitOfWork.ClientMembershipMinutes.GetRecordsNumber(_key);
                 Paging.GetFirst();
                 ClientMembershipMinutes = new ObservableCollection<ClientMembershipMinutesDisplayDataModel>(unitOfWork.ClientMembershipMinutes.Search(_key, Paging.CurrentPage, PagingWPF.PageSize));
             }
@@ -69,7 +67,7 @@ namespace Cafe.ViewModels.MembershipViewModels
         {
             try
             {
-                Load(true);
+                Load();
             }
             catch (Exception ex)
             {
@@ -90,7 +88,7 @@ namespace Cafe.ViewModels.MembershipViewModels
         {
             try
             {
-                Load(false);
+                Load();
             }
             catch (Exception ex)
             {

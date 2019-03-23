@@ -18,9 +18,9 @@ namespace Cafe.ViewModels.BillViewModels
     {
         public static int BillID { get; set; }
 
-        MetroWindow _currentWindow;
+        MetroWindow currentWindow;
 
-        private readonly BillItemAddDialog _billItemAddDialog;
+        private readonly BillItemAddDialog billItemAddDialog;
 
         private void Load()
         {
@@ -33,8 +33,8 @@ namespace Cafe.ViewModels.BillViewModels
         public BillItemsViewModel()
         {
             _isFocused = true;
-            _billItemAddDialog = new BillItemAddDialog();
-            _currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
+            billItemAddDialog = new BillItemAddDialog();
+            currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
         private bool _isFocused;
@@ -165,7 +165,7 @@ namespace Cafe.ViewModels.BillViewModels
                 if (selectedBillItem.BillItem.Qty == null)
                     return;
 
-                MessageDialogResult result = await _currentWindow.ShowMessageAsync("تأكيد العملية", "هل تـريــد تغير هـذه الكمية؟", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings()
+                MessageDialogResult result = await currentWindow.ShowMessageAsync("تأكيد العملية", "هل تـريــد تغير هـذه الكمية؟", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings()
                 {
                     AffirmativeButtonText = "موافق",
                     NegativeButtonText = "الغاء",
@@ -211,8 +211,8 @@ namespace Cafe.ViewModels.BillViewModels
             try
             {
                 NewBillItem = new BillItemAddDataModel();
-                _billItemAddDialog.DataContext = this;
-                await _currentWindow.ShowMetroDialogAsync(_billItemAddDialog);
+                billItemAddDialog.DataContext = this;
+                await currentWindow.ShowMetroDialogAsync(billItemAddDialog);
             }
             catch (Exception ex)
             {
@@ -286,7 +286,7 @@ namespace Cafe.ViewModels.BillViewModels
                 switch (parameter)
                 {
                     case "Add":
-                        await _currentWindow.HideMetroDialogAsync(_billItemAddDialog);
+                        await currentWindow.HideMetroDialogAsync(billItemAddDialog);
                         break;
                     default:
                         break;

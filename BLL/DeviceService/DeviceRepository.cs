@@ -11,8 +11,6 @@ namespace BLL.DeviceService
 {
     public class DeviceRepository : GenericRepository<Device>, IDeviceRepository
     {
-        static List<Device> devices { get; set; }
-
         public DeviceRepository(GeneralDBContext context)
             : base(context)
         {
@@ -23,16 +21,14 @@ namespace BLL.DeviceService
             get { return Context as GeneralDBContext; }
         }
 
-        public int GetRecordsNumber(bool isNew, string key)
+        public int GetRecordsNumber( string key)
         {
-            if (isNew)
-                devices = GetAll().ToList();
-            return devices.Where(s => (s.Name + s.DeviceType.Name).Contains(key)).Count();
+            return GeneralDBContext.Devices.Where(s => (s.Name + s.DeviceType.Name).Contains(key)).Count();
         }
 
         public List<DeviceDisplayDataModel> Search(string key, int pageNumber, int pageSize)
         {
-            return devices.Where(w => (w.Name + w.DeviceType.Name).Contains(key)).OrderBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new DeviceDisplayDataModel
+            return GeneralDBContext.Devices.Where(w => (w.Name + w.DeviceType.Name).Contains(key)).OrderBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new DeviceDisplayDataModel
             {
                 Device = s,
                 DeviceType = s.DeviceType,

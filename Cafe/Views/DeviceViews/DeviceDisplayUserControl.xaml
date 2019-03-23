@@ -68,11 +68,9 @@
                         </Style.Triggers>
                     </Style>
                 </TextBox.Style>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="TextChanged">
-                        <Custom:EventToCommand Command="{Binding Search}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding Path=Search}" Key="Enter" />
+                </TextBox.InputBindings>
             </TextBox>
 
             <DataGrid 

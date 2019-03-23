@@ -19,15 +19,15 @@ namespace Cafe.ViewModels.ClientViewModels
 {
     public class ClientDisplayViewModel : ValidatableBindableBase
     {
-        MetroWindow _currentWindow;
-        private readonly ClientAddDialog _clientAddDialog;
-        private readonly ClientUpdateDialog _clientUpdateDialog;
+        MetroWindow currentWindow;
+        private readonly ClientAddDialog clientAddDialog;
+        private readonly ClientUpdateDialog clientUpdateDialog;
 
-        private void Load(bool isNew)
+        private void Load()
         {
             using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
             {
-                Paging.TotalRecords = unitOfWork.Clients.GetRecordsNumber(isNew, _key);
+                Paging.TotalRecords = unitOfWork.Clients.GetRecordsNumber(_key);
                 Paging.GetFirst();
                 Clients = new ObservableCollection<ClientDisplayDataModel>(unitOfWork.Clients.Search(_key, Paging.CurrentPage, PagingWPF.PageSize));
             }
@@ -38,9 +38,9 @@ namespace Cafe.ViewModels.ClientViewModels
             _key = "";
             _isFocused = true;
             _paging = new PagingWPF();
-            _clientAddDialog = new ClientAddDialog();
-            _clientUpdateDialog = new ClientUpdateDialog();       
-            _currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
+            clientAddDialog = new ClientAddDialog();
+            clientUpdateDialog = new ClientUpdateDialog();
+            currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
         private bool _isFocused;
@@ -110,7 +110,7 @@ namespace Cafe.ViewModels.ClientViewModels
         {
             try
             {
-                Load(true);
+                Load();
             }
             catch (Exception ex)
             {
@@ -131,7 +131,7 @@ namespace Cafe.ViewModels.ClientViewModels
         {
             try
             {
-                Load(false);
+                Load();
             }
             catch (Exception ex)
             {
@@ -207,7 +207,7 @@ namespace Cafe.ViewModels.ClientViewModels
                     unitOfWork.Clients.Remove(_selectedClient.Client);
                     unitOfWork.Complete();
                 }
-                Load(true);
+                Load();
             }
             catch (Exception ex)
             {
@@ -304,8 +304,8 @@ namespace Cafe.ViewModels.ClientViewModels
             try
             {
                 NewClient = new ClientAddDataModel();
-                _clientAddDialog.DataContext = this;
-                await _currentWindow.ShowMetroDialogAsync(_clientAddDialog);
+                clientAddDialog.DataContext = this;
+                await currentWindow.ShowMetroDialogAsync(clientAddDialog);
             }
             catch (Exception ex)
             {
@@ -334,7 +334,7 @@ namespace Cafe.ViewModels.ClientViewModels
                     var client = unitOfWork.Clients.SingleOrDefault(s => s.Code == _newClient.Code || s.Telephone == _newClient.Telephone);
                     if (client != null)
                     {
-                        await _currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالعميل موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        await currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالعميل موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
                             AffirmativeButtonText = "موافق",
                             DialogMessageFontSize = 25,
@@ -351,7 +351,7 @@ namespace Cafe.ViewModels.ClientViewModels
                         });
                         unitOfWork.Complete();
                         NewClient = new ClientAddDataModel();
-                        Load(true);
+                        Load();
                     }
                 }
 
@@ -381,13 +381,13 @@ namespace Cafe.ViewModels.ClientViewModels
         {
             try
             {
-                _clientUpdateDialog.DataContext = this;
+                clientUpdateDialog.DataContext = this;
                 ClientUpdate = new ClientUpdateDataModel();
                 ClientUpdate.Name = _selectedClient.Client.Name;
                 ClientUpdate.Code = _selectedClient.Client.Code;
                 ClientUpdate.Telephone = _selectedClient.Client.Telephone;
                 ClientUpdate.ID = _selectedClient.Client.ID;
-                await _currentWindow.ShowMetroDialogAsync(_clientUpdateDialog);
+                await currentWindow.ShowMetroDialogAsync(clientUpdateDialog);
             }
             catch (Exception ex)
             {
@@ -416,7 +416,7 @@ namespace Cafe.ViewModels.ClientViewModels
                     var client = unitOfWork.Clients.SingleOrDefault(s => (s.Telephone == _clientUpdate.Telephone || s.Code == _clientUpdate.Code) && s.ID != _clientUpdate.ID);
                     if (client != null)
                     {
-                        await _currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالعميل موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        await currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالعميل موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
                             AffirmativeButtonText = "موافق",
                             DialogMessageFontSize = 25,
@@ -430,8 +430,8 @@ namespace Cafe.ViewModels.ClientViewModels
                         SelectedClient.Client.Telephone = ClientUpdate.Telephone;
                         unitOfWork.Clients.Edit(_selectedClient.Client);
                         unitOfWork.Complete();
-                        await _currentWindow.HideMetroDialogAsync(_clientUpdateDialog);
-                        Load(true);
+                        await currentWindow.HideMetroDialogAsync(clientUpdateDialog);
+                        Load();
                     }
                 }
             }
@@ -468,10 +468,10 @@ namespace Cafe.ViewModels.ClientViewModels
                 switch (parameter)
                 {
                     case "Add":
-                        await _currentWindow.HideMetroDialogAsync(_clientAddDialog);
+                        await currentWindow.HideMetroDialogAsync(clientAddDialog);
                         break;
                     case "Update":
-                        await _currentWindow.HideMetroDialogAsync(_clientUpdateDialog);
+                        await currentWindow.HideMetroDialogAsync(clientUpdateDialog);
                         break;
                     default:
                         break;
