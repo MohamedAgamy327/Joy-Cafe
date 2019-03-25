@@ -64,19 +64,6 @@ namespace DTO.DeviceTypeDataModel
             }
         }
 
-        private string _birthdayVisibility;
-        public string BirthdayVisibility
-        {
-            get
-            {
-                if (Birthday)
-                    return _birthdayVisibility = "Visible";
-                else
-                    return _birthdayVisibility = "Collapsed";
-            }
-            set { SetProperty(ref _birthdayVisibility, value); }
-        }
-
         private decimal? _birthdayHourPrice;
         public decimal? BirthdayHourPrice
         {

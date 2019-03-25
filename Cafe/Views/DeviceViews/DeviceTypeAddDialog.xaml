@@ -15,6 +15,7 @@
     <StackPanel Name="pnl" Margin="10" >
         <StackPanel.Resources>
             <ResourceDictionary>
+                <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
                 <ResourceDictionary.MergedDictionaries>
                     <ResourceDictionary Source="..\..\Skins\MainSkin.xaml"/>
                 </ResourceDictionary.MergedDictionaries>
@@ -37,14 +38,17 @@
         <Controls:NumericUpDown IsEnabled="False"  Value="{Binding NewDeviceType.MultiMinutePrice, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle}" Minimum="0.01">
         </Controls:NumericUpDown>
 
-        <Controls:ToggleSwitch IsChecked="{Binding NewDeviceType.Birthday, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Center" OnLabel="عيد ميلاد متاح" OffLabel="عيد ميلاد غير متاح" Style="{StaticResource ToggleSwitchStyle}"></Controls:ToggleSwitch>
+        <Controls:ToggleSwitch x:Name="VisibilityToggle"  IsChecked="{Binding NewDeviceType.Birthday, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Center" OnLabel="عيد ميلاد متاح" OffLabel="عيد ميلاد غير متاح" Style="{StaticResource ToggleSwitchStyle}"></Controls:ToggleSwitch>
 
-        <TextBlock Style="{StaticResource TextBlockStyle}" Margin="0,5" Visibility="{Binding NewDeviceType.BirthdayVisibility}">سعر ساعة عيد ميلاد</TextBlock>
-        <Controls:NumericUpDown Visibility="{Binding NewDeviceType.BirthdayVisibility}" Value="{Binding NewDeviceType.BirthdayHourPrice, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle}" Minimum="0.01">
-        </Controls:NumericUpDown>
-        <TextBlock Visibility="{Binding NewDeviceType.BirthdayVisibility}" Style="{StaticResource TextBlockStyle}" Margin="0,5">سعر دقيقة عيد ميلاد</TextBlock>
-        <Controls:NumericUpDown Visibility="{Binding NewDeviceType.BirthdayVisibility}" IsEnabled="False"  Value="{Binding NewDeviceType.BirthdayMinutePrice, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle}" Minimum="0.01">
-        </Controls:NumericUpDown>
+        <StackPanel Visibility="{Binding IsChecked, ElementName=VisibilityToggle, Converter={StaticResource BoolToVisibility}}">
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="0,5" >سعر ساعة عيد ميلاد</TextBlock>
+            <Controls:NumericUpDown  Value="{Binding NewDeviceType.BirthdayHourPrice, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle}" Minimum="0.01">
+            </Controls:NumericUpDown>
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="0,5">سعر دقيقة عيد ميلاد</TextBlock>
+            <Controls:NumericUpDown  IsEnabled="False"  Value="{Binding NewDeviceType.BirthdayMinutePrice, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle}" Minimum="0.01">
+            </Controls:NumericUpDown>
+        </StackPanel>
+     
 
 
         <Separator Margin="0 15 0 0" />

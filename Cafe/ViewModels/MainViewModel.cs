@@ -254,6 +254,7 @@ namespace Cafe.ViewModels
 
                         if (UserData.Role == RoleText.Admin)
                         {
+                            Mouse.OverrideCursor = null;
                             await currentWindow.HideMetroDialogAsync(loginDialog);
                         }
 
@@ -261,11 +262,13 @@ namespace Cafe.ViewModels
                         {
                             if (unitOfWork.Shifts.SingleOrDefault(s => s.UserID == user.ID && s.EndDate == null) != null)
                             {
+                                Mouse.OverrideCursor = null;
                                 await currentWindow.HideMetroDialogAsync(loginDialog);
                                 NavigateToViewMethodAsync("Bill");
                             }
                             else if (unitOfWork.Shifts.SingleOrDefault(s => s.UserID != user.ID && s.EndDate == null) != null)
                             {
+                                Mouse.OverrideCursor = null;
                                 await currentWindow.HideMetroDialogAsync(loginDialog);
                                 await currentWindow.ShowMessageAsync("فشل الدخول", "يجب انهاء الشفت اولاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                                 {
@@ -337,6 +340,7 @@ namespace Cafe.ViewModels
 
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
+                    Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
                     unitOfWork.Shifts.Add(new Shift
                     {
                         SafeStart = _newShiftModel.SafeStart,
@@ -345,12 +349,17 @@ namespace Cafe.ViewModels
                     });
                     unitOfWork.Complete();
                 }
+                Mouse.OverrideCursor = null;
                 await currentWindow.HideMetroDialogAsync(startShiftDialog);
                 NavigateToViewMethodAsync("Bill");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
             }
         }
         private bool CanExecuteStartShift()
@@ -410,7 +419,6 @@ namespace Cafe.ViewModels
                         string sqlCommand = @"BACKUP DATABASE [{0}] TO  DISK = N'" + fileName + ".bak' WITH NOFORMAT, NOINIT,NAME = N'MyAir-Full Database Backup', SKIP, NOREWIND, NOUNLOAD,  STATS = 10";
                         db.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, string.Format(sqlCommand, dbname));
                         BackupModel = new BackupDataModel();
-                        Mouse.OverrideCursor = null;
                     }
                     catch
                     {
@@ -424,6 +432,10 @@ namespace Cafe.ViewModels
                         });
                         await currentWindow.ShowMetroDialogAsync(backupDialog);
                         return;
+                    }
+                    finally
+                    {
+                        Mouse.OverrideCursor = null;
                     }
                 }
             }
@@ -495,12 +507,14 @@ namespace Cafe.ViewModels
                 cmd.ExecuteNonQuery();
                 sqlconnection.Close();
                 RestoreBackupModel = new RestoreBackupDataModel();
-                Mouse.OverrideCursor = null;
             }
             catch (Exception ex)
             {
-                Mouse.OverrideCursor = null;
                 MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
             }
         }
         private bool CanExecuteRestore()

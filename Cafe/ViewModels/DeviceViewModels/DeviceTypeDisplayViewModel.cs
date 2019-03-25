@@ -298,7 +298,7 @@ namespace Cafe.ViewModels.DeviceViewModels
         }
         private bool CanExecuteSave()
         {
-            if (NewDeviceType.HasErrors)
+            if (NewDeviceType.HasErrors || (NewDeviceType.Birthday && NewDeviceType.BirthdayHourPrice == null))
                 return false;
             else
                 return true;
@@ -401,7 +401,10 @@ namespace Cafe.ViewModels.DeviceViewModels
         {
             try
             {
-                return !DeviceTypeUpdate.HasErrors;
+                if (DeviceTypeUpdate.HasErrors || (DeviceTypeUpdate.Birthday && DeviceTypeUpdate.BirthdayHourPrice == null))
+                    return false;
+                else
+                    return true;
             }
             catch
             {

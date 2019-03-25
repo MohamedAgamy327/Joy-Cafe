@@ -22,8 +22,11 @@ using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Cafe.ViewModels.BillViewModels
 {
@@ -1139,11 +1142,53 @@ namespace Cafe.ViewModels.BillViewModels
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
+                    Mouse.OverrideCursor = Cursors.Wait;
+                    string oldUSer = UserData.Name;
+                    if (_shift.NewShift)
+                    {
+                        var user = unitOfWork.Users.SingleOrDefault(s => s.Name == _shift.UserName && s.Password == _shift.Password && s.IsWorked == true);
+
+                        if (user == null)
+                        {
+                            Mouse.OverrideCursor = null;
+                            await currentWindow.ShowMessageAsync("فشل الإنهاء", "يوجد خطأ فى الاسم أو الرقم السرى يرجى التأكد من البيانات", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                            {
+                                AffirmativeButtonText = "موافق",
+                                DialogMessageFontSize = 25,
+                                DialogTitleFontSize = 30
+                            });
+                            return;
+                        }
+
+                        else if (user.Role.Name == RoleText.Admin)
+                        {
+                            Mouse.OverrideCursor = null;
+                            await currentWindow.ShowMessageAsync("فشل الإنهاء", "لا تملك الصلاحية الكاشير فقط من يستطيع بداية شيفت جديد", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                            {
+                                AffirmativeButtonText = "موافق",
+                                DialogMessageFontSize = 25,
+                                DialogTitleFontSize = 30
+                            });
+                            return;
+                        }
+                        else
+                        {
+                            UserData.ID = user.ID;
+                            UserData.Role = user.Role.Name;
+                            UserData.Name = user.Name;
+                        }
+                    }
+                    else
+                    {
+                        UserData.Role = "";
+                        UserData.Name = "";
+                        UserData.ID = 0;
+                    }
+
                     DateTime endDate = DateTime.Now;
                     Bill bill = unitOfWork.Bills.SingleOrDefault(s => s.EndDate == null && s.Type == GeneralText.Items);
                     if (bill != null)
                     {
-
                         var itemsBillTotal = unitOfWork.BillsItems.Find(f => f.BillID == bill.ID).Sum(s => s.Total);
                         bill.UserID = UserData.ID;
                         bill.ItemsSum = (itemsBillTotal.HasValue) ? itemsBillTotal : 0;
@@ -1168,6 +1213,10 @@ namespace Cafe.ViewModels.BillViewModels
                             };
                             unitOfWork.Safes.Add(safe);
                         }
+                        else
+                        {
+                            unitOfWork.Bills.Remove(bill);
+                        }
                     }
 
                     var shift = unitOfWork.Shifts.SingleOrDefault(s => s.EndDate == null);
@@ -1180,53 +1229,57 @@ namespace Cafe.ViewModels.BillViewModels
 
                     if (_shift.NewShift)
                     {
-                        var user = unitOfWork.Users.SingleOrDefault(s => s.Name == _shift.UserName && s.Password == _shift.Password && s.IsWorked == true);
-
-                        if (user == null)
+                        Shift newShift = new Shift
                         {
-                            await currentWindow.ShowMessageAsync("فشل الإنهاء", "يوجد خطأ فى الاسم أو الرقم السرى يرجى التأكد من البيانات", MessageDialogStyle.Affirmative, new MetroDialogSettings()
-                            {
-                                AffirmativeButtonText = "موافق",
-                                DialogMessageFontSize = 25,
-                                DialogTitleFontSize = 30
-                            });
-                            return;
+                            StartDate = DateTime.Now,
+                            UserID = UserData.ID,
+                            SafeStart = _shift.SafeEnd
+                        };
+                        unitOfWork.Shifts.Add(newShift);
+                    }
+                    unitOfWork.Complete();
+
+                    string path = "";
+                    bool exists;
+                    try
+                    {
+                        path = @"D:\JoyDB";
+                        exists = Directory.Exists(path);
+                        if (!exists)
+                            Directory.CreateDirectory(path);
+                    }
+                    catch
+                    {
+
+                    }
+                    try
+                    {
+                        path = @"E:\JoyDB";
+                        exists = Directory.Exists(path);
+                        if (!exists)
+                            Directory.CreateDirectory(path);
+                    }
+                    catch
+                    {
+                        path = @"D:\JoyDB";
+                    }
+                    using (GeneralDBContext db = new GeneralDBContext())
+                    {
+                        try
+                        {
+                            string fileName = path + $"\\JoyDB shift {oldUSer} {DateTime.Now.ToShortDateString().Replace('/', '-')} - {DateTime.Now.ToLongTimeString().Replace(':', '-')}";
+                            string dbname = db.Database.Connection.Database;
+                            string sqlCommand = @"BACKUP DATABASE [{0}] TO  DISK = N'" + fileName + ".bak' WITH NOFORMAT, NOINIT,NAME = N'MyAir-Full Database Backup', SKIP, NOREWIND, NOUNLOAD,  STATS = 10";
+                            db.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, string.Format(sqlCommand, dbname));
                         }
-
-                        else if (user.Role.Name == RoleText.Admin)
+                        catch
                         {
-                            await currentWindow.ShowMessageAsync("فشل الإنهاء", "لا تملك الصلاحية الكاشير فقط من يستطيع بداية شيفت جديد", MessageDialogStyle.Affirmative, new MetroDialogSettings()
-                            {
-                                AffirmativeButtonText = "موافق",
-                                DialogMessageFontSize = 25,
-                                DialogTitleFontSize = 30
-                            });
-                            return;
-                        }
-                        else
-                        {
-                            UserData.ID = user.ID;
-                            UserData.Role = user.Role.Name;
-                            UserData.Name = user.Name;
-
-                            Shift newShift = new Shift
-                            {
-                                StartDate = DateTime.Now,
-                                UserID = UserData.ID,
-                                SafeStart = _shift.SafeEnd
-                            };
-                            unitOfWork.Shifts.Add(newShift);
-                            unitOfWork.Complete();
-                            await currentWindow.HideMetroDialogAsync(finishShiftDialog);
                         }
                     }
-                    else
+                    Mouse.OverrideCursor = null;
+                    await currentWindow.HideMetroDialogAsync(finishShiftDialog);
+                    if (!_shift.NewShift)
                     {
-                        unitOfWork.Complete();
-                        await currentWindow.HideMetroDialogAsync(finishShiftDialog);
-                        UserData.Role = "";
-                        UserData.Name = "";
-                        UserData.ID = 0;
                         currentWindow.Close();
                         new MainViewModel().NavigateToViewMethodAsync("SignOut");
                     }
@@ -1236,6 +1289,10 @@ namespace Cafe.ViewModels.BillViewModels
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
             }
         }
         private bool CanExecuteFinishShift()
