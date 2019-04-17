@@ -19,7 +19,6 @@ namespace DAL
 
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
-      
         public DbSet<Safe> Safes { get; set; }
         public DbSet<Bill> Bills { get; set; }
         public DbSet<Item> Items { get; set; }

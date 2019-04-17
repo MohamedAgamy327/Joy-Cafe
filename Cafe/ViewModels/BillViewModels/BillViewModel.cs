@@ -13,6 +13,14 @@ namespace Cafe.ViewModels.BillViewModels
         public BillViewModel()
         {
             _currentViewModel = new DevicesViewModel();
+            _title = $"اسم المستخدم: {UserData.Name}";
+        }
+
+        private string _title;
+        public string Title
+        {
+            get { return _title; }
+            set { SetProperty(ref _title, value); }
         }
 
         private ViewModelBase _currentViewModel;
@@ -35,9 +43,14 @@ namespace Cafe.ViewModels.BillViewModels
         {
             try
             {
-                if (UserData.Role == RoleText.Cashier)
+                if (UserData.Role == RoleText.Cashier && !UserData.newShift)
                 {
                     new MainViewModel().ExecuteShutdown();
+
+                }
+                else if (UserData.Role == RoleText.Cashier && !string.IsNullOrEmpty(UserData.Name))
+                {
+                    new MainViewModel().NavigateToViewMethodAsync("Bill");
                 }
             }
             catch (Exception ex)
@@ -45,5 +58,11 @@ namespace Cafe.ViewModels.BillViewModels
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        public void ChangeTitle()
+        {
+
+        }
+
     }
 }

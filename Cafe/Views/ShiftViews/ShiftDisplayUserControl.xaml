@@ -94,15 +94,15 @@
                   AutoGenerateColumns="False"
                                >
             <DataGrid.Columns>
-                <DataGridTextColumn IsReadOnly="True"  Header="المستخدم" Width="3*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                <DataGridTextColumn IsReadOnly="True"  Header="المستخدم" Width="3*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
                                     Binding="{Binding User.Name}"  />
-                <DataGridTextColumn IsReadOnly="True"  Header="بداية الشفت" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                <DataGridTextColumn IsReadOnly="True"  Header="بداية الشفت" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
                                     Binding="{Binding Shift.StartDate, StringFormat={}\{0:hh:mm tt yyyy/MM/dd  \}}"  />
 
-                <DataGridTextColumn IsReadOnly="True"  Header="نهاية الشفت" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                <DataGridTextColumn IsReadOnly="True"  Header="نهاية الشفت" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
                                     Binding="{Binding Shift.EndDate, StringFormat={}\{0:hh:mm tt yyyy/MM/dd  \}}"  />
 
-                <DataGridTemplateColumn  Header="عرض" Width="0.75*" HeaderStyle="{StaticResource ColumnHeaderStyle}" >
+                <DataGridTemplateColumn  Header="عرض" Width="0.75*" HeaderStyle="{StaticResource ColumnHeaderStyle1}" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button  Command="{Binding DataContext.Show, 

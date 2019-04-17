@@ -1,27 +1,15 @@
 ﻿using DAL.BindableBaseService;
 using DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DTO.DeviceDataModel
 {
-  public  class DevicePlayDataModel : ValidatableBindableBase
+    public  class DevicePlayDataModel : ValidatableBindableBase
     {
-        private string _deviceTypeIcon;
-        public string DeviceTypeIcon
+        private string _deviceTypeImage;
+        public string DeviceTypeImage
         {
-            get { return _deviceTypeIcon; }
-            set { SetProperty(ref _deviceTypeIcon, value); }
-        }
-
-        private string _color;
-        public string Color
-        {
-            get { return _color; }
-            set { SetProperty(ref _color, value); }
+            get { return _deviceTypeImage; }
+            set { SetProperty(ref _deviceTypeImage, value); }
         }
 
         private string _gameType;

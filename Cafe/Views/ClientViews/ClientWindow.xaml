@@ -35,10 +35,10 @@
 
         <StackPanel Orientation="Horizontal" Margin="5">
 
-            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="ClientDisplay" Title="العملاء" HorizontalTitleAlignment="Center" VerticalTitleAlignment="Center"   Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource NormalTileStyle}"  >
+            <Controls:Tile Background="#808000" Command="{Binding NavigateToView}" CommandParameter="ClientDisplay" Title="العملاء" HorizontalTitleAlignment="Center" VerticalTitleAlignment="Center"   Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource NormalTileStyle}"  >
             </Controls:Tile>
 
-            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="ClientPoint" Title="النقاط" HorizontalTitleAlignment="Center" VerticalTitleAlignment="Center"   Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource NormalTileStyle}"  >
+            <Controls:Tile Background="#008000" Command="{Binding NavigateToView}" CommandParameter="ClientPoint" Title="النقاط" HorizontalTitleAlignment="Center" VerticalTitleAlignment="Center"   Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource NormalTileStyle}"  >
             </Controls:Tile>
 
         </StackPanel>

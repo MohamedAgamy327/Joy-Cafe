@@ -65,12 +65,12 @@
 
                 <DataGrid.Columns>
 
-                    <DataGridTextColumn IsReadOnly="True"  Header="الصنف" Width="2*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="الصنف" Width="2*" HeaderStyle="{StaticResource ColumnHeaderStyle3}"
                                     Binding="{Binding Item.Name}"  />
-                    <DataGridTextColumn IsReadOnly="True"  Header="السعر" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="السعر" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle3}"
                                     Binding="{Binding BillItem.Price}"  />
 
-                    <DataGridTemplateColumn Header="الكمية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}">
+                    <DataGridTemplateColumn Header="الكمية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle3}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Controls:NumericUpDown  Value="{Binding BillItem.Qty,ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}"  HasDecimals="False" HorizontalContentAlignment="Center" Minimum="1"  >
@@ -85,10 +85,10 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTextColumn IsReadOnly="True"  Header="الإجمالى" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="الإجمالى" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle3}"
                                     Binding="{Binding BillItem.Total,StringFormat={}{0:0.00;(0.00)}}"  />
                     
-                    <DataGridTemplateColumn  Header="حذف" Width="0.5*" HeaderStyle="{StaticResource ColumnHeaderStyle}" >
+                    <DataGridTemplateColumn  Header="حذف" Width="0.5*" HeaderStyle="{StaticResource ColumnHeaderStyle3}" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Command="{Binding DataContext.DeleteItem,

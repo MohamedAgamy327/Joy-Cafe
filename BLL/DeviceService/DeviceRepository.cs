@@ -21,7 +21,7 @@ namespace BLL.DeviceService
             get { return Context as GeneralDBContext; }
         }
 
-        public int GetRecordsNumber( string key)
+        public int GetRecordsNumber(string key)
         {
             return GeneralDBContext.Devices.Where(s => (s.Name + s.DeviceType.Name).Contains(key)).Count();
         }
@@ -39,48 +39,36 @@ namespace BLL.DeviceService
 
         public List<DevicePlayDataModel> GetAvailable()
         {
+            string url = @"../../Resources/Icons/";
             return GeneralDBContext.Devices.AsNoTracking().Where(w => w.IsAvailable == true).OrderBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Select(s => new DevicePlayDataModel
             {
                 Device = s,
                 DeviceType = s.DeviceType,
-                Color = s.Case == CaseText.Busy ? "#CCD24726" :
-                    s.Case == CaseText.Free ? "#E577B900" : "#000000",
-                DeviceTypeIcon = s.DeviceType.Name == DeviceTypeText.PlayStation3 ? "MonitorPlay" :
-                    s.DeviceType.Name == DeviceTypeText.PlayStation4 ? "SocialPlaystation" :
-                    s.DeviceType.Name == DeviceTypeText.VIP ? "Vip" :
-                    s.DeviceType.Name == DeviceTypeText.Premium ? "AdobePremierpro" :
-                    s.DeviceType.Name == DeviceTypeText.Royal ? "SocialSpotify" :
-                    s.DeviceType.Name == DeviceTypeText.VR ? "SmileyGlasses" : "Xbox",
+                DeviceTypeImage = s.Case == CaseText.Free ? (url + (DevicesImagesList.ImageList.FirstOrDefault(m => m.Contains(s.DeviceType.Name) && m.Contains(CaseText.Free)))) :
+                s.Case == CaseText.Paused ? (url + (DevicesImagesList.ImageList.FirstOrDefault(m => m.Contains(s.DeviceType.Name) && m.Contains(CaseText.Paused) && m.Contains(s.BillsDevices.OrderByDescending(o => o.StartDate).FirstOrDefault().GameType)))) :
+                (url + (DevicesImagesList.ImageList.FirstOrDefault(m => m.Contains(s.DeviceType.Name) && m.Contains(s.BillsDevices.OrderByDescending(o => o.StartDate).FirstOrDefault().GameType)))),
                 GameType = s.Case != CaseText.Free ? s.BillsDevices.OrderByDescending(o => o.StartDate).FirstOrDefault().GameType : ""
             }).ToList();
         }
 
         public List<DeviceFreeDataModel> GetFree(string gameType)
         {
+            string url = @"../../Resources/Icons/";
             if (gameType == GamePlayTypeText.Birthday)
                 return GeneralDBContext.Devices.AsNoTracking().Where(w => w.IsAvailable == true && w.Case == CaseText.Free && w.DeviceType.Birthday == true).OrderBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Select(s => new DeviceFreeDataModel
                 {
                     Device = s,
                     DeviceType = s.DeviceType,
-                    DeviceTypeIcon = s.DeviceType.Name == DeviceTypeText.PlayStation3 ? "MonitorPlay" :
-                          s.DeviceType.Name == DeviceTypeText.PlayStation4 ? "SocialPlaystation" :
-                          s.DeviceType.Name == DeviceTypeText.VIP ? "Vip" :
-                          s.DeviceType.Name == DeviceTypeText.Premium ? "AdobePremierpro" :
-                          s.DeviceType.Name == DeviceTypeText.Royal ? "SocialSpotify" :
-                          s.DeviceType.Name == DeviceTypeText.VR ? "SmileyGlasses" : "Xbox"
+                    DeviceTypeImage = (url + (DevicesImagesList.ImageList.FirstOrDefault(m => m.Contains(s.DeviceType.Name) && m.Contains(CaseText.Free))))
                 }).ToList();
             else
                 return GeneralDBContext.Devices.AsNoTracking().Where(w => w.IsAvailable == true && w.Case == CaseText.Free).OrderBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Select(s => new DeviceFreeDataModel
                 {
                     Device = s,
                     DeviceType = s.DeviceType,
-                    DeviceTypeIcon = s.DeviceType.Name == DeviceTypeText.PlayStation3 ? "MonitorPlay" :
-                          s.DeviceType.Name == DeviceTypeText.PlayStation4 ? "SocialPlaystation" :
-                          s.DeviceType.Name == DeviceTypeText.VIP ? "Vip" :
-                          s.DeviceType.Name == DeviceTypeText.Premium ? "AdobePremierpro" :
-                          s.DeviceType.Name == DeviceTypeText.Royal ? "SocialSpotify" :
-                          s.DeviceType.Name == DeviceTypeText.VR ? "SmileyGlasses" : "Xbox"
+                    DeviceTypeImage = (url + (DevicesImagesList.ImageList.FirstOrDefault(m => m.Contains(s.DeviceType.Name) && m.Contains(CaseText.Free))))
                 }).ToList();
         }
+
     }
 }

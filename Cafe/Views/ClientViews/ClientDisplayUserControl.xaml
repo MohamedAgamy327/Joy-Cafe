@@ -74,6 +74,7 @@
             </TextBox>
 
             <DataGrid 
+                
                 ItemsSource="{Binding Clients}"
                 SelectedItem="{Binding SelectedClient}"
                       Margin="0 10 0 0"
@@ -86,11 +87,11 @@
                   AutoGenerateColumns="False"
                                >
                 <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly="True"  Header="العميل" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Client.Name}" />
-                    <DataGridTextColumn IsReadOnly="True"  Header="الكود" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Client.Code}" />
-                    <DataGridTextColumn IsReadOnly="True"  Header="التليفون" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Client.Telephone}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="العميل" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding Client.Name}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="الكود" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding Client.Code}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="التليفون" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding Client.Telephone}" />
 
-                    <DataGridTemplateColumn  Header="تعديل" Width="0.5*" HeaderStyle="{StaticResource ColumnHeaderStyle}" >
+                    <DataGridTemplateColumn  Header="تعديل" Width="0.5*" HeaderStyle="{StaticResource ColumnHeaderStyle1}" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Command="{Binding DataContext.ShowUpdate, 
@@ -101,7 +102,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     
-                    <DataGridTemplateColumn  Header="حذف" Width="0.5*" HeaderStyle="{StaticResource ColumnHeaderStyle}" >
+                    <DataGridTemplateColumn  Header="حذف" Width="0.5*" HeaderStyle="{StaticResource ColumnHeaderStyle1}" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button  Command="{Binding DataContext.Delete, 
@@ -145,7 +146,7 @@
             </StackPanel>
 
             <StackPanel Margin="0,5"  Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <Button Command="{Binding Export}" Margin="5,0"    Style="{DynamicResource MetroCircleButtonStyle}" BorderThickness="0"   >
+                <Button  Command="{Binding Export}" Margin="5,0"    Style="{DynamicResource MetroCircleButtonStyle}" BorderThickness="0"   >
                     <iconPacks:PackIconSimpleIcons Kind="MicrosoftExcel" Width="40" Height="40" />
                 </Button>
             </StackPanel>

@@ -4,6 +4,6 @@
     {
         public const string Free = "Free";
         public const string Busy = "Busy";
-        public const string Temporary = "Temporary";
+        public const string Paused = "Paused";
     }
 }

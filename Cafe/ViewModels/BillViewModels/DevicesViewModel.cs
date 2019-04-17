@@ -14,6 +14,7 @@ using DTO.BillDeviceDataModel;
 using DTO.BillItemDataModel;
 using DTO.ClientDataModel;
 using DTO.DeviceDataModel;
+using DTO.MainDataModel;
 using DTO.ShiftDataModel;
 using DTO.UserDataModel;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -23,10 +24,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Cafe.ViewModels.BillViewModels
 {
@@ -37,17 +40,29 @@ namespace Cafe.ViewModels.BillViewModels
         private readonly ClientAddDialog clientAddDialog;
         private readonly ClientCheckDialog clientCheckDialog;
         private readonly FinishShiftDialog finishShiftDialog;
+        private readonly FinishShiftConfirmDialog finishShiftConfirmDialog;
 
         public DevicesViewModel()
         {
+            UserData.newShift = false;
+            _timer = new DispatcherTimer(DispatcherPriority.Render);
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += (sender, args) =>
+            {
+                CurrentTime = DateTime.Now.ToLongTimeString();
+            };
+            _timer.Start();
+
             _isFocused = true;
-            _accountVisibility = VisibilityText.Collapsed;
-            _freeDevicesVisibility = VisibilityText.Collapsed;
-            _availableDevicesVisibility = VisibilityText.Visible;
+            _accountVisibility = Visibility.Collapsed;
+            _freeDevicesVisibility = Visibility.Collapsed;
+            _availableDevicesVisibility = Visibility.Visible;
             clientAddDialog = new ClientAddDialog();
             clientCheckDialog = new ClientCheckDialog();
             finishShiftDialog = new FinishShiftDialog();
+            finishShiftConfirmDialog = new FinishShiftConfirmDialog();
             currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
+
         }
 
         private bool _isFocused;
@@ -57,24 +72,45 @@ namespace Cafe.ViewModels.BillViewModels
             set { SetProperty(ref _isFocused, value); }
         }
 
+        // Time 
+
+        private string _currentTime;
+
+        public DispatcherTimer _timer;
+
+        public string CurrentTime
+        {
+            get
+            {
+                return this._currentTime;
+            }
+            set
+            {
+                if (_currentTime == value)
+                    return;
+                _currentTime = value;
+                OnPropertyChanged("CurrentTime");
+            }
+        }
+
         // Grid Display
 
-        private string _accountVisibility;
-        public string AccountVisibility
+        private Visibility _accountVisibility;
+        public Visibility AccountVisibility
         {
             get { return _accountVisibility; }
             set { SetProperty(ref _accountVisibility, value); }
         }
 
-        private string _freeDevicesVisibility;
-        public string FreeDevicesVisibility
+        private Visibility _freeDevicesVisibility;
+        public Visibility FreeDevicesVisibility
         {
             get { return _freeDevicesVisibility; }
             set { SetProperty(ref _freeDevicesVisibility, value); }
         }
 
-        private string _availableDevicesVisibility;
-        public string AvailableDevicesVisibility
+        private Visibility _availableDevicesVisibility;
+        public Visibility AvailableDevicesVisibility
         {
             get { return _availableDevicesVisibility; }
             set { SetProperty(ref _availableDevicesVisibility, value); }
@@ -82,50 +118,57 @@ namespace Cafe.ViewModels.BillViewModels
 
         // Device Case 
 
-        private string _startVisibility;
-        public string StartVisibility
+        private Visibility _clickVisibility;
+        public Visibility ClickVisibility
+        {
+            get { return _clickVisibility; }
+            set { SetProperty(ref _clickVisibility, value); }
+        }
+
+        private Visibility _startVisibility;
+        public Visibility StartVisibility
         {
             get { return _startVisibility; }
             set { SetProperty(ref _startVisibility, value); }
         }
 
-        private string _stopVisibility;
-        public string StopVisibility
+        private Visibility _stopVisibility;
+        public Visibility StopVisibility
         {
             get { return _stopVisibility; }
             set { SetProperty(ref _stopVisibility, value); }
         }
 
-        private string _birthdayVisibility;
-        public string BirthdayVisibility
+        private Visibility _birthdayVisibility;
+        public Visibility BirthdayVisibility
         {
             get { return _birthdayVisibility; }
             set { SetProperty(ref _birthdayVisibility, value); }
         }
 
-        private string _singleVisibility;
-        public string SingleVisibility
+        private Visibility _singleVisibility;
+        public Visibility SingleVisibility
         {
             get { return _singleVisibility; }
             set { SetProperty(ref _singleVisibility, value); }
         }
 
-        private string _multiVisibility;
-        public string MultiVisibility
+        private Visibility _multiVisibility;
+        public Visibility MultiVisibility
         {
             get { return _multiVisibility; }
             set { SetProperty(ref _multiVisibility, value); }
         }
 
-        private string _temporaryVisibility;
-        public string TemporaryVisibility
+        private Visibility _temporaryVisibility;
+        public Visibility TemporaryVisibility
         {
             get { return _temporaryVisibility; }
             set { SetProperty(ref _temporaryVisibility, value); }
         }
 
-        private string _resumeVisibility;
-        public string ResumeVisibility
+        private Visibility _resumeVisibility;
+        public Visibility ResumeVisibility
         {
             get { return _resumeVisibility; }
             set { SetProperty(ref _resumeVisibility, value); }
@@ -207,6 +250,13 @@ namespace Cafe.ViewModels.BillViewModels
             set { SetProperty(ref _clientCheck, value); }
         }
 
+        private LoginDataModel _loginModel;
+        public LoginDataModel LoginModel
+        {
+            get { return _loginModel; }
+            set { SetProperty(ref _loginModel, value); }
+        }
+
         private FinishShiftDataModel _shift;
         public FinishShiftDataModel Shift
         {
@@ -281,7 +331,7 @@ namespace Cafe.ViewModels.BillViewModels
                     Devices = new ObservableCollection<DevicePlayDataModel>(unitOfWork.Devices.GetAvailable());
                     BusyDevices = _devices.Where(w => w.Device.Case == CaseText.Busy).Count();
                     AvailableDevices = _devices.Where(w => w.Device.Case == CaseText.Free).Count();
-                    TemporaryDevices = _devices.Where(w => w.Device.Case == CaseText.Temporary).Count();
+                    TemporaryDevices = _devices.Where(w => w.Device.Case == CaseText.Paused).Count();
                 }
             }
             catch (Exception ex)
@@ -304,46 +354,56 @@ namespace Cafe.ViewModels.BillViewModels
             try
             {
                 if (SelectedDevice == null)
+                {
+                    SingleVisibility = Visibility.Collapsed;
+                    MultiVisibility = Visibility.Collapsed;
+                    BirthdayVisibility = Visibility.Collapsed;
+                    ResumeVisibility = Visibility.Collapsed;
+                    TemporaryVisibility = Visibility.Collapsed;
+                    StartVisibility = Visibility.Collapsed;
+                    StopVisibility = Visibility.Collapsed;
                     return;
+                }
+                    
 
-                SingleVisibility = VisibilityText.Visible;
-                MultiVisibility = VisibilityText.Visible;
-                BirthdayVisibility = VisibilityText.Visible;
+                SingleVisibility = Visibility.Visible;
+                MultiVisibility = Visibility.Visible;
+                BirthdayVisibility = Visibility.Visible;
 
                 if (_selectedDevice.Device.Case != CaseText.Free)
                 {
-                    StartVisibility = VisibilityText.Collapsed;
-                    StopVisibility = VisibilityText.Visible;
+                    StartVisibility = Visibility.Collapsed;
+                    StopVisibility = Visibility.Visible;
                 }
                 else
                 {
-                    StartVisibility = VisibilityText.Visible;
-                    StopVisibility = VisibilityText.Collapsed;
+                    StartVisibility = Visibility.Visible;
+                    StopVisibility = Visibility.Collapsed;
                 }
                 if (_selectedDevice.DeviceType.Birthday && _selectedDevice.GameType != GamePlayTypeText.Birthday)
-                    BirthdayVisibility = VisibilityText.Visible;
+                    BirthdayVisibility = Visibility.Visible;
                 else
-                    BirthdayVisibility = VisibilityText.Collapsed;
+                    BirthdayVisibility = Visibility.Collapsed;
 
                 if (_selectedDevice.GameType == GamePlayTypeText.Single)
-                    SingleVisibility = VisibilityText.Collapsed;
-                if (_selectedDevice.GameType == GamePlayTypeText.Multiplayer)
-                    MultiVisibility = VisibilityText.Collapsed;
+                    SingleVisibility = Visibility.Collapsed;
+                if (_selectedDevice.GameType == GamePlayTypeText.Multi)
+                    MultiVisibility = Visibility.Collapsed;
 
                 if (_selectedDevice.Device.Case == CaseText.Free)
                 {
-                    ResumeVisibility = VisibilityText.Collapsed;
-                    TemporaryVisibility = VisibilityText.Collapsed;
+                    ResumeVisibility = Visibility.Collapsed;
+                    TemporaryVisibility = Visibility.Collapsed;
                 }
-                else if (_selectedDevice.Device.Case == CaseText.Temporary)
+                else if (_selectedDevice.Device.Case == CaseText.Paused)
                 {
-                    ResumeVisibility = VisibilityText.Visible;
-                    TemporaryVisibility = VisibilityText.Collapsed;
+                    ResumeVisibility = Visibility.Visible;
+                    TemporaryVisibility = Visibility.Collapsed;
                 }
                 else
                 {
-                    ResumeVisibility = VisibilityText.Collapsed;
-                    TemporaryVisibility = VisibilityText.Visible;
+                    ResumeVisibility = Visibility.Collapsed;
+                    TemporaryVisibility = Visibility.Visible;
                 }
             }
             catch (Exception ex)
@@ -367,7 +427,6 @@ namespace Cafe.ViewModels.BillViewModels
             {
                 if (SelectedDevice == null)
                     return;
-
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
                     Bill bill = new Bill
@@ -395,12 +454,12 @@ namespace Cafe.ViewModels.BillViewModels
                             };
                             break;
 
-                        case GamePlayTypeText.Multiplayer:
+                        case GamePlayTypeText.Multi:
 
                             newBillDevice = new BillDevice
                             {
                                 StartDate = DateTime.Now,
-                                GameType = GamePlayTypeText.Multiplayer,
+                                GameType = GamePlayTypeText.Multi,
                                 MinutePrice = _selectedDevice.DeviceType.MultiMinutePrice,
                                 BillID = bill.ID,
                                 DeviceID = _selectedDevice.Device.ID
@@ -428,7 +487,7 @@ namespace Cafe.ViewModels.BillViewModels
                     Devices = new ObservableCollection<DevicePlayDataModel>(unitOfWork.Devices.GetAvailable());
                     BusyDevices = _devices.Where(w => w.Device.Case == CaseText.Busy).Count();
                     AvailableDevices = _devices.Where(w => w.Device.Case == CaseText.Free).Count();
-                    TemporaryDevices = _devices.Where(w => w.Device.Case == CaseText.Temporary).Count();
+                    TemporaryDevices = _devices.Where(w => w.Device.Case == CaseText.Paused).Count();
                 }
             }
             catch (Exception ex)
@@ -482,12 +541,12 @@ namespace Cafe.ViewModels.BillViewModels
 
                             break;
 
-                        case GamePlayTypeText.Multiplayer:
+                        case GamePlayTypeText.Multi:
 
                             newBillDevice = new BillDevice
                             {
                                 StartDate = DateTime.Now,
-                                GameType = GamePlayTypeText.Multiplayer,
+                                GameType = GamePlayTypeText.Multi,
                                 MinutePrice = _selectedDevice.DeviceType.MultiMinutePrice,
                                 BillID = Convert.ToInt32(_selectedDevice.Device.BillID),
                                 DeviceID = _selectedDevice.Device.ID
@@ -517,7 +576,7 @@ namespace Cafe.ViewModels.BillViewModels
                     Devices = new ObservableCollection<DevicePlayDataModel>(unitOfWork.Devices.GetAvailable());
                     BusyDevices = _devices.Where(w => w.Device.Case == CaseText.Busy).Count();
                     AvailableDevices = _devices.Where(w => w.Device.Case == CaseText.Free).Count();
-                    TemporaryDevices = _devices.Where(w => w.Device.Case == CaseText.Temporary).Count();
+                    TemporaryDevices = _devices.Where(w => w.Device.Case == CaseText.Paused).Count();
                 }
             }
             catch (Exception ex)
@@ -544,7 +603,7 @@ namespace Cafe.ViewModels.BillViewModels
 
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    _selectedDevice.Device.Case = CaseText.Temporary;
+                    _selectedDevice.Device.Case = CaseText.Paused;
                     unitOfWork.Devices.Edit(_selectedDevice.Device);
                     BillDevice selectedBillDevice = unitOfWork.BillsDevices.FirstOrDefault(s => s.BillID == _selectedDevice.Device.BillID && s.EndDate == null);
                     selectedBillDevice.EndDate = DateTime.Now;
@@ -555,7 +614,7 @@ namespace Cafe.ViewModels.BillViewModels
                     Devices = new ObservableCollection<DevicePlayDataModel>(unitOfWork.Devices.GetAvailable());
                     BusyDevices = _devices.Where(w => w.Device.Case == CaseText.Busy).Count();
                     AvailableDevices = _devices.Where(w => w.Device.Case == CaseText.Free).Count();
-                    TemporaryDevices = _devices.Where(w => w.Device.Case == CaseText.Temporary).Count();
+                    TemporaryDevices = _devices.Where(w => w.Device.Case == CaseText.Paused).Count();
                 }
             }
             catch (Exception ex)
@@ -603,12 +662,12 @@ namespace Cafe.ViewModels.BillViewModels
 
                             break;
 
-                        case GamePlayTypeText.Multiplayer:
+                        case GamePlayTypeText.Multi:
 
                             newBillDevice = new BillDevice
                             {
                                 StartDate = DateTime.Now,
-                                GameType = GamePlayTypeText.Multiplayer,
+                                GameType = GamePlayTypeText.Multi,
                                 MinutePrice = _selectedDevice.DeviceType.MultiMinutePrice,
                                 BillID = Convert.ToInt32(_selectedDevice.Device.BillID),
                                 DeviceID = _selectedDevice.Device.ID
@@ -637,7 +696,7 @@ namespace Cafe.ViewModels.BillViewModels
                     Devices = new ObservableCollection<DevicePlayDataModel>(unitOfWork.Devices.GetAvailable());
                     BusyDevices = _devices.Where(w => w.Device.Case == CaseText.Busy).Count();
                     AvailableDevices = _devices.Where(w => w.Device.Case == CaseText.Free).Count();
-                    TemporaryDevices = _devices.Where(w => w.Device.Case == CaseText.Temporary).Count();
+                    TemporaryDevices = _devices.Where(w => w.Device.Case == CaseText.Paused).Count();
                 }
             }
             catch (Exception ex)
@@ -701,8 +760,8 @@ namespace Cafe.ViewModels.BillViewModels
                 {
                     FreeDevices = new ObservableCollection<DeviceFreeDataModel>(unitOfWork.Devices.GetFree(_selectedDevice.GameType));
                 }
-                AvailableDevicesVisibility = VisibilityText.Collapsed;
-                FreeDevicesVisibility = VisibilityText.Visible;
+                AvailableDevicesVisibility = Visibility.Collapsed;
+                FreeDevicesVisibility = Visibility.Visible;
             }
             catch (Exception ex)
             {
@@ -723,8 +782,8 @@ namespace Cafe.ViewModels.BillViewModels
         {
             try
             {
-                FreeDevicesVisibility = VisibilityText.Collapsed;
-                AvailableDevicesVisibility = VisibilityText.Visible;
+                FreeDevicesVisibility = Visibility.Collapsed;
+                AvailableDevicesVisibility = Visibility.Visible;
             }
             catch (Exception ex)
             {
@@ -783,11 +842,11 @@ namespace Cafe.ViewModels.BillViewModels
                             };
                             break;
 
-                        case GamePlayTypeText.Multiplayer:
+                        case GamePlayTypeText.Multi:
                             newBillDevice = new BillDevice
                             {
                                 StartDate = DateTime.Now,
-                                GameType = GamePlayTypeText.Multiplayer,
+                                GameType = GamePlayTypeText.Multi,
                                 MinutePrice = selectedFreeDevice.DeviceType.MultiMinutePrice,
                                 BillID = Convert.ToInt32(selectedFreeDevice.Device.BillID),
                                 DeviceID = selectedFreeDevice.Device.ID
@@ -810,8 +869,8 @@ namespace Cafe.ViewModels.BillViewModels
                     }
                     unitOfWork.BillsDevices.Add(newBillDevice);
                     unitOfWork.Complete();
-                    FreeDevicesVisibility = VisibilityText.Collapsed;
-                    AvailableDevicesVisibility = VisibilityText.Visible;
+                    FreeDevicesVisibility = Visibility.Collapsed;
+                    AvailableDevicesVisibility = Visibility.Visible;
                     Devices = new ObservableCollection<DevicePlayDataModel>(unitOfWork.Devices.GetAvailable());
                 }
 
@@ -839,14 +898,14 @@ namespace Cafe.ViewModels.BillViewModels
             {
                 if (billID == null)
                     return;
-                AccountVisibility = VisibilityText.Collapsed;
+                AccountVisibility = Visibility.Collapsed;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
                     BillDevices = new ObservableCollection<BillDevicesDisplayDataModel>(unitOfWork.BillsDevices.GetBillDevices(Convert.ToInt32(billID)));
                     BillItems = new ObservableCollection<BillItemsDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(Convert.ToInt32(billID)));
                 }
-                AvailableDevicesVisibility = VisibilityText.Collapsed;
-                AccountVisibility = VisibilityText.Visible;
+                AvailableDevicesVisibility = Visibility.Collapsed;
+                AccountVisibility = Visibility.Visible;
             }
             catch (Exception ex)
             {
@@ -867,8 +926,8 @@ namespace Cafe.ViewModels.BillViewModels
         {
             try
             {
-                AccountVisibility = VisibilityText.Collapsed;
-                AvailableDevicesVisibility = VisibilityText.Visible;
+                AccountVisibility = Visibility.Collapsed;
+                AvailableDevicesVisibility = Visibility.Visible;
             }
             catch (Exception ex)
             {
@@ -928,8 +987,10 @@ namespace Cafe.ViewModels.BillViewModels
                     await currentWindow.HideMetroDialogAsync(clientCheckDialog);
                     if (client == null)
                     {
-                        NewClient = new ClientBillAddDataModel();
-                        NewClient.Telephone = _clientCheck.Telephone;
+                        NewClient = new ClientBillAddDataModel
+                        {
+                            Telephone = _clientCheck.Telephone
+                        };
                         clientAddDialog.DataContext = this;
                         await currentWindow.ShowMetroDialogAsync(clientAddDialog);
                     }
@@ -1094,32 +1155,84 @@ namespace Cafe.ViewModels.BillViewModels
                     });
                     return;
                 }
-                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
-                {
-                    var shift = unitOfWork.Shifts.FirstOrDefault(s => s.EndDate == null);
-                    var safeIncome = unitOfWork.Safes.Find(f => f.UserID == UserData.ID && f.Type == true && f.RegistrationDate >= shift.StartDate && f.RegistrationDate <= DateTime.Now).Sum(s => s.Amount);
-                    safeIncome = (safeIncome.HasValue) ? safeIncome : 0;
-                    var itemsBillTotal = unitOfWork.BillsItems.Find(f => f.Bill.Type == GeneralText.Items && f.Bill.EndDate == null).Sum(s => s.Total);
-                    itemsBillTotal = (itemsBillTotal.HasValue) ? itemsBillTotal : 0;
-                    var spending = unitOfWork.Safes.Find(f => f.UserID == UserData.ID && f.Type == false && f.RegistrationDate >= shift.StartDate && f.RegistrationDate <= DateTime.Now).Sum(s => s.Amount);
-                    spending = (spending.HasValue) ? spending : 0;
-
-                    Shift = new FinishShiftDataModel();
-                    Shift.NewShift = true;
-                    Shift.CurrentUserName = shift.User.Name;
-                    Shift.SafeStart = shift.SafeStart;
-                    Shift.StartDate = shift.StartDate;
-                    Shift.Income = safeIncome + itemsBillTotal;
-                    Shift.Spending = spending;
-                    Shift.Total = shift.SafeStart + Shift.Income - spending;
-                }
-                finishShiftDialog.DataContext = this;
-                await currentWindow.ShowMetroDialogAsync(finishShiftDialog);
+                LoginModel = new LoginDataModel();
+                finishShiftConfirmDialog.DataContext = this;
+                await currentWindow.ShowMetroDialogAsync(finishShiftConfirmDialog);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private RelayCommand _signIn;
+        public RelayCommand SignIn
+        {
+            get
+            {
+                return _signIn ?? (_signIn = new RelayCommand(
+                    ExecuteSignInAsync,
+                    CanExecuteSignIn));
+            }
+        }
+        private async void ExecuteSignInAsync()
+        {
+            try
+            {
+                if (LoginModel.Name == null || LoginModel.Password == null)
+                    return;
+                if (LoginModel.Name == UserData.Name && LoginModel.Password == UserData.Password)
+                {
+                    using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                    {
+                        var shift = unitOfWork.Shifts.FirstOrDefault(s => s.EndDate == null);
+                        var safeIncome = unitOfWork.Safes.Find(f => f.UserID == UserData.ID && f.Type == true && f.RegistrationDate >= shift.StartDate && f.RegistrationDate <= DateTime.Now).Sum(s => s.Amount);
+                        safeIncome = (safeIncome.HasValue) ? safeIncome : 0;
+                        var itemsBillTotal = unitOfWork.BillsItems.Find(f => f.Bill.Type == GeneralText.Items && f.Bill.EndDate == null).Sum(s => s.Total);
+                        itemsBillTotal = (itemsBillTotal.HasValue) ? itemsBillTotal : 0;
+                        var spending = unitOfWork.Safes.Find(f => f.UserID == UserData.ID && f.Type == false && f.RegistrationDate >= shift.StartDate && f.RegistrationDate <= DateTime.Now).Sum(s => s.Amount);
+                        spending = (spending.HasValue) ? spending : 0;
+
+                        Shift = new FinishShiftDataModel
+                        {
+                            NewShift = true,
+                            CurrentUserName = shift.User.Name,
+                            SafeStart = shift.SafeStart,
+                            StartDate = shift.StartDate,
+                            Income = safeIncome + itemsBillTotal,
+                            Spending = spending
+                        };
+                        Shift.Total = shift.SafeStart + Shift.Income - spending;
+                    }
+                    finishShiftDialog.DataContext = this;
+                    await currentWindow.HideMetroDialogAsync(finishShiftConfirmDialog);
+                    await currentWindow.ShowMetroDialogAsync(finishShiftDialog);
+                }
+                else
+                {
+                    await currentWindow.HideMetroDialogAsync(finishShiftConfirmDialog);
+                    await currentWindow.ShowMessageAsync("فشل الدخول", "يوجد خطأ فى الاسم أو الرقم السرى يرجى التأكد من البيانات", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                    {
+                        AffirmativeButtonText = "موافق",
+                        DialogMessageFontSize = 25,
+                        DialogTitleFontSize = 30
+                    });
+                    await currentWindow.ShowMetroDialogAsync(finishShiftConfirmDialog);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
+            }
+        }
+        private bool CanExecuteSignIn()
+        {
+            return !LoginModel.HasErrors;
         }
 
         private RelayCommand _finishShift;
@@ -1176,12 +1289,14 @@ namespace Cafe.ViewModels.BillViewModels
                             UserData.ID = user.ID;
                             UserData.Role = user.Role.Name;
                             UserData.Name = user.Name;
+                            UserData.Password = user.Password;
                         }
                     }
                     else
                     {
                         UserData.Role = "";
                         UserData.Name = "";
+                        UserData.Password = "";
                         UserData.ID = 0;
                     }
 
@@ -1283,6 +1398,11 @@ namespace Cafe.ViewModels.BillViewModels
                         currentWindow.Close();
                         new MainViewModel().NavigateToViewMethodAsync("SignOut");
                     }
+                    else
+                    {
+                        UserData.newShift = true;
+                        currentWindow.Close();
+                    }
                 }
 
             }
@@ -1304,6 +1424,29 @@ namespace Cafe.ViewModels.BillViewModels
             else
                 return true;
 
+        }
+
+        // Show Calc 
+
+        private RelayCommand _showCalc;
+        public RelayCommand ShowCalc
+        {
+            get
+            {
+                return _showCalc ?? (_showCalc = new RelayCommand(
+                    ExecuteShowCalc));
+            }
+        }
+        private void ExecuteShowCalc()
+        {
+            try
+            {
+                Process.Start("calc.exe");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private RelayCommand<string> _closeDialog;
@@ -1329,6 +1472,9 @@ namespace Cafe.ViewModels.BillViewModels
                         break;
                     case "FinishShift":
                         await currentWindow.HideMetroDialogAsync(finishShiftDialog);
+                        break;
+                    case "Login":
+                        await currentWindow.HideMetroDialogAsync(finishShiftConfirmDialog);
                         break;
                     default:
                         break;

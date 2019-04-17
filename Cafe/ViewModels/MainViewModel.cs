@@ -251,6 +251,7 @@ namespace Cafe.ViewModels
                         UserData.ID = user.ID;
                         UserData.Role = user.Role.Name;
                         UserData.Name = user.Name;
+                        UserData.Password = user.Password;
 
                         if (UserData.Role == RoleText.Admin)
                         {

@@ -221,7 +221,7 @@ namespace Cafe.ViewModels.ClientViewModels
             get
             {
                 return _export
-                    ?? (_export = new RelayCommand(ExportMethod));
+                    ?? (_export = new RelayCommand(ExportMethod,CanExecuteExport));
             }
         }
         private void ExportMethod()
@@ -268,6 +268,13 @@ namespace Cafe.ViewModels.ClientViewModels
                 Mouse.OverrideCursor = null;
                 MessageBox.Show(ex.ToString());
             }
+        }
+        private bool CanExecuteExport()
+        {
+            if (Clients==null || Clients.Count == 0)
+                return false;
+            else
+                return true;
         }
 
         private void releaseObject(object obj)

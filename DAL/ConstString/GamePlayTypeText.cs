@@ -3,7 +3,7 @@
     public class GamePlayTypeText
     {
         public const string Single = "Single";
-        public const string Multiplayer = "Multiplayer";
+        public const string Multi = "Multi";
         public const string Birthday = "Birthday";
     }
 }

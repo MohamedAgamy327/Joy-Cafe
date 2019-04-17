@@ -84,11 +84,11 @@
                                >
                 <DataGrid.Columns>
                     
-                    <DataGridTextColumn IsReadOnly="True"  Header="المستخدم" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding User.Name}" />
-                    <DataGridTextColumn IsReadOnly="True"  Header="الصلاحية" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Role.Name}" />
-                    <DataGridTextColumn IsReadOnly="True"  Header="الحالة" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Status}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="المستخدم" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding User.Name}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="الصلاحية" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding Role.Name}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="الحالة" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding Status}" />
                     
-                    <DataGridTemplateColumn  Header="تعديل" Width="0.75*" HeaderStyle="{StaticResource ColumnHeaderStyle}" >
+                    <DataGridTemplateColumn  Header="تعديل" Width="0.75*" HeaderStyle="{StaticResource ColumnHeaderStyle1}" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Command="{Binding DataContext.ShowUpdate, 
@@ -99,7 +99,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     
-                    <DataGridTemplateColumn  Header="حذف" Width="0.75*" HeaderStyle="{StaticResource ColumnHeaderStyle}" >
+                    <DataGridTemplateColumn  Header="حذف" Width="0.75*" HeaderStyle="{StaticResource ColumnHeaderStyle1}" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button  Command="{Binding DataContext.Delete, 

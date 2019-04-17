@@ -60,19 +60,19 @@
                                >
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly="True"  Header="النوع" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="النوع" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
                                     Binding="{Binding DeviceType.Name}"  />
-                    <DataGridTextColumn IsReadOnly="True"  Header="الجهاز" Width="1.2*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="الجهاز" Width="1.2*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
                                     Binding="{Binding Device.Name}"  />
-                    <DataGridTextColumn IsReadOnly="True"  Header="اللعب" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="اللعب" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
                                     Binding="{Binding BillDevice.GameType}"  />
-                    <DataGridTextColumn IsReadOnly="True"  Header="البداية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="البداية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
                                     Binding="{Binding BillDevice.StartDate, StringFormat={}\{0:hh:mm tt \}}"  />
-                    <DataGridTextColumn IsReadOnly="True"  Header="النهاية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="النهاية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
                                     Binding="{Binding EndDate, StringFormat={}\{0:hh:mm tt \}}"  />
-                    <DataGridTextColumn IsReadOnly="True"  Header="المدة" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="المدة" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
                                     Binding="{Binding Duration}"  />
-                    <DataGridTextColumn IsReadOnly="True"  Header="الإجمالى" Width="1.2*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="الإجمالى" Width="1.2*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
                                     Binding="{Binding Total,StringFormat={}{0:0.00;(0.00)}}"  />
                 </DataGrid.Columns>
 
@@ -93,13 +93,13 @@
                                >
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly="True"  Header="الصنف" Width="2*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="الصنف" Width="2*" HeaderStyle="{StaticResource ColumnHeaderStyle2}"
                                     Binding="{Binding Item.Name}"  />
-                    <DataGridTextColumn IsReadOnly="True"  Header="السعر" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="السعر" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle2}"
                                     Binding="{Binding BillItem.Price}"  />
-                    <DataGridTextColumn IsReadOnly="True"  Header="الكمية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="الكمية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle2}"
                                     Binding="{Binding BillItem.Qty}"  />
-                    <DataGridTextColumn IsReadOnly="True"  Header="الإجمالى" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="الإجمالى" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle2}"
                                     Binding="{Binding  BillItem.Total,StringFormat={}{0:0.00;(0.00)}}"  />
 
                 </DataGrid.Columns>
@@ -185,7 +185,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="2">
-                <StackPanel  Orientation="Horizontal">
+                <StackPanel  Orientation="Horizontal" Name="pnl">
                     <TextBlock Width="120"  Style="{StaticResource TextBlockWindowStyle}" Margin="5">خصم نسبة:</TextBlock>
                     <Controls:NumericUpDown Name="nud1" Width="150" HasDecimals="True" Margin="5" Value="{Binding BillPaid.Ratio, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle3}" Minimum="0" Maximum="100">
                         <i:Interaction.Triggers>
@@ -198,7 +198,7 @@
 
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Width="120"  Style="{StaticResource TextBlockWindowStyle}" Margin="5">خصم مبلغ:</TextBlock>
-                    <Controls:NumericUpDown Name="nud2" Width="150" HasDecimals="True" Margin="5" Value="{Binding BillPaid.Discount,ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle3}" Minimum="0" >
+                    <Controls:NumericUpDown Name="nud2" Width="150" HasDecimals="True" Margin="5" Value="{Binding BillPaid.Discount,ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle3}" Minimum="0" Maximum="{Binding SelectedBill.Total}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="ValueChanged">
                                 <Custom:EventToCommand Command="{Binding DiscountChanged}" />
@@ -215,7 +215,7 @@
 
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Width="120"  Style="{StaticResource TextBlockWindowStyle}" Margin="5">الحد الأدنى:</TextBlock>
-                    <Controls:NumericUpDown Width="150" HasDecimals="True" Margin="5" Value="{Binding BillPaid.Minimum,ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle3}" Minimum="0" >
+                    <Controls:NumericUpDown Width="150" HasDecimals="True" Margin="5" Value="{Binding BillPaid.Minimum,ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle3}" Minimum="1" >
                     </Controls:NumericUpDown>
                 </StackPanel>
             </StackPanel>

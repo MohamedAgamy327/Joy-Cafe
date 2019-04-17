@@ -102,16 +102,16 @@
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
 
-                    <DataGridTextColumn IsReadOnly="True"  Header="البيان" Width="3*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="البيان" Width="3*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
                                     Binding="{Binding Safe.Statement}"  />
-                    <DataGridTextColumn IsReadOnly="True"  Header="التاريخ" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="التاريخ" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
                                     Binding="{Binding Safe.RegistrationDate, StringFormat={}\{0:hh:mm tt yyyy/MM/dd  \}}"  />
-                    <DataGridTextColumn IsReadOnly="True"  Header="المستخدم" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="المستخدم" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
                                     Binding="{Binding User.Name}"  />
-                    <DataGridTextColumn IsReadOnly="True"  Header="المبلغ" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="المبلغ" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
                                     Binding="{Binding Safe.Amount}"  />
 
-                    <DataGridTemplateColumn  Header="حذف" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}" >
+                    <DataGridTemplateColumn  Header="حذف" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle1}" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Command="{Binding DataContext.Delete, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"   BorderThickness="0"   >

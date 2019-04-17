@@ -70,11 +70,11 @@
     <Compile Include="BindableBaseService\BindableBase.cs" />
     <Compile Include="BindableBaseService\ValidatableBindableBase.cs" />
     <Compile Include="ConstString\CaseText.cs" />
+    <Compile Include="ConstString\DevicesImagesList.cs" />
     <Compile Include="ConstString\DeviceTypeText.cs" />
     <Compile Include="ConstString\GamePlayTypeText.cs" />
     <Compile Include="ConstString\GeneralText.cs" />
     <Compile Include="ConstString\RoleText.cs" />
-    <Compile Include="ConstString\VisibilityText.cs" />
     <Compile Include="GeneralDBContext.cs" />
     <Compile Include="Entities\Bill.cs" />
     <Compile Include="Entities\BillIDevice.cs" />

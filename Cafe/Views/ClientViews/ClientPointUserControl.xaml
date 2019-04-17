@@ -112,10 +112,10 @@
                   AutoGenerateColumns="False"
                                >
             <DataGrid.Columns>
-                <DataGridTextColumn IsReadOnly="True"  Header="العميل" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Client.Name}" />
-                <DataGridTextColumn IsReadOnly="True"  Header="الكود" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Client.Code}" />
-                <DataGridTextColumn IsReadOnly="True"  Header="التليفون" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Client.Telephone}" />
-                <DataGridTextColumn IsReadOnly="True"  Header="النقاط" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Points}" />
+                <DataGridTextColumn IsReadOnly="True"  Header="العميل" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle2}"   Binding="{Binding Client.Name}" />
+                <DataGridTextColumn IsReadOnly="True"  Header="الكود" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle2}"   Binding="{Binding Client.Code}" />
+                <DataGridTextColumn IsReadOnly="True"  Header="التليفون" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle2}"   Binding="{Binding Client.Telephone}" />
+                <DataGridTextColumn IsReadOnly="True"  Header="النقاط" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle2}"   Binding="{Binding Points}" />
             </DataGrid.Columns>
             
             <DataGrid.Style>

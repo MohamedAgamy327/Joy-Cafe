@@ -47,6 +47,7 @@ namespace Cafe.ViewModels
             SimpleIoc.Default.Register<ShiftSpendingViewModel>();         
             SimpleIoc.Default.Register<BillItemsViewModel>();
             SimpleIoc.Default.Register<AccountPaidViewModel>();
+      
         }
 
         public MainViewModel Main

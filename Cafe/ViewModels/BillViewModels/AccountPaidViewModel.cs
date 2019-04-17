@@ -8,7 +8,7 @@ using DTO.BillDataModel;
 using DTO.BillDeviceDataModel;
 using DTO.BillItemDataModel;
 using DTO.UserDataModel;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.ObjectModel;
@@ -28,8 +28,8 @@ namespace Cafe.ViewModels.BillViewModels
             currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
-        private string _isMembership;
-        public string IsMembership
+        private Visibility _isMembership;
+        public Visibility IsMembership
         {
             get { return _isMembership; }
             set { SetProperty(ref _isMembership, value); }
@@ -95,7 +95,7 @@ namespace Cafe.ViewModels.BillViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    IsMembership = VisibilityText.Visible;
+                    IsMembership = Visibility.Visible;
                     BillDevices = new ObservableCollection<BillDevicesDisplayDataModel>(unitOfWork.BillsDevices.GetBillDevices(BillData.BillID));
                     BillItems = new ObservableCollection<BillItemsDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(BillData.BillID));
                     SelectedClient = unitOfWork.Clients.Get(BillData.ClientID);
@@ -108,7 +108,7 @@ namespace Cafe.ViewModels.BillViewModels
                     {
                         if (item.BillDevice.GameType == GamePlayTypeText.Birthday)
                         {
-                            IsMembership = VisibilityText.Collapsed;
+                            IsMembership = Visibility.Collapsed;
                             break;
                         }
                     }
@@ -116,9 +116,9 @@ namespace Cafe.ViewModels.BillViewModels
                     var billDevicesCount = BillDevices.Select(k => new { k.DeviceType.Name }).Distinct().Count();
                     var cmm = unitOfWork.ClientMembershipMinutes.FirstOrDefault(f => f.ClientID == BillData.ClientID && f.DeviceTypeID == device.DeviceTypeID);
                     if (billDevicesCount > 1 || cmm == null || cmm.Minutes == 0)
-                        IsMembership = VisibilityText.Collapsed;
+                        IsMembership = Visibility.Collapsed;
 
-                    if (IsMembership != VisibilityText.Collapsed)
+                    if (IsMembership != Visibility.Collapsed)
                     {
                         SelectedBill.MembershipMinutes = cmm.Minutes;
                         SelectedBill.MembershipMinutesAfterPaid = cmm.Minutes > SelectedBill.PlayedMinutes ? cmm.Minutes - SelectedBill.PlayedMinutes : 0;
@@ -200,7 +200,7 @@ namespace Cafe.ViewModels.BillViewModels
             get
             {
                 return _save
-                    ?? (_save = new RelayCommand(SaveMethod));
+                    ?? (_save = new RelayCommand(SaveMethod, CanExecuteSave));
             }
         }
         private void SaveMethod()
@@ -237,10 +237,10 @@ namespace Cafe.ViewModels.BillViewModels
                             Statement = "فاتورة للجهاز  " + device.Name,
                             UserID = UserData.ID,
                             RegistrationDate = BillData.EndDate,
-                            Type=true
+                            Type = true
                         };
                         unitOfWork.Safes.Add(safe);
-                        _selectedBill.Minimum = BillPaid.Minimum;
+                        _selectedBill.Minimum = _billPaid.Minimum;
                         _selectedBill.Total = _billPaid.Minimum;
                         _selectedBill.TotalAfterDiscount = _billPaid.Minimum;
                         _selectedBill.Point = 0;
@@ -253,7 +253,7 @@ namespace Cafe.ViewModels.BillViewModels
                         _selectedBill.Point = SelectedBill.PlayedMinutes / 5;
                         _selectedBill.Discount = _billPaid.Discount;
                         _selectedBill.Ratio = _billPaid.Ratio;
-                        if (IsMembership != VisibilityText.Collapsed)
+                        if (IsMembership != Visibility.Collapsed)
                         {
                             var cmm = unitOfWork.ClientMembershipMinutes.FirstOrDefault(f => f.ClientID == BillData.ClientID && f.DeviceTypeID == device.DeviceTypeID);
                             cmm.Minutes = (int)_selectedBill.MembershipMinutesAfterPaid;
@@ -287,13 +287,13 @@ namespace Cafe.ViewModels.BillViewModels
                 MessageBox.Show(ex.ToString());
             }
         }
-        //private bool CanExecuteSave()
-        //{
-        //    if ((BillPaid.Minimum == null || BillPaid.Minimum == 0) && (BillPaid.Discount == null || BillPaid.Ratio == null))
-        //        return false;
-        //    else
-        //        return true;
-        //}
+        private bool CanExecuteSave()
+        {
+            if ((BillPaid.Discount == null || BillPaid.Ratio == null) && BillPaid.Minimum == null)
+                return false;
+            else
+                return true;
+        }
 
         private RelayCommand _print;
         public RelayCommand Print
@@ -301,7 +301,7 @@ namespace Cafe.ViewModels.BillViewModels
             get
             {
                 return _print
-                    ?? (_print = new RelayCommand(PrintMethod));
+                    ?? (_print = new RelayCommand(PrintMethod,CanExecutePrint));
             }
         }
         private void PrintMethod()
@@ -346,7 +346,7 @@ namespace Cafe.ViewModels.BillViewModels
                     ds.Items[i]["Total"] = string.Format("{0:0.00}", item.BillItem.Total); ;
                     i++;
                 }
-                if (IsMembership == "Collapsed")
+                if (IsMembership == Visibility.Collapsed)
                 {
                     if (BillItems.Count == 0)
                     {
@@ -368,10 +368,10 @@ namespace Cafe.ViewModels.BillViewModels
                         Mouse.OverrideCursor = null;
                         rpt.ShowDialog();
 
-                      //  billItemsReport.PrintToPrinter(1, false, 0, 15);
+                        //  billItemsReport.PrintToPrinter(1, false, 0, 15);
                     }
                 }
-          
+
             }
             catch (Exception ex)
             {
@@ -382,6 +382,12 @@ namespace Cafe.ViewModels.BillViewModels
                 Mouse.OverrideCursor = null;
             }
         }
-
+        private bool CanExecutePrint()
+        {
+            if ((BillPaid.Discount == null || BillPaid.Ratio == null) && BillPaid.Minimum == null)
+                return false;
+            else
+                return true;
+        }
     }
 }

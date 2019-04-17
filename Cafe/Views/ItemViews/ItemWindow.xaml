@@ -33,7 +33,7 @@
         <StackPanel Orientation="Horizontal" Margin="5">
 
 
-            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="ItemDisplay" Title="الأصناف" HorizontalTitleAlignment="Center" VerticalTitleAlignment="Center"   Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource NormalTileStyle}"  >
+            <Controls:Tile Background="#808000" Command="{Binding NavigateToView}" CommandParameter="ItemDisplay" Title="الأصناف" HorizontalTitleAlignment="Center" VerticalTitleAlignment="Center"   Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource NormalTileStyle}"  >
             </Controls:Tile>
 
         </StackPanel>

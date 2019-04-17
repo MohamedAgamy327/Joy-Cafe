@@ -85,13 +85,13 @@
                   AutoGenerateColumns="False"
                                >
                 <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly="True"  Header="النوع" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding DeviceType.Name}" />
-                    <DataGridTextColumn IsReadOnly="True"  Header="عدد الاجهزة" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding  DevicesCount}" />
-                    <DataGridTextColumn IsReadOnly="True"  Header="سعر الساعة" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding  DeviceType.SingleHourPrice,StringFormat={}{0:0.00;(0.00)}}" />
-                    <DataGridTextColumn IsReadOnly="True"  Header="سعر الدقيقة" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding  DeviceType.SingleMinutePrice,StringFormat={}{0:0.00;(0.00)}}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="النوع" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding DeviceType.Name}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="عدد الاجهزة" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding  DevicesCount}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="سعر الساعة" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding  DeviceType.SingleHourPrice,StringFormat={}{0:0.00;(0.00)}}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="سعر الدقيقة" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding  DeviceType.SingleMinutePrice,StringFormat={}{0:0.00;(0.00)}}" />
 
 
-                    <DataGridTemplateColumn  Header="تعديل" Width="0.5*" HeaderStyle="{StaticResource ColumnHeaderStyle}" >
+                    <DataGridTemplateColumn  Header="تعديل" Width="0.5*" HeaderStyle="{StaticResource ColumnHeaderStyle1}" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Command="{Binding DataContext.ShowUpdate, 
@@ -102,7 +102,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     
-                    <DataGridTemplateColumn  Header="حذف" Width="0.5*" HeaderStyle="{StaticResource ColumnHeaderStyle}" >
+                    <DataGridTemplateColumn  Header="حذف" Width="0.5*" HeaderStyle="{StaticResource ColumnHeaderStyle1}" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button  Command="{Binding DataContext.Delete, 

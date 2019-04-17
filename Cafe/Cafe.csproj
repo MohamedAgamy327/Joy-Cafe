@@ -52,7 +52,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>SalesICO.ico</ApplicationIcon>
+    <ApplicationIcon>Cafe.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
@@ -201,6 +201,9 @@
     </Compile>
     <Compile Include="Views\BillViews\BillItemsViews\BillItemsWindow.xaml.cs">
       <DependentUpon>BillItemsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillViews\FinishShiftViews\FinishShiftConfirmDialog.xaml.cs">
+      <DependentUpon>FinishShiftConfirmDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BillViews\ShiftItemsViews\ShiftItemAddDialog.xaml.cs">
       <DependentUpon>ShiftItemAddDialog.xaml</DependentUpon>
@@ -375,6 +378,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BillViews\BillItemsViews\BillItemsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BillViews\FinishShiftViews\FinishShiftConfirmDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -713,6 +720,79 @@
       <Project>{4585EEDF-98F5-4B53-A60C-5C3CAA963FA5}</Project>
       <Name>Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\PremiumBirthday.PNG" />
+    <Resource Include="Resources\Icons\PremiumMulti.PNG" />
+    <Resource Include="Resources\Icons\PremiumSingle.PNG" />
+    <Resource Include="Resources\Icons\PS3Multi.PNG" />
+    <Resource Include="Resources\Icons\PS3Single.PNG" />
+    <Resource Include="Resources\Icons\PS4Multi.PNG" />
+    <Resource Include="Resources\Icons\PS4Single.PNG" />
+    <Resource Include="Resources\Icons\RoyalBirthday.PNG" />
+    <Resource Include="Resources\Icons\RoyalMulti.PNG" />
+    <Resource Include="Resources\Icons\RoyalSingle.PNG" />
+    <Resource Include="Resources\Icons\VIPBirthday.PNG" />
+    <Resource Include="Resources\Icons\VIPMulti.PNG" />
+    <Resource Include="Resources\Icons\VIPSingle.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\PremiumFree.PNG" />
+    <Resource Include="Resources\Icons\PS3Free.PNG" />
+    <Resource Include="Resources\Icons\PS4Free.PNG" />
+    <Resource Include="Resources\Icons\RoyalFree.PNG" />
+    <Resource Include="Resources\Icons\VIPFree.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\VRBirthday.PNG" />
+    <Resource Include="Resources\Icons\VRFree.PNG" />
+    <Resource Include="Resources\Icons\VRMulti.PNG" />
+    <Resource Include="Resources\Icons\VRSingle.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Cafe.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\PS3Birthday.PNG" />
+    <Resource Include="Resources\Icons\PS3PausedBirthday.PNG" />
+    <Resource Include="Resources\Icons\PS3PausedMulti.PNG" />
+    <Resource Include="Resources\Icons\PS3PausedSingle.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Cafe.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\RoyalPausedBirthday.PNG" />
+    <Resource Include="Resources\Icons\RoyalPausedMulti.PNG" />
+    <Resource Include="Resources\Icons\RoyalPausedSingle.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\PS4PausedSingle.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\VIPPausedMulti.PNG" />
+    <Resource Include="Resources\Icons\VIPPausedSingle.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\VRPausedBirthday.PNG" />
+    <Resource Include="Resources\Icons\VRPausedMulti.PNG" />
+    <Resource Include="Resources\Icons\VRPausedSingle.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\PS4Birthday.PNG" />
+    <Resource Include="Resources\Icons\PS4PausedBirthday.PNG" />
+    <Resource Include="Resources\Icons\PS4PausedMulti.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\PremiumPausedBirthday.PNG" />
+    <Resource Include="Resources\Icons\PremiumPausedMulti.PNG" />
+    <Resource Include="Resources\Icons\PremiumPausedSingle.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\VIPPausedBirthday.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\joy.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -127,19 +127,19 @@
                   AutoGenerateColumns="False"
                                >
                 <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly="True"  Header="العميل" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Client.Name}" />
-                    <DataGridTextColumn IsReadOnly="True"  Header="الكود" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Client.Code}" />
-                    <DataGridTextColumn IsReadOnly="True"  Header="التليفون" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Client.Telephone}" />
-                    <DataGridTextColumn IsReadOnly="True"  Header="المستخدم" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"  Header="العميل" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle3}"   Binding="{Binding Client.Name}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="الكود" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle3}"   Binding="{Binding Client.Code}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="التليفون" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle3}"   Binding="{Binding Client.Telephone}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="المستخدم" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle3}"
                                     Binding="{Binding User.Name}"  />
-                    <DataGridTextColumn IsReadOnly="True"  Header="النوع" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding DeviceType.Name}" />
-                    <DataGridTextColumn IsReadOnly="True"  Header="العضوية" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Membership.Name}" />
-                    <DataGridTextColumn IsReadOnly="True"  Header="السعر" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Membership.Price}" />
-                    <DataGridTextColumn IsReadOnly="True"  Header="دقائق العضوية" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Membership.Minutes}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="النوع" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle3}"   Binding="{Binding DeviceType.Name}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="العضوية" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle3}"   Binding="{Binding Membership.Name}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="السعر" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle3}"   Binding="{Binding Membership.Price}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="دقائق العضوية" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle3}"   Binding="{Binding Membership.Minutes}" />
 
-                    <DataGridTextColumn IsReadOnly="True"   Header="تاريخ الشراء" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                    <DataGridTextColumn IsReadOnly="True"   Header="تاريخ الشراء" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle3}"
                                     Binding="{Binding ClientMembership.Date, StringFormat={}\{0:yyyy/MM/dd \}}"  />
-                    <DataGridTemplateColumn  Header="حذف" Width="0.5*" HeaderStyle="{StaticResource ColumnHeaderStyle}" >
+                    <DataGridTemplateColumn  Header="حذف" Width="0.5*" HeaderStyle="{StaticResource ColumnHeaderStyle3}" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button  Command="{Binding DataContext.Delete, 

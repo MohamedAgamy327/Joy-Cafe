@@ -5,8 +5,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-                     xmlns:Custom="http://www.galasoft.ch/mvvmlight"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
@@ -87,11 +86,11 @@
                   AutoGenerateColumns="False"
                                >
             <DataGrid.Columns>
-                <DataGridTextColumn IsReadOnly="True"  Header="العميل" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Client.Name}" />
-                <DataGridTextColumn IsReadOnly="True"  Header="الكود" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Client.Code}" />
-                <DataGridTextColumn IsReadOnly="True"  Header="التليفون" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding Client.Telephone}" />
-                <DataGridTextColumn IsReadOnly="True"  Header="النوع" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding DeviceType.Name}" />
-                <DataGridTextColumn IsReadOnly="True"  Header="الدقائق" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle}"   Binding="{Binding ClientMembershipMinute.Minutes}" />
+                <DataGridTextColumn IsReadOnly="True"  Header="العميل" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle4}"   Binding="{Binding Client.Name}" />
+                <DataGridTextColumn IsReadOnly="True"  Header="الكود" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle4}"   Binding="{Binding Client.Code}" />
+                <DataGridTextColumn IsReadOnly="True"  Header="التليفون" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle4}"   Binding="{Binding Client.Telephone}" />
+                <DataGridTextColumn IsReadOnly="True"  Header="النوع" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle4}"   Binding="{Binding DeviceType.Name}" />
+                <DataGridTextColumn IsReadOnly="True"  Header="الدقائق" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle4}"   Binding="{Binding ClientMembershipMinute.Minutes}" />
             </DataGrid.Columns>
 
             <DataGrid.Style>

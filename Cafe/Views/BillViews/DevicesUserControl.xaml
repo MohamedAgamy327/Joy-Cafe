@@ -36,121 +36,144 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width=".04*" />
                 <ColumnDefinition Width="7*" />
             </Grid.ColumnDefinitions>
 
             <!-- slider -->
-            
-            <StackPanel Margin="5">
+            <Grid Grid.Column="0">
 
-                <Button Command="{Binding ShowAddItems}"  Margin="5,10" Style="{StaticResource SquareButtonStyle}" >
-                    <StackPanel Orientation="Horizontal" >
-                        <TextBlock  Text="الطلبات الخارجية" Margin="5,0" Style="{StaticResource TextBlockStyle}" ></TextBlock>
-                        <iconPacks:PackIconMaterial Kind="Coffee" />
-                    </StackPanel>
-                </Button>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="4.8*"/> 
+                </Grid.RowDefinitions>
 
-                <Button Command="{Binding ShowSpending}"   Margin="5,10"  Style="{StaticResource SquareButtonStyle}" >
-                    <StackPanel Orientation="Horizontal" >
-                        <TextBlock  Text="المصاريف" Margin="5,0" Style="{StaticResource TextBlockStyle}" ></TextBlock>
-                        <iconPacks:PackIconModern Kind="Money" />
-                    </StackPanel>
-                </Button>
+                <StackPanel Grid.Row="0" Margin="5">
 
-                <Button Command="{Binding ShowFinishShift}"   Margin="5,10"  Style="{StaticResource SquareButtonStyle}" >
-                    <StackPanel Orientation="Horizontal" >
-                        <TextBlock  Text="إنهاء الشفت" Margin="5,0" Style="{StaticResource TextBlockStyle}" ></TextBlock>
-                        <iconPacks:PackIconModern Kind="TimerStop" />
-                    </StackPanel>
-                </Button>
+                    <Button Command="{Binding ShowAddItems}"  Margin="5,10" Style="{StaticResource SquareButtonStyle}" >
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock  Text="الطلبات الخارجية" Margin="5,0" Style="{StaticResource TextBlockStyle}" ></TextBlock>
+                            <iconPacks:PackIconMaterial Kind="Coffee" />
+                        </StackPanel>
+                    </Button>
 
-            </StackPanel>
-            
+                    <Button Command="{Binding ShowSpending}"   Margin="5,10"  Style="{StaticResource SquareButtonStyle}" >
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock  Text="المصاريف" Margin="5,0" Style="{StaticResource TextBlockStyle}" ></TextBlock>
+                            <iconPacks:PackIconModern Kind="Money" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Command="{Binding ShowFinishShift}"   Margin="5,10"  Style="{StaticResource SquareButtonStyle}" >
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock  Text="إنهاء الشفت" Margin="5,0" Style="{StaticResource TextBlockStyle}" ></TextBlock>
+                            <iconPacks:PackIconModern Kind="TimerStop" />
+                        </StackPanel>
+                    </Button>
+
+
+                    <Button Command="{Binding ShowCalc}"   Margin="5,10"  Style="{StaticResource SquareButtonStyle}" >
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock  Text="آله حاسبة" Margin="5,0" Style="{StaticResource TextBlockStyle}" ></TextBlock>
+                            <iconPacks:PackIconFontAwesome Kind="Calculator" />
+                        </StackPanel>
+                    </Button>
+
+
+                </StackPanel>
+                
+                <StackPanel Grid.Row="1">
+                    <Image  Source="..\..\Resources\joy.jpg" Stretch="Fill" Height="250"  />
+                    <TextBlock Name="lblTimer" Style="{StaticResource TextBlockAddUpdateStyle}" FontFamily="Veranda" FontSize="25" Text="{Binding Path=CurrentTime}"></TextBlock>
+                </StackPanel>
+            </Grid>
+
+            <Separator Grid.Column="1" Background="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"  />
+
             <!-- slider -->
             
-            <Grid Grid.Column="1"  >
+            <Grid Grid.Column="2"  >
 
                 <!--Devices-->
-                <ListBox Grid.Row="0" Visibility="{Binding AvailableDevicesVisibility}" ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice,UpdateSourceTrigger=PropertyChanged}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  >
+                <ListBox Name="listView1" MouseDown="MyListView_MouseDown" Grid.Row="0" Visibility="{Binding AvailableDevicesVisibility}" ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice,UpdateSourceTrigger=PropertyChanged}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  SelectionMode="Single" >
 
-                    <ListBox.ContextMenu>
-                        <ContextMenu >
+                    <ListBox.ContextMenu >
+                        <ContextMenu>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseEnter">
                                     <i:InvokeCommandAction Command="{Binding Check}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-
                             <MenuItem  Header="الطلبات" Visibility="{Binding StopVisibility}"  Command="{Binding ShowBillItems}"    >
-                                <MenuItem.Icon>
-                                    <iconPacks:PackIconMaterial Kind="FoodForkDrink" Margin="10,0,5,0" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-
-                            <MenuItem Header="تشغيل" Visibility="{Binding StartVisibility}"  >
-
-                                <MenuItem  Header="فردى"   Command="{Binding Start}" CommandParameter="Single"   >
                                     <MenuItem.Icon>
-                                        <iconPacks:PackIconMaterial Kind="AccountMultiple" Margin="10,0,5,0" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem  Header="مالتى"   Command="{Binding Start}" CommandParameter="Multiplayer"    >
-                                    <MenuItem.Icon>
-                                        <iconPacks:PackIconModern Kind="PeopleMultiple" Margin="10,0,5,0" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem  Header="عيد ميلاد" Visibility="{Binding BirthdayVisibility}"  Command="{Binding Start}" CommandParameter="Birthday"     >
-                                    <MenuItem.Icon>
-                                        <iconPacks:PackIconFontAwesome Kind="BirthdayCake" Margin="10,0,5,0" />
+                                        <iconPacks:PackIconMaterial Kind="FoodForkDrink" Margin="10,0,5,0" />
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem.Icon>
-                                    <iconPacks:PackIconFontAwesome Kind="PlayCircle" Margin="10,0,5,0" />
-                                </MenuItem.Icon>
-                            </MenuItem>
+                                <MenuItem Header="تشغيل" Visibility="{Binding StartVisibility}"  >
 
-                            <MenuItem Header="تغير النوع" Visibility="{Binding StopVisibility}"  >
+                                    <MenuItem  Header="فردى"   Command="{Binding Start}" CommandParameter="Single"   >
+                                        <MenuItem.Icon>
+                                            <iconPacks:PackIconMaterial Kind="AccountMultiple" Margin="10,0,5,0" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem  Header="مالتى"   Command="{Binding Start}" CommandParameter="Multi"    >
+                                        <MenuItem.Icon>
+                                            <iconPacks:PackIconModern Kind="PeopleMultiple" Margin="10,0,5,0" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem  Header="عيد ميلاد" Visibility="{Binding BirthdayVisibility}"  Command="{Binding Start}" CommandParameter="Birthday"     >
+                                        <MenuItem.Icon>
+                                            <iconPacks:PackIconFontAwesome Kind="BirthdayCake" Margin="10,0,5,0" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
 
-                                <MenuItem  Header="فردى"   Command="{Binding Change}" CommandParameter="Single" Visibility="{Binding SingleVisibility}"  >
                                     <MenuItem.Icon>
-                                        <iconPacks:PackIconMaterial Kind="AccountMultiple" Margin="10,0,5,0" />
+                                        <iconPacks:PackIconFontAwesome Kind="PlayCircle" Margin="10,0,5,0" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem  Header="مالتى" Visibility="{Binding MultiVisibility}"  Command="{Binding Change}" CommandParameter="Multiplayer"    >
+
+                                <MenuItem Header="تغير النوع" Visibility="{Binding StopVisibility}"  >
+
+                                    <MenuItem  Header="فردى"   Command="{Binding Change}" CommandParameter="Single" Visibility="{Binding SingleVisibility}"  >
+                                        <MenuItem.Icon>
+                                            <iconPacks:PackIconMaterial Kind="AccountMultiple" Margin="10,0,5,0" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem  Header="مالتى" Visibility="{Binding MultiVisibility}"  Command="{Binding Change}" CommandParameter="Multi"    >
+                                        <MenuItem.Icon>
+                                            <iconPacks:PackIconModern Kind="PeopleMultiple" Margin="10,0,5,0" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem  Header="عيد ميلاد" Visibility="{Binding BirthdayVisibility}"  Command="{Binding Change}" CommandParameter="Birthday"     >
+                                        <MenuItem.Icon>
+                                            <iconPacks:PackIconFontAwesome Kind="BirthdayCake" Margin="10,0,5,0" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+
                                     <MenuItem.Icon>
-                                        <iconPacks:PackIconModern Kind="PeopleMultiple" Margin="10,0,5,0" />
+                                        <iconPacks:PackIconFontAwesome Kind="Exchange" Margin="10,0,5,0" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem  Header="عيد ميلاد" Visibility="{Binding BirthdayVisibility}"  Command="{Binding Change}" CommandParameter="Birthday"     >
+
+                                <MenuItem  Header="إيقاف مؤقت"   Command="{Binding TemporaryStop}"  Visibility="{Binding TemporaryVisibility}"  >
                                     <MenuItem.Icon>
-                                        <iconPacks:PackIconFontAwesome Kind="BirthdayCake" Margin="10,0,5,0" />
+                                        <iconPacks:PackIconModern Kind="SignStop"  Margin="10,0,5,0" />
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem.Icon>
-                                    <iconPacks:PackIconFontAwesome Kind="Exchange" Margin="10,0,5,0" />
-                                </MenuItem.Icon>
-                            </MenuItem>
+                                <MenuItem  Header="إستئناف التشغيل"   Command="{Binding Resume}"  Visibility="{Binding ResumeVisibility}"  >
+                                    <MenuItem.Icon>
+                                        <iconPacks:PackIconModern Kind="ControlResume"  Margin="10,0,5,0" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
 
-                            <MenuItem  Header="إيقاف مؤقت"   Command="{Binding TemporaryStop}"  Visibility="{Binding TemporaryVisibility}"  >
-                                <MenuItem.Icon>
-                                    <iconPacks:PackIconModern Kind="SignStop"  Margin="10,0,5,0" />
-                                </MenuItem.Icon>
-                            </MenuItem>
+                                <MenuItem  Header="نقل"   Command="{Binding MoveFrom}"  Visibility="{Binding StopVisibility}"  >
+                                    <MenuItem.Icon>
+                                        <iconPacks:PackIconMaterial Kind="FolderMove"  Margin="10,0,5,0" />
 
-                            <MenuItem  Header="إستئناف التشغيل"   Command="{Binding Resume}"  Visibility="{Binding ResumeVisibility}"  >
-                                <MenuItem.Icon>
-                                    <iconPacks:PackIconModern Kind="ControlResume"  Margin="10,0,5,0" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-
-                            <MenuItem  Header="نقل"   Command="{Binding MoveFrom}"  Visibility="{Binding StopVisibility}"  >
-                                <MenuItem.Icon>
-                                    <iconPacks:PackIconMaterial Kind="FolderMove"  Margin="10,0,5,0" />
-
-                                </MenuItem.Icon>
-                            </MenuItem>
+                                    </MenuItem.Icon>
+                                </MenuItem>
 
                             <MenuItem Header="إنهاء ودفع الحساب"  Visibility="{Binding StopVisibility}"   Command="{Binding Stop}">
                                 <MenuItem.Icon>
@@ -169,16 +192,11 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate >
                             <StackPanel Margin="5" >
-                                <Button  Style="{DynamicResource MetroCircleButtonStyle}" BorderThickness="0" Width="100" Height="100" Command="{Binding DataContext.ShowAccount,
+                                <Button Background="Transparent" Command="{Binding DataContext.ShowAccount,
                         RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Device.BillID}">
-                                    <iconPacks:PackIconModern  Kind="{Binding DeviceTypeIcon}" Width="80" Height="80" Foreground="{Binding Color}"  />
-
+                                    <Image Source="{Binding DeviceTypeImage}" Width="100" Height="100"  />
                                 </Button>
-
                                 <TextBlock Style="{StaticResource TextBlockAddUpdateStyle}" Text="{Binding Device.Name}"></TextBlock>
-
-                                <TextBlock Style="{StaticResource TextBlockAddUpdateStyle}" Text="{Binding DeviceType.Name}"></TextBlock>
-                                <TextBlock Style="{StaticResource TextBlockAddUpdateStyle}" Text="{Binding GameType}"></TextBlock>
 
                             </StackPanel>
                         </DataTemplate>
@@ -226,19 +244,19 @@
                                >
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn IsReadOnly="True"  Header="النوع" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                            <DataGridTextColumn IsReadOnly="True"  Header="النوع" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle3}"
                                     Binding="{Binding DeviceType.Name}"  />
-                            <DataGridTextColumn IsReadOnly="True"  Header="الجهاز" Width="1.2*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                            <DataGridTextColumn IsReadOnly="True"  Header="الجهاز" Width="1.2*" HeaderStyle="{StaticResource ColumnHeaderStyle3}"
                                     Binding="{Binding Device.Name}"  />
-                            <DataGridTextColumn IsReadOnly="True"  Header="اللعب" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                            <DataGridTextColumn IsReadOnly="True"  Header="اللعب" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle3}"
                                     Binding="{Binding BillDevice.GameType}"  />
-                            <DataGridTextColumn IsReadOnly="True"  Header="البداية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                            <DataGridTextColumn IsReadOnly="True"  Header="البداية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle3}"
                                     Binding="{Binding BillDevice.StartDate, StringFormat={}\{0:hh:mm tt \}}"  />
-                            <DataGridTextColumn IsReadOnly="True"  Header="النهاية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                            <DataGridTextColumn IsReadOnly="True"  Header="النهاية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle3}"
                                     Binding="{Binding EndDate, StringFormat={}\{0:hh:mm tt \}}"  />
-                            <DataGridTextColumn IsReadOnly="True"  Header="المدة" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                            <DataGridTextColumn IsReadOnly="True"  Header="المدة" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle3}"
                                     Binding="{Binding Duration}"  />
-                            <DataGridTextColumn IsReadOnly="True"  Header="الإجمالى" Width="1.2*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                            <DataGridTextColumn IsReadOnly="True"  Header="الإجمالى" Width="1.2*" HeaderStyle="{StaticResource ColumnHeaderStyle3}"
                                     Binding="{Binding Total,StringFormat={}{0:0.00;(0.00)}}"  />
                         </DataGrid.Columns>
 
@@ -258,13 +276,13 @@
                                >
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn IsReadOnly="True"  Header="الصنف" Width="2*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                            <DataGridTextColumn IsReadOnly="True"  Header="الصنف" Width="2*" HeaderStyle="{StaticResource ColumnHeaderStyle4}"
                                     Binding="{Binding Item.Name}"  />
-                            <DataGridTextColumn IsReadOnly="True"  Header="السعر" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                            <DataGridTextColumn IsReadOnly="True"  Header="السعر" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle4}"
                                     Binding="{Binding BillItem.Price}"  />
-                            <DataGridTextColumn IsReadOnly="True"  Header="الكمية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                            <DataGridTextColumn IsReadOnly="True"  Header="الكمية" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle4}"
                                     Binding="{Binding BillItem.Qty}"  />
-                            <DataGridTextColumn IsReadOnly="True"  Header="الإجمالى" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle}"
+                            <DataGridTextColumn IsReadOnly="True"  Header="الإجمالى" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle4}"
                                     Binding="{Binding  BillItem.Total,StringFormat={}{0:0.00;(0.00)}}"  />
 
                         </DataGrid.Columns>
@@ -300,8 +318,8 @@
                             </StackPanel>
                         </Button>
                     </StackPanel>
-                    
-                    <ListBox Grid.Row="1" ItemsSource="{Binding FreeDevices}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                    <ListBox Name="listView2" MouseDown="MyListView2_MouseDown" Grid.Row="1" ItemsSource="{Binding FreeDevices}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -315,15 +333,11 @@
 
                                 <StackPanel Margin="10">
 
-                                    <Button  Command="{Binding DataContext.MoveTo,
-         RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" Style="{DynamicResource MetroCircleButtonStyle}" BorderThickness="0" Width="100" Height="100">
-                                        <iconPacks:PackIconModern Kind="{Binding DeviceTypeIcon}" Width="80" Height="80" Foreground="#E577B900"  />
-
+                                    <Button Background="Transparent" Command="{Binding DataContext.MoveTo,
+         RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" >
+                                        <Image Source="{Binding DeviceTypeImage}" Width="100" Height="100"  />
                                     </Button>
-
                                     <TextBlock Style="{StaticResource TextBlockAddUpdateStyle}" Text="{Binding Device.Name}"></TextBlock>
-
-                                    <TextBlock Style="{StaticResource TextBlockAddUpdateStyle}" Text="{Binding DeviceType.Name}"></TextBlock>
 
                                 </StackPanel>
                             </DataTemplate>
@@ -337,7 +351,6 @@
 
             </Grid>
 
-
             
         </Grid>
 
@@ -347,6 +360,7 @@
             <StatusBarItem Content="الأجهزة المشغولة" Style="{StaticResource StatusBarItemStyle}"/>
             <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
             <StatusBarItem  Content="{Binding BusyDevices}" Style="{StaticResource StatusBarItemStyle}"/>
+            <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
             <StatusBarItem Content="الأجهزة الموقوفة مؤقتاً" Style="{StaticResource StatusBarItemStyle}"/>
             <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
             <StatusBarItem  Content="{Binding TemporaryDevices}" Style="{StaticResource StatusBarItemStyle}"/>
@@ -370,16 +384,17 @@
             <StatusBarItem Content="  إجمالى الأجهزة:" Style="{StaticResource StatusBarItemStyle}"/>
             <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
             <StatusBarItem  Content="{Binding DevicesSum,StringFormat={}{0:0;(0)}}" Style="{StaticResource StatusBarItemStyle}"/>
-            <StatusBarItem Content=" حنيهاً " Style="{StaticResource StatusBarItemStyle}"/>
+            <StatusBarItem Content=" جنيهاً " Style="{StaticResource StatusBarItemStyle}"/>
+            <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
             <StatusBarItem Content=" إجمالى الطلبات:" Style="{StaticResource StatusBarItemStyle}"/>
             <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
             <StatusBarItem  Content="{Binding ItemsSum,StringFormat={}{0:0;(0)}}" Style="{StaticResource StatusBarItemStyle}"/>
-            <StatusBarItem Content=" حنيهاً " Style="{StaticResource StatusBarItemStyle}"/>
+            <StatusBarItem Content=" جنيهاً " Style="{StaticResource StatusBarItemStyle}"/>
             <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
             <StatusBarItem Content=" الإجمالى:" Style="{StaticResource StatusBarItemStyle}"/>
             <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
             <StatusBarItem  Content="{Binding TotalSum,StringFormat={}{0:0;(0)}}" Style="{StaticResource StatusBarItemStyle}"/>
-            <StatusBarItem Content=" حنيهاً " Style="{StaticResource StatusBarItemStyle}"/>
+            <StatusBarItem Content=" جنيهاً " Style="{StaticResource StatusBarItemStyle}"/>
         </StatusBar>
 
     </Grid>

@@ -23,11 +23,27 @@
     </Style>
     
     <!--DataGrid-->
-    <Style x:Key="ColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+
+    <Style TargetType="DataGridCell">
+        <Setter Property="HorizontalAlignment"  Value="Center"/>
+        <Setter Property="VerticalAlignment"  Value="Center"/>
+        <Setter Property="FontFamily" Value="veranda"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <Style  x:Key="DatePickerStyle" TargetType="Controls:DateTimePicker"  >
+        <Setter Property="FontFamily" Value="calibri"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Height" Value="30"/>
+    </Style>
+
+    <Style x:Key="ColumnHeaderStyle1" TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
-                    <Grid Name="HedearGrid" Height="40" Background="{DynamicResource AccentColorBrush}" >
+                    <Grid Name="HedearGrid" Height="40" Background="#808000" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
@@ -70,21 +86,151 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style TargetType="DataGridCell">
-        <Setter Property="HorizontalAlignment"  Value="Center"/>
-        <Setter Property="VerticalAlignment"  Value="Center"/>
-        <Setter Property="FontFamily" Value="veranda"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontSize" Value="16"/>
+
+    <Style x:Key="ColumnHeaderStyle2" TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                    <Grid Name="HedearGrid" Height="40" Background="#008000" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="BackgroundBorder" Margin="-1 0 0 0" BorderThickness="1,0,0,0" BorderBrush="LightGray" Grid.ColumnSpan="2" />
+                        <TextBlock  Margin="5 0 0 0" Foreground="White" VerticalAlignment="Center"  Grid.Column="0"  Height="Auto"  Width="Auto" Text="{TemplateBinding Content}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" FontFamily="calibri"   />
+
+                        <Path x:Name="SortArrow" Visibility="Collapsed" Data="M0,0 L1,0 0.5,1 z" Stretch="Fill" 
+                            Grid.Column="1" Width="8" Height="6" Fill="White" Margin="0,0,8,0" 
+                            VerticalAlignment="Center" RenderTransformOrigin="0.5,0.4" />
+                        <Thumb x:Name="PART_RightHeaderGripper" HorizontalAlignment="Center" Cursor="SizeWE" Grid.Column="1" >
+                            <Thumb.Style>
+                                <Style TargetType="{x:Type Thumb}">
+                                    <Setter Property="Width" Value="2" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                <Border Background="Transparent"/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Thumb.Style>
+                        </Thumb>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="SortDirection" Value="Ascending">
+                            <Setter TargetName="SortArrow" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="SortArrow" Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="180" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="SortDirection" Value="Descending">
+                            <Setter TargetName="SortArrow" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
-    <Style  x:Key="DatePickerStyle" TargetType="Controls:DateTimePicker"  >
-        <Setter Property="FontFamily" Value="calibri"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontSize" Value="16"/>
-        <Setter Property="Height" Value="30"/>
+    <Style x:Key="ColumnHeaderStyle3" TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                    <Grid Name="HedearGrid" Height="40" Background="#000080" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="BackgroundBorder" Margin="-1 0 0 0" BorderThickness="1,0,0,0" BorderBrush="LightGray" Grid.ColumnSpan="2" />
+                        <TextBlock  Margin="5 0 0 0" Foreground="White" VerticalAlignment="Center"  Grid.Column="0"  Height="Auto"  Width="Auto" Text="{TemplateBinding Content}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" FontFamily="calibri"   />
+
+                        <Path x:Name="SortArrow" Visibility="Collapsed" Data="M0,0 L1,0 0.5,1 z" Stretch="Fill" 
+                            Grid.Column="1" Width="8" Height="6" Fill="White" Margin="0,0,8,0" 
+                            VerticalAlignment="Center" RenderTransformOrigin="0.5,0.4" />
+                        <Thumb x:Name="PART_RightHeaderGripper" HorizontalAlignment="Center" Cursor="SizeWE" Grid.Column="1" >
+                            <Thumb.Style>
+                                <Style TargetType="{x:Type Thumb}">
+                                    <Setter Property="Width" Value="2" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                <Border Background="Transparent"/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Thumb.Style>
+                        </Thumb>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="SortDirection" Value="Ascending">
+                            <Setter TargetName="SortArrow" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="SortArrow" Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="180" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="SortDirection" Value="Descending">
+                            <Setter TargetName="SortArrow" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
+    <Style x:Key="ColumnHeaderStyle4" TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                    <Grid Name="HedearGrid" Height="40" Background="#800080" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="BackgroundBorder" Margin="-1 0 0 0" BorderThickness="1,0,0,0" BorderBrush="LightGray" Grid.ColumnSpan="2" />
+                        <TextBlock  Margin="5 0 0 0" Foreground="White" VerticalAlignment="Center"  Grid.Column="0"  Height="Auto"  Width="Auto" Text="{TemplateBinding Content}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" FontFamily="calibri"   />
+
+                        <Path x:Name="SortArrow" Visibility="Collapsed" Data="M0,0 L1,0 0.5,1 z" Stretch="Fill" 
+                            Grid.Column="1" Width="8" Height="6" Fill="White" Margin="0,0,8,0" 
+                            VerticalAlignment="Center" RenderTransformOrigin="0.5,0.4" />
+                        <Thumb x:Name="PART_RightHeaderGripper" HorizontalAlignment="Center" Cursor="SizeWE" Grid.Column="1" >
+                            <Thumb.Style>
+                                <Style TargetType="{x:Type Thumb}">
+                                    <Setter Property="Width" Value="2" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                <Border Background="Transparent"/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Thumb.Style>
+                        </Thumb>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="SortDirection" Value="Ascending">
+                            <Setter TargetName="SortArrow" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="SortArrow" Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="180" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="SortDirection" Value="Descending">
+                            <Setter TargetName="SortArrow" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <!--TextBlock-->
     
     <Style  x:Key="TextBlockStyle"  TargetType="TextBlock" >
@@ -209,9 +355,9 @@
 
     <Style x:Key="StatusBarItemStyle" TargetType="StatusBarItem" >
         <Setter Property="Foreground" Value="Black" />
-        <Setter Property="FontFamily" Value="calibri"/>
+        <Setter Property="FontFamily" Value="Times New Roman (Headings CS)"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontSize" Value="25"/>
         
     </Style>
 

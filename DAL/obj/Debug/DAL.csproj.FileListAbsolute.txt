@@ -68,11 +68,10 @@ D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.Migrations.client_telephone.resou
 D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.Migrations.updateBill.resources
 D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.Migrations.updateBillDevice.resources
 D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.Migrations.updateBillItem.resources
-D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.csproj.GenerateResource.cache
-D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.dll
-D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.pdb
-D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
-D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.csproj.CopyComplete
-D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.csprojAssemblyReference.cache
 D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.Migrations.billItems.resources
 D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.Migrations.billItems2.resources
+D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.csproj.GenerateResource.cache
+D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.csproj.CopyComplete
+D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.dll
+D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.pdb

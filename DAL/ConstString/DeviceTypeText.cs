@@ -2,11 +2,11 @@
 {
     public class DeviceTypeText
     {
-        public const string PlayStation3 = "PlayStation 3";
-        public const string PlayStation4 = "PlayStation 4";
-        public const string VIP = "VIP RooM";
-        public const string Premium = "Premium RooM";
-        public const string Royal = "Royal RooM";
-        public const string VR = "VR RooM";
+        public const string PS3 = "PS3";
+        public const string PS4 = "PS4";
+        public const string VIP = "VIP";
+        public const string Premium = "Premium";
+        public const string Royal = "Royal";
+        public const string VR = "VR";
     }
 }

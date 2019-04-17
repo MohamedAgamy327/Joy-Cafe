@@ -1,20 +1,15 @@
 ﻿using DAL.BindableBaseService;
 using DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DTO.DeviceDataModel
 {
     public class DeviceFreeDataModel : ValidatableBindableBase
     {
-        private string _deviceTypeIcon;
-        public string DeviceTypeIcon
+        private string _deviceTypeImage;
+        public string DeviceTypeImage
         {
-            get { return _deviceTypeIcon; }
-            set { SetProperty(ref _deviceTypeIcon, value); }
+            get { return _deviceTypeImage; }
+            set { SetProperty(ref _deviceTypeImage, value); }
         }
 
         private Device _device;
