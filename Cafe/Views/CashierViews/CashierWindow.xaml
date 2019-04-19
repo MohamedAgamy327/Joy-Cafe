@@ -1,0 +1,38 @@
+﻿<Controls:MetroWindow
+     x:Class="Cafe.Views.CashierViews.CashierWindow"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:views = "clr-namespace:Cafe.Views.CashierViews"
+        xmlns:viewModels = "clr-namespace:Cafe.ViewModels.CashierViewModels" 
+        Title="{Binding Title}" 
+        Height="1000"
+        Width="1024"
+        ShowTitleBar="True"
+        WindowState="Maximized" 
+        FlowDirection="RightToLeft"
+        DataContext="{Binding Cashier, Source={StaticResource Locator}}">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <DataTemplate DataType = "{x:Type viewModels:DevicesViewModel}">
+                <views:DevicesUserControl/>
+            </DataTemplate>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Skins\MainSkin.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding Shutdown}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <ContentControl Content="{Binding CurrentViewModel}" />
+    </Grid>
+
+</Controls:MetroWindow>

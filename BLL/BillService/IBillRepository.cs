@@ -9,6 +9,6 @@ namespace BLL.BillService
     public interface IBillRepository : IGenericRepository<Bill>
     {
         Bill GetLastBill(int deviceId);
-        List<BillDisplayDataModel> Search(DateTime date);
+        List<BillDayDataModel> Search(DateTime date);
     }
 }

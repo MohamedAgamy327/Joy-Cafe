@@ -1,6 +1,4 @@
 ﻿using DAL.BindableBaseService;
-using DAL.ConstString;
-using DTO.UserDataModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using System;
@@ -10,17 +8,13 @@ namespace Cafe.ViewModels.BillViewModels
 {
     public class BillViewModel : ValidatableBindableBase
     {
+        static string Destination { get; set; }
+
         public BillViewModel()
         {
-            _currentViewModel = new DevicesViewModel();
-            _title = $"اسم المستخدم: {UserData.Name}";
-        }
-
-        private string _title;
-        public string Title
-        {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
+         //   Destination = "BillDisplay";
+            Destination = "BillDay";
+            _currentViewModel = new BillDayViewModel();
         }
 
         private ViewModelBase _currentViewModel;
@@ -30,27 +24,33 @@ namespace Cafe.ViewModels.BillViewModels
             set { SetProperty(ref _currentViewModel, value); }
         }
 
-        private RelayCommand _shutdown;
-        public RelayCommand Shutdown
+        private RelayCommand<string> _navigateToView;
+        public RelayCommand<string> NavigateToView
         {
             get
             {
-                return _shutdown ?? (_shutdown = new RelayCommand(
-                    ExecuteShutdown));
+                return _navigateToView
+                    ?? (_navigateToView = new RelayCommand<string>(NavigateToViewMethod));
             }
         }
-        private void ExecuteShutdown()
+        private void NavigateToViewMethod(string destination)
         {
             try
             {
-                if (UserData.Role == RoleText.Cashier && !UserData.newShift)
+                if (Destination != destination)
                 {
-                    new MainViewModel().ExecuteShutdown();
-
-                }
-                else if (UserData.Role == RoleText.Cashier && !string.IsNullOrEmpty(UserData.Name))
-                {
-                    new MainViewModel().NavigateToViewMethodAsync("Bill");
+                    Destination = destination;
+                    switch (destination)
+                    {
+                        case "BillDisplay":
+                            CurrentViewModel = new BillDisplayViewModel();
+                            break;
+                        case "BillDay":
+                            CurrentViewModel = new BillDayViewModel();
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
             catch (Exception ex)
@@ -58,11 +58,5 @@ namespace Cafe.ViewModels.BillViewModels
                 MessageBox.Show(ex.ToString());
             }
         }
-
-        public void ChangeTitle()
-        {
-
-        }
-
     }
 }

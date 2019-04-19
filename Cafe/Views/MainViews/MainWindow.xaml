@@ -90,11 +90,11 @@
                 <iconPacks:PackIconMaterial Kind="WalletMembership" Width="50" Height="50" />
             </Controls:Tile>
 
-            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="Bill" Title="الكاشير" Background="#CC647687"  Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource LargeTileStyle}" >
+            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="Cashier" Title="الكاشير" Background="#CC647687"  Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource LargeTileStyle}" >
                 <iconPacks:PackIconEntypo Kind="GameController" Width="50" Height="50"/>
             </Controls:Tile>
 
-            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="BillDisplay" Title="الفواتير" Background="#4286f4"  Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource LargeTileStyle}" >
+            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="Bill" Title="الفواتير" Background="#4286f4"  Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource LargeTileStyle}" >
                 <iconPacks:PackIconMaterial Kind="Receipt" Width="50" Height="50"/>
             </Controls:Tile>
         

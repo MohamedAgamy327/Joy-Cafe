@@ -13,7 +13,7 @@ using System.Data.SqlClient;
 using Cafe.Views.UserViews;
 using Cafe.Views.ClientViews;
 using Cafe.Views.DeviceViews;
-using Cafe.Views.BillViews;
+using Cafe.Views.CashierViews;
 using Cafe.Views.ShiftViews;
 using Cafe.Views.MembershipViews;
 using DAL.BindableBaseService;
@@ -27,6 +27,7 @@ using DTO.UserDataModel;
 using System.IO;
 using System.Data;
 using DTO.ShiftDataModel;
+using Cafe.Views.BillViews;
 
 namespace Cafe.ViewModels
 {
@@ -156,7 +157,7 @@ namespace Cafe.ViewModels
                         currentWindow.Show();
                         break;
 
-                    case "Bill":
+                    case "Cashier":
                         using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                         {
                             if (unitOfWork.DevicesTypes.FirstOrDefault(f => f.SingleHourPrice == 0) != null)
@@ -173,13 +174,13 @@ namespace Cafe.ViewModels
                             }
                         }
                         currentWindow.Hide();
-                        new BillWindow().ShowDialog();
+                        new CashierWindow().ShowDialog();
                         currentWindow.Show();
                         break;
 
-                    case "BillDisplay":
+                    case "Bill":
                         currentWindow.Hide();
-                        //new SpendingWindow().ShowDialog();
+                        new BillWindow().ShowDialog();
                         currentWindow.Show();
                         break;
 
@@ -271,7 +272,7 @@ namespace Cafe.ViewModels
                             {
                                 Mouse.OverrideCursor = null;
                                 await currentWindow.HideMetroDialogAsync(loginDialog);
-                                NavigateToViewMethodAsync("Bill");
+                                NavigateToViewMethodAsync("Cashier");
                             }
                             else if (unitOfWork.Shifts.SingleOrDefault(s => s.UserID != user.ID && s.EndDate == null) != null)
                             {
@@ -358,7 +359,7 @@ namespace Cafe.ViewModels
                 }
                 Mouse.OverrideCursor = null;
                 await currentWindow.HideMetroDialogAsync(startShiftDialog);
-                NavigateToViewMethodAsync("Bill");
+                NavigateToViewMethodAsync("Cashier");
             }
             catch (Exception ex)
             {
@@ -503,8 +504,10 @@ namespace Cafe.ViewModels
                     return;
                 Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
                 SqlConnection sqlconnection = new SqlConnection(@"Server=.\sqlexpress; Database=master; Integrated Security=true");
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = sqlconnection;
+                SqlCommand cmd = new SqlCommand
+                {
+                    Connection = sqlconnection
+                };
                 cmd.Parameters.Add("@fileName", SqlDbType.NChar).Value = RestoreBackupModel.Path;
                 cmd.CommandText = "ALTER Database JoyDB SET OFFLINE WITH ROLLBACK IMMEDIATE; Restore Database JoyDB From Disk= @fileName WITH REPLACE";
                 sqlconnection.Open();

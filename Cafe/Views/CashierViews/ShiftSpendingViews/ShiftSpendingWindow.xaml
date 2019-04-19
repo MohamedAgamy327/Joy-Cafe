@@ -1,0 +1,133 @@
+﻿
+<Controls:MetroWindow
+    x:Class="Cafe.Views.CashierViews.ShiftSpendingViews.ShiftSpendingWindow"
+     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="المصاريف" 
+        Height="1000"
+        Width="1024"
+        ShowTitleBar="True"
+        WindowState="Maximized" 
+        FlowDirection="RightToLeft"
+        DataContext="{Binding ShiftSpending, Source={StaticResource Locator}}">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Loaded}"  />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\..\Skins\MainSkin.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.7*" />
+            <ColumnDefinition Width="8.3*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Margin="10">
+
+            <Button Command="{Binding ShowAdd}"  Margin="5" Style="{StaticResource SquareButtonStyle}" >
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock  Text="إضافة بند" Margin="5,0" Style="{StaticResource TextBlockStyle}" ></TextBlock>
+                    <iconPacks:PackIconModern Kind="Add" />
+                </StackPanel>
+            </Button>
+
+        </StackPanel>
+
+        <Grid Grid.Column="1" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".7*" />
+                <RowDefinition Height="9*" />
+                <RowDefinition Height=".5*" />
+            </Grid.RowDefinitions>
+
+            <TextBox   Text="{Binding Key,UpdateSourceTrigger=PropertyChanged}"   
+                         Controls:TextBoxHelper.ClearTextButton="True"
+                         Controls:TextBoxHelper.UseFloatingWatermark="True"
+                         Controls:TextBoxHelper.Watermark="بحث..." 
+                FontSize="14" FontFamily="calibri" FontWeight="Bold"
+                >
+                <TextBox.Style>
+                    <Style BasedOn="{StaticResource SearchMetroTextBox}" TargetType="{x:Type TextBox}">
+                        <Style.Triggers>
+                            <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
+                                <Setter Property="Controls:TextBoxHelper.ButtonContent" Value="r" />
+                                <Setter Property="Controls:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding Path=Search}" Key="Enter" />
+                </TextBox.InputBindings>
+            </TextBox>
+
+            <DataGrid 
+                ItemsSource="{Binding Spendings}"
+                SelectedItem="{Binding SelectedSpending}"
+                      Margin="0 10 0 0"
+                  Grid.Row="1"
+                  HeadersVisibility="All"
+                  SelectionUnit="FullRow"
+                  IsManipulationEnabled="False"
+                      CanUserDeleteRows="False"
+                      CanUserAddRows="False"
+                  AutoGenerateColumns="False"
+                               >
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn IsReadOnly="True"  Header="البيان" Width="3*" HeaderStyle="{StaticResource ColumnHeaderStyle4}"
+                                    Binding="{Binding Spending.Statement}"  />
+                    <DataGridTextColumn IsReadOnly="True"  Header="التاريخ" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle4}"
+                                    Binding="{Binding Spending.RegistrationDate, StringFormat={}\{0:hh:mm tt yyyy/MM/dd  \}}"  />
+
+                    <DataGridTextColumn IsReadOnly="True"  Header="المبلغ" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle4}"
+                                    Binding="{Binding Spending.Amount}"  />
+
+                    <DataGridTemplateColumn  Header="تعديل" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle4}" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding DataContext.ShowUpdate, 
+                        RelativeSource={RelativeSource AncestorType={x:Type Window}}}"   Style="{DynamicResource MetroCircleButtonStyle}" BorderThickness="0" >
+                                    <iconPacks:PackIconEntypo Kind="Edit" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn  Header="حذف" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle4}" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Style="{DynamicResource MetroCircleButtonStyle}" Command="{Binding DataContext.Delete, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"   BorderThickness="0"   >
+                                    <iconPacks:PackIconMaterial Kind="DeleteForever" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <StatusBar VerticalAlignment="Bottom" Grid.ColumnSpan="2">
+            <StatusBarItem Content="عدد البنود" Style="{StaticResource StatusBarItemStyle}" />
+            <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
+            <StatusBarItem  Content="{Binding TotalRecords}" Style="{StaticResource StatusBarItemStyle}"/>
+            <StatusBarItem Content="إجمالى المصاريف" Style="{StaticResource StatusBarItemStyle}" />
+            <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
+            <StatusBarItem  Content="{Binding Sum}" Style="{StaticResource StatusBarItemStyle}"/>
+            <StatusBarItem Content="جنيهاً" Style="{StaticResource StatusBarItemStyle}" />
+        </StatusBar>
+    </Grid>
+
+</Controls:MetroWindow>

@@ -1,0 +1,54 @@
+﻿<dialogs:CustomDialog x:Class="Cafe.Views.CashierViews.BillItemsViews.BillItemAddDialog"
+                      xmlns:Helpers="clr-namespace:Cafe.Helpers"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xml:lang="ar-EG"
+                         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      dialogs:DialogParticipation.Register="{Binding}"
+                      mc:Ignorable="d"
+                      Title="إضافة طلب"
+                      FlowDirection="RightToLeft" 
+                     
+                      >
+    <StackPanel Name="pnl" >
+        <StackPanel.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="..\..\..\Skins\MainSkin.xaml"/>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </StackPanel.Resources>
+
+        <TextBlock Style="{StaticResource TextBlockStyle}" VerticalAlignment="Center" Margin="0,5">الصنف</TextBlock>
+        <ComboBox Name="First" Helpers:FocusExtension.IsFocused="{Binding IsFocused}" IsEditable="True"  ItemsSource="{Binding Items}" SelectedValue="{Binding NewBillItem.ItemID}" SelectedValuePath="ID" DisplayMemberPath="Name" SelectedItem="{Binding SelectedItem,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboBoxStyle}">
+        </ComboBox>
+
+        <TextBlock VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" Margin="0,5">السعر</TextBlock>
+        <Controls:NumericUpDown IsEnabled="False"   Value="{Binding SelectedItem.Price,ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle}" Minimum="0.01">
+        </Controls:NumericUpDown>
+
+        <TextBlock VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" Margin="0,5">الكمية</TextBlock>
+        <Controls:NumericUpDown  HasDecimals="False"   Value="{Binding NewBillItem.Qty,ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle}" Minimum="1">
+        </Controls:NumericUpDown>
+
+        <Separator Margin="0 10 0 0" />
+        <StackPanel Orientation="Horizontal" Margin="0,10" >
+            <Button Name="btn" Margin="5,0" Command="{Binding Save}" FocusManager.FocusedElement="{Binding ElementName=First}" Style="{StaticResource SquareButtonStyle}" Width="100"    >
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock  Text="حفظ"  Style="{StaticResource TextBlockStyle}" Margin="10,0"></TextBlock>
+                    <iconPacks:PackIconModern Kind="Save" />
+                </StackPanel>
+            </Button>
+            <Button IsCancel="True" Margin="5,0" Command="{Binding CloseDialog}" CommandParameter="Add" Style="{StaticResource SquareButtonStyle}" Width="100" >
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock  Text="إغلاق"  Style="{StaticResource TextBlockStyle}" Margin="10,0"></TextBlock>
+                    <iconPacks:PackIconModern Kind="Cancel" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </StackPanel>
+</dialogs:CustomDialog>

@@ -58,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BillDataModel\BillData.cs" />
+    <Compile Include="BillDataModel\BillDayDataModel.cs" />
+    <Compile Include="BillDataModel\BillDisplayDataModel.cs" />
     <Compile Include="BillDataModel\BillPaidDataModel.cs" />
     <Compile Include="BillDeviceDataModel\BillDevicesDisplayDataModel.cs" />
     <Compile Include="BillItemDataModel\BillItemAddDataModel.cs" />

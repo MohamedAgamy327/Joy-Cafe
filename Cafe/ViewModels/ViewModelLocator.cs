@@ -5,9 +5,10 @@ using Cafe.ViewModels.SpendingViewModels;
 using Cafe.ViewModels.UserViewModels;
 using Cafe.ViewModels.ClientViewModels;
 using Cafe.ViewModels.DeviceViewModels;
-using Cafe.ViewModels.BillViewModels;
+using Cafe.ViewModels.CashierViewModels;
 using Cafe.ViewModels.ShiftViewModels;
 using Cafe.ViewModels.MembershipViewModels;
+using Cafe.ViewModels.BillViewModels;
 using CommonServiceLocator;
 
 namespace Cafe.ViewModels
@@ -41,13 +42,15 @@ namespace Cafe.ViewModels
             SimpleIoc.Default.Register<SafeViewModel>();
             SimpleIoc.Default.Register<SafeDisplayViewModel>();
             SimpleIoc.Default.Register<SafeReportViewModel>();
-            SimpleIoc.Default.Register<BillViewModel>();
+            SimpleIoc.Default.Register<CashierViewModel>();
             SimpleIoc.Default.Register<DevicesViewModel>();
             SimpleIoc.Default.Register<ShiftItemsViewModel>();
             SimpleIoc.Default.Register<ShiftSpendingViewModel>();         
             SimpleIoc.Default.Register<BillItemsViewModel>();
             SimpleIoc.Default.Register<AccountPaidViewModel>();
-      
+            SimpleIoc.Default.Register<BillViewModel>();
+            SimpleIoc.Default.Register<BillDisplayViewModel>();
+            SimpleIoc.Default.Register<BillDayViewModel>();
         }
 
         public MainViewModel Main
@@ -234,11 +237,11 @@ namespace Cafe.ViewModels
             }
         }
 
-        public BillViewModel Bill
+        public CashierViewModel Cashier
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<BillViewModel>();
+                return ServiceLocator.Current.GetInstance<CashierViewModel>();
             }
         }
 
@@ -279,6 +282,30 @@ namespace Cafe.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<AccountPaidViewModel>();
+            }
+        }
+
+        public BillViewModel Bill
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<BillViewModel>();
+            }
+        }
+
+        public BillDisplayViewModel BillDisplay
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<BillDisplayViewModel>();
+            }
+        }
+
+        public BillDayViewModel BillDay
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<BillDayViewModel>();
             }
         }
 
@@ -398,10 +425,10 @@ namespace Cafe.ViewModels
                 SimpleIoc.Default.Unregister<SafeReportViewModel>();
                 SimpleIoc.Default.Register<SafeReportViewModel>();
             }
-            else if (viewModel == "Bill")
+            else if (viewModel == "Cashier")
             {
-                SimpleIoc.Default.Unregister<BillViewModel>();
-                SimpleIoc.Default.Register<BillViewModel>();
+                SimpleIoc.Default.Unregister<CashierViewModel>();
+                SimpleIoc.Default.Register<CashierViewModel>();
             }
             else if (viewModel == "Devices")
             {
@@ -427,6 +454,21 @@ namespace Cafe.ViewModels
             {
                 SimpleIoc.Default.Unregister<AccountPaidViewModel>();
                 SimpleIoc.Default.Register<AccountPaidViewModel>();
+            }
+            else if (viewModel == "Bill")
+            {
+                SimpleIoc.Default.Unregister<BillViewModel>();
+                SimpleIoc.Default.Register<BillViewModel>();
+            }
+            else if (viewModel == "BillDisplay")
+            {
+                SimpleIoc.Default.Unregister<BillDisplayViewModel>();
+                SimpleIoc.Default.Register<BillDisplayViewModel>();
+            }
+            else if (viewModel == "BillDay")
+            {
+                SimpleIoc.Default.Unregister<BillDayViewModel>();
+                SimpleIoc.Default.Register<BillDayViewModel>();
             }
         }
     }

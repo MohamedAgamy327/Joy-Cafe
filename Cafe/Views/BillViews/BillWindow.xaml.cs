@@ -3,7 +3,7 @@ using MahApps.Metro.Controls;
 
 namespace Cafe.Views.BillViews
 {
-    public partial class BillWindow : MetroWindow
+    public partial class BillWindow :  MetroWindow
     {
         public BillWindow()
         {
