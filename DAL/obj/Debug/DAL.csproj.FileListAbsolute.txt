@@ -75,3 +75,5 @@ D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
 D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.csproj.CopyComplete
 D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.dll
 D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.pdb
+D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.csprojAssemblyReference.cache
+D:\Work\Project\Now\Joy-Cafe\DAL\obj\Debug\DAL.Migrations.updatebilldelete.resources

@@ -128,19 +128,29 @@ namespace Cafe.ViewModels.BillViewModels
             get
             {
                 return _deleteItem
-                    ?? (_deleteItem = new RelayCommand(DeleteItemMethod));
+                    ?? (_deleteItem = new RelayCommand(DeleteItemMethodAsync));
             }
         }
-        private void DeleteItemMethod()
+        private async void DeleteItemMethodAsync()
         {
             try
             {
-                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                MessageDialogResult result = await currentWindow.ShowMessageAsync("تأكيد الحذف", "هل تـريــد حــذف هـذا الطلب؟", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings()
                 {
-                    unitOfWork.BillsItems.Remove(_selectedBillItem.BillItem);
-                    unitOfWork.Complete();
+                    AffirmativeButtonText = "موافق",
+                    NegativeButtonText = "الغاء",
+                    DialogMessageFontSize = 25,
+                    DialogTitleFontSize = 30
+                });
+                if (result == MessageDialogResult.Affirmative)
+                {
+                    using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                    {
+                        unitOfWork.BillsItems.Remove(_selectedBillItem.BillItem);
+                        unitOfWork.Complete();
+                    }
+                    Load();
                 }
-                Load();
             }
             catch (Exception ex)
             {

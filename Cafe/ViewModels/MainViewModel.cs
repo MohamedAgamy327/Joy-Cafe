@@ -177,6 +177,12 @@ namespace Cafe.ViewModels
                         currentWindow.Show();
                         break;
 
+                    case "BillDisplay":
+                        currentWindow.Hide();
+                        //new SpendingWindow().ShowDialog();
+                        currentWindow.Show();
+                        break;
+
                     case "Spending":
                         currentWindow.Hide();
                         new SpendingWindow().ShowDialog();

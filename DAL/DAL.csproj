@@ -127,6 +127,10 @@
     <Compile Include="Migrations\201903161325264_billItems2.Designer.cs">
       <DependentUpon>201903161325264_billItems2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904190410009_update-bill-delete.cs" />
+    <Compile Include="Migrations\201904190410009_update-bill-delete.Designer.cs">
+      <DependentUpon>201904190410009_update-bill-delete.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -161,6 +165,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903161325264_billItems2.resx">
       <DependentUpon>201903161325264_billItems2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904190410009_update-bill-delete.resx">
+      <DependentUpon>201904190410009_update-bill-delete.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

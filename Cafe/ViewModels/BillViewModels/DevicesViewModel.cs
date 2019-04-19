@@ -1,4 +1,5 @@
 ﻿using BLL.UnitOfWorkService;
+using Cafe.Reports;
 using Cafe.Views.BillViews.AccountPaidViews;
 using Cafe.Views.BillViews.BillClientViews;
 using Cafe.Views.BillViews.BillItemsViews;
@@ -57,6 +58,7 @@ namespace Cafe.ViewModels.BillViewModels
             _accountVisibility = Visibility.Collapsed;
             _freeDevicesVisibility = Visibility.Collapsed;
             _availableDevicesVisibility = Visibility.Visible;
+            PrintVisibility = Visibility.Visible;
             clientAddDialog = new ClientAddDialog();
             clientCheckDialog = new ClientCheckDialog();
             finishShiftDialog = new FinishShiftDialog();
@@ -172,6 +174,13 @@ namespace Cafe.ViewModels.BillViewModels
         {
             get { return _resumeVisibility; }
             set { SetProperty(ref _resumeVisibility, value); }
+        }
+
+        private Visibility _printVisibility;
+        public Visibility PrintVisibility
+        {
+            get { return _printVisibility; }
+            set { SetProperty(ref _printVisibility, value); }
         }
 
         // Device Cases Count
@@ -362,13 +371,15 @@ namespace Cafe.ViewModels.BillViewModels
                     TemporaryVisibility = Visibility.Collapsed;
                     StartVisibility = Visibility.Collapsed;
                     StopVisibility = Visibility.Collapsed;
+                    PrintVisibility = Visibility.Collapsed;
                     return;
                 }
-                    
+
 
                 SingleVisibility = Visibility.Visible;
                 MultiVisibility = Visibility.Visible;
                 BirthdayVisibility = Visibility.Visible;
+                PrintVisibility = Visibility.Visible;
 
                 if (_selectedDevice.Device.Case != CaseText.Free)
                 {
@@ -702,6 +713,102 @@ namespace Cafe.ViewModels.BillViewModels
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private RelayCommand _print;
+        public RelayCommand Print
+        {
+            get
+            {
+                return _print
+                    ?? (_print = new RelayCommand(PrintMethodAsync));
+            }
+        }
+        private async void PrintMethodAsync()
+        {
+            try
+            {           
+                // Account Print
+                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                {
+                    var bill = unitOfWork.Bills.GetLastBill(_selectedDevice.Device.ID);
+                    if (bill == null)
+                    {
+                        await currentWindow.ShowMessageAsync("فشل الطبع", "عفواً لا يوجد فاتورة سابقة", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        {
+                            AffirmativeButtonText = "موافق",
+                            DialogMessageFontSize = 25,
+                            DialogTitleFontSize = 30
+                        });
+                        return;
+                    }
+                    var billDevices = new ObservableCollection<BillDevicesDisplayDataModel>(unitOfWork.BillsDevices.GetBillDevices(bill.ID));
+                    var billItems = new ObservableCollection<BillItemsDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(bill.ID));
+
+                    Mouse.OverrideCursor = Cursors.Wait;
+                    DS ds = new DS();
+                    ds.Bill.Rows.Clear();
+                    int i = 0;
+
+                    foreach (var item in billDevices)
+                    {
+                        var hoursPlayed = item.Duration / 60;
+                        var minuutesPlayed = item.Duration % 60;
+                        ds.Bill.Rows.Add();
+                        ds.Bill[i]["BillID"] = "#" + bill.ID;
+                        ds.Bill[i]["Date"] = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                        ds.Bill[i]["Time"] = DateTime.Now.ToString(" h:mm tt");
+                        ds.Bill[i]["Device"] = item.DeviceType.Name + " ( " + item.Device.Name + " ) : " + item.BillDevice.GameType;
+                        ds.Bill[i]["StartDate"] = "Start Time: " + item.BillDevice.StartDate.ToString(" h:mm tt");
+                        ds.Bill[i]["EndDate"] = "End Time: " + Convert.ToDateTime(item.EndDate).ToString(" h:mm tt");
+                        ds.Bill[i]["TotalTime"] = "Total Time: " + Convert.ToInt32(hoursPlayed).ToString("D2") + ":" + Convert.ToInt32(minuutesPlayed).ToString("D2");
+                        ds.Bill[i]["TotalPlayedMoney"] = bill.MembershipMinutes == null ? string.Format("{0:0.00}", Math.Round(Convert.ToDecimal(item.Total), 0)) : "";
+                        ds.Bill[i]["Discount"] = string.Format("{0:0.00}", bill.Discount);
+                        ds.Bill[i]["BillTotal"] = string.Format("{0:0.00}",  Math.Round(Convert.ToDecimal(bill.TotalAfterDiscount), 0));
+                        i++;
+                    }
+                    i = 0;
+                    foreach (var item in billItems)
+                    {
+                        ds.Items.Rows.Add();
+                        ds.Items[i]["Qty"] = item.BillItem.Qty;
+                        ds.Items[i]["Item"] = item.Item.Name;
+                        ds.Items[i]["Total"] = string.Format("{0:0.00}", item.BillItem.Total); ;
+                        i++;
+                    }
+
+                    if (billItems.Count == 0)
+                    {
+                        //ReportWindow rpt = new ReportWindow();
+                        BillReport billReport = new BillReport();
+                        billReport.SetDataSource(ds.Tables["Bill"]);
+                        //rpt.crv.ViewerCore.ReportSource = billReport;
+                        Mouse.OverrideCursor = null;
+                        //rpt.ShowDialog();
+                        billReport.PrintToPrinter(1, false, 0, 15);
+                    }
+                    else
+                    {
+                        //ReportWindow rpt = new ReportWindow();
+                        BillItemsReport billItemsReport = new BillItemsReport();
+                        billItemsReport.SetDataSource(ds.Tables["Bill"]);
+                        billItemsReport.Subreports[0].SetDataSource(ds.Tables["Items"]);
+                        //rpt.crv.ViewerCore.ReportSource = billItemsReport;
+                        Mouse.OverrideCursor = null;
+                        billItemsReport.PrintToPrinter(1, false, 0, 15);
+                        //rpt.ShowDialog();
+                        billItemsReport.PrintToPrinter(1, false, 0, 15);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
             }
         }
 

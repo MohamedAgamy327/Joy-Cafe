@@ -94,10 +94,14 @@
                 <iconPacks:PackIconEntypo Kind="GameController" Width="50" Height="50"/>
             </Controls:Tile>
 
-            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="Spending" Title="المصاريف"   Background="#CCD2691E" Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource LargeTileStyle}" >
+            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="BillDisplay" Title="الفواتير" Background="#4286f4"  Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource LargeTileStyle}" >
+                <iconPacks:PackIconMaterial Kind="Receipt" Width="50" Height="50"/>
+            </Controls:Tile>
+        
+            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="Spending" Title="المصاريف"   Background="#CCD2691E" Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource SmallTileStyle}" >
                 <iconPacks:PackIconModern Kind="Money" Width="50" Height="50" />
             </Controls:Tile>
-            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="Safe" Title="الخزنة" Background="#CC008299"  Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource LargeTileStyle}" >
+            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="Safe" Title="الخزنة" Background="#CC008299"  Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource SmallTileStyle}" >
                 <iconPacks:PackIconOcticons Kind="Lock" Width="50" Height="50" />
             </Controls:Tile>
 

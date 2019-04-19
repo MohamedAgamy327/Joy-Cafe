@@ -301,7 +301,7 @@ namespace Cafe.ViewModels.BillViewModels
             get
             {
                 return _print
-                    ?? (_print = new RelayCommand(PrintMethod,CanExecutePrint));
+                    ?? (_print = new RelayCommand(PrintMethod, CanExecutePrint));
             }
         }
         private void PrintMethod()
@@ -332,9 +332,9 @@ namespace Cafe.ViewModels.BillViewModels
                     ds.Bill[i]["StartDate"] = "Start Time: " + item.BillDevice.StartDate.ToString(" h:mm tt");
                     ds.Bill[i]["EndDate"] = "End Time: " + Convert.ToDateTime(item.EndDate).ToString(" h:mm tt");
                     ds.Bill[i]["TotalTime"] = "Total Time: " + Convert.ToInt32(hoursPlayed).ToString("D2") + ":" + Convert.ToInt32(minuutesPlayed).ToString("D2");
-                    ds.Bill[i]["TotalPlayedMoney"] = string.Format("{0:0.00}", Math.Round(Convert.ToDecimal(item.Total), 0));
+                    ds.Bill[i]["TotalPlayedMoney"] = IsMembership == Visibility.Collapsed ? string.Format("{0:0.00}", Math.Round(Convert.ToDecimal(item.Total), 0)) : "";
                     ds.Bill[i]["Discount"] = string.Format("{0:0.00}", _selectedBill.Discount);
-                    ds.Bill[i]["BillTotal"] = string.Format("{0:0.00}", _selectedBill.TotalAfterDiscount);
+                    ds.Bill[i]["BillTotal"] = string.Format("{0:0.00}", Math.Round(Convert.ToDecimal(_selectedBill.TotalAfterDiscount), 0));
                     i++;
                 }
                 i = 0;
@@ -346,30 +346,28 @@ namespace Cafe.ViewModels.BillViewModels
                     ds.Items[i]["Total"] = string.Format("{0:0.00}", item.BillItem.Total); ;
                     i++;
                 }
-                if (IsMembership == Visibility.Collapsed)
-                {
-                    if (BillItems.Count == 0)
-                    {
-                        ReportWindow rpt = new ReportWindow();
-                        BillReport billReport = new BillReport();
-                        billReport.SetDataSource(ds.Tables["Bill"]);
-                        rpt.crv.ViewerCore.ReportSource = billReport;
-                        Mouse.OverrideCursor = null;
-                        rpt.ShowDialog();
-                        //billReport.PrintToPrinter(1, false, 0, 15);
-                    }
-                    else
-                    {
-                        ReportWindow rpt = new ReportWindow();
-                        BillItemsReport billItemsReport = new BillItemsReport();
-                        billItemsReport.SetDataSource(ds.Tables["Bill"]);
-                        billItemsReport.Subreports[0].SetDataSource(ds.Tables["Items"]);
-                        rpt.crv.ViewerCore.ReportSource = billItemsReport;
-                        Mouse.OverrideCursor = null;
-                        rpt.ShowDialog();
 
-                        //  billItemsReport.PrintToPrinter(1, false, 0, 15);
-                    }
+                if (BillItems.Count == 0)
+                {
+                    //ReportWindow rpt = new ReportWindow();
+                    BillReport billReport = new BillReport();
+                    billReport.SetDataSource(ds.Tables["Bill"]);
+                    //rpt.crv.ViewerCore.ReportSource = billReport;
+                    Mouse.OverrideCursor = null;
+                    //rpt.ShowDialog();
+                    billReport.PrintToPrinter(1, false, 0, 15);
+                }
+                else
+                {
+                    //ReportWindow rpt = new ReportWindow();
+                    BillItemsReport billItemsReport = new BillItemsReport();
+                    billItemsReport.SetDataSource(ds.Tables["Bill"]);
+                    billItemsReport.Subreports[0].SetDataSource(ds.Tables["Items"]);
+                    //rpt.crv.ViewerCore.ReportSource = billItemsReport;
+                    Mouse.OverrideCursor = null;
+                    billItemsReport.PrintToPrinter(1, false, 0, 15);
+                    //rpt.ShowDialog();
+                    billItemsReport.PrintToPrinter(1, false, 0, 15);
                 }
 
             }
@@ -384,10 +382,12 @@ namespace Cafe.ViewModels.BillViewModels
         }
         private bool CanExecutePrint()
         {
-            if ((BillPaid.Discount == null || BillPaid.Ratio == null) && BillPaid.Minimum == null)
+            if (BillPaid.Minimum != null)
                 return false;
-            else
+            if (BillPaid.Discount != null && BillPaid.Ratio != null)
                 return true;
+            else
+                return false;
         }
     }
 }

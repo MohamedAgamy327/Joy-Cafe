@@ -127,6 +127,13 @@ namespace DAL.Entities
             set { SetProperty(ref _totalAfterDiscount, value); }
         }
 
+        private bool _isDeleted;
+        public bool IsDeleted
+        {
+            get { return _isDeleted; }
+            set { SetProperty(ref _isDeleted, value); }
+        }
+
         private DateTime _startDate;
         [Required]
         public DateTime StartDate
