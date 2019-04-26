@@ -8,7 +8,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:Custom="http://www.galasoft.ch/mvvmlight"
     mc:Ignorable="d" 
-    
+       xml:lang="ar-EG"
              FlowDirection="RightToLeft"
              d:DesignHeight="600"
              d:DesignWidth="800">
@@ -81,18 +81,18 @@
                   AutoGenerateColumns="False"
                                >
                 <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly="True"  Header="الكود" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding Bill.ID}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="الكود" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle2}"   Binding="{Binding Bill.ID}" />
 
-                    <DataGridTextColumn IsReadOnly="True"  Header="المستخدم" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding User.Name}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="المستخدم" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle2}"   Binding="{Binding User.Name}" />
 
-                    <DataGridTextColumn IsReadOnly="True"  Header="العميل" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding Client.Name}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="العميل" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle2}"   Binding="{Binding Client.Name}" />
 
-                    <DataGridTextColumn IsReadOnly="True"  Header="المجموع" Width="1.5*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding Bill.TotalAfterDiscount}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="المجموع" Width="1.5*"  HeaderStyle="{StaticResource ColumnHeaderStyle2}"   Binding="{Binding Bill.TotalAfterDiscount}" />
 
-                    <DataGridTemplateColumn  Header="الحذف" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle1}" >
+                    <DataGridTemplateColumn  Header="الحذف" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle2}" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding Bill.IsDeleted,UpdateSourceTrigger=PropertyChanged}" >
+                                <CheckBox IsChecked="{Binding Bill.Deleted,UpdateSourceTrigger=PropertyChanged}" >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Checked">
                                             <i:InvokeCommandAction Command="{Binding DataContext.Check, 

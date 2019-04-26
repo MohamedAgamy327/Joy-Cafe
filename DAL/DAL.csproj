@@ -69,11 +69,14 @@
   <ItemGroup>
     <Compile Include="BindableBaseService\BindableBase.cs" />
     <Compile Include="BindableBaseService\ValidatableBindableBase.cs" />
-    <Compile Include="ConstString\CaseText.cs" />
+    <Compile Include="ConstString\BillCaseText.cs" />
+    <Compile Include="ConstString\BillTypeText.cs" />
+    <Compile Include="ConstString\DeviceCaseText.cs" />
     <Compile Include="ConstString\DevicesImagesList.cs" />
     <Compile Include="ConstString\DeviceTypeText.cs" />
     <Compile Include="ConstString\GamePlayTypeText.cs" />
     <Compile Include="ConstString\GeneralText.cs" />
+    <Compile Include="ConstString\OtherDeviceTypeText.cs" />
     <Compile Include="ConstString\RoleText.cs" />
     <Compile Include="GeneralDBContext.cs" />
     <Compile Include="Entities\Bill.cs" />
@@ -131,6 +134,18 @@
     <Compile Include="Migrations\201904190410009_update-bill-delete.Designer.cs">
       <DependentUpon>201904190410009_update-bill-delete.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904201415004_devices-order.cs" />
+    <Compile Include="Migrations\201904201415004_devices-order.Designer.cs">
+      <DependentUpon>201904201415004_devices-order.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904251110510_cancled-bill.cs" />
+    <Compile Include="Migrations\201904251110510_cancled-bill.Designer.cs">
+      <DependentUpon>201904251110510_cancled-bill.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904251120037_cancled-reason-bill.cs" />
+    <Compile Include="Migrations\201904251120037_cancled-reason-bill.Designer.cs">
+      <DependentUpon>201904251120037_cancled-reason-bill.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -168,6 +183,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904190410009_update-bill-delete.resx">
       <DependentUpon>201904190410009_update-bill-delete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904201415004_devices-order.resx">
+      <DependentUpon>201904201415004_devices-order.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904251110510_cancled-bill.resx">
+      <DependentUpon>201904251110510_cancled-bill.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904251120037_cancled-reason-bill.resx">
+      <DependentUpon>201904251120037_cancled-reason-bill.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

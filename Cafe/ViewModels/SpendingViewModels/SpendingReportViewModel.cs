@@ -19,7 +19,7 @@ namespace Cafe.ViewModels.SpendingViewModels
                 Paging.TotalRecords = unitOfWork.Spendings.GetRecordsNumber(_key, _dateFrom, _dateTo);
                 Paging.GetFirst();
                 Spendings = new ObservableCollection<SpendingDisplayDataModel>(unitOfWork.Spendings.Search(_key, _dateFrom, _dateTo, Paging.CurrentPage, PagingWPF.PageSize));
-                Paging.TotalAmount = unitOfWork.Spendings.GetTotalAmount(_key, _dateFrom, _dateTo);
+                TotalAmount = unitOfWork.Spendings.GetTotalAmount(_key, _dateFrom, _dateTo);
             }
         }
 
@@ -28,17 +28,21 @@ namespace Cafe.ViewModels.SpendingViewModels
             _key = "";
             _dateTo = DateTime.Now;
             _dateFrom = DateTime.Now;
-            _paging = new SpendingReportDataModel();
+            _paging = new PagingWPF();
         }
 
         private string _key;
         public string Key
         {
             get { return _key; }
-            set
-            {
-                SetProperty(ref _key, value);
-            }
+            set { SetProperty(ref _key, value); }
+        }
+
+        private decimal? _totalAmount;
+        public decimal? TotalAmount
+        {
+            get { return _totalAmount; }
+            set { SetProperty(ref _totalAmount, value); }
         }
 
         private DateTime _dateTo;
@@ -55,8 +59,8 @@ namespace Cafe.ViewModels.SpendingViewModels
             set { SetProperty(ref _dateFrom, value); }
         }
 
-        private SpendingReportDataModel _paging;
-        public SpendingReportDataModel Paging
+        private PagingWPF _paging;
+        public PagingWPF Paging
         {
             get { return _paging; }
             set { SetProperty(ref _paging, value); }

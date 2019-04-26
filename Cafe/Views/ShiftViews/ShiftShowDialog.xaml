@@ -88,6 +88,8 @@
 
             <TextBlock Text="{Binding SelectedShift.Shift.SafeEnd}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
 
+            <TextBlock Foreground="Red"  Text="{Binding Message}" Style="{StaticResource TextBlockStyle}" Margin="20,0"/>
+
         </StackPanel>
         
        

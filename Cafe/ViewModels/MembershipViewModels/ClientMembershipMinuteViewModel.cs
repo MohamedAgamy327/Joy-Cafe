@@ -32,10 +32,7 @@ namespace Cafe.ViewModels.MembershipViewModels
         public string Key
         {
             get { return _key; }
-            set
-            {
-                SetProperty(ref _key, value);
-            }
+            set { SetProperty(ref _key, value); }
         }
 
         private PagingWPF _paging;

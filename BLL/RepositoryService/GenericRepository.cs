@@ -73,5 +73,9 @@ namespace BLL.RepositoryService
         {
             return _entities.Count();
         }
+        public int GetRecordsNumber(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _entities.Where(predicate).Count();
+        }
     }
 }

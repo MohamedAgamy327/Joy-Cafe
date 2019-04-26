@@ -1,4 +1,5 @@
 ﻿<dialogs:CustomDialog  x:Class="Cafe.Views.DeviceViews.DeviceAddDialog"
+                          xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:Helpers="clr-namespace:Cafe.Helpers"
                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -30,6 +31,10 @@
                 <KeyBinding Command="{Binding Path=Save}" Key="Enter" />
             </TextBox.InputBindings>
         </TextBox>
+
+        <TextBlock Style="{StaticResource TextBlockStyle}" Margin="0,5">الترتيب فى العرض</TextBlock>
+        <Controls:NumericUpDown HasDecimals="False"  Value="{Binding NewDevice.Order, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle2}" >
+        </Controls:NumericUpDown>
 
         <Separator Margin="0 15 0 0" />
         <StackPanel Orientation="Horizontal" Margin="0 10 0 0" >

@@ -213,14 +213,14 @@ namespace Cafe.ViewModels.CashierViewModels
                         return;
 
                     Device device = unitOfWork.Devices.Get(BillData.DeviceID);
-                    if (device.Case == CaseText.Busy)
+                    if (device.Case == DeviceCaseText.Busy)
                     {
                         BillDevice billDevice = unitOfWork.BillsDevices.SingleOrDefault(f => f.BillID == BillData.BillID && f.EndDate == null);
                         billDevice.EndDate = BillData.EndDate;
                         billDevice.Duration = Convert.ToInt32((Convert.ToDateTime(billDevice.EndDate) - billDevice.StartDate).TotalMinutes);
                         unitOfWork.BillsDevices.Edit(billDevice);
                     }
-                    device.Case = CaseText.Free;
+                    device.Case = DeviceCaseText.Free;
                     device.BillID = null;
                     unitOfWork.Devices.Edit(device);
                     _selectedBill.UserID = UserData.ID;
@@ -250,7 +250,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     }
                     else
                     {
-                        _selectedBill.Point = SelectedBill.PlayedMinutes / 5;
+                        _selectedBill.Point = Convert.ToInt32(Math.Round(Convert.ToDecimal(SelectedBill.DevicesSum), 0));
                         _selectedBill.Discount = _billPaid.Discount;
                         _selectedBill.Ratio = _billPaid.Ratio;
                         if (IsMembership != Visibility.Collapsed)

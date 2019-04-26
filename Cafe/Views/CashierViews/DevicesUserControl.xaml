@@ -83,7 +83,10 @@
                 </StackPanel>
                 
                 <StackPanel Grid.Row="1">
-                    <Image  Source="..\..\Resources\joy.jpg" Stretch="Fill" Height="250"  />
+                    <Image Margin="0 30 0 0" Source="..\..\Resources\joy.jpg" Stretch="Fill" Height="200"  />
+
+                    <TextBlock Foreground="Blue" Margin="0,5" Style="{StaticResource TextBlockAddUpdateStyle}" FontFamily="Veranda" FontSize="25" >3329744</TextBlock>
+
                     <TextBlock Name="lblTimer" Style="{StaticResource TextBlockAddUpdateStyle}" FontFamily="Veranda" FontSize="25" Text="{Binding Path=CurrentTime}"></TextBlock>
                 </StackPanel>
             </Grid>
@@ -187,9 +190,12 @@
                                 </MenuItem.Icon>
                             </MenuItem>
 
-                            
-                            
-                            
+                            <MenuItem Header="إلغاء"  Visibility="{Binding CancelVisibility}"   Command="{Binding ShowCancel}">
+                                <MenuItem.Icon>
+                                    <iconPacks:PackIconModern Kind="Cancel"  Margin="10,0,5,0" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+
                         </ContextMenu>
                     </ListBox.ContextMenu>
 
@@ -203,7 +209,7 @@
                             <StackPanel Margin="5" >
                                 <Button Background="Transparent" Command="{Binding DataContext.ShowAccount,
                         RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Device.BillID}">
-                                    <Image Source="{Binding DeviceTypeImage}" Width="100" Height="100"  />
+                                    <Image Source="{Binding DeviceTypeImage}" Width="200" Height="100" Stretch="Fill" />
                                 </Button>
                                 <TextBlock Style="{StaticResource TextBlockAddUpdateStyle}" Text="{Binding Device.Name}"></TextBlock>
 
@@ -344,7 +350,7 @@
 
                                     <Button Background="Transparent" Command="{Binding DataContext.MoveTo,
          RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" >
-                                        <Image Source="{Binding DeviceTypeImage}" Width="100" Height="100"  />
+                                        <Image Source="{Binding DeviceTypeImage}" Width="200" Height="100"  />
                                     </Button>
                                     <TextBlock Style="{StaticResource TextBlockAddUpdateStyle}" Text="{Binding Device.Name}"></TextBlock>
 

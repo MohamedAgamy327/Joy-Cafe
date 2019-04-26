@@ -3,6 +3,7 @@ using Cafe.Reports;
 using Cafe.Views.CashierViews.AccountPaidViews;
 using Cafe.Views.CashierViews.BillClientViews;
 using Cafe.Views.CashierViews.BillItemsViews;
+using Cafe.Views.CashierViews.CancelBillViews;
 using Cafe.Views.CashierViews.FinishShiftViews;
 using Cafe.Views.CashierViews.ShiftItemsViews;
 using Cafe.Views.CashierViews.ShiftSpendingViews;
@@ -42,6 +43,7 @@ namespace Cafe.ViewModels.CashierViewModels
         private readonly ClientCheckDialog clientCheckDialog;
         private readonly FinishShiftDialog finishShiftDialog;
         private readonly FinishShiftConfirmDialog finishShiftConfirmDialog;
+        private readonly CancelReasonDialog cancelReasonDialog;
 
         public DevicesViewModel()
         {
@@ -55,6 +57,7 @@ namespace Cafe.ViewModels.CashierViewModels
             clientCheckDialog = new ClientCheckDialog();
             finishShiftDialog = new FinishShiftDialog();
             finishShiftConfirmDialog = new FinishShiftConfirmDialog();
+            cancelReasonDialog = new CancelReasonDialog();
             currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
 
         }
@@ -175,6 +178,13 @@ namespace Cafe.ViewModels.CashierViewModels
             set { SetProperty(ref _printVisibility, value); }
         }
 
+        private Visibility _cancelVisibility;
+        public Visibility CancelVisibility
+        {
+            get { return _cancelVisibility; }
+            set { SetProperty(ref _cancelVisibility, value); }
+        }
+        
         // Device Cases Count
 
         private int _temporaryDevices;
@@ -265,6 +275,13 @@ namespace Cafe.ViewModels.CashierViewModels
             set { SetProperty(ref _shift, value); }
         }
 
+        private BillCancelDataModel _billCancel;
+        public BillCancelDataModel BillCancel
+        {
+            get { return _billCancel; }
+            set { SetProperty(ref _billCancel, value); }
+        }
+
         private List<string> _telephoneSuggestions;
         public List<string> TelephoneSuggestions
         {
@@ -336,13 +353,8 @@ namespace Cafe.ViewModels.CashierViewModels
                     CurrentTime = DateTime.Now.ToLongTimeString();
                 };
                 _timer.Start();
-                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
-                {
-                    Devices = new ObservableCollection<DevicePlayDataModel>(unitOfWork.Devices.GetAvailable());
-                    BusyDevices = _devices.Where(w => w.Device.Case == CaseText.Busy).Count();
-                    AvailableDevices = _devices.Where(w => w.Device.Case == CaseText.Free).Count();
-                    TemporaryDevices = _devices.Where(w => w.Device.Case == CaseText.Paused).Count();
-                }
+
+                UpdateData();
             }
             catch (Exception ex)
             {
@@ -373,6 +385,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     StartVisibility = Visibility.Collapsed;
                     StopVisibility = Visibility.Collapsed;
                     PrintVisibility = Visibility.Collapsed;
+                    CancelVisibility = Visibility.Collapsed;
                     return;
                 }
 
@@ -382,15 +395,17 @@ namespace Cafe.ViewModels.CashierViewModels
                 BirthdayVisibility = Visibility.Visible;
                 PrintVisibility = Visibility.Visible;
 
-                if (_selectedDevice.Device.Case != CaseText.Free)
+                if (_selectedDevice.Device.Case != DeviceCaseText.Free)
                 {
                     StartVisibility = Visibility.Collapsed;
                     StopVisibility = Visibility.Visible;
+                    CancelVisibility = Visibility.Visible;
                 }
                 else
                 {
                     StartVisibility = Visibility.Visible;
                     StopVisibility = Visibility.Collapsed;
+                    CancelVisibility = Visibility.Collapsed;
                 }
                 if (_selectedDevice.DeviceType.Birthday && _selectedDevice.GameType != GamePlayTypeText.Birthday)
                     BirthdayVisibility = Visibility.Visible;
@@ -402,12 +417,12 @@ namespace Cafe.ViewModels.CashierViewModels
                 if (_selectedDevice.GameType == GamePlayTypeText.Multi)
                     MultiVisibility = Visibility.Collapsed;
 
-                if (_selectedDevice.Device.Case == CaseText.Free)
+                if (_selectedDevice.Device.Case == DeviceCaseText.Free)
                 {
                     ResumeVisibility = Visibility.Collapsed;
                     TemporaryVisibility = Visibility.Collapsed;
                 }
-                else if (_selectedDevice.Device.Case == CaseText.Paused)
+                else if (_selectedDevice.Device.Case == DeviceCaseText.Paused)
                 {
                     ResumeVisibility = Visibility.Visible;
                     TemporaryVisibility = Visibility.Collapsed;
@@ -444,11 +459,11 @@ namespace Cafe.ViewModels.CashierViewModels
                     Bill bill = new Bill
                     {
                         StartDate = DateTime.Now,
-                        Type = GeneralText.Devices
+                        Type = BillTypeText.Devices
                     };
                     unitOfWork.Bills.Add(bill);
 
-                    _selectedDevice.Device.Case = CaseText.Busy;
+                    _selectedDevice.Device.Case = DeviceCaseText.Busy;
                     _selectedDevice.Device.BillID = bill.ID;
                     unitOfWork.Devices.Edit(_selectedDevice.Device);
                     BillDevice newBillDevice = null;
@@ -496,10 +511,7 @@ namespace Cafe.ViewModels.CashierViewModels
 
                     unitOfWork.BillsDevices.Add(newBillDevice);
                     unitOfWork.Complete();
-                    Devices = new ObservableCollection<DevicePlayDataModel>(unitOfWork.Devices.GetAvailable());
-                    BusyDevices = _devices.Where(w => w.Device.Case == CaseText.Busy).Count();
-                    AvailableDevices = _devices.Where(w => w.Device.Case == CaseText.Free).Count();
-                    TemporaryDevices = _devices.Where(w => w.Device.Case == CaseText.Paused).Count();
+                    UpdateData();
                 }
             }
             catch (Exception ex)
@@ -525,7 +537,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    if (_selectedDevice.Device.Case == CaseText.Busy)
+                    if (_selectedDevice.Device.Case == DeviceCaseText.Busy)
                     {
                         BillDevice selectedBillDevice = unitOfWork.BillsDevices.FirstOrDefault(w => w.BillID == _selectedDevice.Device.BillID && w.EndDate == null);
                         selectedBillDevice.EndDate = DateTime.Now;
@@ -534,7 +546,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     }
                     else
                     {
-                        _selectedDevice.Device.Case = CaseText.Busy;
+                        _selectedDevice.Device.Case = DeviceCaseText.Busy;
                         unitOfWork.Devices.Edit(_selectedDevice.Device);
                     }
                     BillDevice newBillDevice = null;
@@ -585,10 +597,7 @@ namespace Cafe.ViewModels.CashierViewModels
 
                     unitOfWork.BillsDevices.Add(newBillDevice);
                     unitOfWork.Complete();
-                    Devices = new ObservableCollection<DevicePlayDataModel>(unitOfWork.Devices.GetAvailable());
-                    BusyDevices = _devices.Where(w => w.Device.Case == CaseText.Busy).Count();
-                    AvailableDevices = _devices.Where(w => w.Device.Case == CaseText.Free).Count();
-                    TemporaryDevices = _devices.Where(w => w.Device.Case == CaseText.Paused).Count();
+                    UpdateData();
                 }
             }
             catch (Exception ex)
@@ -615,7 +624,7 @@ namespace Cafe.ViewModels.CashierViewModels
 
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    _selectedDevice.Device.Case = CaseText.Paused;
+                    _selectedDevice.Device.Case = DeviceCaseText.Paused;
                     unitOfWork.Devices.Edit(_selectedDevice.Device);
                     BillDevice selectedBillDevice = unitOfWork.BillsDevices.FirstOrDefault(s => s.BillID == _selectedDevice.Device.BillID && s.EndDate == null);
                     selectedBillDevice.EndDate = DateTime.Now;
@@ -623,10 +632,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     unitOfWork.BillsDevices.Edit(selectedBillDevice);
                     unitOfWork.Complete();
 
-                    Devices = new ObservableCollection<DevicePlayDataModel>(unitOfWork.Devices.GetAvailable());
-                    BusyDevices = _devices.Where(w => w.Device.Case == CaseText.Busy).Count();
-                    AvailableDevices = _devices.Where(w => w.Device.Case == CaseText.Free).Count();
-                    TemporaryDevices = _devices.Where(w => w.Device.Case == CaseText.Paused).Count();
+                    UpdateData();
                 }
             }
             catch (Exception ex)
@@ -653,7 +659,7 @@ namespace Cafe.ViewModels.CashierViewModels
 
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    _selectedDevice.Device.Case = CaseText.Busy;
+                    _selectedDevice.Device.Case = DeviceCaseText.Busy;
                     unitOfWork.Devices.Edit(_selectedDevice.Device);
 
                     BillDevice selectedBillDevice = unitOfWork.BillsDevices.GetLast((int)_selectedDevice.Device.BillID);
@@ -705,10 +711,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     }
                     unitOfWork.BillsDevices.Add(newBillDevice);
                     unitOfWork.Complete();
-                    Devices = new ObservableCollection<DevicePlayDataModel>(unitOfWork.Devices.GetAvailable());
-                    BusyDevices = _devices.Where(w => w.Device.Case == CaseText.Busy).Count();
-                    AvailableDevices = _devices.Where(w => w.Device.Case == CaseText.Free).Count();
-                    TemporaryDevices = _devices.Where(w => w.Device.Case == CaseText.Paused).Count();
+                    UpdateData();
                 }
             }
             catch (Exception ex)
@@ -847,6 +850,76 @@ namespace Cafe.ViewModels.CashierViewModels
             }
         }
 
+        private RelayCommand _showCancel;
+        public RelayCommand ShowCancel
+        {
+            get
+            {
+                return _showCancel
+                    ?? (_showCancel = new RelayCommand(ShowCancelMethod));
+            }
+        }
+        private async void ShowCancelMethod()
+        {
+            try
+            {
+                BillCancel = new BillCancelDataModel();
+                cancelReasonDialog.DataContext = this;
+                await currentWindow.ShowMetroDialogAsync(cancelReasonDialog);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private RelayCommand _cancel;
+        public RelayCommand Cancel
+        {
+            get
+            {
+                return _cancel
+                    ?? (_cancel = new RelayCommand(CancelMethod,CanExecuteCancel));
+            }
+        }
+        private async void CancelMethod()
+        {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                {
+                    if(SelectedDevice.Device.Case == DeviceCaseText.Busy)
+                    {
+                        BillDevice selectedBillDevice = unitOfWork.BillsDevices.FirstOrDefault(s => s.BillID == _selectedDevice.Device.BillID && s.EndDate == null);
+                        selectedBillDevice.EndDate = DateTime.Now;
+                        selectedBillDevice.Duration = Convert.ToInt32((Convert.ToDateTime(selectedBillDevice.EndDate) - selectedBillDevice.StartDate).TotalMinutes);
+                        unitOfWork.BillsDevices.Edit(selectedBillDevice);
+                    }
+                    var bill = unitOfWork.Bills.Get((int)_selectedDevice.Device.BillID);
+                    bill.UserID = UserData.ID;
+                    bill.EndDate = DateTime.Now;
+                    bill.Date = DateTime.Now;
+                    bill.Canceled = true;
+                    bill.CancelReason = _billCancel.CancelReason;
+                    unitOfWork.Bills.Edit(bill);
+                    _selectedDevice.Device.BillID = null;
+                    _selectedDevice.Device.Case = DeviceCaseText.Free;
+                    unitOfWork.Devices.Edit(_selectedDevice.Device);
+                    unitOfWork.Complete();
+                    UpdateData();
+                }
+                await currentWindow.HideMetroDialogAsync(cancelReasonDialog);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private bool CanExecuteCancel()
+        {
+            return !BillCancel.HasErrors;
+        }
+
         // Move
 
         private RelayCommand _moveFrom;
@@ -916,7 +989,7 @@ namespace Cafe.ViewModels.CashierViewModels
                 {
                     BillDevice selectedBillDevice;
 
-                    if (_selectedDevice.Device.Case == CaseText.Busy)
+                    if (_selectedDevice.Device.Case == DeviceCaseText.Busy)
                     {
                         selectedBillDevice = unitOfWork.BillsDevices.FirstOrDefault(s => s.BillID == _selectedDevice.Device.BillID && s.EndDate == null);
                         selectedBillDevice.EndDate = DateTime.Now;
@@ -928,10 +1001,10 @@ namespace Cafe.ViewModels.CashierViewModels
                         selectedBillDevice = unitOfWork.BillsDevices.GetLast((int)_selectedDevice.Device.BillID);
                     }
 
-                    selectedFreeDevice.Device.Case = CaseText.Busy;
+                    selectedFreeDevice.Device.Case = DeviceCaseText.Busy;
                     selectedFreeDevice.Device.BillID = _selectedDevice.Device.BillID;
                     unitOfWork.Devices.Edit(selectedFreeDevice.Device);
-                    _selectedDevice.Device.Case = CaseText.Free;
+                    _selectedDevice.Device.Case = DeviceCaseText.Free;
                     _selectedDevice.Device.BillID = null;
                     unitOfWork.Devices.Edit(_selectedDevice.Device);
 
@@ -979,7 +1052,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     unitOfWork.Complete();
                     FreeDevicesVisibility = Visibility.Collapsed;
                     AvailableDevicesVisibility = Visibility.Visible;
-                    Devices = new ObservableCollection<DevicePlayDataModel>(unitOfWork.Devices.GetAvailable());
+                    UpdateData();
                 }
 
             }
@@ -1108,7 +1181,7 @@ namespace Cafe.ViewModels.CashierViewModels
                         BillData.ClientID = client.ID;
                         BillData.DeviceID = _selectedDevice.Device.ID;
                         new AccountPaidWindow().ShowDialog();
-                        LoadedMethod();
+                        UpdateData();
                     }
                 }
             }
@@ -1160,7 +1233,7 @@ namespace Cafe.ViewModels.CashierViewModels
                 await currentWindow.HideMetroDialogAsync(clientAddDialog);
 
                 new AccountPaidWindow().ShowDialog();
-                LoadedMethod();
+                UpdateData();
             }
             catch (Exception ex)
             {
@@ -1296,7 +1369,7 @@ namespace Cafe.ViewModels.CashierViewModels
                         var shift = unitOfWork.Shifts.FirstOrDefault(s => s.EndDate == null);
                         var safeIncome = unitOfWork.Safes.Find(f => f.UserID == UserData.ID && f.Type == true && f.RegistrationDate >= shift.StartDate && f.RegistrationDate <= DateTime.Now).Sum(s => s.Amount);
                         safeIncome = (safeIncome.HasValue) ? safeIncome : 0;
-                        var itemsBillTotal = unitOfWork.BillsItems.Find(f => f.Bill.Type == GeneralText.Items && f.Bill.EndDate == null).Sum(s => s.Total);
+                        var itemsBillTotal = unitOfWork.BillsItems.Find(f => f.Bill.Type == BillTypeText.Items && f.Bill.EndDate == null).Sum(s => s.Total);
                         itemsBillTotal = (itemsBillTotal.HasValue) ? itemsBillTotal : 0;
                         var spending = unitOfWork.Safes.Find(f => f.UserID == UserData.ID && f.Type == false && f.RegistrationDate >= shift.StartDate && f.RegistrationDate <= DateTime.Now).Sum(s => s.Amount);
                         spending = (spending.HasValue) ? spending : 0;
@@ -1409,7 +1482,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     }
 
                     DateTime endDate = DateTime.Now;
-                    Bill bill = unitOfWork.Bills.SingleOrDefault(s => s.EndDate == null && s.Type == GeneralText.Items);
+                    Bill bill = unitOfWork.Bills.SingleOrDefault(s => s.EndDate == null && s.Type == BillTypeText.Items);
                     if (bill != null)
                     {
                         var itemsBillTotal = unitOfWork.BillsItems.Find(f => f.BillID == bill.ID).Sum(s => s.Total);
@@ -1584,6 +1657,10 @@ namespace Cafe.ViewModels.CashierViewModels
                     case "Login":
                         await currentWindow.HideMetroDialogAsync(finishShiftConfirmDialog);
                         break;
+                    case "CancelBill":
+                        await currentWindow.HideMetroDialogAsync(cancelReasonDialog);
+                        break;
+                        
                     default:
                         break;
                 }
@@ -1594,5 +1671,15 @@ namespace Cafe.ViewModels.CashierViewModels
             }
         }
 
+        private void UpdateData()
+        {
+            using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+            {
+                Devices = new ObservableCollection<DevicePlayDataModel>(unitOfWork.Devices.GetAvailable());
+                BusyDevices = _devices.Where(w => w.Device.Case == DeviceCaseText.Busy).Count();
+                AvailableDevices = _devices.Where(w => w.Device.Case == DeviceCaseText.Free).Count();
+                TemporaryDevices = _devices.Where(w => w.Device.Case == DeviceCaseText.Paused).Count();
+            }
+        }
     }
 }

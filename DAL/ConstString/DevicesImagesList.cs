@@ -6,12 +6,14 @@ namespace DAL.ConstString
     {
         public static List<string> ImageList = new List<string>
         {
-            "PS3Free.PNG","PS3Single.PNG","PS3Multi.PNG","PS3Birthday.PNG","PS3PausedSingle.PNG","PS3PausedMulti.PNG","PS3PausedBirthday.PNG",
-            "PS4Free.PNG","PS4Single.PNG","PS4Multi.PNG","PS4Birthday.PNG","PS4PausedSingle.PNG","PS4PausedMulti.PNG","PS4PausedBirthday.PNG",
-            "RoyalFree.PNG","RoyalSingle.PNG","RoyalMulti.PNG","RoyalBirthday.PNG","RoyalPausedSingle.PNG","RoyalPausedMulti.PNG","RoyalPausedBirthday.PNG",
-            "VIPFree.PNG","VIPSingle.PNG","VIPMulti.PNG","VIPBirthday.PNG","VIPPausedSingle.PNG","VIPPausedMulti.PNG","VIPPausedBirthday.PNG",
-            "VRFree.PNG","VRSingle.PNG","VRMulti.PNG","VRBirthday.PNG","VRPausedSingle.PNG","VRPausedMulti.PNG","VRPausedBirthday.PNG",
-            "PremiumFree.PNG","PremiumSingle.PNG","PremiumMulti.PNG","PremiumBirthday.PNG","PremiumPausedSingle.PNG","PremiumPausedMulti.PNG","PremiumPausedBirthday.PNG"
+            "PS3Free.PNG","PS3Single.PNG","PS3Multi.PNG","PS3Paused.PNG",
+            "PS4Free.PNG","PS4Single.PNG","PS4Multi.PNG","PS4Paused.PNG",
+            "PS4 4KFree.PNG","PS4 4KSingle.PNG","PS4 4KMulti.PNG","PS4 4KPaused.PNG",
+            "RoyalFree.PNG","RoyalSingle.PNG","RoyalMulti.PNG","RoyalBirthday.PNG","RoyalPaused.PNG",
+            "VIPFree.PNG","VIPSingle.PNG","VIPMulti.PNG","VIPBirthday.PNG","VIPPaused.PNG",
+            "VRFree.PNG","VRSingle.PNG","VRBirthday.PNG","VRPaused.PNG",
+            "PremiumFree.PNG","PremiumSingle.PNG","PremiumMulti.PNG","PremiumBirthday.PNG","PremiumPaused.PNG",
+            "OtherFree.PNG","OtherSingle.PNG","OtherMulti.PNG","OtherBirthday.PNG","OtherPaused.PNG"
         };
     }
 }

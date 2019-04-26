@@ -60,10 +60,7 @@ namespace Cafe.ViewModels.DeviceViewModels
         public string Key
         {
             get { return _key; }
-            set
-            {
-                SetProperty(ref _key, value);
-            }
+            set { SetProperty(ref _key, value); }
         }
 
         private PagingWPF _paging;
@@ -291,21 +288,32 @@ namespace Cafe.ViewModels.DeviceViewModels
                             DialogMessageFontSize = 25,
                             DialogTitleFontSize = 30
                         });
+                        return;
                     }
-                    else
+                    device = unitOfWork.Devices.SingleOrDefault(s => s.Order == _newDevice.Order);
+                    if (device != null)
                     {
-                        unitOfWork.Devices.Add(new Device
+                        await currentWindow.ShowMessageAsync("فشل الإضافة", "هذا الترتيب موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
-                            IsAvailable = true,
-                            Name = _newDevice.Name,
-                            DeviceTypeID = _newDevice.DeviceTypeID,
-                            Case = CaseText.Free
+                            AffirmativeButtonText = "موافق",
+                            DialogMessageFontSize = 25,
+                            DialogTitleFontSize = 30
                         });
-                        unitOfWork.Complete();
-                        NewDevice = new DeviceAddDataModel();
-                        Load();
+                        return;
                     }
+                    unitOfWork.Devices.Add(new Device
+                    {
+                        IsAvailable = true,
+                        Name = _newDevice.Name,
+                        DeviceTypeID = _newDevice.DeviceTypeID,
+                        Order = _newDevice.Order,
+                        Case = DeviceCaseText.Free
+                    });
+                    unitOfWork.Complete();
+                    NewDevice = new DeviceAddDataModel();
+                    Load();
                 }
+
             }
             catch (Exception ex)
             {
@@ -338,10 +346,11 @@ namespace Cafe.ViewModels.DeviceViewModels
                 DeviceUpdate = new DeviceUpdateDataModel();
                 DeviceUpdate.ID = _selectedDevice.Device.ID;
                 DeviceUpdate.Name = _selectedDevice.Device.Name;
+                DeviceUpdate.Order = _selectedDevice.Device.Order;
                 DeviceUpdate.DeviceTypeID = _selectedDevice.Device.DeviceTypeID;
                 DeviceUpdate.DeviceType = _selectedDevice.DeviceType;
                 DeviceUpdate.IsAvailable = _selectedDevice.Device.IsAvailable;
-                NotBusy = SelectedDevice.Device.Case == CaseText.Free ? true : false;
+                NotBusy = SelectedDevice.Device.Case == DeviceCaseText.Free ? true : false;
                 deviceUpdateDialog.DataContext = this;
                 await currentWindow.ShowMetroDialogAsync(deviceUpdateDialog);
             }
@@ -378,16 +387,28 @@ namespace Cafe.ViewModels.DeviceViewModels
                             DialogMessageFontSize = 25,
                             DialogTitleFontSize = 30
                         });
+                        return;
                     }
-                    else
+                     device = unitOfWork.Devices.SingleOrDefault(s => s.Order == _deviceUpdate.Order && s.ID != _deviceUpdate.ID);
+                    if (device != null)
                     {
-                        SelectedDevice.Device.Name = _deviceUpdate.Name;
-                        SelectedDevice.Device.IsAvailable = _deviceUpdate.IsAvailable;
-                        unitOfWork.Devices.Edit(SelectedDevice.Device);
-                        unitOfWork.Complete();
-                        await currentWindow.HideMetroDialogAsync(deviceUpdateDialog);
-                        Load();
+                        await currentWindow.ShowMessageAsync("فشل الإضافة", "هذا الترتيب موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                        {
+                            AffirmativeButtonText = "موافق",
+                            DialogMessageFontSize = 25,
+                            DialogTitleFontSize = 30
+                        });
+                        return;
                     }
+
+                    SelectedDevice.Device.Name = _deviceUpdate.Name;
+                    SelectedDevice.Device.IsAvailable = _deviceUpdate.IsAvailable;
+                    SelectedDevice.Device.Order = _deviceUpdate.Order;
+                    unitOfWork.Devices.Edit(SelectedDevice.Device);
+                    unitOfWork.Complete();
+                    await currentWindow.HideMetroDialogAsync(deviceUpdateDialog);
+                    Load();
+
                 }
             }
             catch (Exception ex)

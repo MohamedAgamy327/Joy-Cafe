@@ -1,8 +1,6 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
-using MahApps.Metro.Controls;
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using DAL.BindableBaseService;
 using Utilities.Paging;
@@ -21,27 +19,60 @@ namespace Cafe.ViewModels.SafeViewModels
                 Paging.TotalRecords = unitOfWork.Safes.GetRecordsNumber(_key, _dateFrom, _dateTo);
                 Paging.GetFirst();
                 Safes = new ObservableCollection<SafeDisplayDataModel>(unitOfWork.Safes.Search(_key, _dateFrom, _dateTo, Paging.CurrentPage, PagingWPF.PageSize));
-                Paging.TotalIncome = unitOfWork.Safes.GetTotalIncome(_key, _dateFrom, _dateTo);
-                Paging.TotalOutgoings = unitOfWork.Safes.GetTotalOutgoings(_key, _dateFrom, _dateTo);
+                TotalIncome = unitOfWork.Safes.GetTotalIncome(_key, _dateFrom, _dateTo);
+                TotalOutgoings = unitOfWork.Safes.GetTotalOutgoings(_key, _dateFrom, _dateTo);
             }
         }
 
         public SafeReportViewModel()
         {
-            _key = "";        
+            _key = "";
             _dateTo = DateTime.Now;
             _dateFrom = DateTime.Now;
-            _paging = new SafeReportDataModel();    
+            _paging = new PagingWPF();
         }
 
         private string _key;
         public string Key
         {
             get { return _key; }
+            set { SetProperty(ref _key, value); }
+        }
+
+        private decimal? _currentAccount;
+        public decimal? CurrentAccount
+        {
+            get { return _currentAccount; }
+            set { SetProperty(ref _currentAccount, value); }
+        }
+
+        private decimal? _totalIncome;
+        public decimal? TotalIncome
+        {
+            get { return _totalIncome; }
             set
             {
-                SetProperty(ref _key, value);
+                SetProperty(ref _totalIncome, value);
+                OnPropertyChanged("Difference");
             }
+        }
+
+        private decimal? _totalOutgoings;
+        public decimal? TotalOutgoings
+        {
+            get { return _totalOutgoings; }
+            set
+            {
+                SetProperty(ref _totalOutgoings, value);
+                OnPropertyChanged("Difference");
+            }
+        }
+
+        private decimal? _difference;
+        public decimal? Difference
+        {
+            get { return _difference = _totalIncome + _totalOutgoings; }
+            set { SetProperty(ref _difference, value); }
         }
 
         private DateTime _dateTo;
@@ -58,8 +89,8 @@ namespace Cafe.ViewModels.SafeViewModels
             set { SetProperty(ref _dateFrom, value); }
         }
 
-        private SafeReportDataModel _paging;
-        public SafeReportDataModel Paging
+        private PagingWPF _paging;
+        public PagingWPF Paging
         {
             get { return _paging; }
             set { SetProperty(ref _paging, value); }
@@ -89,7 +120,7 @@ namespace Cafe.ViewModels.SafeViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    Paging.CurrentAccount = unitOfWork.Safes.GetCurrentAccount();
+                    CurrentAccount = unitOfWork.Safes.GetCurrentAccount();
                 }
                 Load();
             }

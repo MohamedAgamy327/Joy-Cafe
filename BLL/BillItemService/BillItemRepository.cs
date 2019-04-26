@@ -22,7 +22,7 @@ namespace BLL.BillItemService
 
         public List<BillItemsDisplayDataModel> GetBillItems()
         {
-            return GeneralDBContext.BillsItems.AsNoTracking().Where(w => w.Bill.Type == GeneralText.Items && w.Bill.EndDate == null).OrderByDescending(o=>o.RegistrationDate).Select(s => new BillItemsDisplayDataModel
+            return GeneralDBContext.BillsItems.AsNoTracking().Where(w => w.Bill.Type == BillTypeText.Items && w.Bill.EndDate == null).OrderByDescending(o=>o.RegistrationDate).Select(s => new BillItemsDisplayDataModel
             {
                 BillItem = s,
                 Item = s.Item

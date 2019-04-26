@@ -8,7 +8,6 @@ using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
 using DAL.BindableBaseService;
 using BLL.UnitOfWorkService;
-using DAL.Entities;
 using DAL;
 using Utilities.Paging;
 using DTO.ShiftDataModel;
@@ -36,7 +35,7 @@ namespace Cafe.ViewModels.ShiftViewModels
             _dateTo = DateTime.Now;
             _dateFrom = DateTime.Now;
             _paging = new PagingWPF();
-            shiftShowDialog = new ShiftShowDialog();          
+            shiftShowDialog = new ShiftShowDialog();
             currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
@@ -44,10 +43,14 @@ namespace Cafe.ViewModels.ShiftViewModels
         public string Key
         {
             get { return _key; }
-            set
-            {
-                SetProperty(ref _key, value);
-            }
+            set { SetProperty(ref _key, value); }
+        }
+
+        private string _message;
+        public string Message
+        {
+            get { return _message; }
+            set { SetProperty(ref _message, value); }
         }
 
         private DateTime _dateTo;
@@ -194,6 +197,14 @@ namespace Cafe.ViewModels.ShiftViewModels
             try
             {
                 shiftShowDialog.DataContext = this;
+
+                if (_selectedShift.Shift.Total > _selectedShift.Shift.SafeEnd)
+                    Message = $"يوجد عجز مالى قدره {_selectedShift.Shift.Total - _selectedShift.Shift.SafeEnd} جنيه";
+                else if (_selectedShift.Shift.Total < _selectedShift.Shift.SafeEnd)
+                    Message = $"يوجد فائض مالى قدره {_selectedShift.Shift.SafeEnd - _selectedShift.Shift.Total} جنيه";
+                else
+                    Message = "";
+
                 await currentWindow.ShowMetroDialogAsync(shiftShowDialog);
             }
             catch (Exception ex)

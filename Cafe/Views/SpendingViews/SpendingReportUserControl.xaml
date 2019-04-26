@@ -131,7 +131,7 @@
             <StatusBarItem  Content="{Binding Paging.TotalRecords}" Style="{StaticResource StatusBarItemStyle}"/>
             <StatusBarItem Content="مجموع المصاريف" Style="{StaticResource StatusBarItemStyle}"/>
             <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
-            <StatusBarItem  Content="{Binding Paging.TotalAmount}" Style="{StaticResource StatusBarItemStyle}" />
+            <StatusBarItem  Content="{Binding TotalAmount}" Style="{StaticResource StatusBarItemStyle}" />
         </StatusBar>
     </Grid>
 

@@ -28,7 +28,7 @@ namespace BLL.DeviceService
 
         public List<DeviceDisplayDataModel> Search(string key, int pageNumber, int pageSize)
         {
-            return GeneralDBContext.Devices.Where(w => (w.Name + w.DeviceType.Name).Contains(key)).OrderBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new DeviceDisplayDataModel
+            return GeneralDBContext.Devices.Where(w => (w.Name + w.DeviceType.Name).Contains(key)).OrderBy(o => o.Order).ThenBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new DeviceDisplayDataModel
             {
                 Device = s,
                 DeviceType = s.DeviceType,
@@ -40,33 +40,35 @@ namespace BLL.DeviceService
         public List<DevicePlayDataModel> GetAvailable()
         {
             string url = @"../../Resources/Icons/";
-            return GeneralDBContext.Devices.AsNoTracking().Where(w => w.IsAvailable == true).OrderBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Select(s => new DevicePlayDataModel
+            return GeneralDBContext.Devices.AsNoTracking().Where(w => w.IsAvailable == true).OrderBy(o => o.Order).ThenBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Select(s => new DevicePlayDataModel
             {
                 Device = s,
                 DeviceType = s.DeviceType,
-                DeviceTypeImage = s.Case == CaseText.Free ? (url + (DevicesImagesList.ImageList.FirstOrDefault(m => m.Contains(s.DeviceType.Name) && m.Contains(CaseText.Free)))) :
-                s.Case == CaseText.Paused ? (url + (DevicesImagesList.ImageList.FirstOrDefault(m => m.Contains(s.DeviceType.Name) && m.Contains(CaseText.Paused) && m.Contains(s.BillsDevices.OrderByDescending(o => o.StartDate).FirstOrDefault().GameType)))) :
-                (url + (DevicesImagesList.ImageList.FirstOrDefault(m => m.Contains(s.DeviceType.Name) && m.Contains(s.BillsDevices.OrderByDescending(o => o.StartDate).FirstOrDefault().GameType)))),
-                GameType = s.Case != CaseText.Free ? s.BillsDevices.OrderByDescending(o => o.StartDate).FirstOrDefault().GameType : ""
+                DeviceTypeImage = s.Case == DeviceCaseText.Free ? (url + (DevicesImagesList.ImageList.FirstOrDefault(m => m.Contains(s.DeviceType.Name) && m.Contains(DeviceCaseText.Free)) ?? OtherDeviceTypeText.OtherFree)) :
+                s.Case == DeviceCaseText.Paused ? (url + (DevicesImagesList.ImageList.FirstOrDefault(m => m.Contains(s.DeviceType.Name) && m.Contains(DeviceCaseText.Paused)) ?? OtherDeviceTypeText.OtherPaused))
+                : (url + (DevicesImagesList.ImageList.FirstOrDefault(m => m.Contains(s.DeviceType.Name) && m.Contains(s.BillsDevices.OrderByDescending(o => o.StartDate).FirstOrDefault().GameType)) ?? OtherDeviceTypeText.Other + s.BillsDevices.OrderByDescending(o => o.StartDate).FirstOrDefault().GameType + ".PNG")
+                ),
+                GameType = s.Case != DeviceCaseText.Free ? s.BillsDevices.OrderByDescending(o => o.StartDate).FirstOrDefault().GameType : ""
             }).ToList();
+
         }
 
         public List<DeviceFreeDataModel> GetFree(string gameType)
         {
             string url = @"../../Resources/Icons/";
             if (gameType == GamePlayTypeText.Birthday)
-                return GeneralDBContext.Devices.AsNoTracking().Where(w => w.IsAvailable == true && w.Case == CaseText.Free && w.DeviceType.Birthday == true).OrderBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Select(s => new DeviceFreeDataModel
+                return GeneralDBContext.Devices.AsNoTracking().Where(w => w.IsAvailable == true && w.Case == DeviceCaseText.Free && w.DeviceType.Birthday == true).OrderBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Select(s => new DeviceFreeDataModel
                 {
                     Device = s,
                     DeviceType = s.DeviceType,
-                    DeviceTypeImage = (url + (DevicesImagesList.ImageList.FirstOrDefault(m => m.Contains(s.DeviceType.Name) && m.Contains(CaseText.Free))))
+                    DeviceTypeImage = (url + (DevicesImagesList.ImageList.FirstOrDefault(m => m.Contains(s.DeviceType.Name) && m.Contains(DeviceCaseText.Free)) ?? OtherDeviceTypeText.OtherFree))
                 }).ToList();
             else
-                return GeneralDBContext.Devices.AsNoTracking().Where(w => w.IsAvailable == true && w.Case == CaseText.Free).OrderBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Select(s => new DeviceFreeDataModel
+                return GeneralDBContext.Devices.AsNoTracking().Where(w => w.IsAvailable == true && w.Case == DeviceCaseText.Free).OrderBy(o => o.Order).ThenBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Select(s => new DeviceFreeDataModel
                 {
                     Device = s,
                     DeviceType = s.DeviceType,
-                    DeviceTypeImage = (url + (DevicesImagesList.ImageList.FirstOrDefault(m => m.Contains(s.DeviceType.Name) && m.Contains(CaseText.Free))))
+                    DeviceTypeImage = (url + (DevicesImagesList.ImageList.FirstOrDefault(m => m.Contains(s.DeviceType.Name) && m.Contains(DeviceCaseText.Free)) ?? OtherDeviceTypeText.OtherFree))
                 }).ToList();
         }
 

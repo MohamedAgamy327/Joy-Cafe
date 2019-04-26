@@ -247,13 +247,13 @@ namespace Cafe.ViewModels.CashierViewModels
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var bill = unitOfWork.Bills.FirstOrDefault(f => f.Type == GeneralText.Items && f.EndDate == null);
+                    var bill = unitOfWork.Bills.FirstOrDefault(f => f.Type == BillTypeText.Items && f.EndDate == null);
                     if (bill == null)
                     {
                         bill = new Bill
                         {
                             StartDate = DateTime.Now,
-                            Type = GeneralText.Items
+                            Type = BillTypeText.Items
                         };
                         unitOfWork.Bills.Add(bill);
                     }

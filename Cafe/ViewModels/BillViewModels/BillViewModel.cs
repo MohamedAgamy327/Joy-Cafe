@@ -12,9 +12,8 @@ namespace Cafe.ViewModels.BillViewModels
 
         public BillViewModel()
         {
-         //   Destination = "BillDisplay";
-            Destination = "BillDay";
-            _currentViewModel = new BillDayViewModel();
+            Destination = "BillDisplay";
+            _currentViewModel = new BillDisplayViewModel();
         }
 
         private ViewModelBase _currentViewModel;

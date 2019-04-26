@@ -31,6 +31,7 @@ namespace DAL.Migrations
                 context.DevicesTypes.AddRange(new List<DeviceType> {
                     new DeviceType() { Name = DeviceTypeText.PS3, MultiHourPrice = 0, MultiMinutePrice = 0, SingleHourPrice = 0, SingleMinutePrice = 0 },
                     new DeviceType() { Name = DeviceTypeText.PS4, MultiHourPrice = 0, MultiMinutePrice = 0, SingleHourPrice = 0, SingleMinutePrice = 0 },
+                    new DeviceType() { Name = DeviceTypeText.PS44K, MultiHourPrice = 0, MultiMinutePrice = 0, SingleHourPrice = 0, SingleMinutePrice = 0 },
                     new DeviceType() { Name = DeviceTypeText.VIP, MultiHourPrice = 0, MultiMinutePrice = 0, SingleHourPrice = 0, SingleMinutePrice = 0 },
                     new DeviceType() { Name = DeviceTypeText.Premium, MultiHourPrice = 0, MultiMinutePrice = 0, SingleHourPrice = 0, SingleMinutePrice = 0 },
                     new DeviceType() { Name = DeviceTypeText.Royal, MultiHourPrice = 0, MultiMinutePrice = 0, SingleHourPrice = 0, SingleMinutePrice = 0 },

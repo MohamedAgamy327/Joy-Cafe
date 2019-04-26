@@ -137,20 +137,20 @@
         <StatusBar VerticalAlignment="Bottom" Grid.Row="3">
             <StatusBarItem  Content="الرصيد الحالى" Style="{StaticResource StatusBarItemStyle}"/>
             <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
-            <StatusBarItem  Content="{Binding Paging.CurrentAccount}" Style="{StaticResource StatusBarItemStyle}"/>
+            <StatusBarItem  Content="{Binding CurrentAccount}" Style="{StaticResource StatusBarItemStyle}"/>
             <StatusBarItem   Content="خلال الفترة المحددة" Style="{StaticResource StatusBarItemStyle}"/>
             <StatusBarItem  Content="عدد البنود" Style="{StaticResource StatusBarItemStyle}"/>
             <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
             <StatusBarItem   Content="{Binding Paging.TotalRecords}" Style="{StaticResource StatusBarItemStyle}"/>
             <StatusBarItem  Content="مجموع الدخل" Style="{StaticResource StatusBarItemStyle}"/>
             <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
-            <StatusBarItem  Content="{Binding Paging.TotalIncome}" Style="{StaticResource StatusBarItemStyle}" />
+            <StatusBarItem  Content="{Binding TotalIncome}" Style="{StaticResource StatusBarItemStyle}" />
             <StatusBarItem  Content="مجموع المصروف" Style="{StaticResource StatusBarItemStyle}"/>
             <Separator Style="{StaticResource MetroStatusBarSeparator}" ></Separator>
-            <StatusBarItem   Content="{Binding Paging.TotalOutgoings}" Style="{StaticResource StatusBarItemStyle}"/>
+            <StatusBarItem   Content="{Binding TotalOutgoings}" Style="{StaticResource StatusBarItemStyle}"/>
             <StatusBarItem  Content="الفرق" Style="{StaticResource StatusBarItemStyle}"/>
             <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
-            <StatusBarItem  Content="{Binding Paging.Difference}" Style="{StaticResource StatusBarItemStyle}"/>
+            <StatusBarItem  Content="{Binding Difference}" Style="{StaticResource StatusBarItemStyle}"/>
         </StatusBar>
     </Grid>
 </UserControl>

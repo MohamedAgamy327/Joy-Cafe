@@ -32,6 +32,11 @@
                 <KeyBinding Command="{Binding Path=Update}" Key="Enter" />
             </TextBox.InputBindings>
         </TextBox>
+
+        <TextBlock Style="{StaticResource TextBlockStyle}" Margin="0,5">الترتيب فى العرض</TextBlock>
+        <Controls:NumericUpDown HasDecimals="False"  Value="{Binding DeviceUpdate.Order, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle2}" >
+        </Controls:NumericUpDown>
+
         <Controls:ToggleSwitch IsEnabled="{Binding NotBusy}" IsChecked="{Binding DeviceUpdate.IsAvailable}"  HorizontalAlignment="Center" OnLabel="متاح" OffLabel="غير متاح" Style="{StaticResource ToggleSwitchStyle}"></Controls:ToggleSwitch>
 
         <Separator Margin="0 15 0 0" />

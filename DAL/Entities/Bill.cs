@@ -78,6 +78,13 @@ namespace DAL.Entities
             set { SetProperty(ref _type, value); }
         }
 
+        private string _cancelReason;
+        public string CancelReason
+        {
+            get { return _cancelReason; }
+            set { SetProperty(ref _cancelReason, value); }
+        }
+
         private decimal? _minimum;
         public decimal? Minimum
         {
@@ -127,13 +134,20 @@ namespace DAL.Entities
             set { SetProperty(ref _totalAfterDiscount, value); }
         }
 
-        private bool _isDeleted;
-        public bool IsDeleted
+        private bool _deleted;
+        public bool Deleted
         {
-            get { return _isDeleted; }
-            set { SetProperty(ref _isDeleted, value); }
+            get { return _deleted; }
+            set { SetProperty(ref _deleted, value); }
         }
 
+        private bool _canceled;
+        public bool Canceled
+        {
+            get { return _canceled; }
+            set { SetProperty(ref _canceled, value); }
+        }
+      
         private DateTime _startDate;
         [Required]
         public DateTime StartDate

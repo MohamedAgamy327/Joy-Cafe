@@ -21,5 +21,14 @@ namespace DTO.DeviceDataModel
             set { SetProperty(ref _name, value); }
         }
 
+        private int? _order;
+        [Required]
+        [Range(1, int.MaxValue)]
+        public int? Order
+        {
+            get { return _order; }
+            set { SetProperty(ref _order, value); }
+        }
+
     }
 }

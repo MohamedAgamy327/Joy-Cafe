@@ -15,6 +15,7 @@ namespace BLL.RepositoryService
         void RemoveRange(IEnumerable<TEntity> entities);
 
         int GetRecordsNumber();
+        int GetRecordsNumber(Expression<Func<TEntity, bool>> predicate);
 
         TEntity Get(int id);
         TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);

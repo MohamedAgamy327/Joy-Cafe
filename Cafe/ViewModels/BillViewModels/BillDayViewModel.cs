@@ -21,7 +21,7 @@ namespace Cafe.ViewModels.BillViewModels
             using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
             {
                 Bills = new ObservableCollection<BillDayDataModel>(unitOfWork.Bills.Search(Date));
-                SelectedBills = Bills.Where(w => w.Bill.IsDeleted == true).Count();
+                SelectedBills = Bills.Where(w => w.Bill.Deleted == true).Count();
             }
         }
 
@@ -109,7 +109,7 @@ namespace Cafe.ViewModels.BillViewModels
         {
             try
             {
-                 SelectedBills = Bills.Where(w => w.Bill.IsDeleted == true).Count();
+                 SelectedBills = Bills.Where(w => w.Bill.Deleted == true).Count();
             }
             catch (Exception ex)
             {
@@ -130,7 +130,7 @@ namespace Cafe.ViewModels.BillViewModels
         {
             try
             {
-                if (Bills.Where(w => w.Bill.IsDeleted == true).Count() == 0)
+                if (Bills.Where(w => w.Bill.Deleted == true).Count() == 0)
                     return;
 
                 MessageDialogResult result = await currentWindow.ShowMessageAsync("تأكيد الحذف", "هل تـريــد حــذف هذه الفواتير؟", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings()
@@ -144,9 +144,9 @@ namespace Cafe.ViewModels.BillViewModels
                 {
                     using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                     {
-                        foreach (var item in Bills.Where(w => w.Bill.IsDeleted == true))
+                        foreach (var item in Bills.Where(w => w.Bill.Deleted == true))
                         {
-                            item.Bill.IsDeleted = true;
+                            item.Bill.Deleted = true;
                             unitOfWork.Bills.Edit(item.Bill);
                         }
                         unitOfWork.Complete();
@@ -162,7 +162,7 @@ namespace Cafe.ViewModels.BillViewModels
         }
         private bool CanExecuteDelete()
         {
-            if (Bills == null || Bills.Where(w => w.Bill.IsDeleted == true).Count() == 0)
+            if (Bills == null || Bills.Where(w => w.Bill.Deleted == true).Count() == 0)
                 return false;
             else
                 return true;

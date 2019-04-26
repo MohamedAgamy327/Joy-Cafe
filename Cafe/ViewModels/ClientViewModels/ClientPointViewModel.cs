@@ -34,10 +34,7 @@ namespace Cafe.ViewModels.ClientViewModels
         public string Key
         {
             get { return _key; }
-            set
-            {
-                SetProperty(ref _key, value);
-            }
+            set { SetProperty(ref _key, value); }
         }
 
         private DateTime _dateTo;

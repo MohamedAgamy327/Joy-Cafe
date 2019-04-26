@@ -32,7 +32,7 @@ namespace BLL.DeviceTypeService
             {
                 DeviceType = s,
                 DevicesCount = s.Devices.Count,
-                CanDelete = s.Devices.Count > 0 || s.Memberships.Count > 0 || s.ID == 1 || s.ID == 2 || s.ID == 3 || s.ID == 4 || s.ID == 5 || s.ID == 6 ? false : true
+                CanDelete = s.Devices.Count > 0 || s.Memberships.Count > 0 || s.ID == 1 || s.ID == 2 || s.ID == 3 || s.ID == 4 || s.ID == 5 || s.ID == 6 || s.ID == 7 ? false : true
             }).ToList();
         }
     }

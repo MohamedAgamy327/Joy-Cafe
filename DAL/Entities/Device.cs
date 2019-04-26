@@ -51,6 +51,13 @@ namespace DAL.Entities
             set { SetProperty(ref _name, value); }
         }
 
+        private int? _order;
+        public int? Order
+        {
+            get { return _order; }
+            set { SetProperty(ref _order, value); }
+        }
+
         public virtual DeviceType DeviceType { get; set; }
 
         public virtual Bill Bill { get; set; }
