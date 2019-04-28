@@ -50,7 +50,7 @@
 
                 <StackPanel Grid.Row="0" Margin="5">
 
-                    <Button Command="{Binding ShowAddItems}"  Margin="5,10" Style="{StaticResource SquareButtonStyle}" >
+                    <Button Command="{Binding ShowItems}"  Margin="5,10" Style="{StaticResource SquareButtonStyle}" >
                         <StackPanel Orientation="Horizontal" >
                             <TextBlock  Text="الطلبات الخارجية" Margin="5,0" Style="{StaticResource TextBlockStyle}" ></TextBlock>
                             <iconPacks:PackIconMaterial Kind="Coffee" />

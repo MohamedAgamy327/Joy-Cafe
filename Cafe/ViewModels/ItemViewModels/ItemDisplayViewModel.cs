@@ -280,6 +280,7 @@ namespace Cafe.ViewModels.ItemViewModels
                         });
                         unitOfWork.Complete();
                         NewItem = new ItemAddDataModel();
+                        OnPropertyChanged("NewItem");
                         Load();
                     }
                 }
@@ -313,11 +314,13 @@ namespace Cafe.ViewModels.ItemViewModels
             try
             {
                 itemUpdateDialog.DataContext = this;
-                ItemUpdate = new ItemUpdateDataModel();
-                ItemUpdate.Name = _selectedItem.Item.Name;
-                ItemUpdate.IsAvailable = _selectedItem.Item.IsAvailable;
-                ItemUpdate.Price = _selectedItem.Item.Price;
-                ItemUpdate.ID = _selectedItem.Item.ID;
+                ItemUpdate = new ItemUpdateDataModel
+                {
+                    Name = _selectedItem.Item.Name,
+                    IsAvailable = _selectedItem.Item.IsAvailable,
+                    Price = _selectedItem.Item.Price,
+                    ID = _selectedItem.Item.ID
+                };
 
                 await currentWindow.ShowMetroDialogAsync(itemUpdateDialog);
             }

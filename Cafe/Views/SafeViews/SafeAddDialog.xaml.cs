@@ -15,6 +15,8 @@ namespace Cafe.Views.SafeViews
 
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
+            First.Focus();
+
             foreach (FrameworkElement item in pnl.Children)
             {
                 if (item is TextBox)

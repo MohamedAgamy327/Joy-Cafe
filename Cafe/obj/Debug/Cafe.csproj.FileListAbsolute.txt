@@ -785,3 +785,13 @@ D:\Work\Project\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.exe
 D:\Work\Project\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.pdb
 D:\Work\Project\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\CashierViews\CancelBillViews\CancelReasonDialog.g.cs
 D:\Work\Project\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\CashierViews\CancelBillViews\CancelReasonDialog.baml
+D:\Work\Project\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\de\System.Windows.Interactivity.resources.dll
+D:\Work\Project\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\en\System.Windows.Interactivity.resources.dll
+D:\Work\Project\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\es\System.Windows.Interactivity.resources.dll
+D:\Work\Project\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\fr\System.Windows.Interactivity.resources.dll
+D:\Work\Project\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\it\System.Windows.Interactivity.resources.dll
+D:\Work\Project\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\ja\System.Windows.Interactivity.resources.dll
+D:\Work\Project\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\ko\System.Windows.Interactivity.resources.dll
+D:\Work\Project\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\ru\System.Windows.Interactivity.resources.dll
+D:\Work\Project\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
+D:\Work\Project\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll

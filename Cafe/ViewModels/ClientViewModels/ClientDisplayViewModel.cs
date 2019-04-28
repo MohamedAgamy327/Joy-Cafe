@@ -386,11 +386,13 @@ namespace Cafe.ViewModels.ClientViewModels
             try
             {
                 clientUpdateDialog.DataContext = this;
-                ClientUpdate = new ClientUpdateDataModel();
-                ClientUpdate.Name = _selectedClient.Client.Name;
-                ClientUpdate.Code = _selectedClient.Client.Code;
-                ClientUpdate.Telephone = _selectedClient.Client.Telephone;
-                ClientUpdate.ID = _selectedClient.Client.ID;
+                ClientUpdate = new ClientUpdateDataModel
+                {
+                    Name = _selectedClient.Client.Name,
+                    Code = _selectedClient.Client.Code,
+                    Telephone = _selectedClient.Client.Telephone,
+                    ID = _selectedClient.Client.ID
+                };
                 await currentWindow.ShowMetroDialogAsync(clientUpdateDialog);
             }
             catch (Exception ex)

@@ -23,10 +23,10 @@
 
 
         <TextBlock Style="{StaticResource TextBlockStyle}" Margin="0,5">التليفون</TextBlock>
-        <TextBox Name="First" behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding TelephoneSuggestions}" Helpers:FocusExtension.IsFocused="{Binding IsFocused}" Text="{Binding ClientCheck.Telephone, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}">
+        <TextBox Name="First" Helpers:FocusExtension.IsFocused="{Binding IsFocused}" behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding TelephoneSuggestions}"  Text="{Binding ClientCheck.Telephone, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}">
         </TextBox>
 
-        <Button Name="btn" Margin="0,5" Command="{Binding CheckClient}" HorizontalAlignment="Left"  FocusManager.FocusedElement="{Binding ElementName=First}" Style="{StaticResource SquareButtonStyle}" Width="100"    >
+        <Button IsDefault="True" Name="btn" Margin="0,5" Command="{Binding CheckClient}" HorizontalAlignment="Left"   Style="{StaticResource SquareButtonStyle}" Width="100"    >
             <StackPanel Orientation="Horizontal" >
                 <TextBlock  Text="Add"  Style="{StaticResource TextBlockStyle}" Margin="10,0"></TextBlock>
                 <iconPacks:PackIconMaterial Kind="AccountSearch" />

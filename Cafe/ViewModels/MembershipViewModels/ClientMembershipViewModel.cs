@@ -341,7 +341,7 @@ namespace Cafe.ViewModels.MembershipViewModels
         {
             try
             {
-                if (SelectedClient == null || SelectedMembership == null || SelectedDeviceType == null)
+                if (SelectedClient.Name == null || SelectedMembership.Name == null || SelectedDeviceType.Name == null)
                     return;
 
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))

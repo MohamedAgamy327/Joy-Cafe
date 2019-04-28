@@ -25,76 +25,77 @@
         </StackPanel.Resources>
 
         <StackPanel Orientation="Horizontal">
-
             <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">الكاشير  :</TextBlock>
-
             <TextBlock Text="{Binding SelectedShift.User.Name}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
-
         </StackPanel>
 
-
         <StackPanel Orientation="Horizontal">
-
             <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">وقت بداية الشفت :</TextBlock>
-
             <TextBlock Text="{Binding SelectedShift.Shift.StartDate, StringFormat={}\{0:hh:mm tt yyyy/MM/dd  \}}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
-
         </StackPanel>
 
         <StackPanel Orientation="Horizontal">
-
             <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">وقت نهاية الشفت :</TextBlock>
-
             <TextBlock Text="{Binding SelectedShift.Shift.EndDate, StringFormat={}\{0:hh:mm tt yyyy/MM/dd  \}}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
-
         </StackPanel>
 
         <StackPanel Orientation="Horizontal">
-
             <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">بداية الشفت :</TextBlock>
-
-            <TextBlock Text="{Binding SelectedShift.Shift.SafeStart}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
-
+            <TextBlock Text="{Binding SelectedShift.Shift.SafeStart,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">جنيهاً</TextBlock>
         </StackPanel>
 
-
         <StackPanel Orientation="Horizontal">
-
-            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">الدخل :</TextBlock>
-
-            <TextBlock Text="{Binding SelectedShift.Shift.Income}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">إجمالى الحد الادنى:</TextBlock>
+            <TextBlock Text="{Binding SelectedShift.Shift.TotalMinimum,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">جنيهاً</TextBlock>
 
         </StackPanel>
 
         <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">إجمالى الأجهزة:</TextBlock>
+            <TextBlock Text="{Binding SelectedShift.Shift.TotalDevices,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">جنيهاً</TextBlock>
+        </StackPanel>
 
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">إجمالى الطلبات :</TextBlock>
+            <TextBlock Text="{Binding SelectedShift.Shift.TotalItems,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">جنيهاً</TextBlock>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">إجمالى الخصومات :</TextBlock>
+            <TextBlock Text="{Binding SelectedShift.Shift.TotalDiscount,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">جنيهاً</TextBlock>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">الدخل</TextBlock>
+            <TextBlock Text="{Binding SelectedShift.Shift.Income,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">جنيهاً</TextBlock>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
             <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">المصاريف  :</TextBlock>
-
-            <TextBlock Text="{Binding SelectedShift.Shift.Spending}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
-
+            <TextBlock Text="{Binding SelectedShift.Shift.Spending,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">جنيهاً</TextBlock>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal">
-
             <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">الإجمالى  :</TextBlock>
-
-            <TextBlock Text="{Binding SelectedShift.Shift.Total}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
-
+            <TextBlock Text="{Binding SelectedShift.Shift.Total,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">جنيهاً</TextBlock>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal">
-
             <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">الدرج :</TextBlock>
-
-            <TextBlock Text="{Binding SelectedShift.Shift.SafeEnd}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
-
+            <TextBlock Text="{Binding SelectedShift.Shift.SafeEnd,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">جنيهاً</TextBlock>
             <TextBlock Foreground="Red"  Text="{Binding Message}" Style="{StaticResource TextBlockStyle}" Margin="20,0"/>
-
         </StackPanel>
         
        
-
-
         <Separator Margin="0 10 0 0" />
         <StackPanel Orientation="Horizontal" Margin="0 10 0 0" >
 

@@ -267,7 +267,7 @@ namespace Cafe.ViewModels.MembershipViewModels
         {
             try
             {
-                if (NewMembership.Minutes == null || NewMembership.Name == null || NewMembership.Price == null || SelectedDeviceType == null)
+                if (NewMembership.Minutes == null || NewMembership.Name == null || NewMembership.Price == null || SelectedDeviceType.Name == null)
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
@@ -323,15 +323,16 @@ namespace Cafe.ViewModels.MembershipViewModels
             try
             {
                 membershipUpdateDialog.DataContext = this;
-                MembershipUpdate = new MembershipUpdateDataModel();
-                MembershipUpdate.ID = _selectedMembership.Membership.ID;
-                MembershipUpdate.Name = _selectedMembership.Membership.Name;
-                MembershipUpdate.DeviceTypeID = _selectedMembership.Membership.DeviceTypeID;
-                MembershipUpdate.Name = _selectedMembership.Membership.Name;
-                MembershipUpdate.Price = _selectedMembership.Membership.Price;
-                MembershipUpdate.Minutes = _selectedMembership.Membership.Minutes;
-                MembershipUpdate.DeviceType = _selectedMembership.DeviceType;
-                MembershipUpdate.IsAvailable = _selectedMembership.Membership.IsAvailable;
+                MembershipUpdate = new MembershipUpdateDataModel
+                {
+                    ID = _selectedMembership.Membership.ID,
+                    Name = _selectedMembership.Membership.Name,
+                    DeviceTypeID = _selectedMembership.Membership.DeviceTypeID,
+                    Price = _selectedMembership.Membership.Price,
+                    Minutes = _selectedMembership.Membership.Minutes,
+                    DeviceType = _selectedMembership.DeviceType,
+                    IsAvailable = _selectedMembership.Membership.IsAvailable
+                };
                 await currentWindow.ShowMetroDialogAsync(membershipUpdateDialog);
             }
             catch (Exception ex)

@@ -5,7 +5,8 @@
     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"      
-          xmlns:Custom="http://www.galasoft.ch/mvvmlight"  
+          xmlns:Custom="http://www.galasoft.ch/mvvmlight"
+    xmlns:Helpers="clr-namespace:Cafe.Helpers"
     Title="دفع الحساب" 
         Height="1000"
         Width="1024"
@@ -187,7 +188,7 @@
             <StackPanel Grid.Column="2">
                 <StackPanel  Orientation="Horizontal" Name="pnl">
                     <TextBlock Width="120"  Style="{StaticResource TextBlockWindowStyle}" Margin="5">خصم نسبة:</TextBlock>
-                    <Controls:NumericUpDown Name="nud1" Width="150" HasDecimals="True" Margin="5" Value="{Binding BillPaid.Ratio, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle3}" Minimum="0" Maximum="100">
+                    <Controls:NumericUpDown Helpers:FocusExtension.IsFocused="{Binding IsFocused}"  Name="First" Width="150" HasDecimals="True" Margin="5" Value="{Binding BillPaid.Ratio, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle3}" Minimum="0" Maximum="100">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="ValueChanged">
                                 <Custom:EventToCommand Command="{Binding RatioChanged}" />

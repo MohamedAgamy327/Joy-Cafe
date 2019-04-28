@@ -275,7 +275,7 @@ namespace Cafe.ViewModels.DeviceViewModels
         {
             try
             {
-                if (NewDevice.Name == null || SelectedDeviceType == null)
+                if (NewDevice.Name == null || SelectedDeviceType.Name == null)
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
@@ -343,13 +343,15 @@ namespace Cafe.ViewModels.DeviceViewModels
         {
             try
             {
-                DeviceUpdate = new DeviceUpdateDataModel();
-                DeviceUpdate.ID = _selectedDevice.Device.ID;
-                DeviceUpdate.Name = _selectedDevice.Device.Name;
-                DeviceUpdate.Order = _selectedDevice.Device.Order;
-                DeviceUpdate.DeviceTypeID = _selectedDevice.Device.DeviceTypeID;
-                DeviceUpdate.DeviceType = _selectedDevice.DeviceType;
-                DeviceUpdate.IsAvailable = _selectedDevice.Device.IsAvailable;
+                DeviceUpdate = new DeviceUpdateDataModel
+                {
+                    ID = _selectedDevice.Device.ID,
+                    Name = _selectedDevice.Device.Name,
+                    Order = _selectedDevice.Device.Order,
+                    DeviceTypeID = _selectedDevice.Device.DeviceTypeID,
+                    DeviceType = _selectedDevice.DeviceType,
+                    IsAvailable = _selectedDevice.Device.IsAvailable
+                };
                 NotBusy = SelectedDevice.Device.Case == DeviceCaseText.Free ? true : false;
                 deviceUpdateDialog.DataContext = this;
                 await currentWindow.ShowMetroDialogAsync(deviceUpdateDialog);

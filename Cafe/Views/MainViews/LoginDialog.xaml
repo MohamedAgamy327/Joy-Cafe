@@ -24,20 +24,14 @@
 
         <TextBlock Style="{StaticResource TextBlockStyle}" Margin="0,5">الاسم</TextBlock>
         <TextBox Helpers:FocusExtension.IsFocused="{Binding IsFocused}"  Text="{Binding LoginModel.Name, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding NamesSuggestions}" Style="{StaticResource TextBoxStyle}">
-            <TextBox.InputBindings>
-                <KeyBinding Command="{Binding Path=SignIn}" Key="Enter" />
-            </TextBox.InputBindings>
         </TextBox>
         <TextBlock Style="{StaticResource TextBlockStyle}" Margin="0,5">الرقم السرى</TextBlock>
         <PasswordBox Margin="0,5" Height="25" Helpers:Secure.Password="{Binding LoginModel.Password, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" 
 	Controls:TextBoxHelper.UseFloatingWatermark="True" Style="{StaticResource Win8MetroPasswordBox}" >
-            <PasswordBox.InputBindings>
-                <KeyBinding Command="{Binding Path=SignIn}" Key="Enter" />
-            </PasswordBox.InputBindings>
         </PasswordBox>
         <Separator Margin="0 15 0 0" />
         <StackPanel Orientation="Horizontal" Margin="0 10 0 0" >
-            <Button Name="btn" Command="{Binding SignIn}" Style="{StaticResource SquareButtonStyle}" Width="100"    >
+            <Button IsDefault="True" Name="btn" Command="{Binding SignIn}" Style="{StaticResource SquareButtonStyle}" Width="100"    >
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock  Text="دخول"  Style="{StaticResource TextBlockStyle}" Margin="10,0"></TextBlock>
                     <iconPacks:PackIconFontAwesome Kind="SignIn"  />

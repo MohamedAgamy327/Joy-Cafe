@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Cafe.Views.ClientViews
 {
-    public partial class ClientAddDialog  : CustomDialog
+    public partial class ClientAddDialog : CustomDialog
     {
         public ClientAddDialog()
         {
@@ -14,8 +14,10 @@ namespace Cafe.Views.ClientViews
 
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
+            First.Focus();
             foreach (FrameworkElement item in pnl.Children)
             {
+                First.Focus();
                 if (item is TextBox)
                 {
                     TextBox txt = item as TextBox;

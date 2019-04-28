@@ -244,7 +244,7 @@ namespace Cafe.ViewModels.CashierViewModels
         {
             try
             {
-                if (NewBillItem.Qty == null || SelectedItem == null)
+                if (NewBillItem.Qty == null || SelectedItem.Name == null)
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {

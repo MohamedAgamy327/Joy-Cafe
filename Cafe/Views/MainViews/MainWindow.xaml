@@ -48,14 +48,6 @@
             <Button Command="{Binding NavigateToView}" CommandParameter="BackupRestore"  ToolTip="إسترجاع نسخة إحتياطية">
                 <iconPacks:PackIconMaterial Kind="BackupRestore" />
             </Button>
-            <Button Command="{Binding NavigateToView}" ToolTip="المستخدمين" CommandParameter="User" >
-                <iconPacks:PackIconMaterial Kind="AccountMultiple"  />
-            </Button>
-
-            <Button Command="{Binding NavigateToView}" ToolTip="عرض الشفتات" CommandParameter="Shifts" >
-                <iconPacks:PackIconMaterial Kind="Timetable" />
-            </Button>
-            
             <Button Command="{Binding NavigateToView}" ToolTip="تسجيل خروج" CommandParameter="SignOut" >
                 <iconPacks:PackIconMaterial Kind="Logout" />
             </Button>
@@ -73,12 +65,12 @@
  
         <WrapPanel  Grid.Row="1" Grid.Column="0"  Margin="0,200,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="800"  >
 
-            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="Device"  Title="الأجهزة" Background="#CC5334AD"  Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource LargeTileStyle}" >
+            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="Device"  Title="الأجهزة" Background="#CC5334AD"  Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource SmallTileStyle}" >
                 <iconPacks:PackIconMaterial Kind="Playstation" Width="50" Height="50"/>
                 
             </Controls:Tile>
                 
-            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="Item" Title="البار" Background="#CCD24726" Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource LargeTileStyle}" >
+            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="Item" Title="البار" Background="#CCD24726" Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource SmallTileStyle}" >
                 <iconPacks:PackIconMaterial Kind="Coffee" Width="50" Height="50" />
             </Controls:Tile>
 
@@ -86,11 +78,11 @@
                 <iconPacks:PackIconMaterial Kind="AccountSwitch" Width="50" Height="50" />
             </Controls:Tile>
 
-            <Controls:Tile Command="{Binding NavigateToView}" Background="#E577B900" CommandParameter="Membership" Title="العضويات"   Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource SmallTileStyle}" >
+            <Controls:Tile Command="{Binding NavigateToView}" Background="#1acec5" CommandParameter="Membership" Title="العضويات"   Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource SmallTileStyle}" >
                 <iconPacks:PackIconMaterial Kind="WalletMembership" Width="50" Height="50" />
             </Controls:Tile>
 
-            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="Cashier" Title="الكاشير" Background="#CC647687"  Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource LargeTileStyle}" >
+            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="Cashier" Title="الكاشير" Background="#ca170f"  Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource LargeTileStyle}" >
                 <iconPacks:PackIconEntypo Kind="GameController" Width="50" Height="50"/>
             </Controls:Tile>
 
@@ -105,6 +97,13 @@
                 <iconPacks:PackIconOcticons Kind="Lock" Width="50" Height="50" />
             </Controls:Tile>
 
+
+            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="User" Title="المستخدمين"   Background="#bb6475" Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource SmallTileStyle}" >
+                <iconPacks:PackIconMaterial Kind="AccountMultiple" Width="50" Height="50" />
+            </Controls:Tile>
+            <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="Shifts" Title="الشيفتات" Background="#ffb38a"  Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource SmallTileStyle}" >
+                <iconPacks:PackIconMaterial Kind="Timetable" Width="50" Height="50" />
+            </Controls:Tile>
 
         </WrapPanel>
 

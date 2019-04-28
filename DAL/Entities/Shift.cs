@@ -44,6 +44,34 @@ namespace DAL.Entities
             set { SetProperty(ref _spending, value);}
         }
 
+        private decimal? _totalMinimum;
+        public decimal? TotalMinimum
+        {
+            get { return _totalMinimum; }
+            set { SetProperty(ref _totalMinimum, value); }
+        }
+
+        private decimal? _totalDevices;
+        public decimal? TotalDevices
+        {
+            get { return _totalDevices; }
+            set { SetProperty(ref _totalDevices, value); }
+        }
+
+        private decimal? _totalItems;
+        public decimal? TotalItems
+        {
+            get { return _totalItems; }
+            set { SetProperty(ref _totalItems, value); }
+        }
+
+        private decimal? _totalDiscount;
+        public decimal? TotalDiscount
+        {
+            get { return _totalDiscount; }
+            set { SetProperty(ref _totalDiscount, value); }
+        }
+
         private decimal? _total;
         public decimal? Total
         {

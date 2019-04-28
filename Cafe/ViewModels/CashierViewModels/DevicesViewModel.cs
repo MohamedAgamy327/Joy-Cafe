@@ -59,7 +59,6 @@ namespace Cafe.ViewModels.CashierViewModels
             finishShiftConfirmDialog = new FinishShiftConfirmDialog();
             cancelReasonDialog = new CancelReasonDialog();
             currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
-
         }
 
         private bool _isFocused;
@@ -69,12 +68,59 @@ namespace Cafe.ViewModels.CashierViewModels
             set { SetProperty(ref _isFocused, value); }
         }
 
-        // Time 
+        private int _temporaryDevices;
+        public int TemporaryDevices
+        {
+            get { return _temporaryDevices; }
+            set { SetProperty(ref _temporaryDevices, value); }
+        }
+
+        private int _availableDevices;
+        public int AvailableDevices
+        {
+            get { return _availableDevices; }
+            set { SetProperty(ref _availableDevices, value); }
+        }
+
+        private int _busyDevices;
+        public int BusyDevices
+        {
+            get { return _busyDevices; }
+            set { SetProperty(ref _busyDevices, value); }
+        }
+
+        private decimal _devicesSum;
+        public decimal DevicesSum
+        {
+            get
+            {
+                if (BillDevices != null)
+                    return _devicesSum = BillDevices.Sum(s => Convert.ToDecimal(s.Total));
+                else
+                    return 0;
+            }
+        }
+
+        private decimal _itemsSum;
+        public decimal ItemsSum
+        {
+            get
+            {
+                if (BillItems != null)
+                    return _itemsSum = BillItems.Sum(s => Convert.ToDecimal(s.BillItem.Total));
+                else
+                    return 0;
+            }
+        }
+
+        private decimal _totalSum;
+        public decimal TotalSum
+        {
+            get { return _totalSum = ItemsSum + DevicesSum; }
+        }
 
         private string _currentTime;
-
         public DispatcherTimer _timer;
-
         public string CurrentTime
         {
             get
@@ -89,8 +135,6 @@ namespace Cafe.ViewModels.CashierViewModels
                 OnPropertyChanged("CurrentTime");
             }
         }
-
-        // Grid Display
 
         private Visibility _accountVisibility;
         public Visibility AccountVisibility
@@ -111,15 +155,6 @@ namespace Cafe.ViewModels.CashierViewModels
         {
             get { return _availableDevicesVisibility; }
             set { SetProperty(ref _availableDevicesVisibility, value); }
-        }
-
-        // Device Case 
-
-        private Visibility _clickVisibility;
-        public Visibility ClickVisibility
-        {
-            get { return _clickVisibility; }
-            set { SetProperty(ref _clickVisibility, value); }
         }
 
         private Visibility _startVisibility;
@@ -184,61 +219,6 @@ namespace Cafe.ViewModels.CashierViewModels
             get { return _cancelVisibility; }
             set { SetProperty(ref _cancelVisibility, value); }
         }
-        
-        // Device Cases Count
-
-        private int _temporaryDevices;
-        public int TemporaryDevices
-        {
-            get { return _temporaryDevices; }
-            set { SetProperty(ref _temporaryDevices, value); }
-        }
-
-        private int _availableDevices;
-        public int AvailableDevices
-        {
-            get { return _availableDevices; }
-            set { SetProperty(ref _availableDevices, value); }
-        }
-
-        private int _busyDevices;
-        public int BusyDevices
-        {
-            get { return _busyDevices; }
-            set { SetProperty(ref _busyDevices, value); }
-        }
-
-        // Bill Account
-
-        private decimal _devicesSum;
-        public decimal DevicesSum
-        {
-            get
-            {
-                if (BillDevices != null)
-                    return _devicesSum = BillDevices.Sum(s => Convert.ToDecimal(s.Total));
-                else
-                    return 0;
-            }
-        }
-
-        private decimal _itemsSum;
-        public decimal ItemsSum
-        {
-            get
-            {
-                if (BillItems != null)
-                    return _itemsSum = BillItems.Sum(s => Convert.ToDecimal(s.BillItem.Total));
-                else
-                    return 0;
-            }
-        }
-
-        private decimal _totalSum;
-        public decimal TotalSum
-        {
-            get { return _totalSum = ItemsSum + DevicesSum; }
-        }
 
         private ClientBillAddDataModel _newClient;
         public ClientBillAddDataModel NewClient
@@ -288,8 +268,6 @@ namespace Cafe.ViewModels.CashierViewModels
             get { return _telephoneSuggestions; }
             set { SetProperty(ref _telephoneSuggestions, value); }
         }
-
-        // Devices
 
         private ObservableCollection<DeviceFreeDataModel> _freeDevices;
         public ObservableCollection<DeviceFreeDataModel> FreeDevices
@@ -816,6 +794,8 @@ namespace Cafe.ViewModels.CashierViewModels
             }
         }
 
+        // Stop and Pay
+
         private RelayCommand _stop;
         public RelayCommand Stop
         {
@@ -829,6 +809,16 @@ namespace Cafe.ViewModels.CashierViewModels
         {
             try
             {
+                if (UserData.Role == RoleText.Admin)
+                {
+                    await currentWindow.ShowMessageAsync("تنبيه", "الكاشير فقط من له الصلاحية فى الدخول", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+                    {
+                        AffirmativeButtonText = "موافق",
+                        DialogMessageFontSize = 25,
+                        DialogTitleFontSize = 30
+                    });
+                    return;
+                }
                 BillData.EndDate = DateTime.Now;
                 if (SelectedDevice == null)
                     return;
@@ -849,6 +839,107 @@ namespace Cafe.ViewModels.CashierViewModels
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        private RelayCommand _checkClient;
+        public RelayCommand CheckClient
+        {
+            get
+            {
+                return _checkClient ?? (_checkClient = new RelayCommand(
+                    ExecuteCheckClient,
+                    CanExecuteCheckClient));
+            }
+        }
+        private async void ExecuteCheckClient()
+        {
+            try
+            {
+                if (ClientCheck.Telephone == null)
+                    return;
+                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                {
+                    var client = unitOfWork.Clients.SingleOrDefault(s => s.Telephone == _clientCheck.Telephone);
+                    await currentWindow.HideMetroDialogAsync(clientCheckDialog);
+                    if (client == null)
+                    {
+                        NewClient = new ClientBillAddDataModel
+                        {
+                            Telephone = _clientCheck.Telephone
+                        };
+                        clientAddDialog.DataContext = this;
+                        await currentWindow.ShowMetroDialogAsync(clientAddDialog);
+                    }
+                    else
+                    {
+                        BillData.BillID = (int)_selectedDevice.Device.BillID;
+                        BillData.ClientID = client.ID;
+                        BillData.DeviceID = _selectedDevice.Device.ID;
+                        new AccountPaidWindow().ShowDialog();
+                        UpdateData();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private bool CanExecuteCheckClient()
+        {
+            try
+            {
+                return !ClientCheck.HasErrors;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private RelayCommand _addClient;
+        public RelayCommand AddClient
+        {
+            get
+            {
+                return _addClient ?? (_addClient = new RelayCommand(
+                    ExecuteAddClientAsync,
+                    CanExecuteAddClient));
+            }
+        }
+        private async void ExecuteAddClientAsync()
+        {
+            try
+            {
+                if (NewClient.Name == null)
+                    return;
+                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                {
+                    var client = unitOfWork.Clients.Add(new Client
+                    {
+                        Name = _newClient.Name,
+                        Telephone = _newClient.Telephone
+                    });
+                    unitOfWork.Complete();
+                    BillData.DeviceID = _selectedDevice.Device.ID;
+                    BillData.ClientID = client.ID;
+                    BillData.BillID = (int)_selectedDevice.Device.BillID;
+                }
+                await currentWindow.HideMetroDialogAsync(clientAddDialog);
+
+                new AccountPaidWindow().ShowDialog();
+                UpdateData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private bool CanExecuteAddClient()
+        {
+            return !NewClient.HasErrors;
+        }
+
+        // Cancel
 
         private RelayCommand _showCancel;
         public RelayCommand ShowCancel
@@ -879,7 +970,7 @@ namespace Cafe.ViewModels.CashierViewModels
             get
             {
                 return _cancel
-                    ?? (_cancel = new RelayCommand(CancelMethod,CanExecuteCancel));
+                    ?? (_cancel = new RelayCommand(CancelMethod, CanExecuteCancel));
             }
         }
         private async void CancelMethod()
@@ -888,7 +979,7 @@ namespace Cafe.ViewModels.CashierViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    if(SelectedDevice.Device.Case == DeviceCaseText.Busy)
+                    if (SelectedDevice.Device.Case == DeviceCaseText.Busy)
                     {
                         BillDevice selectedBillDevice = unitOfWork.BillsDevices.FirstOrDefault(s => s.BillID == _selectedDevice.Device.BillID && s.EndDate == null);
                         selectedBillDevice.EndDate = DateTime.Now;
@@ -1144,119 +1235,18 @@ namespace Cafe.ViewModels.CashierViewModels
             }
         }
 
-        // Client
-
-        private RelayCommand _checkClient;
-        public RelayCommand CheckClient
-        {
-            get
-            {
-                return _checkClient ?? (_checkClient = new RelayCommand(
-                    ExecuteCheckClient,
-                    CanExecuteCheckClient));
-            }
-        }
-        private async void ExecuteCheckClient()
-        {
-            try
-            {
-                if (ClientCheck.Telephone == null)
-                    return;
-                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
-                {
-                    var client = unitOfWork.Clients.SingleOrDefault(s => s.Telephone == _clientCheck.Telephone);
-                    await currentWindow.HideMetroDialogAsync(clientCheckDialog);
-                    if (client == null)
-                    {
-                        NewClient = new ClientBillAddDataModel
-                        {
-                            Telephone = _clientCheck.Telephone
-                        };
-                        clientAddDialog.DataContext = this;
-                        await currentWindow.ShowMetroDialogAsync(clientAddDialog);
-                    }
-                    else
-                    {
-                        BillData.BillID = (int)_selectedDevice.Device.BillID;
-                        BillData.ClientID = client.ID;
-                        BillData.DeviceID = _selectedDevice.Device.ID;
-                        new AccountPaidWindow().ShowDialog();
-                        UpdateData();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-        private bool CanExecuteCheckClient()
-        {
-            try
-            {
-                return !ClientCheck.HasErrors;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        private RelayCommand _addClient;
-        public RelayCommand AddClient
-        {
-            get
-            {
-                return _addClient ?? (_addClient = new RelayCommand(
-                    ExecuteAddClientAsync,
-                    CanExecuteAddClient));
-            }
-        }
-        private async void ExecuteAddClientAsync()
-        {
-            try
-            {
-                if (NewClient.Name == null)
-                    return;
-                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
-                {
-                    var client = unitOfWork.Clients.Add(new Client
-                    {
-                        Name = _newClient.Name,
-                        Telephone = _newClient.Telephone
-                    });
-                    unitOfWork.Complete();
-                    BillData.DeviceID = _selectedDevice.Device.ID;
-                    BillData.ClientID = client.ID;
-                    BillData.BillID = (int)_selectedDevice.Device.BillID;
-                }
-                await currentWindow.HideMetroDialogAsync(clientAddDialog);
-
-                new AccountPaidWindow().ShowDialog();
-                UpdateData();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-        private bool CanExecuteAddClient()
-        {
-            return !NewClient.HasErrors;
-        }
-
         // Items
 
-        private RelayCommand _showAddItems;
-        public RelayCommand ShowAddItems
+        private RelayCommand _showItems;
+        public RelayCommand ShowItems
         {
             get
             {
-                return _showAddItems
-                    ?? (_showAddItems = new RelayCommand(ShowAddItemsMethod));
+                return _showItems
+                    ?? (_showItems = new RelayCommand(ShowItemsMethod));
             }
         }
-        private async void ShowAddItemsMethod()
+        private async void ShowItemsMethod()
         {
             try
             {
@@ -1366,13 +1356,21 @@ namespace Cafe.ViewModels.CashierViewModels
                 {
                     using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                     {
-                        var shift = unitOfWork.Shifts.FirstOrDefault(s => s.EndDate == null);
-                        var safeIncome = unitOfWork.Safes.Find(f => f.UserID == UserData.ID && f.Type == true && f.RegistrationDate >= shift.StartDate && f.RegistrationDate <= DateTime.Now).Sum(s => s.Amount);
-                        safeIncome = (safeIncome.HasValue) ? safeIncome : 0;
-                        var itemsBillTotal = unitOfWork.BillsItems.Find(f => f.Bill.Type == BillTypeText.Items && f.Bill.EndDate == null).Sum(s => s.Total);
-                        itemsBillTotal = (itemsBillTotal.HasValue) ? itemsBillTotal : 0;
-                        var spending = unitOfWork.Safes.Find(f => f.UserID == UserData.ID && f.Type == false && f.RegistrationDate >= shift.StartDate && f.RegistrationDate <= DateTime.Now).Sum(s => s.Amount);
-                        spending = (spending.HasValue) ? spending : 0;
+                        Shift shift = unitOfWork.Shifts.FirstOrDefault(s => s.EndDate == null);
+
+                        decimal safeIncome = unitOfWork.Safes.Find(f => f.UserID == UserData.ID && f.Type == true && f.RegistrationDate >= shift.StartDate && f.RegistrationDate <= DateTime.Now).Sum(s => s.Amount) ?? 0;
+
+                        decimal itemsBillTotal = unitOfWork.BillsItems.Find(f => f.Bill.Type == BillTypeText.Items && f.Bill.EndDate == null).Sum(s => s.Total) ?? 0;
+
+                        decimal spending = unitOfWork.Safes.Find(f => f.UserID == UserData.ID && f.Type == false && f.RegistrationDate >= shift.StartDate && f.RegistrationDate <= DateTime.Now).Sum(s => s.Amount) ?? 0;
+
+                        decimal totalMinimum = unitOfWork.Bills.Find(f => f.UserID == UserData.ID && f.Minimum != null && f.EndDate >= shift.StartDate && f.EndDate <= DateTime.Now).Sum(s => s.Minimum) ?? 0;
+
+                        decimal totalDevices = unitOfWork.Bills.Find(f => f.UserID == UserData.ID && f.EndDate >= shift.StartDate && f.EndDate <= DateTime.Now).Sum(s => s.DevicesSum) ?? 0;
+
+                        decimal totalItems = (unitOfWork.Bills.Find(f => f.UserID == UserData.ID && f.EndDate >= shift.StartDate && f.EndDate <= DateTime.Now).Sum(s => s.ItemsSum) ?? 0) + itemsBillTotal;
+
+                        decimal totalDiscount = unitOfWork.Bills.Find(f => f.UserID == UserData.ID && f.EndDate >= shift.StartDate && f.EndDate <= DateTime.Now).Sum(s => s.Discount) ?? 0;
 
                         Shift = new FinishShiftDataModel
                         {
@@ -1380,6 +1378,10 @@ namespace Cafe.ViewModels.CashierViewModels
                             CurrentUserName = shift.User.Name,
                             SafeStart = shift.SafeStart,
                             StartDate = shift.StartDate,
+                            TotalDevices = totalDevices,
+                            TotalDiscount = totalDiscount,
+                            TotalItems = totalItems,
+                            TotalMinimum = totalMinimum,
                             Income = safeIncome + itemsBillTotal,
                             Spending = spending
                         };
@@ -1473,21 +1475,13 @@ namespace Cafe.ViewModels.CashierViewModels
                             UserData.Password = user.Password;
                         }
                     }
-                    else
-                    {
-                        UserData.Role = "";
-                        UserData.Name = "";
-                        UserData.Password = "";
-                        UserData.ID = 0;
-                    }
 
                     DateTime endDate = DateTime.Now;
                     Bill bill = unitOfWork.Bills.SingleOrDefault(s => s.EndDate == null && s.Type == BillTypeText.Items);
                     if (bill != null)
                     {
-                        var itemsBillTotal = unitOfWork.BillsItems.Find(f => f.BillID == bill.ID).Sum(s => s.Total);
                         bill.UserID = UserData.ID;
-                        bill.ItemsSum = (itemsBillTotal.HasValue) ? itemsBillTotal : 0;
+                        bill.ItemsSum = unitOfWork.BillsItems.Find(f => f.BillID == bill.ID).Sum(s => s.Total) ?? 0;
                         bill.Total = bill.ItemsSum;
                         bill.TotalAfterDiscount = bill.ItemsSum;
                         bill.Discount = 0;
@@ -1521,6 +1515,10 @@ namespace Cafe.ViewModels.CashierViewModels
                     shift.SafeEnd = _shift.SafeEnd;
                     shift.Spending = _shift.Spending;
                     shift.Total = _shift.Total;
+                    shift.TotalDevices = _shift.TotalDevices;
+                    shift.TotalDiscount = _shift.TotalDiscount;
+                    shift.TotalItems = _shift.TotalItems;
+                    shift.TotalMinimum = _shift.TotalMinimum;
                     unitOfWork.Shifts.Edit(shift);
 
                     if (_shift.NewShift)
@@ -1532,6 +1530,13 @@ namespace Cafe.ViewModels.CashierViewModels
                             SafeStart = _shift.SafeEnd
                         };
                         unitOfWork.Shifts.Add(newShift);
+                    }
+                    else
+                    {
+                        UserData.Role = "";
+                        UserData.Name = "";
+                        UserData.Password = "";
+                        UserData.ID = 0;
                     }
                     unitOfWork.Complete();
 
@@ -1660,7 +1665,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     case "CancelBill":
                         await currentWindow.HideMetroDialogAsync(cancelReasonDialog);
                         break;
-                        
+
                     default:
                         break;
                 }

@@ -45,7 +45,47 @@
 
             <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">بداية الشفت :</TextBlock>
 
-            <TextBlock Text="{Binding Shift.SafeStart}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
+            <TextBlock Text="{Binding Shift.SafeStart,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
+
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">جنيهاً</TextBlock>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">إجمالى الحد الادنى:</TextBlock>
+
+            <TextBlock Text="{Binding Shift.TotalMinimum,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
+
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">جنيهاً</TextBlock>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">إجمالى الأجهزة: </TextBlock>
+
+            <TextBlock Text="{Binding Shift.TotalDevices,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
+
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">جنيهاً</TextBlock>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">إجمالى الطلبات :</TextBlock>
+
+            <TextBlock Text="{Binding Shift.TotalItems,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
+
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">جنيهاً</TextBlock>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+
+            <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">إجمالى الخصومات :</TextBlock>
+
+            <TextBlock Text="{Binding Shift.TotalDiscount,StringFormat={}{0:0;(0)}}" Style="{StaticResource TextBlockStyle}" Margin="5"/>
 
             <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">جنيهاً</TextBlock>
 
@@ -78,7 +118,7 @@
 
         <TextBlock Style="{StaticResource TextBlockStyle}" Margin="5">الدرج</TextBlock>
 
-        <Controls:NumericUpDown  Value="{Binding Shift.SafeEnd, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle}" Minimum="0">
+        <Controls:NumericUpDown Helpers:FocusExtension.IsFocused="{Binding IsFocused}"  Name="First" Value="{Binding Shift.SafeEnd, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle}" Minimum="0">
         </Controls:NumericUpDown>
 
         <Controls:ToggleSwitch x:Name="VisibilityToggle"  HorizontalAlignment="Center" OnLabel="بداية شيفت جديد" OffLabel="انهاء الشيفت" IsChecked="{Binding Shift.NewShift, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ToggleSwitchStyle}"></Controls:ToggleSwitch>
@@ -95,7 +135,7 @@
         
         <Separator Margin="0 10 0 0" />
         <StackPanel Orientation="Horizontal" Margin="0 10 0 0" >
-            <Button Name="btn" Command="{Binding FinishShift}" Style="{StaticResource SquareButtonStyle}" Width="120" Margin="5,0"  >
+            <Button IsDefault="True" Name="btn" Command="{Binding FinishShift}" Style="{StaticResource SquareButtonStyle}" Width="120" Margin="5,0"  >
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock  Text="إنهاء الشفت"  Style="{StaticResource TextBlockStyle}" Margin="10,0"></TextBlock>
                     <iconPacks:PackIconModern Kind="TimerStop" />

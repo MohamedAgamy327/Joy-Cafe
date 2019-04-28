@@ -27,15 +27,12 @@
         <TextBox  Name="First" Helpers:FocusExtension.IsFocused="{Binding IsFocused}" Text="{Binding NewSafe.Statement, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding StatementSuggestions }" Style="{StaticResource TextBoxStyle}"></TextBox>
         <TextBlock Style="{StaticResource TextBlockStyle}" Margin="0,5">المبلغ</TextBlock>
         <Controls:NumericUpDown  Value="{Binding NewSafe.Amount, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle}" Minimum="0.01">
-            <!--<Controls:NumericUpDown.InputBindings>
-                <KeyBinding Command="{Binding Path=Save}" Key="Enter" />
-            </Controls:NumericUpDown.InputBindings>-->
         </Controls:NumericUpDown>
 
       
         <Separator Margin="0 15 0 0" />
         <StackPanel Orientation="Horizontal" Margin="0 10 0 0" >
-            <Button Name="btn" Command="{Binding Save}" FocusManager.FocusedElement="{Binding ElementName=First}" Style="{StaticResource SquareButtonStyle}" Width="100"    >
+            <Button IsDefault="True" Name="btn" Command="{Binding Save}" FocusManager.FocusedElement="{Binding ElementName=First}" Style="{StaticResource SquareButtonStyle}" Width="100"    >
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock  Text="حفظ"  Style="{StaticResource TextBlockStyle}" Margin="10,0"></TextBlock>
                     <iconPacks:PackIconModern Kind="Save" />

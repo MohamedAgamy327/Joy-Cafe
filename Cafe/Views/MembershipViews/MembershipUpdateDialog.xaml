@@ -1,5 +1,6 @@
 ﻿<dialogs:CustomDialog x:Class="Cafe.Views.MembershipViews.MembershipUpdateDialog"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:Helpers="clr-namespace:Cafe.Helpers"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -26,7 +27,7 @@
         </ComboBox>
         
         <TextBlock Style="{StaticResource TextBlockStyle}" Margin="0,5">العضوية</TextBlock>
-        <TextBox   Text="{Binding MembershipUpdate.Name, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}"></TextBox>
+        <TextBox  Helpers:FocusExtension.IsFocused="{Binding IsFocused}"  Name="First" Text="{Binding MembershipUpdate.Name, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}"></TextBox>
 
         <TextBlock Style="{StaticResource TextBlockStyle}" Margin="0,5">السعر</TextBlock>
         <Controls:NumericUpDown HasDecimals="True" Value="{Binding MembershipUpdate.Price, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle}" Minimum="1">
@@ -40,7 +41,7 @@
 
         <Separator Margin="0 15 0 0" />
         <StackPanel Orientation="Horizontal" Margin="0 10 0 0" >
-            <Button Name="btn" Command="{Binding Update}" Style="{StaticResource SquareButtonStyle}" Width="100"    >
+            <Button IsDefault="True" Name="btn" Command="{Binding Update}" Style="{StaticResource SquareButtonStyle}" Width="100"    >
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock  Text="تحديث"  Style="{StaticResource TextBlockStyle}" Margin="10,0"></TextBlock>
                     <iconPacks:PackIconMaterial Kind="Update" />

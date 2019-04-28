@@ -269,7 +269,7 @@ namespace Cafe.ViewModels.UserViewModels
         {
             try
             {
-                if (NewUser.Name == null || NewUser.Password == null || SelectedRole == null)
+                if (NewUser.Name == null || NewUser.Password == null || SelectedRole.Name == null)
                     return;
 
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
@@ -328,13 +328,15 @@ namespace Cafe.ViewModels.UserViewModels
             try
             {
                 userUpdateDialog.DataContext = this;
-                UserUpdate = new UserUpdateDataModel();
-                UserUpdate.ID = SelectedUser.User.ID;
-                UserUpdate.IsWorked = SelectedUser.User.IsWorked;
-                UserUpdate.Name = SelectedUser.User.Name;
-                UserUpdate.Password = SelectedUser.User.Password;
-                UserUpdate.RoleID = SelectedUser.User.RoleID;
-                UserUpdate.Role = SelectedUser.Role;
+                UserUpdate = new UserUpdateDataModel
+                {
+                    ID = SelectedUser.User.ID,
+                    IsWorked = SelectedUser.User.IsWorked,
+                    Name = SelectedUser.User.Name,
+                    Password = SelectedUser.User.Password,
+                    RoleID = SelectedUser.User.RoleID,
+                    Role = SelectedUser.Role
+                };
                 await currentWindow.ShowMetroDialogAsync(userUpdateDialog);
             }
             catch (Exception ex)
@@ -357,7 +359,7 @@ namespace Cafe.ViewModels.UserViewModels
         {
             try
             {
-                if (UserUpdate.Password == null || UserUpdate.Role == null || UserUpdate.Name == null)
+                if (UserUpdate.Password == null || UserUpdate.Role.Name == null || UserUpdate.Name == null)
                     return;
 
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))

@@ -23,14 +23,11 @@
 
 
         <TextBlock Style="{StaticResource TextBlockStyle}" Margin="0,5">النوع</TextBlock>
-        <ComboBox IsEnabled="False" Name="First"  ItemsSource="{Binding DevicesTypes}" SelectedValuePath="ID" SelectedItem="{Binding DeviceUpdate.DeviceType}" DisplayMemberPath="Name" 
+        <ComboBox IsEnabled="False"   ItemsSource="{Binding DevicesTypes}" SelectedValuePath="ID" SelectedItem="{Binding DeviceUpdate.DeviceType}" DisplayMemberPath="Name" 
                    SelectedValue="{Binding DeviceUpdate.DeviceTypeID, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" IsEditable="True"  Style="{StaticResource ComboBoxStyle}">
         </ComboBox>
         <TextBlock Style="{StaticResource TextBlockStyle}" Margin="0,5">اسم الجهاز</TextBlock>
-        <TextBox  Helpers:FocusExtension.IsFocused="{Binding IsFocused}"  Text="{Binding DeviceUpdate.Name, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource TextBoxStyle}">
-            <TextBox.InputBindings>
-                <KeyBinding Command="{Binding Path=Update}" Key="Enter" />
-            </TextBox.InputBindings>
+        <TextBox  Helpers:FocusExtension.IsFocused="{Binding IsFocused}"  Name="First"  Text="{Binding DeviceUpdate.Name, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource TextBoxStyle}">
         </TextBox>
 
         <TextBlock Style="{StaticResource TextBlockStyle}" Margin="0,5">الترتيب فى العرض</TextBlock>
@@ -41,7 +38,7 @@
 
         <Separator Margin="0 15 0 0" />
         <StackPanel Orientation="Horizontal" Margin="0 10 0 0" >
-            <Button Name="btn" Command="{Binding Update}" Style="{StaticResource SquareButtonStyle}" Width="100"    >
+            <Button IsDefault="True" Name="btn" Command="{Binding Update}" Style="{StaticResource SquareButtonStyle}" Width="100"    >
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock  Text="تحديث"  Style="{StaticResource TextBlockStyle}" Margin="10,0"></TextBlock>
                     <iconPacks:PackIconMaterial Kind="Update" />

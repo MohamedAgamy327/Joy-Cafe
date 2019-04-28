@@ -146,6 +146,14 @@
     <Compile Include="Migrations\201904251120037_cancled-reason-bill.Designer.cs">
       <DependentUpon>201904251120037_cancled-reason-bill.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904271704303_update-shift.cs" />
+    <Compile Include="Migrations\201904271704303_update-shift.Designer.cs">
+      <DependentUpon>201904271704303_update-shift.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904271715269_update-discount.cs" />
+    <Compile Include="Migrations\201904271715269_update-discount.Designer.cs">
+      <DependentUpon>201904271715269_update-discount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -192,6 +200,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904251120037_cancled-reason-bill.resx">
       <DependentUpon>201904251120037_cancled-reason-bill.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904271704303_update-shift.resx">
+      <DependentUpon>201904271704303_update-shift.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904271715269_update-discount.resx">
+      <DependentUpon>201904271715269_update-discount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
