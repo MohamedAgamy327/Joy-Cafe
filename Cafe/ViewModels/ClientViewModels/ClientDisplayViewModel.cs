@@ -218,7 +218,7 @@ namespace Cafe.ViewModels.ClientViewModels
             get
             {
                 return _export
-                    ?? (_export = new RelayCommand(ExportMethod,CanExecuteExport));
+                    ?? (_export = new RelayCommand(ExportMethod, CanExecuteExport));
             }
         }
         private void ExportMethod()
@@ -245,12 +245,18 @@ namespace Cafe.ViewModels.ClientViewModels
                 xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
                 xlWorkSheet.Cells[1, 1] = "العميل";
                 xlWorkSheet.Cells[1, 2] = "التليفون";
-                foreach (var item in Clients)
+                xlWorkSheet.Cells[1, 3] = "النقاط";
+                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    xlWorkSheet.Cells[i, 2].NumberFormat = "@";
-                    xlWorkSheet.Cells[i, 1] = item.Client.Name;
-                    xlWorkSheet.Cells[i, 2] = item.Client.Telephone;
-                    i++;
+                    var clients = unitOfWork.Clients.Find(w => (w.Name + w.Telephone + w.Code).Contains(_key)).OrderBy(o => o.Name);
+                    foreach (var item in clients)
+                    {
+                        xlWorkSheet.Cells[i, 2].NumberFormat = "@";
+                        xlWorkSheet.Cells[i, 1] = item.Name;
+                        xlWorkSheet.Cells[i, 2] = item.Telephone;
+                        xlWorkSheet.Cells[i, 3] = item.Points;
+                        i++;
+                    }
                 }
                 xlWorkBook.SaveAs(fbd.SelectedPath + @"\العملاء.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
                 xlWorkBook.Close(true, misValue, misValue);
@@ -268,7 +274,7 @@ namespace Cafe.ViewModels.ClientViewModels
         }
         private bool CanExecuteExport()
         {
-            if (Clients==null || Clients.Count == 0)
+            if (Clients == null || Clients.Count == 0)
                 return false;
             else
                 return true;

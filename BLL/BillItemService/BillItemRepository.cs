@@ -20,18 +20,18 @@ namespace BLL.BillItemService
             get { return Context as GeneralDBContext; }
         }
 
-        public List<BillItemsDisplayDataModel> GetBillItems()
+        public List<ShiftItemDisplayDataModel> GetShiftItems()
         {
-            return GeneralDBContext.BillsItems.AsNoTracking().Where(w => w.Bill.Type == BillTypeText.Items && w.Bill.EndDate == null).OrderByDescending(o=>o.RegistrationDate).Select(s => new BillItemsDisplayDataModel
+            return GeneralDBContext.BillsItems.AsNoTracking().Where(w => w.Bill.Type == BillTypeText.Items && w.Bill.EndDate == null).OrderByDescending(o=>o.RegistrationDate).Select(s => new ShiftItemDisplayDataModel
             {
                 BillItem = s,
                 Item = s.Item
             }).ToList();
         }
 
-        public List<BillItemsDisplayDataModel> GetBillItems(int billID)
+        public List<BillItemDisplayDataModel> GetBillItems(int billID)
         {
-            return GeneralDBContext.BillsItems.AsNoTracking().Where(w => w.BillID == billID).OrderByDescending(o => o.RegistrationDate).Select(s => new BillItemsDisplayDataModel
+            return GeneralDBContext.BillsItems.AsNoTracking().Where(w => w.BillID == billID).OrderByDescending(o => o.RegistrationDate).Select(s => new BillItemDisplayDataModel
             {
                 BillItem = s,
                 Item = s.Item

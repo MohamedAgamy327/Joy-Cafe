@@ -36,11 +36,13 @@ namespace DAL.Entities
             set { SetProperty(ref _playedMinutes, value); }
         }
 
-        private int? _membershipMinutes;
-        public int? MembershipMinutes
+        // membership
+
+        private int? _currentMembershipMinutes;
+        public int? CurrentMembershipMinutes
         {
-            get { return _membershipMinutes; }
-            set { SetProperty(ref _membershipMinutes, value); }
+            get { return _currentMembershipMinutes; }
+            set { SetProperty(ref _currentMembershipMinutes, value); }
         }
 
         private int? _membershipMinutesPaid;
@@ -64,12 +66,38 @@ namespace DAL.Entities
             set { SetProperty(ref _remainderMinutes, value); }
         }
 
-        private int? _point;
-        public int? Point
+        // end of membership
+
+        // points 
+
+        private int? _currentPoints;
+        public int? CurrentPoints
         {
-            get { return _point; }
-            set { SetProperty(ref _point, value); }
+            get { return _currentPoints; }
+            set { SetProperty(ref _currentPoints, value); }
         }
+
+        private int? _usedPoints;
+        public int? UsedPoints
+        {
+            get { return _usedPoints; }
+            set { SetProperty(ref _usedPoints, value); }
+        }
+
+        private int? _pointsAfterUsed;
+        public int? PointsAfterUsed
+        {
+            get { return _pointsAfterUsed; }
+            set { SetProperty(ref _pointsAfterUsed, value); }
+        }
+
+        private int? _earnedPoints;
+        public int? EarnedPoints
+        {
+            get { return _earnedPoints; }
+            set { SetProperty(ref _earnedPoints, value); }
+        }
+        // end points 
 
         private string _type;
         public string Type
@@ -123,8 +151,8 @@ namespace DAL.Entities
         private decimal? _ratio;
         public decimal? Ratio
         {
-            get{ return _ratio;}
-            set{SetProperty(ref _ratio, value);}
+            get { return _ratio; }
+            set { SetProperty(ref _ratio, value); }
         }
 
         private decimal? _totalAfterDiscount;
@@ -147,7 +175,7 @@ namespace DAL.Entities
             get { return _canceled; }
             set { SetProperty(ref _canceled, value); }
         }
-      
+
         private DateTime _startDate;
         [Required]
         public DateTime StartDate

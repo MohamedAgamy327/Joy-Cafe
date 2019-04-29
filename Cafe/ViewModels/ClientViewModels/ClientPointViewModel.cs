@@ -147,7 +147,7 @@ namespace Cafe.ViewModels.ClientViewModels
         {
             try
             {
-                Paging.Next();
+                Paging.Previous();
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
                     Clients = new ObservableCollection<ClientPointDataModel>(unitOfWork.Clients.Search(_key, Paging.CurrentPage, PagingWPF.PageSize, _dateFrom, _dateTo));

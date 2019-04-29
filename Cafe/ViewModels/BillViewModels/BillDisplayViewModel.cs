@@ -18,13 +18,46 @@ namespace Cafe.ViewModels.BillViewModels
         {
             using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
             {
-                Paging.TotalRecords = unitOfWork.Bills.GetRecordsNumber(BillCaseText.All, _key, _dateFrom, _dateTo);
-                Paging.GetFirst();
-                Bills = new ObservableCollection<BillDisplayDataModel>(unitOfWork.Bills.Search(_selectedBillCase.Key, _key, _dateFrom, _dateTo, Paging.CurrentPage, PagingWPF.PageSize));
-                AvailableCount = unitOfWork.Bills.GetRecordsNumber(w => w.Canceled == false && w.Deleted == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo);
-                DeletedCount = unitOfWork.Bills.GetRecordsNumber(w => w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo);
-                CanceledCount = unitOfWork.Bills.GetRecordsNumber(w => w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo);
+                if (_selectedBillCase != null)
+                {
+                    Paging.TotalRecords = unitOfWork.Bills.GetRecordsNumber(_selectedBillCase.Key, _key, _dateFrom, _dateTo);
+                    Paging.GetFirst();
+                    Bills = new ObservableCollection<BillDisplayDataModel>(unitOfWork.Bills.Search(_selectedBillCase.Key, _key, _dateFrom, _dateTo, Paging.CurrentPage, PagingWPF.PageSize));
 
+                    if (_selectedBillCase.Key == BillCaseText.All)
+                    {
+                        AvailableCount = unitOfWork.Bills.GetRecordsNumber(w => w.Canceled == false && w.Deleted == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo);
+                        DeletedCount = unitOfWork.Bills.GetRecordsNumber(w => w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo);
+                        CanceledCount = unitOfWork.Bills.GetRecordsNumber(w => w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo);
+                    }
+                    else if (_selectedBillCase.Key == BillCaseText.Available)
+                    {
+                        AvailableCount = unitOfWork.Bills.GetRecordsNumber(w => w.Canceled == false && w.Deleted == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo);
+                        DeletedCount = 0;
+                        CanceledCount = 0;
+                    }
+                    else if (_selectedBillCase.Key == BillCaseText.Canceled)
+                    {
+                        AvailableCount = 0;
+                        DeletedCount = 0;
+                        CanceledCount = unitOfWork.Bills.GetRecordsNumber(w => w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo);
+                    }
+                    else if (_selectedBillCase.Key == BillCaseText.Deleted)
+                    {
+                        AvailableCount = 0;
+                        DeletedCount = unitOfWork.Bills.GetRecordsNumber(w => w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo);
+                        CanceledCount = 0;
+                    }
+                }
+                else
+                {
+                    Paging.TotalRecords = 0;
+                    Paging.GetFirst();
+                    Bills = new ObservableCollection<BillDisplayDataModel>();
+                    AvailableCount = 0;
+                    DeletedCount = 0;
+                    CanceledCount = 0;
+                }
             }
         }
 

@@ -25,7 +25,8 @@ namespace Cafe.ViewModels.CashierViewModels
         {
             using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
             {
-                BillItems = new ObservableCollection<BillItemsDisplayDataModel>(unitOfWork.BillsItems.GetBillItems());
+                ShiftItems = new ObservableCollection<ShiftItemDisplayDataModel>(unitOfWork.BillsItems.GetShiftItems());
+                CheckedSum = ShiftItems.Where(w => w.Checked == true).Sum(s => Convert.ToDecimal(s.BillItem.Total));
             }
         }
 
@@ -48,11 +49,18 @@ namespace Cafe.ViewModels.CashierViewModels
         {
             get
             {
-                if (BillItems != null && BillItems.Count > 0)
-                    return _itemsSum = BillItems.Sum(s => Convert.ToDecimal(s.BillItem.Total));
+                if (ShiftItems != null && ShiftItems.Count > 0)
+                    return _itemsSum = ShiftItems.Sum(s => Convert.ToDecimal(s.BillItem.Total));
                 else
                     return 0;
             }
+        }
+
+        private decimal _checkedSum;
+        public decimal CheckedSum
+        {
+            get { return _checkedSum; }
+            set { SetProperty(ref _checkedSum, value); }
         }
 
         private Item _selectedItem;
@@ -62,18 +70,18 @@ namespace Cafe.ViewModels.CashierViewModels
             set { SetProperty(ref _selectedItem, value); }
         }
 
-        private BillItemAddDataModel _newBillItem;
-        public BillItemAddDataModel NewBillItem
+        private ShiftItemAddDataModel _newShiftItem;
+        public ShiftItemAddDataModel NewShiftItem
         {
-            get { return _newBillItem; }
-            set { SetProperty(ref _newBillItem, value); }
+            get { return _newShiftItem; }
+            set { SetProperty(ref _newShiftItem, value); }
         }
 
-        private BillItemsDisplayDataModel _selectedBillItem;
-        public BillItemsDisplayDataModel SelectedBillItem
+        private ShiftItemDisplayDataModel _selectedShiftItem;
+        public ShiftItemDisplayDataModel SelectedShiftItem
         {
-            get { return _selectedBillItem; }
-            set { SetProperty(ref _selectedBillItem, value); }
+            get { return _selectedShiftItem; }
+            set { SetProperty(ref _selectedShiftItem, value); }
         }
 
         private ObservableCollection<Item> _items;
@@ -83,13 +91,13 @@ namespace Cafe.ViewModels.CashierViewModels
             set { SetProperty(ref _items, value); }
         }
 
-        private ObservableCollection<BillItemsDisplayDataModel> _billItems;
-        public ObservableCollection<BillItemsDisplayDataModel> BillItems
+        private ObservableCollection<ShiftItemDisplayDataModel> _shiftItems;
+        public ObservableCollection<ShiftItemDisplayDataModel> ShiftItems
         {
-            get { return _billItems; }
+            get { return _shiftItems; }
             set
             {
-                SetProperty(ref _billItems, value);
+                SetProperty(ref _shiftItems, value);
                 OnPropertyChanged("ItemsSum");
             }
         }
@@ -121,6 +129,27 @@ namespace Cafe.ViewModels.CashierViewModels
             }
         }
 
+        private RelayCommand _check;
+        public RelayCommand Check
+        {
+            get
+            {
+                return _check
+                    ?? (_check = new RelayCommand(CheckMethod));
+            }
+        }
+        private void CheckMethod()
+        {
+            try
+            {
+                CheckedSum = ShiftItems.Where(w => w.Checked == true).Sum(s => Convert.ToDecimal(s.BillItem.Total));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
         private RelayCommand _deleteItem;
         public RelayCommand DeleteItem
         {
@@ -145,7 +174,7 @@ namespace Cafe.ViewModels.CashierViewModels
                 {
                     using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                     {
-                        unitOfWork.BillsItems.Remove(_selectedBillItem.BillItem);
+                        unitOfWork.BillsItems.Remove(_selectedShiftItem.BillItem);
                         unitOfWork.Complete();
                     }
                     Load();
@@ -158,20 +187,20 @@ namespace Cafe.ViewModels.CashierViewModels
 
         }
 
-        private RelayCommand<BillItemsDisplayDataModel> _qtyChanged;
-        public RelayCommand<BillItemsDisplayDataModel> QtyChanged
+        private RelayCommand<ShiftItemDisplayDataModel> _qtyChanged;
+        public RelayCommand<ShiftItemDisplayDataModel> QtyChanged
         {
             get
             {
                 return _qtyChanged
-                    ?? (_qtyChanged = new RelayCommand<BillItemsDisplayDataModel>(QtyChangedMethodAsync));
+                    ?? (_qtyChanged = new RelayCommand<ShiftItemDisplayDataModel>(QtyChangedMethodAsync));
             }
         }
-        private async void QtyChangedMethodAsync(BillItemsDisplayDataModel selectedBillItem)
+        private async void QtyChangedMethodAsync(ShiftItemDisplayDataModel selectedShiftItem)
         {
             try
             {
-                if (selectedBillItem.BillItem.Qty == null)
+                if (selectedShiftItem.BillItem.Qty == null)
                     return;
 
                 MessageDialogResult result = await currentWindow.ShowMessageAsync("تأكيد العملية", "هل تـريــد تغير هـذه الكمية؟", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings()
@@ -185,8 +214,8 @@ namespace Cafe.ViewModels.CashierViewModels
                 {
                     using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                     {
-                        selectedBillItem.BillItem.Total = selectedBillItem.BillItem.Qty * selectedBillItem.BillItem.Price;
-                        unitOfWork.BillsItems.Edit(selectedBillItem.BillItem);
+                        selectedShiftItem.BillItem.Total = selectedShiftItem.BillItem.Qty * selectedShiftItem.BillItem.Price;
+                        unitOfWork.BillsItems.Edit(selectedShiftItem.BillItem);
                         unitOfWork.Complete();
                     }
                     OnPropertyChanged("ItemsSum");
@@ -219,7 +248,7 @@ namespace Cafe.ViewModels.CashierViewModels
         {
             try
             {
-                NewBillItem = new BillItemAddDataModel();
+                NewShiftItem = new ShiftItemAddDataModel();
                 _shiftItemAddDialog.DataContext = this;
                 await currentWindow.ShowMetroDialogAsync(_shiftItemAddDialog);
             }
@@ -243,7 +272,7 @@ namespace Cafe.ViewModels.CashierViewModels
         {
             try
             {
-                if (NewBillItem.Qty == null || SelectedItem.Name == null)
+                if (NewShiftItem.Qty == null || SelectedItem.Name == null)
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
@@ -261,17 +290,17 @@ namespace Cafe.ViewModels.CashierViewModels
                     unitOfWork.BillsItems.Add(new BillItem
                     {
                         BillID = bill.ID,
-                        ItemID = _newBillItem.ItemID,
+                        ItemID = _newShiftItem.ItemID,
                         Price = _selectedItem.Price,
-                        Qty = _newBillItem.Qty,
+                        Qty = _newShiftItem.Qty,
                         RegistrationDate = DateTime.Now,
-                        Total = _newBillItem.Qty * _selectedItem.Price
+                        Total = _newShiftItem.Qty * _selectedItem.Price
                     });
 
                     unitOfWork.Complete();
                 }
                 Load();
-                NewBillItem = new BillItemAddDataModel();
+                NewShiftItem = new ShiftItemAddDataModel();
             }
             catch (Exception ex)
             {
@@ -282,7 +311,7 @@ namespace Cafe.ViewModels.CashierViewModels
         {
             try
             {
-                if (NewBillItem.HasErrors)
+                if (NewShiftItem.HasErrors)
                     return false;
                 else
                     return true;

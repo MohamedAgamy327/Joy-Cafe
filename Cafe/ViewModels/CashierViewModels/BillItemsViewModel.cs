@@ -26,7 +26,7 @@ namespace Cafe.ViewModels.CashierViewModels
         {
             using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
             {
-                BillItems = new ObservableCollection<BillItemsDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(BillID));
+                BillItems = new ObservableCollection<BillItemDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(BillID));
             }
         }
 
@@ -70,8 +70,8 @@ namespace Cafe.ViewModels.CashierViewModels
             set { SetProperty(ref _newBillItem, value); }
         }
 
-        private BillItemsDisplayDataModel _selectedBillItem;
-        public BillItemsDisplayDataModel SelectedBillItem
+        private BillItemDisplayDataModel _selectedBillItem;
+        public BillItemDisplayDataModel SelectedBillItem
         {
             get { return _selectedBillItem; }
             set { SetProperty(ref _selectedBillItem, value); }
@@ -84,8 +84,8 @@ namespace Cafe.ViewModels.CashierViewModels
             set { SetProperty(ref _items, value); }
         }
 
-        private ObservableCollection<BillItemsDisplayDataModel> _billItems;
-        public ObservableCollection<BillItemsDisplayDataModel> BillItems
+        private ObservableCollection<BillItemDisplayDataModel> _billItems;
+        public ObservableCollection<BillItemDisplayDataModel> BillItems
         {
             get { return _billItems; }
             set
@@ -159,16 +159,16 @@ namespace Cafe.ViewModels.CashierViewModels
 
         }
 
-        private RelayCommand<BillItemsDisplayDataModel> _qtyChanged;
-        public RelayCommand<BillItemsDisplayDataModel> QtyChanged
+        private RelayCommand<BillItemDisplayDataModel> _qtyChanged;
+        public RelayCommand<BillItemDisplayDataModel> QtyChanged
         {
             get
             {
                 return _qtyChanged
-                    ?? (_qtyChanged = new RelayCommand<BillItemsDisplayDataModel>(QtyChangedMethodAsync));
+                    ?? (_qtyChanged = new RelayCommand<BillItemDisplayDataModel>(QtyChangedMethodAsync));
             }
         }
-        private async void QtyChangedMethodAsync(BillItemsDisplayDataModel selectedBillItem)
+        private async void QtyChangedMethodAsync(BillItemDisplayDataModel selectedBillItem)
         {
             try
             {

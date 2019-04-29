@@ -24,7 +24,7 @@
         </StackPanel.Resources>
 
         <TextBlock Style="{StaticResource TextBlockStyle}" VerticalAlignment="Center" Margin="0,5">الصنف</TextBlock>
-            <ComboBox Name="First" Helpers:FocusExtension.IsFocused="{Binding IsFocused}" IsEditable="True"  ItemsSource="{Binding Items}" SelectedValue="{Binding NewBillItem.ItemID}" SelectedValuePath="ID" DisplayMemberPath="Name" SelectedItem="{Binding SelectedItem,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboBoxStyle}">
+        <ComboBox Name="First" Helpers:FocusExtension.IsFocused="{Binding IsFocused}" IsEditable="True"  ItemsSource="{Binding Items}" SelectedValue="{Binding NewShiftItem.ItemID}" SelectedValuePath="ID" DisplayMemberPath="Name" SelectedItem="{Binding SelectedItem,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboBoxStyle}">
             </ComboBox>
 
             <TextBlock VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" Margin="0,5">السعر</TextBlock>
@@ -32,7 +32,7 @@
             </Controls:NumericUpDown>
 
             <TextBlock VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" Margin="0,5">الكمية</TextBlock>
-        <Controls:NumericUpDown  HasDecimals="False"   Value="{Binding NewBillItem.Qty,ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle}" Minimum="1">
+        <Controls:NumericUpDown  HasDecimals="False"   Value="{Binding NewShiftItem.Qty,ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle}" Minimum="1">
         </Controls:NumericUpDown>
 
         <Separator Margin="0 10 0 0" />

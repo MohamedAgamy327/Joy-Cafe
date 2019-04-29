@@ -103,9 +103,7 @@
                         RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-
                                 </CheckBox>
-
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

@@ -25,9 +25,9 @@ namespace BLL.BillDeviceService
             return GeneralDBContext.BillsDevices.AsNoTracking().OrderByDescending(o => o.EndDate).FirstOrDefault(f => f.BillID == billID);
         }
 
-        List<BillDevicesDisplayDataModel> IBillDeviceRepository.GetBillDevices(int billID)
+        List<BillDeviceDisplayDataModel> IBillDeviceRepository.GetBillDevices(int billID)
         {
-            return GeneralDBContext.BillsDevices.AsNoTracking().Where(w => w.BillID == billID).OrderByDescending(o => o.StartDate).Select(s => new BillDevicesDisplayDataModel
+            return GeneralDBContext.BillsDevices.AsNoTracking().Where(w => w.BillID == billID).OrderByDescending(o => o.StartDate).Select(s => new BillDeviceDisplayDataModel
             {
                 BillDevice = s,
                 Device = s.Device,

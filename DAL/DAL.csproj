@@ -154,6 +154,18 @@
     <Compile Include="Migrations\201904271715269_update-discount.Designer.cs">
       <DependentUpon>201904271715269_update-discount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904281806452_add-points.cs" />
+    <Compile Include="Migrations\201904281806452_add-points.Designer.cs">
+      <DependentUpon>201904281806452_add-points.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904282031523_add-points-system.cs" />
+    <Compile Include="Migrations\201904282031523_add-points-system.Designer.cs">
+      <DependentUpon>201904282031523_add-points-system.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904282050546_add-point-use.cs" />
+    <Compile Include="Migrations\201904282050546_add-point-use.Designer.cs">
+      <DependentUpon>201904282050546_add-point-use.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -206,6 +218,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904271715269_update-discount.resx">
       <DependentUpon>201904271715269_update-discount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904281806452_add-points.resx">
+      <DependentUpon>201904281806452_add-points.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904282031523_add-points-system.resx">
+      <DependentUpon>201904282031523_add-points-system.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904282050546_add-point-use.resx">
+      <DependentUpon>201904282050546_add-point-use.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

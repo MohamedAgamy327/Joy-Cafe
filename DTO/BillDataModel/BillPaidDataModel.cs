@@ -1,9 +1,18 @@
 ﻿using DAL.BindableBaseService;
+using System.ComponentModel.DataAnnotations;
 
 namespace DTO.BillDataModel
 {
     public class BillPaidDataModel : ValidatableBindableBase
     {
+
+        public BillPaidDataModel()
+        {
+            Discount = 0;
+            Ratio = 0;
+            UsedPoints = 0;
+        }
+
         private decimal? _discount;
         public decimal? Discount
         {
@@ -25,10 +34,13 @@ namespace DTO.BillDataModel
             set { SetProperty(ref _minimum, value); }
         }
 
-        public BillPaidDataModel()
+        private int? _usedPoints;
+        [Required]
+        [Range(0, int.MaxValue)]
+        public int? UsedPoints
         {
-            Discount = 0;
-            Ratio = 0;
+            get { return _usedPoints; }
+            set { SetProperty(ref _usedPoints, value); }
         }
 
     }

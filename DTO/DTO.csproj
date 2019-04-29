@@ -63,9 +63,11 @@
     <Compile Include="BillDataModel\BillDayDataModel.cs" />
     <Compile Include="BillDataModel\BillDisplayDataModel.cs" />
     <Compile Include="BillDataModel\BillPaidDataModel.cs" />
-    <Compile Include="BillDeviceDataModel\BillDevicesDisplayDataModel.cs" />
+    <Compile Include="BillDeviceDataModel\BillDeviceDisplayDataModel.cs" />
     <Compile Include="BillItemDataModel\BillItemAddDataModel.cs" />
-    <Compile Include="BillItemDataModel\BillItemsDisplayDataModel.cs" />
+    <Compile Include="BillItemDataModel\BillItemDisplayDataModel.cs" />
+    <Compile Include="BillItemDataModel\ShiftItemAddDataModel.cs" />
+    <Compile Include="BillItemDataModel\ShiftItemDisplayDataModel.cs" />
     <Compile Include="ClientDataModel\ClientAddDataModel.cs" />
     <Compile Include="ClientDataModel\ClientBillAddDataModel.cs" />
     <Compile Include="ClientDataModel\ClientCheckDataModel.cs" />

@@ -56,8 +56,8 @@ namespace Cafe.ViewModels.CashierViewModels
             set { SetProperty(ref _selectedClient, value); }
         }
 
-        private ObservableCollection<BillItemsDisplayDataModel> _billItems;
-        public ObservableCollection<BillItemsDisplayDataModel> BillItems
+        private ObservableCollection<BillItemDisplayDataModel> _billItems;
+        public ObservableCollection<BillItemDisplayDataModel> BillItems
         {
             get { return _billItems; }
             set
@@ -68,8 +68,8 @@ namespace Cafe.ViewModels.CashierViewModels
             }
         }
 
-        private ObservableCollection<BillDevicesDisplayDataModel> _billDevices;
-        public ObservableCollection<BillDevicesDisplayDataModel> BillDevices
+        private ObservableCollection<BillDeviceDisplayDataModel> _billDevices;
+        public ObservableCollection<BillDeviceDisplayDataModel> BillDevices
         {
             get { return _billDevices; }
             set
@@ -96,13 +96,16 @@ namespace Cafe.ViewModels.CashierViewModels
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
                     IsMembership = Visibility.Visible;
-                    BillDevices = new ObservableCollection<BillDevicesDisplayDataModel>(unitOfWork.BillsDevices.GetBillDevices(BillData.BillID));
-                    BillItems = new ObservableCollection<BillItemsDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(BillData.BillID));
+                    BillDevices = new ObservableCollection<BillDeviceDisplayDataModel>(unitOfWork.BillsDevices.GetBillDevices(BillData.BillID));
+                    BillItems = new ObservableCollection<BillItemDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(BillData.BillID));
                     SelectedClient = unitOfWork.Clients.Get(BillData.ClientID);
                     SelectedBill = unitOfWork.Bills.Get(BillData.BillID);
                     Device device = unitOfWork.Devices.Get(BillData.DeviceID);
+
                     SelectedBill.PlayedMinutes = BillDevices.Sum(s => s.Duration);
                     SelectedBill.ItemsSum = BillItems.Sum(s => Convert.ToDecimal(s.BillItem.Total));
+                    SelectedBill.CurrentPoints = SelectedClient.Points ?? 0;
+                    SelectedBill.PointsAfterUsed = 0;
 
                     foreach (var item in BillDevices)
                     {
@@ -120,7 +123,7 @@ namespace Cafe.ViewModels.CashierViewModels
 
                     if (IsMembership != Visibility.Collapsed)
                     {
-                        SelectedBill.MembershipMinutes = cmm.Minutes;
+                        SelectedBill.CurrentMembershipMinutes = cmm.Minutes;
                         SelectedBill.MembershipMinutesAfterPaid = cmm.Minutes > SelectedBill.PlayedMinutes ? cmm.Minutes - SelectedBill.PlayedMinutes : 0;
                         SelectedBill.RemainderMinutes = SelectedBill.MembershipMinutesAfterPaid > 0 ? 0 : SelectedBill.PlayedMinutes - cmm.Minutes;
 
@@ -194,6 +197,31 @@ namespace Cafe.ViewModels.CashierViewModels
             }
         }
 
+        private RelayCommand _usedPointsChanged;
+        public RelayCommand UsedPointsChanged
+        {
+            get
+            {
+                return _usedPointsChanged
+                    ?? (_usedPointsChanged = new RelayCommand(UsedPointsChangedMethod));
+            }
+        }
+        private void UsedPointsChangedMethod()
+        {
+            try
+            {
+                if (BillPaid.UsedPoints != null)
+                    SelectedBill.PointsAfterUsed = SelectedBill.CurrentPoints - BillPaid.UsedPoints;
+                else
+                    SelectedBill.PointsAfterUsed = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+
         private RelayCommand _save;
         public RelayCommand Save
         {
@@ -223,10 +251,12 @@ namespace Cafe.ViewModels.CashierViewModels
                     device.Case = DeviceCaseText.Free;
                     device.BillID = null;
                     unitOfWork.Devices.Edit(device);
+
                     _selectedBill.UserID = UserData.ID;
                     _selectedBill.EndDate = BillData.EndDate;
                     _selectedBill.Date = BillData.EndDate;
                     _selectedBill.ClientID = _selectedClient.ID;
+                    _selectedBill.UsedPoints = _billPaid.UsedPoints;
 
                     if (BillPaid.Minimum != null && BillPaid.Minimum > 0)
                     {
@@ -243,14 +273,14 @@ namespace Cafe.ViewModels.CashierViewModels
                         _selectedBill.Minimum = _billPaid.Minimum;
                         _selectedBill.Total = _billPaid.Minimum;
                         _selectedBill.TotalAfterDiscount = _billPaid.Minimum;
-                        _selectedBill.Point = 0;
+                        _selectedBill.EarnedPoints = 0;
                         _selectedBill.Discount = 0;
                         _selectedBill.Ratio = 0;
                         unitOfWork.Bills.Edit(_selectedBill);
                     }
                     else
                     {
-                        _selectedBill.Point = Convert.ToInt32(Math.Round(Convert.ToDecimal(SelectedBill.DevicesSum), 0));
+                        _selectedBill.EarnedPoints = Convert.ToInt32(Math.Round(Convert.ToDecimal(SelectedBill.DevicesSum), 0));
                         _selectedBill.Discount = _billPaid.Discount;
                         _selectedBill.Ratio = _billPaid.Ratio;
                         if (IsMembership != Visibility.Collapsed)
@@ -258,7 +288,7 @@ namespace Cafe.ViewModels.CashierViewModels
                             var cmm = unitOfWork.ClientMembershipMinutes.FirstOrDefault(f => f.ClientID == BillData.ClientID && f.DeviceTypeID == device.DeviceTypeID);
                             cmm.Minutes = (int)_selectedBill.MembershipMinutesAfterPaid;
                             unitOfWork.ClientMembershipMinutes.Edit(cmm);
-                            _selectedBill.MembershipMinutesPaid = _selectedBill.MembershipMinutes - _selectedBill.MembershipMinutesAfterPaid;
+                            _selectedBill.MembershipMinutesPaid = _selectedBill.CurrentMembershipMinutes - _selectedBill.MembershipMinutesAfterPaid;
                         }
                         unitOfWork.Bills.Edit(_selectedBill);
 
@@ -275,9 +305,11 @@ namespace Cafe.ViewModels.CashierViewModels
                             };
                             unitOfWork.Safes.Add(safe);
                         }
-
-
                     }
+
+                    _selectedClient.Points = _selectedBill.PointsAfterUsed + _selectedBill.EarnedPoints;
+                    unitOfWork.Clients.Edit(_selectedClient);
+
                     unitOfWork.Complete();
                     currentWindow.Close();
                 }
@@ -289,7 +321,7 @@ namespace Cafe.ViewModels.CashierViewModels
         }
         private bool CanExecuteSave()
         {
-            if ((BillPaid.Discount == null || BillPaid.Ratio == null) && BillPaid.Minimum == null)
+            if (BillPaid.HasErrors || ((BillPaid.Discount == null || BillPaid.Ratio == null) && BillPaid.Minimum == null))
                 return false;
             else
                 return true;
@@ -382,7 +414,7 @@ namespace Cafe.ViewModels.CashierViewModels
         }
         private bool CanExecutePrint()
         {
-            if (BillPaid.Minimum != null)
+            if (BillPaid.HasErrors || BillPaid.Minimum != null)
                 return false;
             if (BillPaid.Discount != null && BillPaid.Ratio != null)
                 return true;

@@ -90,7 +90,7 @@
                     <DataGridTextColumn IsReadOnly="True"  Header="العميل" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding Client.Name}" />
                     <DataGridTextColumn IsReadOnly="True"  Header="الكود" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding Client.Code}" />
                     <DataGridTextColumn IsReadOnly="True"  Header="التليفون" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding Client.Telephone}" />
-
+                    <DataGridTextColumn IsReadOnly="True"  Header="النقاط" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle1}"   Binding="{Binding Client.Points}" />
                     <DataGridTemplateColumn  Header="تعديل" Width="0.5*" HeaderStyle="{StaticResource ColumnHeaderStyle1}" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

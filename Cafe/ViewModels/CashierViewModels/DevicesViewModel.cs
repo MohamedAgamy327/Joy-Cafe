@@ -283,8 +283,8 @@ namespace Cafe.ViewModels.CashierViewModels
             set { SetProperty(ref _devices, value); }
         }
 
-        private ObservableCollection<BillItemsDisplayDataModel> _billItems;
-        public ObservableCollection<BillItemsDisplayDataModel> BillItems
+        private ObservableCollection<BillItemDisplayDataModel> _billItems;
+        public ObservableCollection<BillItemDisplayDataModel> BillItems
         {
             get { return _billItems; }
             set
@@ -295,8 +295,8 @@ namespace Cafe.ViewModels.CashierViewModels
             }
         }
 
-        private ObservableCollection<BillDevicesDisplayDataModel> _billDevices;
-        public ObservableCollection<BillDevicesDisplayDataModel> BillDevices
+        private ObservableCollection<BillDeviceDisplayDataModel> _billDevices;
+        public ObservableCollection<BillDeviceDisplayDataModel> BillDevices
         {
             get { return _billDevices; }
             set
@@ -725,8 +725,8 @@ namespace Cafe.ViewModels.CashierViewModels
                         });
                         return;
                     }
-                    var billDevices = new ObservableCollection<BillDevicesDisplayDataModel>(unitOfWork.BillsDevices.GetBillDevices(bill.ID));
-                    var billItems = new ObservableCollection<BillItemsDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(bill.ID));
+                    var billDevices = new ObservableCollection<BillDeviceDisplayDataModel>(unitOfWork.BillsDevices.GetBillDevices(bill.ID));
+                    var billItems = new ObservableCollection<BillItemDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(bill.ID));
 
                     Mouse.OverrideCursor = Cursors.Wait;
                     DS ds = new DS();
@@ -745,7 +745,7 @@ namespace Cafe.ViewModels.CashierViewModels
                         ds.Bill[i]["StartDate"] = "Start Time: " + item.BillDevice.StartDate.ToString(" h:mm tt");
                         ds.Bill[i]["EndDate"] = "End Time: " + Convert.ToDateTime(item.EndDate).ToString(" h:mm tt");
                         ds.Bill[i]["TotalTime"] = "Total Time: " + Convert.ToInt32(hoursPlayed).ToString("D2") + ":" + Convert.ToInt32(minuutesPlayed).ToString("D2");
-                        ds.Bill[i]["TotalPlayedMoney"] = bill.MembershipMinutes == null ? string.Format("{0:0.00}", Math.Round(Convert.ToDecimal(item.Total), 0)) : "";
+                        ds.Bill[i]["TotalPlayedMoney"] = bill.CurrentMembershipMinutes == null ? string.Format("{0:0.00}", Math.Round(Convert.ToDecimal(item.Total), 0)) : "";
                         ds.Bill[i]["Discount"] = string.Format("{0:0.00}", bill.Discount);
                         ds.Bill[i]["BillTotal"] = string.Format("{0:0.00}", Math.Round(Convert.ToDecimal(bill.TotalAfterDiscount), 0));
                         i++;
@@ -827,8 +827,8 @@ namespace Cafe.ViewModels.CashierViewModels
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
                     TelephoneSuggestions = unitOfWork.Clients.GetTelephoneSuggetions();
-                    BillDevices = new ObservableCollection<BillDevicesDisplayDataModel>(unitOfWork.BillsDevices.GetBillDevices(Convert.ToInt32(_selectedDevice.Device.BillID)));
-                    BillItems = new ObservableCollection<BillItemsDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(Convert.ToInt32(_selectedDevice.Device.BillID)));
+                    BillDevices = new ObservableCollection<BillDeviceDisplayDataModel>(unitOfWork.BillsDevices.GetBillDevices(Convert.ToInt32(_selectedDevice.Device.BillID)));
+                    BillItems = new ObservableCollection<BillItemDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(Convert.ToInt32(_selectedDevice.Device.BillID)));
                 }
 
                 clientCheckDialog.DataContext = this;
@@ -1173,8 +1173,8 @@ namespace Cafe.ViewModels.CashierViewModels
                 AccountVisibility = Visibility.Collapsed;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    BillDevices = new ObservableCollection<BillDevicesDisplayDataModel>(unitOfWork.BillsDevices.GetBillDevices(Convert.ToInt32(billID)));
-                    BillItems = new ObservableCollection<BillItemsDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(Convert.ToInt32(billID)));
+                    BillDevices = new ObservableCollection<BillDeviceDisplayDataModel>(unitOfWork.BillsDevices.GetBillDevices(Convert.ToInt32(billID)));
+                    BillItems = new ObservableCollection<BillItemDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(Convert.ToInt32(billID)));
                 }
                 AvailableDevicesVisibility = Visibility.Collapsed;
                 AccountVisibility = Visibility.Visible;

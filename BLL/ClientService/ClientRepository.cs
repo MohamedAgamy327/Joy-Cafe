@@ -43,7 +43,7 @@ namespace BLL.ClientService
                    .Select(s => new ClientPointDataModel
                    {
                        Client = s,
-                       Points = s.Bills.Where(w => w.Date >= dtFrom && w.Date <= dtTo).Sum(k => k.Point).HasValue ? s.Bills.Where(w => w.Date >= dtFrom && w.Date <= dtTo).Sum(k => k.Point) : 0
+                       Points = s.Bills.Where(w => w.Date >= dtFrom && w.Date <= dtTo).Sum(k => k.EarnedPoints).HasValue ? s.Bills.Where(w => w.Date >= dtFrom && w.Date <= dtTo).Sum(k => k.EarnedPoints) : 0
                    }).OrderByDescending(o => o.Points)
                      .ToList();
         }

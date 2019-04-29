@@ -8,6 +8,6 @@ namespace BLL.BillDeviceService
     public interface IBillDeviceRepository : IGenericRepository<BillDevice>
     {
         BillDevice GetLast(int billID);
-        List<BillDevicesDisplayDataModel> GetBillDevices(int billID);
+        List<BillDeviceDisplayDataModel> GetBillDevices(int billID);
     }
 }

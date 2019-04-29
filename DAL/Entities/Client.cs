@@ -13,6 +13,13 @@ namespace DAL.Entities
             set { SetProperty(ref _id, value); }
         }
 
+        private int? _points;
+        public int? Points
+        {
+            get { return _points; }
+            set { SetProperty(ref _points, value); }
+        }
+
         private string _code;
         public string Code
         {
