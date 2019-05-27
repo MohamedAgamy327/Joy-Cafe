@@ -33,7 +33,8 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="9*" />
             <RowDefinition Height="1*" />
-            <RowDefinition Height=".5*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="0.8*" />
         </Grid.RowDefinitions>
         <Grid Margin="0,10">
             <Grid.ColumnDefinitions>
@@ -99,14 +100,23 @@
            
             <DataGrid.Columns>
 
-                <DataGridTextColumn IsReadOnly="True"  Header="البيان" Width="3*" HeaderStyle="{StaticResource ColumnHeaderStyle2}"
+                <DataGridTextColumn IsReadOnly="True"  Header="البيان" Width="3*" HeaderStyle="{StaticResource ColumnHeaderStyle4}"
                                     Binding="{Binding Spending.Statement}"  />
-                <DataGridTextColumn IsReadOnly="True"  Header="التاريخ" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle2}"
+                <DataGridTextColumn IsReadOnly="True"
+                                    Header="التاريخ"
+                                    Width="1.5*"
+                                    HeaderStyle="{StaticResource ColumnHeaderStyle4}"
                                     Binding="{Binding Spending.RegistrationDate, StringFormat={}\{0:hh:mm tt yyyy/MM/dd  \}}"  />
 
-                <DataGridTextColumn IsReadOnly="True"  Header="المستخدم" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle2}"
+                <DataGridTextColumn IsReadOnly="True"
+                                    Header="المستخدم"
+                                    Width="1.5*"
+                                    HeaderStyle="{StaticResource ColumnHeaderStyle4}"
                                     Binding="{Binding User.Name}"  />
-                <DataGridTextColumn IsReadOnly="True"  Header="المبلغ" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle2}"
+                <DataGridTextColumn IsReadOnly="True"
+                                    Header="المبلغ"
+                                    Width="1.5*"
+                                    HeaderStyle="{StaticResource ColumnHeaderStyle4}"
                                     Binding="{Binding Spending.Amount}"  />
             </DataGrid.Columns>
         </DataGrid>
@@ -122,8 +132,23 @@
                 <iconPacks:PackIconOcticons Kind="ChevronLeft" Width="20" Height="20"/>
             </Button>
         </StackPanel>
-        
-        <StatusBar VerticalAlignment="Bottom" Grid.Row="3">
+
+        <StackPanel Margin="0,5"
+                    Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom">
+            <Button  Command="{Binding Export}"
+                     Margin="5,0"
+                     Style="{DynamicResource MetroCircleButtonStyle}"
+                     BorderThickness="0">
+                <iconPacks:PackIconSimpleIcons Kind="MicrosoftExcel"
+                                               Width="40"
+                                               Height="40" />
+            </Button>
+        </StackPanel>
+
+        <StatusBar VerticalAlignment="Bottom" Grid.Row="4">
           
             <StatusBarItem Content="خلال الفترة المحددة" Style="{StaticResource StatusBarItemStyle}"/>
             <StatusBarItem Content="عدد البنود" Style="{StaticResource StatusBarItemStyle}"/>

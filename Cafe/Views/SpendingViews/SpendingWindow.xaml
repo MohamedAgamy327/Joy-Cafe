@@ -38,7 +38,7 @@
             <Controls:Tile Background="#808000" Command="{Binding NavigateToView}" CommandParameter="SpendingDisplay" Title="العرض" HorizontalTitleAlignment="Center" VerticalTitleAlignment="Center"   Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource NormalTileStyle}"  >
             </Controls:Tile>
 
-            <Controls:Tile Background="#008000" Command="{Binding NavigateToView}" CommandParameter="SpendingReport" Title="التقارير" HorizontalTitleAlignment="Center" VerticalTitleAlignment="Center"   Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource NormalTileStyle}"  >
+            <Controls:Tile Background="#800080" Command="{Binding NavigateToView}" CommandParameter="SpendingReport" Title="التقارير" HorizontalTitleAlignment="Center" VerticalTitleAlignment="Center"   Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource NormalTileStyle}"  >
             </Controls:Tile>
 
         </StackPanel>

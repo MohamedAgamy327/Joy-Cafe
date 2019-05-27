@@ -66,6 +66,7 @@
     <Compile Include="BillDeviceDataModel\BillDeviceDisplayDataModel.cs" />
     <Compile Include="BillItemDataModel\BillItemAddDataModel.cs" />
     <Compile Include="BillItemDataModel\BillItemDisplayDataModel.cs" />
+    <Compile Include="ItemDataModel\ItemPrintDataModel.cs" />
     <Compile Include="BillItemDataModel\ShiftItemAddDataModel.cs" />
     <Compile Include="BillItemDataModel\ShiftItemDisplayDataModel.cs" />
     <Compile Include="ClientDataModel\ClientAddDataModel.cs" />

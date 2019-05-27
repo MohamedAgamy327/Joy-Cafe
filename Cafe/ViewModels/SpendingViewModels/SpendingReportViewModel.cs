@@ -7,6 +7,9 @@ using DTO.SpendingDataModel;
 using BLL.UnitOfWorkService;
 using DAL;
 using Utilities.Paging;
+using System.Windows.Input;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Linq;
 
 namespace Cafe.ViewModels.SpendingViewModels
 {
@@ -164,6 +167,102 @@ namespace Cafe.ViewModels.SpendingViewModels
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private RelayCommand _export;
+        public RelayCommand Export
+        {
+            get
+            {
+                return _export
+                    ?? (_export = new RelayCommand(ExportMethod, CanExecuteExport));
+            }
+        }
+        private void ExportMethod()
+        {
+            try
+            {
+                if (Spendings.Count == 0)
+                    return;
+
+                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog
+                {
+                    FileName = "المصاريف",
+                    DefaultExt = ".xls",
+                    Filter = "Text documents (.xls)|*.xls"
+                };
+                bool? result = dlg.ShowDialog();
+
+                if (result != true)
+                {
+                    return;
+                }
+
+                Mouse.OverrideCursor = Cursors.Wait;
+                int i = 2;
+                Excel.Application xlApp;
+                Excel.Workbook xlWorkBook;
+                Excel.Worksheet xlWorkSheet;
+                object misValue = System.Reflection.Missing.Value;
+
+                xlApp = new Excel.Application();
+                xlWorkBook = xlApp.Workbooks.Add(misValue);
+                xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+                xlWorkSheet.Cells[1, 1] = "البيان";
+                xlWorkSheet.Cells[1, 2] = "التاريخ";
+                xlWorkSheet.Cells[1, 3] = "المستخدم";
+                xlWorkSheet.Cells[1, 4] = "المبلغ";
+                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                {
+                    var spendings = unitOfWork.Spendings.Find(w => (w.Statement + w.User.Name).Contains(_key) && w.RegistrationDate >= _dateFrom && w.RegistrationDate <= _dateTo).OrderByDescending(o => o.RegistrationDate);
+                    foreach (var item in spendings)
+                    {
+                        xlWorkSheet.Cells[i, 2].NumberFormat = "@";
+                        xlWorkSheet.Cells[i, 1] = item.Statement;
+                        xlWorkSheet.Cells[i, 2] = item.RegistrationDate;
+                        xlWorkSheet.Cells[i, 3] = item.User.Name;
+                        xlWorkSheet.Cells[i, 4] = item.Amount;
+                        i++;
+                    }
+                }
+                xlWorkBook.SaveAs(dlg.FileName, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                xlWorkBook.Close(true, misValue, misValue);
+                xlApp.Quit();
+                ReleaseObject(xlWorkSheet);
+                ReleaseObject(xlWorkBook);
+                ReleaseObject(xlApp);
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private bool CanExecuteExport()
+        {
+            if (Spendings == null || Spendings.Count == 0)
+                return false;
+            else
+                return true;
+        }
+
+        private void ReleaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                obj = null;
+                MessageBox.Show("Exception Occured while releasing object " + ex.ToString());
+            }
+            finally
+            {
+                GC.Collect();
             }
         }
 

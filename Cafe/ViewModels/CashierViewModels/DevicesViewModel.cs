@@ -729,6 +729,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     var billItems = new ObservableCollection<BillItemDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(bill.ID));
 
                     Mouse.OverrideCursor = Cursors.Wait;
+                    int rnd = new Random().Next(1000, 9999);
                     DS ds = new DS();
                     ds.Bill.Rows.Clear();
                     int i = 0;
@@ -738,8 +739,8 @@ namespace Cafe.ViewModels.CashierViewModels
                         var hoursPlayed = item.Duration / 60;
                         var minuutesPlayed = item.Duration % 60;
                         ds.Bill.Rows.Add();
-                        ds.Bill[i]["BillID"] = "#" + bill.ID;
-                        ds.Bill[i]["Date"] = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                        ds.Bill[i]["BillID"] = $"#{rnd}#{bill.ID}#";
+                        ds.Bill[i]["Date"] = DateTime.Now.ToShortDateString();
                         ds.Bill[i]["Time"] = DateTime.Now.ToString(" h:mm tt");
                         ds.Bill[i]["Device"] = item.DeviceType.Name + " ( " + item.Device.Name + " ) : " + item.BillDevice.GameType;
                         ds.Bill[i]["StartDate"] = "Start Time: " + item.BillDevice.StartDate.ToString(" h:mm tt");
@@ -778,7 +779,6 @@ namespace Cafe.ViewModels.CashierViewModels
                         billItemsReport.Subreports[0].SetDataSource(ds.Tables["Items"]);
                         //rpt.crv.ViewerCore.ReportSource = billItemsReport;
                         Mouse.OverrideCursor = null;
-                        billItemsReport.PrintToPrinter(1, false, 0, 15);
                         //rpt.ShowDialog();
                         billItemsReport.PrintToPrinter(1, false, 0, 15);
                     }

@@ -11,6 +11,8 @@ using BLL.UnitOfWorkService;
 using DAL;
 using Utilities.Paging;
 using DTO.ShiftDataModel;
+using System.Windows.Input;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Cafe.ViewModels.ShiftViewModels
 {
@@ -210,6 +212,122 @@ namespace Cafe.ViewModels.ShiftViewModels
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private RelayCommand _export;
+        public RelayCommand Export
+        {
+            get
+            {
+                return _export
+                    ?? (_export = new RelayCommand(ExportMethod, CanExecuteExport));
+            }
+        }
+        private void ExportMethod()
+        {
+            try
+            {
+                if (Shifts.Count == 0)
+                    return;
+
+                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog
+                {
+                    FileName = "الشيفتات",
+                    DefaultExt = ".xls",
+                    Filter = "Text documents (.xls)|*.xls"
+                };
+                bool? result = dlg.ShowDialog();
+
+                if (result != true)
+                {
+                    return;
+                }
+
+                Mouse.OverrideCursor = Cursors.Wait;
+                int i = 2;
+                Excel.Application xlApp;
+                Excel.Workbook xlWorkBook;
+                Excel.Worksheet xlWorkSheet;
+                object misValue = System.Reflection.Missing.Value;
+
+                xlApp = new Excel.Application();
+                xlWorkBook = xlApp.Workbooks.Add(misValue);
+                xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+                xlWorkSheet.Cells[1, 1] = "الكاشير";
+                xlWorkSheet.Cells[1, 2] = "وقت بداية الشيفت";
+                xlWorkSheet.Cells[1, 3] = "وقت نهاية الشيفت";
+                xlWorkSheet.Cells[1, 4] = "بداية الشفت";
+                xlWorkSheet.Cells[1, 5] = "إجمالى الحد الأدنى";
+                xlWorkSheet.Cells[1, 6] = "إجمالى الأجهزه";
+                xlWorkSheet.Cells[1, 7] = "إجمالى الطلبات";
+                xlWorkSheet.Cells[1, 8] = "إجمالى الخصومات";
+                xlWorkSheet.Cells[1, 9] = "الدخل";
+                xlWorkSheet.Cells[1, 10] = "المصاريف";
+                xlWorkSheet.Cells[1, 11] = "الإجمالى";
+                xlWorkSheet.Cells[1, 12] = "الدرج";
+                xlWorkSheet.Cells[1, 13] = "الحالة";
+
+                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                {
+                    var shifts = unitOfWork.Shifts.Find(w => (w.User.Name).Contains(_key) && w.StartDate >= _dateFrom && w.StartDate <= _dateTo).OrderByDescending(o => o.StartDate);
+                    foreach (var item in shifts)
+                    {
+                        xlWorkSheet.Cells[i, 2].NumberFormat = "@";
+                        xlWorkSheet.Cells[i, 3].NumberFormat = "@";
+                        xlWorkSheet.Cells[i, 1] = item.User.Name;
+                        xlWorkSheet.Cells[i, 2] = item.StartDate;
+                        xlWorkSheet.Cells[i, 3] = item.EndDate;
+                        xlWorkSheet.Cells[i, 4] = item.SafeStart;
+                        xlWorkSheet.Cells[i, 5] = item.TotalMinimum;
+                        xlWorkSheet.Cells[i, 6] = item.TotalDevices;
+                        xlWorkSheet.Cells[i, 7] = item.TotalItems;
+                        xlWorkSheet.Cells[i, 8] = item.TotalDiscount;
+                        xlWorkSheet.Cells[i, 9] = item.Income;
+                        xlWorkSheet.Cells[i, 10] = item.Spending;
+                        xlWorkSheet.Cells[i, 11] = item.Total;
+                        xlWorkSheet.Cells[i, 12] = item.SafeEnd;
+                        xlWorkSheet.Cells[i, 13] = item.Total > item.SafeEnd ? $"يوجد عجز مالى قدره {item.Total - item.SafeEnd} جنيه" :
+                           item.Total > item.SafeEnd ? $"يوجد فائض مالى قدره {item.SafeEnd - item.Total} جنيه" : "";
+                        i++;
+                    }
+                }
+                xlWorkBook.SaveAs(dlg.FileName, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                xlWorkBook.Close(true, misValue, misValue);
+                xlApp.Quit();
+                ReleaseObject(xlWorkSheet);
+                ReleaseObject(xlWorkBook);
+                ReleaseObject(xlApp);
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private bool CanExecuteExport()
+        {
+            if (Shifts == null || Shifts.Count == 0)
+                return false;
+            else
+                return true;
+        }
+        private void ReleaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                obj = null;
+                MessageBox.Show("Exception Occured while releasing object " + ex.ToString());
+            }
+            finally
+            {
+                GC.Collect();
             }
         }
 

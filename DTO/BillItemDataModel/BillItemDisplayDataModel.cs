@@ -18,5 +18,6 @@ namespace DTO.BillItemDataModel
             get { return _item; }
             set { SetProperty(ref _item, value); }
         }
+
     }
 }

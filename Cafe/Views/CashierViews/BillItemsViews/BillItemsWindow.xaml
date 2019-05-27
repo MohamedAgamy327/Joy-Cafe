@@ -31,7 +31,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.7*" />
-            <ColumnDefinition Width="8.3*"/>
+            <ColumnDefinition Width="8.3*" />
         </Grid.ColumnDefinitions>
 
         <StackPanel Margin="10">
@@ -48,6 +48,7 @@
         <Grid Grid.Column="1" Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="9*" />
+                <RowDefinition Height="1*" />
                 <RowDefinition Height="0.5*" />
             </Grid.RowDefinitions>
 
@@ -107,8 +108,23 @@
                 </DataGrid.Style>
             </DataGrid>
 
+            <StackPanel Margin="0,5"
+                        Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom">
+                <Button  Command="{Binding Print}"
+                         Margin="5,0"
+                         Style="{DynamicResource MetroCircleButtonStyle}"
+                         BorderThickness="0">
+                    <iconPacks:PackIconModern Kind="Printer"
+                                                   Width="50"
+                                                   Height="50" />
+                </Button>
+            </StackPanel>
+
         </Grid>
-        <StatusBar VerticalAlignment="Bottom" Grid.Row="1" Grid.ColumnSpan="2">
+        <StatusBar VerticalAlignment="Bottom" Grid.Row="2" Grid.ColumnSpan="2">
           
             <StatusBarItem Content="إجمالى الطلبات" Style="{StaticResource StatusBarItemStyle}" />
             <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>

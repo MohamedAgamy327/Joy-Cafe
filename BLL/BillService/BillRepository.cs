@@ -31,13 +31,13 @@ namespace BLL.BillService
             switch (billCase)
             {
                 case BillCaseText.All:
-                    return GeneralDBContext.Bills.Where(w => w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).Count();
+                    return GeneralDBContext.Bills.Where(w => w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).Count();
                 case BillCaseText.Available:
-                    return GeneralDBContext.Bills.Where(w => w.Deleted == false && w.Canceled == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).Count();
+                    return GeneralDBContext.Bills.Where(w => w.Deleted == false && w.Canceled == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).Count();
                 case BillCaseText.Canceled:
-                    return GeneralDBContext.Bills.Where(w => w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).Count();
+                    return GeneralDBContext.Bills.Where(w => w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).Count();
                 case BillCaseText.Deleted:
-                    return GeneralDBContext.Bills.Where(w => w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).Count();
+                    return GeneralDBContext.Bills.Where(w => w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).Count();
                 default:
                     return 0;
             }
@@ -57,7 +57,7 @@ namespace BLL.BillService
             switch (billCase)
             {
                 case BillCaseText.All:
-                    return GeneralDBContext.Bills.Where(w => w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).OrderBy(o => o.ID).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new BillDisplayDataModel
+                    return GeneralDBContext.Bills.Where(w => w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).OrderBy(o => o.ID).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new BillDisplayDataModel
                     {
                         Bill = s,
                         User = s.User,
@@ -65,7 +65,7 @@ namespace BLL.BillService
                         Case = s.Canceled == true ? BillCaseText.Canceled : s.Deleted == true ? BillCaseText.Deleted : BillCaseText.Available
                     }).ToList();
                 case BillCaseText.Available:
-                    return GeneralDBContext.Bills.Where(w => w.Deleted == false && w.Canceled == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).OrderBy(o => o.ID).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new BillDisplayDataModel
+                    return GeneralDBContext.Bills.Where(w => w.Deleted == false && w.Canceled == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).OrderBy(o => o.ID).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new BillDisplayDataModel
                     {
                         Bill = s,
                         User = s.User,
@@ -73,7 +73,7 @@ namespace BLL.BillService
                         Case = s.Canceled == true ? BillCaseText.Canceled : s.Deleted == true ? BillCaseText.Deleted : BillCaseText.Available
                     }).ToList();
                 case BillCaseText.Canceled:
-                    return GeneralDBContext.Bills.Where(w => w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).OrderBy(o => o.ID).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new BillDisplayDataModel
+                    return GeneralDBContext.Bills.Where(w => w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).OrderBy(o => o.ID).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new BillDisplayDataModel
                     {
                         Bill = s,
                         User = s.User,
@@ -81,7 +81,7 @@ namespace BLL.BillService
                         Case = s.Canceled == true ? BillCaseText.Canceled : s.Deleted == true ? BillCaseText.Deleted : BillCaseText.Available
                     }).ToList();
                 case BillCaseText.Deleted:
-                    return GeneralDBContext.Bills.Where(w => w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).OrderBy(o => o.ID).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new BillDisplayDataModel
+                    return GeneralDBContext.Bills.Where(w => w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).OrderBy(o => o.ID).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new BillDisplayDataModel
                     {
                         Bill = s,
                         User = s.User,

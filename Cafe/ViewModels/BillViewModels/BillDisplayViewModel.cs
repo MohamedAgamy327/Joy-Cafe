@@ -9,11 +9,19 @@ using DAL;
 using DAL.ConstString;
 using System.Windows;
 using System.Linq;
+using DAL.Entities;
+using Excel = Microsoft.Office.Interop.Excel;
+using Cafe.Views.BillViews;
+using MahApps.Metro.Controls;
+using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace Cafe.ViewModels.BillViewModels
 {
     public class BillDisplayViewModel : ValidatableBindableBase
     {
+        MetroWindow currentWindow;
+
         private void Load()
         {
             using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
@@ -73,6 +81,7 @@ namespace Cafe.ViewModels.BillViewModels
            new BillCaseDataModel { Value=  "الملغى",Key= BillCaseText.Canceled },
            new BillCaseDataModel{  Value="المحذوف",Key= BillCaseText.Deleted } };
             _selectedBillCase = _billCases.SingleOrDefault(w => w.Key == BillCaseText.All);
+            currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
         private string _key;
@@ -129,6 +138,13 @@ namespace Cafe.ViewModels.BillViewModels
         {
             get { return _selectedBillCase; }
             set { SetProperty(ref _selectedBillCase, value); }
+        }
+
+        private BillDisplayDataModel _selectedBill;
+        public BillDisplayDataModel SelectedBill
+        {
+            get { return _selectedBill; }
+            set { SetProperty(ref _selectedBill, value); }
         }
 
         private ObservableCollection<BillCaseDataModel> _billCases;
@@ -238,5 +254,173 @@ namespace Cafe.ViewModels.BillViewModels
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        private RelayCommand _show;
+        public RelayCommand Show
+        {
+            get
+            {
+                return _show
+                    ?? (_show = new RelayCommand(ShowMethod));
+            }
+        }
+        private void ShowMethod()
+        {
+            try
+            {
+                BillShowViewModel.BillID = _selectedBill.Bill.ID;
+                currentWindow.Hide();
+                new BillShowWindow().ShowDialog();
+                currentWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private RelayCommand _export;
+        public RelayCommand Export
+        {
+            get
+            {
+                return _export
+                    ?? (_export = new RelayCommand(ExportMethod, CanExecuteExport));
+            }
+        }
+        private void ExportMethod()
+        {
+            try
+            {
+                if (Bills.Count == 0)
+                    return;
+
+                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog
+                {
+                    FileName = "الفواتير",
+                    DefaultExt = ".xls",
+                    Filter = "Text documents (.xls)|*.xls"
+                };
+                bool? result = dlg.ShowDialog();
+
+                if (result != true)
+                {
+                    return;
+                }
+
+                Mouse.OverrideCursor = Cursors.Wait;
+                int i = 2;
+                Excel.Application xlApp;
+                Excel.Workbook xlWorkBook;
+                Excel.Worksheet xlWorkSheet;
+                object misValue = System.Reflection.Missing.Value;
+
+                xlApp = new Excel.Application();
+                xlWorkBook = xlApp.Workbooks.Add(misValue);
+                xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+                xlWorkSheet.Cells[1, 1] = "الكاشير";
+                xlWorkSheet.Cells[1, 2] = "كود الفاتورة";
+                xlWorkSheet.Cells[1, 3] = "تاريخ الفاتورة";
+                xlWorkSheet.Cells[1, 4] = "العميل";
+                xlWorkSheet.Cells[1, 5] = "إجمالى الأجهزه";
+                xlWorkSheet.Cells[1, 6] = "إجمالى الطلبات";
+                xlWorkSheet.Cells[1, 7] = "الإجمالى";
+                xlWorkSheet.Cells[1, 8] = "خصم نسبة";
+                xlWorkSheet.Cells[1, 9] = "خصم مبلغ";
+                xlWorkSheet.Cells[1, 10] = "الإجمالى بعد الخصم";
+                xlWorkSheet.Cells[1, 11] = "الحد الأدنى";
+                xlWorkSheet.Cells[1, 12] = "ملغى";
+                xlWorkSheet.Cells[1, 13] = "سبب الإلغاء";
+                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                {
+                    List<Bill> bills = null;
+                    switch (_selectedBillCase.Key)
+                    {
+                        case BillCaseText.All:
+                            bills = unitOfWork.Bills.Find(w => w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
+                            break;
+
+                        case BillCaseText.Available:
+                            bills = unitOfWork.Bills.Find(w => w.Deleted == false && w.Canceled == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
+                            break;
+
+                        case BillCaseText.Canceled:
+                            bills = unitOfWork.Bills.Find(w => w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
+                            break;
+
+                        case BillCaseText.Deleted:
+                            bills = unitOfWork.Bills.Find(w => w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    foreach (var item in bills)
+                    {
+                        xlWorkSheet.Cells[i, 3].NumberFormat = "@";
+                        xlWorkSheet.Cells[i, 1] = item.User.Name;
+                        xlWorkSheet.Cells[i, 2] = item.ID;
+                        xlWorkSheet.Cells[i, 3] = item.Date;
+                        xlWorkSheet.Cells[i, 4] = !item.Canceled ? item.Client.Name : "";
+                        xlWorkSheet.Cells[i, 5] = item.DevicesSum;
+                        xlWorkSheet.Cells[i, 6] = item.ItemsSum;
+                        xlWorkSheet.Cells[i, 7] = item.Total;
+                        xlWorkSheet.Cells[i, 8] = item.Ratio;
+                        xlWorkSheet.Cells[i, 9] = item.Discount;
+                        xlWorkSheet.Cells[i, 10] = item.TotalAfterDiscount;
+                        xlWorkSheet.Cells[i, 11] = item.Minimum;
+                        xlWorkSheet.Cells[i, 12] = item.Canceled ? "نعم" : "لا";
+                        xlWorkSheet.Cells[i, 13] = item.CancelReason;
+                        i++;
+                    }
+                    xlWorkSheet.Cells[i + 1, 5] = "إجمالى الأجهزة";
+                    xlWorkSheet.Cells[i + 2, 5] = bills.Where(w => w.DevicesSum != null).Sum(s => Convert.ToDecimal(s.DevicesSum));
+                    xlWorkSheet.Cells[i + 1, 6] = "إجمالى طلبات الاجهزة";
+                    xlWorkSheet.Cells[i + 2, 6] = bills.Where(w => w.ItemsSum != null).Sum(s => Convert.ToDecimal(s.ItemsSum));
+                    xlWorkSheet.Cells[i + 1, 9] = "إجمالى الخصومات";
+                    xlWorkSheet.Cells[i + 2, 9] = bills.Where(w => w.Discount != null).Sum(s => Convert.ToDecimal(s.Discount));
+                    xlWorkSheet.Cells[i + 1, 10] = "إجمالى الفواتير بعد الخصومات";
+                    xlWorkSheet.Cells[i + 2, 10] = bills.Where(w => w.TotalAfterDiscount != null).Sum(s => Convert.ToDecimal(s.TotalAfterDiscount));
+                }
+                xlWorkBook.SaveAs(dlg.FileName, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                xlWorkBook.Close(true, misValue, misValue);
+                xlApp.Quit();
+                ReleaseObject(xlWorkSheet);
+                ReleaseObject(xlWorkBook);
+                ReleaseObject(xlApp);
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private bool CanExecuteExport()
+        {
+            if (Bills == null || Bills.Count == 0)
+                return false;
+            else
+                return true;
+        }
+        private void ReleaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                obj = null;
+                MessageBox.Show("Exception Occured while releasing object " + ex.ToString());
+            }
+            finally
+            {
+                GC.Collect();
+            }
+        }
+
     }
 }

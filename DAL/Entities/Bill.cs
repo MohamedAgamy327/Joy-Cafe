@@ -97,6 +97,7 @@ namespace DAL.Entities
             get { return _earnedPoints; }
             set { SetProperty(ref _earnedPoints, value); }
         }
+       
         // end points 
 
         private string _type;

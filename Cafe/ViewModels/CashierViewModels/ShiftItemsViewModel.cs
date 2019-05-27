@@ -12,6 +12,11 @@ using DTO.BillItemDataModel;
 using BLL.UnitOfWorkService;
 using DAL;
 using DAL.ConstString;
+using System.Windows.Input;
+using Cafe.Reports;
+using DTO.UserDataModel;
+using System.Collections.Generic;
+using DTO.ItemDataModel;
 
 namespace Cafe.ViewModels.CashierViewModels
 {
@@ -70,6 +75,13 @@ namespace Cafe.ViewModels.CashierViewModels
             set { SetProperty(ref _selectedItem, value); }
         }
 
+        private List<ItemPrintDataModel> _newItems;
+        public List<ItemPrintDataModel> NewItems
+        {
+            get { return _newItems; }
+            set { SetProperty(ref _newItems, value); }
+        }
+
         private ShiftItemAddDataModel _newShiftItem;
         public ShiftItemAddDataModel NewShiftItem
         {
@@ -119,7 +131,7 @@ namespace Cafe.ViewModels.CashierViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    Items = new ObservableCollection<Item>(unitOfWork.Items.Find(f => f.IsAvailable == true));
+                    Items = new ObservableCollection<Item>(unitOfWork.Items.Find(f => f.IsAvailable == true).OrderByDescending(o => o.BillsItems.Count).ThenBy(o => o.Name));
                 }
                 Load();
             }
@@ -249,6 +261,7 @@ namespace Cafe.ViewModels.CashierViewModels
             try
             {
                 NewShiftItem = new ShiftItemAddDataModel();
+                _newItems = new List<ItemPrintDataModel>();
                 _shiftItemAddDialog.DataContext = this;
                 await currentWindow.ShowMetroDialogAsync(_shiftItemAddDialog);
             }
@@ -299,6 +312,7 @@ namespace Cafe.ViewModels.CashierViewModels
 
                     unitOfWork.Complete();
                 }
+                _newItems.Add(new ItemPrintDataModel { Qty = _newShiftItem.Qty, Name = _selectedItem.Name });
                 Load();
                 NewShiftItem = new ShiftItemAddDataModel();
             }
@@ -320,6 +334,58 @@ namespace Cafe.ViewModels.CashierViewModels
             { return false; }
         }
 
+        private RelayCommand _print;
+        public RelayCommand Print
+        {
+            get
+            {
+                return _print
+                    ?? (_print = new RelayCommand(PrintMethod));
+            }
+        }
+        private void PrintMethod()
+        {
+            try
+            {
+                // Account Print
+                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                {
+                    Mouse.OverrideCursor = Cursors.Wait;
+                    DS ds = new DS();
+                    ds.BillItems.Rows.Clear();
+                    int i = 0;
+
+                    foreach (var item in _shiftItems)
+                    {
+                        ds.BillItems.Rows.Add();
+                        ds.BillItems[i]["Cashier"] = UserData.Name;
+                        ds.BillItems[i]["Time"] = DateTime.Now.ToString(" h:mm tt");
+                        ds.BillItems[i]["Device"] = "طلبات خارجية";
+                        ds.BillItems[i]["Qty"] = item.BillItem.Qty;
+                        ds.BillItems[i]["Item"] = item.Item.Name;
+                        i++;
+                    }
+
+                    //ReportWindow rpt = new ReportWindow();
+                    ItemsOnlyReport itemsOnlyReport = new ItemsOnlyReport();
+                    itemsOnlyReport.SetDataSource(ds.Tables["BillItems"]);
+                    //rpt.crv.ViewerCore.ReportSource = itemsOnlyReport;
+                    Mouse.OverrideCursor = null;
+                    //rpt.ShowDialog();
+                    itemsOnlyReport.PrintToPrinter(1, false, 0, 15);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
+            }
+        }
+
         private RelayCommand<string> _closeDialog;
         public RelayCommand<string> CloseDialog
         {
@@ -337,6 +403,7 @@ namespace Cafe.ViewModels.CashierViewModels
                 {
                     case "Add":
                         await currentWindow.HideMetroDialogAsync(_shiftItemAddDialog);
+                        PrintNewItems();
                         break;
                     default:
                         break;
@@ -347,5 +414,50 @@ namespace Cafe.ViewModels.CashierViewModels
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        private void PrintNewItems()
+        {
+            try
+            {
+                if (_newItems.Count == 0)
+                    return;
+                // Account Print
+                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                {
+                    Mouse.OverrideCursor = Cursors.Wait;
+                    DS ds = new DS();
+                    ds.BillItems.Rows.Clear();
+                    int i = 0;
+
+                    foreach (var item in _newItems)
+                    {
+                        ds.BillItems.Rows.Add();
+                        ds.BillItems[i]["Cashier"] = UserData.Name;
+                        ds.BillItems[i]["Time"] = DateTime.Now.ToString(" h:mm tt");
+                        ds.BillItems[i]["Device"] = "طلبات خارجية";
+                        ds.BillItems[i]["Qty"] = item.Qty;
+                        ds.BillItems[i]["Item"] = item.Name;
+                        i++;
+                    }
+
+                    //ReportWindow rpt = new ReportWindow();
+                    ItemsOnlyReport itemsOnlyReport = new ItemsOnlyReport();
+                    itemsOnlyReport.SetDataSource(ds.Tables["BillItems"]);
+                    //rpt.crv.ViewerCore.ReportSource = itemsOnlyReport;
+                    Mouse.OverrideCursor = null;
+                    //rpt.ShowDialog();
+                    itemsOnlyReport.PrintToPrinter(1, false, 0, 15);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
+            }
+        }
+
     }
 }

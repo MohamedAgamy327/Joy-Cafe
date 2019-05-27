@@ -1,0 +1,98 @@
+﻿<Controls:MetroWindow x:Class="Cafe.Views.ReportViews.ReportWindow"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:clientViews="clr-namespace:Cafe.Views.ClientViews"
+                      xmlns:billViews="clr-namespace:Cafe.Views.BillViews"
+                      xmlns:shiftViews="clr-namespace:Cafe.Views.ShiftViews"
+                      xmlns:spendingViews="clr-namespace:Cafe.Views.SpendingViews"
+                      xmlns:clientViewModels="clr-namespace:Cafe.ViewModels.ClientViewModels"
+                      xmlns:billViewModels="clr-namespace:Cafe.ViewModels.BillViewModels"
+                      xmlns:shiftViewModels="clr-namespace:Cafe.ViewModels.ShiftViewModels"
+                      xmlns:spendingViewModels="clr-namespace:Cafe.ViewModels.SpendingViewModels"
+                      Title="التقارير"
+                      Height="1000"
+                      Width="1024"
+                      ShowTitleBar="True"
+                      WindowState="Maximized"
+                      FlowDirection="RightToLeft"
+                      DataContext="{Binding Report, Source={StaticResource Locator}}">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type clientViewModels:ClientDisplayViewModel}">
+                <clientViews:ClientDisplayUserControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type billViewModels:BillDisplayViewModel}">
+                <billViews:BillDisplayUserControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type shiftViewModels:ShiftDisplayViewModel}">
+                <shiftViews:ShiftDisplayUserControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type spendingViewModels:SpendingReportViewModel}">
+                <spendingViews:SpendingReportUserControl />
+            </DataTemplate>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Skins\MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.8*" />
+            <RowDefinition Height="8.2*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal"
+                    Margin="5">
+
+            <Controls:Tile Background="#808000"
+                           Command="{Binding NavigateToView}"
+                           CommandParameter="Clients"
+                           Title="العملاء"
+                           HorizontalTitleAlignment="Center"
+                           VerticalTitleAlignment="Center"
+                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
+                           Style="{StaticResource NormalTileStyle}">
+            </Controls:Tile>
+
+            <Controls:Tile Background="#000080"
+                           Command="{Binding NavigateToView}"
+                           CommandParameter="Bills"
+                           Title="الفواتير"
+                           HorizontalTitleAlignment="Center"
+                           VerticalTitleAlignment="Center"
+                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
+                           Style="{StaticResource NormalTileStyle}">
+            </Controls:Tile>
+
+            <Controls:Tile Background="#008000"
+                           Command="{Binding NavigateToView}"
+                           CommandParameter="Shifts"
+                           Title="الشيفتات"
+                           HorizontalTitleAlignment="Center"
+                           VerticalTitleAlignment="Center"
+                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
+                           Style="{StaticResource NormalTileStyle}">
+            </Controls:Tile>
+
+            <Controls:Tile Background="#800080"
+                           Command="{Binding NavigateToView}"
+                           CommandParameter="Spendings"
+                           Title="المصاريف"
+                           HorizontalTitleAlignment="Center"
+                           VerticalTitleAlignment="Center"
+                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
+                           Style="{StaticResource NormalTileStyle}">
+            </Controls:Tile>
+
+        </StackPanel>
+
+        <Separator Grid.Row="1"
+                   VerticalAlignment="Top" />
+        <ContentControl Content="{Binding CurrentViewModel}"
+                        Grid.Row="1" />
+    </Grid>
+
+</Controls:MetroWindow>

@@ -33,6 +33,7 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="9*" />
             <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
             <RowDefinition Height=".8*" />
         </Grid.RowDefinitions>
         <Grid Margin="0,10">
@@ -94,15 +95,23 @@
                   AutoGenerateColumns="False"
                                >
             <DataGrid.Columns>
-                <DataGridTextColumn IsReadOnly="True"  Header="المستخدم" Width="3*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
+                <DataGridTextColumn IsReadOnly="True"  Header="الكاشير" Width="3*" HeaderStyle="{StaticResource ColumnHeaderStyle2}"
                                     Binding="{Binding User.Name}"  />
-                <DataGridTextColumn IsReadOnly="True"  Header="بداية الشفت" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
+                <DataGridTextColumn IsReadOnly="True"
+                                    Header="بداية الشفت"
+                                    Width="1.5*"
+                                    HeaderStyle="{StaticResource ColumnHeaderStyle2}"
                                     Binding="{Binding Shift.StartDate, StringFormat={}\{0:hh:mm tt yyyy/MM/dd  \}}"  />
 
-                <DataGridTextColumn IsReadOnly="True"  Header="نهاية الشفت" Width="1.5*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"
+                <DataGridTextColumn IsReadOnly="True"
+                                    Header="نهاية الشفت"
+                                    Width="1.5*"
+                                    HeaderStyle="{StaticResource ColumnHeaderStyle2}"
                                     Binding="{Binding Shift.EndDate, StringFormat={}\{0:hh:mm tt yyyy/MM/dd  \}}"  />
 
-                <DataGridTemplateColumn  Header="عرض" Width="0.75*" HeaderStyle="{StaticResource ColumnHeaderStyle1}" >
+                <DataGridTemplateColumn  Header="عرض"
+                                         Width="0.75*"
+                                         HeaderStyle="{StaticResource ColumnHeaderStyle2}" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button  Command="{Binding DataContext.Show, 
@@ -126,7 +135,23 @@
                 <iconPacks:PackIconOcticons Kind="ChevronLeft" Width="20" Height="20"/>
             </Button>
         </StackPanel>
-        <StatusBar VerticalAlignment="Bottom" Grid.Row="3">
+
+        <StackPanel Margin="0,5"
+                    Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom">
+            <Button  Command="{Binding Export}"
+                     Margin="5,0"
+                     Style="{DynamicResource MetroCircleButtonStyle}"
+                     BorderThickness="0">
+                <iconPacks:PackIconSimpleIcons Kind="MicrosoftExcel"
+                                               Width="40"
+                                               Height="40" />
+            </Button>
+        </StackPanel>
+
+        <StatusBar VerticalAlignment="Bottom" Grid.Row="4">
             <StatusBarItem  Content="عدد الشفتات" Style="{StaticResource StatusBarItemStyle}"/>
             <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
             <StatusBarItem   Content="{Binding Paging.TotalRecords}" Style="{StaticResource StatusBarItemStyle}"/>

@@ -1,15 +1,16 @@
-﻿using GalaSoft.MvvmLight.Ioc;
-using Cafe.ViewModels.SafeViewModels;
-using Cafe.ViewModels.ItemViewModels;
-using Cafe.ViewModels.SpendingViewModels;
-using Cafe.ViewModels.UserViewModels;
+﻿using Cafe.ViewModels.BillViewModels;
+using Cafe.ViewModels.CashierViewModels;
 using Cafe.ViewModels.ClientViewModels;
 using Cafe.ViewModels.DeviceViewModels;
-using Cafe.ViewModels.CashierViewModels;
-using Cafe.ViewModels.ShiftViewModels;
+using Cafe.ViewModels.ItemViewModels;
 using Cafe.ViewModels.MembershipViewModels;
-using Cafe.ViewModels.BillViewModels;
+using Cafe.ViewModels.ReportViewModels;
+using Cafe.ViewModels.SafeViewModels;
+using Cafe.ViewModels.ShiftViewModels;
+using Cafe.ViewModels.SpendingViewModels;
+using Cafe.ViewModels.UserViewModels;
 using CommonServiceLocator;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace Cafe.ViewModels
 {
@@ -45,12 +46,14 @@ namespace Cafe.ViewModels
             SimpleIoc.Default.Register<CashierViewModel>();
             SimpleIoc.Default.Register<DevicesViewModel>();
             SimpleIoc.Default.Register<ShiftItemsViewModel>();
-            SimpleIoc.Default.Register<ShiftSpendingViewModel>();         
+            SimpleIoc.Default.Register<ShiftSpendingViewModel>();
             SimpleIoc.Default.Register<BillItemsViewModel>();
             SimpleIoc.Default.Register<AccountPaidViewModel>();
             SimpleIoc.Default.Register<BillViewModel>();
             SimpleIoc.Default.Register<BillDisplayViewModel>();
             SimpleIoc.Default.Register<BillDayViewModel>();
+            SimpleIoc.Default.Register<BillShowViewModel>();
+            SimpleIoc.Default.Register<ReportViewModel>();
         }
 
         public MainViewModel Main
@@ -309,167 +312,200 @@ namespace Cafe.ViewModels
             }
         }
 
+        public BillShowViewModel BillShow
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<BillShowViewModel>();
+            }
+        }
+
+        public ReportViewModel Report
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ReportViewModel>();
+            }
+        }
+
         public static void Cleanup(string viewModel)
         {
-            if (viewModel == "Main")
+            switch (viewModel)
             {
-                SimpleIoc.Default.Unregister<MainViewModel>();
+                case "Main":
+                    SimpleIoc.Default.Unregister<MainViewModel>();
+                    break;
+
+                case "User":
+                    SimpleIoc.Default.Unregister<UserViewModel>();
+                    SimpleIoc.Default.Register<UserViewModel>();
+                    break;
+
+                case "UserDisplay":
+                    SimpleIoc.Default.Unregister<UserDisplayViewModel>();
+                    SimpleIoc.Default.Register<UserDisplayViewModel>();
+                    break;
+
+                case "Shift":
+                    SimpleIoc.Default.Unregister<ShiftViewModel>();
+                    SimpleIoc.Default.Register<ShiftViewModel>();
+                    break;
+
+                case "ShiftDisplay":
+                    SimpleIoc.Default.Unregister<ShiftDisplayViewModel>();
+                    SimpleIoc.Default.Register<ShiftDisplayViewModel>();
+                    break;
+
+                case "Device":
+                    SimpleIoc.Default.Unregister<DeviceViewModel>();
+                    SimpleIoc.Default.Register<DeviceViewModel>();
+                    break;
+
+                case "DeviceTypeDisplay":
+                    SimpleIoc.Default.Unregister<DeviceTypeDisplayViewModel>();
+                    SimpleIoc.Default.Register<DeviceTypeDisplayViewModel>();
+                    break;
+
+                case "DeviceDisplay":
+                    SimpleIoc.Default.Unregister<DeviceDisplayViewModel>();
+                    SimpleIoc.Default.Register<DeviceDisplayViewModel>();
+                    break;
+
+                case "Item":
+                    SimpleIoc.Default.Unregister<ItemViewModel>();
+                    SimpleIoc.Default.Register<ItemViewModel>();
+                    break;
+
+                case "ItemDisplay":
+                    SimpleIoc.Default.Unregister<ItemDisplayViewModel>();
+                    SimpleIoc.Default.Register<ItemDisplayViewModel>();
+                    break;
+
+                case "Client":
+                    SimpleIoc.Default.Unregister<ClientViewModel>();
+                    SimpleIoc.Default.Register<ClientViewModel>();
+                    break;
+
+                case "ClientDisplay":
+                    SimpleIoc.Default.Unregister<ClientDisplayViewModel>();
+                    SimpleIoc.Default.Register<ClientDisplayViewModel>();
+                    break;
+
+                case "ClientPoint":
+                    SimpleIoc.Default.Unregister<ClientPointViewModel>();
+                    SimpleIoc.Default.Register<ClientPointViewModel>();
+                    break;
+
+                case "Membership":
+                    SimpleIoc.Default.Unregister<MembershipViewModel>();
+                    SimpleIoc.Default.Register<MembershipViewModel>();
+                    break;
+
+                case "MembershipDisplay":
+                    SimpleIoc.Default.Unregister<MembershipDisplayViewModel>();
+                    SimpleIoc.Default.Register<MembershipDisplayViewModel>();
+                    break;
+
+                case "ClientMembership":
+                    SimpleIoc.Default.Unregister<ClientMembershipViewModel>();
+                    SimpleIoc.Default.Register<ClientMembershipViewModel>();
+                    break;
+
+                case "ClientMembershipMinute":
+                    SimpleIoc.Default.Unregister<ClientMembershipMinuteViewModel>();
+                    SimpleIoc.Default.Register<ClientMembershipMinuteViewModel>();
+                    break;
+
+                case "Spending":
+                    SimpleIoc.Default.Unregister<SpendingViewModel>();
+                    SimpleIoc.Default.Register<SpendingViewModel>();
+                    break;
+
+                case "SpendingDisplay":
+                    SimpleIoc.Default.Unregister<SpendingDisplayViewModel>();
+                    SimpleIoc.Default.Register<SpendingDisplayViewModel>();
+                    break;
+
+                case "SpendingReport":
+                    SimpleIoc.Default.Unregister<SpendingReportViewModel>();
+                    SimpleIoc.Default.Register<SpendingReportViewModel>();
+                    break;
+
+                case "Safe":
+                    SimpleIoc.Default.Unregister<SafeViewModel>();
+                    SimpleIoc.Default.Register<SafeViewModel>();
+                    break;
+
+                case "SafeDisplay":
+                    SimpleIoc.Default.Unregister<SafeDisplayViewModel>();
+                    SimpleIoc.Default.Register<SafeDisplayViewModel>();
+                    break;
+
+                case "SafeReport":
+                    SimpleIoc.Default.Unregister<SafeReportViewModel>();
+                    SimpleIoc.Default.Register<SafeReportViewModel>();
+                    break;
+
+                case "Cashier":
+                    SimpleIoc.Default.Unregister<CashierViewModel>();
+                    SimpleIoc.Default.Register<CashierViewModel>();
+                    break;
+
+                case "Devices":
+                    SimpleIoc.Default.Unregister<DevicesViewModel>();
+                    SimpleIoc.Default.Register<DevicesViewModel>();
+                    break;
+
+                case "BillItems":
+                    SimpleIoc.Default.Unregister<BillItemsViewModel>();
+                    SimpleIoc.Default.Register<BillItemsViewModel>();
+                    break;
+
+                case "ShiftSpending":
+                    SimpleIoc.Default.Unregister<ShiftSpendingViewModel>();
+                    SimpleIoc.Default.Register<ShiftSpendingViewModel>();
+                    break;
+
+                case "ShiftItems":
+                    SimpleIoc.Default.Unregister<ShiftItemsViewModel>();
+                    SimpleIoc.Default.Register<ShiftItemsViewModel>();
+                    break;
+
+                case "AccountPaid":
+                    SimpleIoc.Default.Unregister<AccountPaidViewModel>();
+                    SimpleIoc.Default.Register<AccountPaidViewModel>();
+                    break;
+
+                case "Bill":
+                    SimpleIoc.Default.Unregister<BillViewModel>();
+                    SimpleIoc.Default.Register<BillViewModel>();
+                    break;
+
+                case "BillDisplay":
+                    SimpleIoc.Default.Unregister<BillDisplayViewModel>();
+                    SimpleIoc.Default.Register<BillDisplayViewModel>();
+                    break;
+
+                case "BillDay":
+                    SimpleIoc.Default.Unregister<BillDayViewModel>();
+                    SimpleIoc.Default.Register<BillDayViewModel>();
+                    break;
+
+                case "BillShow":
+                    SimpleIoc.Default.Unregister<BillShowViewModel>();
+                    SimpleIoc.Default.Register<BillShowViewModel>();
+                    break;
+
+                case "Report":
+                    SimpleIoc.Default.Unregister<ReportViewModel>();
+                    SimpleIoc.Default.Register<ReportViewModel>();
+                    break;
+
+                default:
+                    break;
             }
-            else if (viewModel == "User")
-            {
-                SimpleIoc.Default.Unregister<UserViewModel>();
-                SimpleIoc.Default.Register<UserViewModel>();
-            }
-            else if (viewModel == "UserDisplay")
-            {
-                SimpleIoc.Default.Unregister<UserDisplayViewModel>();
-                SimpleIoc.Default.Register<UserDisplayViewModel>();
-            }
-            else if (viewModel == "Shift")
-            {
-                SimpleIoc.Default.Unregister<ShiftViewModel>();
-                SimpleIoc.Default.Register<ShiftViewModel>();
-            }
-            else if (viewModel == "ShiftDisplay")
-            {
-                SimpleIoc.Default.Unregister<ShiftDisplayViewModel>();
-                SimpleIoc.Default.Register<ShiftDisplayViewModel>();
-            }
-            else if (viewModel == "Device")
-            {
-                SimpleIoc.Default.Unregister<DeviceViewModel>();
-                SimpleIoc.Default.Register<DeviceViewModel>();
-            }
-            else if (viewModel == "DeviceTypeDisplay")
-            {
-                SimpleIoc.Default.Unregister<DeviceTypeDisplayViewModel>();
-                SimpleIoc.Default.Register<DeviceTypeDisplayViewModel>();
-            }
-            else if (viewModel == "DeviceDisplay")
-            {
-                SimpleIoc.Default.Unregister<DeviceDisplayViewModel>();
-                SimpleIoc.Default.Register<DeviceDisplayViewModel>();
-            }
-            else if (viewModel == "Item")
-            {
-                SimpleIoc.Default.Unregister<ItemViewModel>();
-                SimpleIoc.Default.Register<ItemViewModel>();
-            }
-            else if (viewModel == "ItemDisplay")
-            {
-                SimpleIoc.Default.Unregister<ItemDisplayViewModel>();
-                SimpleIoc.Default.Register<ItemDisplayViewModel>();
-            }
-            else if (viewModel == "Client")
-            {
-                SimpleIoc.Default.Unregister<ClientViewModel>();
-                SimpleIoc.Default.Register<ClientViewModel>();
-            }
-            else if (viewModel == "ClientDisplay")
-            {
-                SimpleIoc.Default.Unregister<ClientDisplayViewModel>();
-                SimpleIoc.Default.Register<ClientDisplayViewModel>();
-            }
-            else if (viewModel == "ClientPoint")
-            {
-                SimpleIoc.Default.Unregister<ClientPointViewModel>();
-                SimpleIoc.Default.Register<ClientPointViewModel>();
-            }
-            else if (viewModel == "Membership")
-            {
-                SimpleIoc.Default.Unregister<MembershipViewModel>();
-                SimpleIoc.Default.Register<MembershipViewModel>();
-            }
-            else if (viewModel == "MembershipDisplay")
-            {
-                SimpleIoc.Default.Unregister<MembershipDisplayViewModel>();
-                SimpleIoc.Default.Register<MembershipDisplayViewModel>();
-            }
-            else if (viewModel == "ClientMembership")
-            {
-                SimpleIoc.Default.Unregister<ClientMembershipViewModel>();
-                SimpleIoc.Default.Register<ClientMembershipViewModel>();
-            }
-            else if (viewModel == "ClientMembershipMinute")
-            {
-                SimpleIoc.Default.Unregister<ClientMembershipMinuteViewModel>();
-                SimpleIoc.Default.Register<ClientMembershipMinuteViewModel>();
-            }
-            else if (viewModel == "Spending")
-            {
-                SimpleIoc.Default.Unregister<SpendingViewModel>();
-                SimpleIoc.Default.Register<SpendingViewModel>();
-            }
-            else if (viewModel == "SpendingDisplay")
-            {
-                SimpleIoc.Default.Unregister<SpendingDisplayViewModel>();
-                SimpleIoc.Default.Register<SpendingDisplayViewModel>();
-            }
-            else if (viewModel == "SpendingReport")
-            {
-                SimpleIoc.Default.Unregister<SpendingReportViewModel>();
-                SimpleIoc.Default.Register<SpendingReportViewModel>();
-            }
-            else if (viewModel == "Safe")
-            {
-                SimpleIoc.Default.Unregister<SafeViewModel>();
-                SimpleIoc.Default.Register<SafeViewModel>();
-            }
-            else if (viewModel == "SafeDisplay")
-            {
-                SimpleIoc.Default.Unregister<SafeDisplayViewModel>();
-                SimpleIoc.Default.Register<SafeDisplayViewModel>();
-            }        
-            else if (viewModel == "SafeReport")
-            {
-                SimpleIoc.Default.Unregister<SafeReportViewModel>();
-                SimpleIoc.Default.Register<SafeReportViewModel>();
-            }
-            else if (viewModel == "Cashier")
-            {
-                SimpleIoc.Default.Unregister<CashierViewModel>();
-                SimpleIoc.Default.Register<CashierViewModel>();
-            }
-            else if (viewModel == "Devices")
-            {
-                SimpleIoc.Default.Unregister<DevicesViewModel>();
-                SimpleIoc.Default.Register<DevicesViewModel>();
-            }
-            else if (viewModel == "BillItems")
-            {
-                SimpleIoc.Default.Unregister<BillItemsViewModel>();
-                SimpleIoc.Default.Register<BillItemsViewModel>();
-            }
-            else if (viewModel == "ShiftSpending")
-            {
-                SimpleIoc.Default.Unregister<ShiftSpendingViewModel>();
-                SimpleIoc.Default.Register<ShiftSpendingViewModel>();
-            }
-            else if (viewModel == "ShiftItems")
-            {
-                SimpleIoc.Default.Unregister<ShiftItemsViewModel>();
-                SimpleIoc.Default.Register<ShiftItemsViewModel>();
-            }
-            else if (viewModel == "AccountPaid")
-            {
-                SimpleIoc.Default.Unregister<AccountPaidViewModel>();
-                SimpleIoc.Default.Register<AccountPaidViewModel>();
-            }
-            else if (viewModel == "Bill")
-            {
-                SimpleIoc.Default.Unregister<BillViewModel>();
-                SimpleIoc.Default.Register<BillViewModel>();
-            }
-            else if (viewModel == "BillDisplay")
-            {
-                SimpleIoc.Default.Unregister<BillDisplayViewModel>();
-                SimpleIoc.Default.Register<BillDisplayViewModel>();
-            }
-            else if (viewModel == "BillDay")
-            {
-                SimpleIoc.Default.Unregister<BillDayViewModel>();
-                SimpleIoc.Default.Register<BillDayViewModel>();
-            }
+
+
         }
     }
 }

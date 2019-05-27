@@ -28,6 +28,7 @@ using System.IO;
 using System.Data;
 using DTO.ShiftDataModel;
 using Cafe.Views.BillViews;
+using Cafe.Views.ReportViews;
 
 namespace Cafe.ViewModels
 {
@@ -196,6 +197,11 @@ namespace Cafe.ViewModels
                         currentWindow.Show();
                         break;
 
+                    case "Reports":
+                        currentWindow.Hide();
+                        new ReportWindow().ShowDialog();
+                        currentWindow.Show();
+                        break;
                     default:
                         break;
                 }

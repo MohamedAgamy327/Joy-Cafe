@@ -1,0 +1,365 @@
+﻿<Controls:MetroWindow x:Class="Cafe.Views.BillViews.BillShowWindow"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      Title="الفاتورة"
+                      Height="1000"
+                      Width="1024"
+                      ShowTitleBar="True"
+                      WindowState="Maximized"
+                      FlowDirection="RightToLeft"
+                      DataContext="{Binding BillShow, Source={StaticResource Locator}}">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Loaded}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Skins\MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6.5*" />
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+
+            <!--Bill Devices-->
+
+            <DataGrid Margin="10,5"
+                      Grid.Column="0"
+                      Grid.Row="1"
+                      ItemsSource="{Binding BillDevices}"
+                      HeadersVisibility="All"
+                      SelectionUnit="FullRow"
+                      IsManipulationEnabled="False"
+                      CanUserDeleteRows="False"
+                      CanUserAddRows="False"
+                      AutoGenerateColumns="False">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn IsReadOnly="True"
+                                        Header="النوع"
+                                        Width="1.5*"
+                                        HeaderStyle="{StaticResource ColumnHeaderStyle1}"
+                                        Binding="{Binding DeviceType.Name}" />
+                    <DataGridTextColumn IsReadOnly="True"
+                                        Header="الجهاز"
+                                        Width="1.2*"
+                                        HeaderStyle="{StaticResource ColumnHeaderStyle1}"
+                                        Binding="{Binding Device.Name}" />
+                    <DataGridTextColumn IsReadOnly="True"
+                                        Header="اللعب"
+                                        Width="1*"
+                                        HeaderStyle="{StaticResource ColumnHeaderStyle1}"
+                                        Binding="{Binding BillDevice.GameType}" />
+                    <DataGridTextColumn IsReadOnly="True"
+                                        Header="البداية"
+                                        Width="1*"
+                                        HeaderStyle="{StaticResource ColumnHeaderStyle1}"
+                                        Binding="{Binding BillDevice.StartDate, StringFormat={}\{0:hh:mm tt \}}" />
+                    <DataGridTextColumn IsReadOnly="True"
+                                        Header="النهاية"
+                                        Width="1*"
+                                        HeaderStyle="{StaticResource ColumnHeaderStyle1}"
+                                        Binding="{Binding BillDevice.EndDate, StringFormat={}\{0:hh:mm tt \}}" />
+                    <DataGridTextColumn IsReadOnly="True"
+                                        Header="المدة"
+                                        Width="1*"
+                                        HeaderStyle="{StaticResource ColumnHeaderStyle1}"
+                                        Binding="{Binding BillDevice.Duration}" />
+                    <DataGridTextColumn IsReadOnly="True"
+                                        Header="الإجمالى"
+                                        Width="1.2*"
+                                        HeaderStyle="{StaticResource ColumnHeaderStyle1}"
+                                        Binding="{Binding BillDevice.Total,StringFormat={}{0:0.00;(0.00)}}" />
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+            <!--Bill Items-->
+
+            <DataGrid Margin="10,5"
+                      Grid.Column="1"
+                      Grid.Row="1"
+                      ItemsSource="{Binding BillItems}"
+                      HeadersVisibility="All"
+                      SelectionUnit="FullRow"
+                      IsManipulationEnabled="False"
+                      CanUserDeleteRows="False"
+                      CanUserAddRows="False"
+                      AutoGenerateColumns="False">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn IsReadOnly="True"
+                                        Header="الصنف"
+                                        Width="2*"
+                                        HeaderStyle="{StaticResource ColumnHeaderStyle2}"
+                                        Binding="{Binding Item.Name}" />
+                    <DataGridTextColumn IsReadOnly="True"
+                                        Header="السعر"
+                                        Width="1*"
+                                        HeaderStyle="{StaticResource ColumnHeaderStyle2}"
+                                        Binding="{Binding BillItem.Price}" />
+                    <DataGridTextColumn IsReadOnly="True"
+                                        Header="الكمية"
+                                        Width="1*"
+                                        HeaderStyle="{StaticResource ColumnHeaderStyle2}"
+                                        Binding="{Binding BillItem.Qty}" />
+                    <DataGridTextColumn IsReadOnly="True"
+                                        Header="الإجمالى"
+                                        Width="1*"
+                                        HeaderStyle="{StaticResource ColumnHeaderStyle2}"
+                                        Binding="{Binding  BillItem.Total,StringFormat={}{0:0.00;(0.00)}}" />
+
+                </DataGrid.Columns>
+
+                <DataGrid.Style>
+                    <Style BasedOn="{StaticResource MetroDataGrid}"
+                           TargetType="{x:Type DataGrid}">
+                        <Setter Property="AlternatingRowBackground"
+                                Value="{DynamicResource GrayBrush10}" />
+                    </Style>
+                </DataGrid.Style>
+
+            </DataGrid>
+
+        </Grid>
+        <Separator Grid.Row="1"
+                   Margin="0,5" />
+
+        <Grid Grid.Row="2">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">الكاشير:</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.User.Name}"
+                               Margin="5" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">كود الفاتورة:</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.ID}"
+                               Margin="5" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">تاريخ الفاتورة:</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.Date,StringFormat={}\{0: yyyy/MM/dd  \}}"
+                               Margin="5" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">العميل:</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.Client.Name}"
+                               Margin="5" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">كود العميل:</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.Client.Code}"
+                               Margin="5" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">الدقائق الملعوبة:</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.PlayedMinutes}"
+                               Margin="5" />
+                </StackPanel>
+
+            </StackPanel>
+            
+            <StackPanel Grid.Column="1">
+     
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">النقاط قبل الفاتورة:</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.CurrentPoints}"
+                               Margin="5" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">النقاط المستخدمه:</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.UsedPoints}"
+                               Margin="5" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">النقاط بعد الاستخدام:</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.PointsAfterUsed}"
+                               Margin="5" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">النقاط المكتسبة:</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.EarnedPoints}"
+                               Margin="5" />
+                </StackPanel>
+
+                <StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                                   Margin="5">دقائق العضوية:</TextBlock>
+                        <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                                   Text="{Binding SelectedBill.CurrentMembershipMinutes}"
+                                   Margin="5" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                                   Margin="5">دقائق  العضوية بعد الدفع:</TextBlock>
+                        <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                                   Text="{Binding SelectedBill.MembershipMinutesAfterPaid}"
+                                   Margin="5" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                                   Margin="5">    الدقائق الملعوبة المتبقية :</TextBlock>
+                        <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                                   Text="{Binding SelectedBill.RemainderMinutes}"
+                                   Margin="5" />
+                    </StackPanel>
+
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel Grid.Column="2">
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">إجمالى الأجهزة:</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.DevicesSum,StringFormat={}{0:0;(0)}}"
+                               Margin="5" />
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">جنيهاً</TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">إجمالى الطلبات:</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.ItemsSum,StringFormat={}{0:0;(0)}}"
+                               Margin="5" />
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">جنيهاً</TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">الإجمالى :</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.Total,StringFormat={}{0:0;(0)}}"
+                               Margin="5" />
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">جنيهاً</TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">خصم نسبة:</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.Ratio,StringFormat={}{0:0;(0)}}"
+                               Margin="5" />
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">%</TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">خصم مبلغ:</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.Discount,StringFormat={}{0:0;(0)}}"
+                               Margin="5" />
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">جنيهاً</TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">الإجمالى بعد الخصم :</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.TotalAfterDiscount,StringFormat={}{0:0;(0)}}"
+                               Margin="5" />
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">جنيهاً</TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">الحد الأدنى :</TextBlock>
+                    <TextBlock  Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.Minimum,StringFormat={}{0:0;(0)}}"
+                               Margin="5" />
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">جنيهاً</TextBlock>
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel Visibility="{Binding SelectedBill.Canceled , Converter={StaticResource BoolToVisibility}}" Grid.Column="3">
+
+                <StackPanel>
+                    <TextBlock Style="{StaticResource TextBlockWindowStyle}"
+                               Margin="5">سبب الإلغاء :</TextBlock>
+
+                    <TextBlock TextWrapping="Wrap" Style="{StaticResource TextBlockWindowStyle}"
+                               Text="{Binding SelectedBill.CancelReason}"
+                               Margin="5" />
+                </StackPanel>
+                
+            </StackPanel>
+        
+        </Grid>
+
+    </Grid>
+
+</Controls:MetroWindow>

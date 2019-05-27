@@ -228,10 +228,18 @@ namespace Cafe.ViewModels.ClientViewModels
                 if (Clients.Count == 0)
                     return;
 
-                System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
-                fbd.ShowDialog();
-                if (fbd.SelectedPath == "")
+                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog
+                {
+                    FileName = "العملاء",
+                    DefaultExt = ".xls",
+                    Filter = "Text documents (.xls)|*.xls"
+                };
+                bool? result = dlg.ShowDialog();
+
+                if (result != true)
+                {
                     return;
+                }
 
                 Mouse.OverrideCursor = Cursors.Wait;
                 int i = 2;
@@ -258,12 +266,12 @@ namespace Cafe.ViewModels.ClientViewModels
                         i++;
                     }
                 }
-                xlWorkBook.SaveAs(fbd.SelectedPath + @"\العملاء.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                xlWorkBook.SaveAs(dlg.FileName, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
                 xlWorkBook.Close(true, misValue, misValue);
                 xlApp.Quit();
-                releaseObject(xlWorkSheet);
-                releaseObject(xlWorkBook);
-                releaseObject(xlApp);
+                ReleaseObject(xlWorkSheet);
+                ReleaseObject(xlWorkBook);
+                ReleaseObject(xlApp);
                 Mouse.OverrideCursor = null;
             }
             catch (Exception ex)
@@ -279,8 +287,7 @@ namespace Cafe.ViewModels.ClientViewModels
             else
                 return true;
         }
-
-        private void releaseObject(object obj)
+        private void ReleaseObject(object obj)
         {
             try
             {

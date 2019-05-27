@@ -83,7 +83,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="True"  Header="الكود" Width="1*"  HeaderStyle="{StaticResource ColumnHeaderStyle2}"   Binding="{Binding Bill.ID}" />
 
-                    <DataGridTextColumn IsReadOnly="True"  Header="المستخدم" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle2}"   Binding="{Binding User.Name}" />
+                    <DataGridTextColumn IsReadOnly="True"  Header="الكاشير" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle2}"   Binding="{Binding User.Name}" />
 
                     <DataGridTextColumn IsReadOnly="True"  Header="العميل" Width="2*"  HeaderStyle="{StaticResource ColumnHeaderStyle2}"   Binding="{Binding Client.Name}" />
 

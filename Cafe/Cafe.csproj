@@ -138,6 +138,9 @@
     <Compile Include="Reports\BillItemsReport.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\ItemsOnlyReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\ItemsReport.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -163,6 +166,7 @@
     </Compile>
     <Compile Include="ViewModels\BillViewModels\BillDayViewModel.cs" />
     <Compile Include="ViewModels\BillViewModels\BillDisplayViewModel.cs" />
+    <Compile Include="ViewModels\BillViewModels\BillShowViewModel.cs" />
     <Compile Include="ViewModels\BillViewModels\BillViewModel.cs" />
     <Compile Include="ViewModels\CashierViewModels\AccountPaidViewModel.cs" />
     <Compile Include="ViewModels\CashierViewModels\BillItemsViewModel.cs" />
@@ -181,6 +185,7 @@
     <Compile Include="ViewModels\DeviceViewModels\DeviceViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MembershipViewModels\MembershipViewModel.cs" />
+    <Compile Include="ViewModels\ReportViewModels\ReportViewModel.cs" />
     <Compile Include="ViewModels\SafeViewModels\SafeDisplayViewModel.cs" />
     <Compile Include="ViewModels\SafeViewModels\SafeReportViewModel.cs" />
     <Compile Include="ViewModels\SafeViewModels\SafeViewModel.cs" />
@@ -199,6 +204,9 @@
     </Compile>
     <Compile Include="Views\BillViews\BillDisplayUserControl.xaml.cs">
       <DependentUpon>BillDisplayUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillViews\BillShowWindow.xaml.cs">
+      <DependentUpon>BillShowWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BillViews\BillWindow.xaml.cs">
       <DependentUpon>BillWindow.xaml</DependentUpon>
@@ -317,6 +325,9 @@
     <Compile Include="Views\MainViews\StartShiftDialog.xaml.cs">
       <DependentUpon>StartShiftDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ReportViews\ReportWindow.xaml.cs">
+      <DependentUpon>ReportWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SafeViews\SafeAddDialog.xaml.cs">
       <DependentUpon>SafeAddDialog.xaml</DependentUpon>
     </Compile>
@@ -387,6 +398,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BillViews\BillDisplayUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BillViews\BillShowWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -562,6 +577,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ReportViews\ReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SafeViews\SafeAddDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -658,6 +677,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\BillItemsReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ItemsOnlyReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\BillReport.rpt">
@@ -813,6 +835,7 @@
     <Resource Include="Resources\Icons\OtherPaused.PNG" />
     <Resource Include="Resources\Icons\OtherSingle.PNG" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
