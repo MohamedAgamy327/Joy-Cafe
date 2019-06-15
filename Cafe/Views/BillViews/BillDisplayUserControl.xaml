@@ -244,6 +244,31 @@
             <StatusBarItem Content="الملغية" Style="{StaticResource StatusBarItemStyle}"/>
             <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
             <StatusBarItem  Content="{Binding CanceledCount}" Style="{StaticResource StatusBarItemStyle}"/>
+
+            <StatusBarItem Content="الأجهزة"
+                           Style="{StaticResource StatusBarItemStyle}" />
+            <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
+            <StatusBarItem  Content="{Binding DevicesSum}"
+                            Style="{StaticResource StatusBarItemStyle}" />
+
+            <StatusBarItem Content="الطلبات"
+                           Style="{StaticResource StatusBarItemStyle}" />
+            <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
+            <StatusBarItem  Content="{Binding ItemsSum}"
+                            Style="{StaticResource StatusBarItemStyle}" />
+
+            <StatusBarItem Content="الخصومات"
+                           Style="{StaticResource StatusBarItemStyle}" />
+            <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
+            <StatusBarItem  Content="{Binding Discount}"
+                            Style="{StaticResource StatusBarItemStyle}" />
+
+            <StatusBarItem Content="الإجمالى"
+                           Style="{StaticResource StatusBarItemStyle}" />
+            <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
+            <StatusBarItem  Content="{Binding TotalAfterDiscount}"
+                            Style="{StaticResource StatusBarItemStyle}" />
+
         </StatusBar>
     </Grid>
 

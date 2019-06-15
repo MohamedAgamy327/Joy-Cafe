@@ -1,5 +1,7 @@
 ﻿<dialogs:CustomDialog x:Class="Cafe.Views.CashierViews.BillItemsViews.BillItemAddDialog"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                       xmlns:Helpers="clr-namespace:Cafe.Helpers"
+                      xmlns:Custom="http://www.galasoft.ch/mvvmlight"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xml:lang="ar-EG"
                          xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -18,14 +20,44 @@
         <StackPanel.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="..\..\..\Skins\MainSkin.xaml"/>
+                    <ResourceDictionary Source="..\..\..\Skins\MainSkin.xaml" />
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </StackPanel.Resources>
 
-        <TextBlock Style="{StaticResource TextBlockStyle}" VerticalAlignment="Center" Margin="0,5">الصنف</TextBlock>
-        <ComboBox Name="First" Helpers:FocusExtension.IsFocused="{Binding IsFocused}" IsEditable="True"  ItemsSource="{Binding Items}" SelectedValue="{Binding NewBillItem.ItemID}" SelectedValuePath="ID" DisplayMemberPath="Name" SelectedItem="{Binding SelectedItem,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboBoxStyle}">
-        </ComboBox>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource TextBlockStyle}"
+                       VerticalAlignment="Center"
+                       Margin="5">  الصنف المختار:</TextBlock>
+
+            <TextBlock Style="{StaticResource TextBlockStyle}"
+                       VerticalAlignment="Center"
+                       Margin="5"
+                       Text="{Binding SelectedItem.Name}"></TextBlock>
+        </StackPanel>
+
+        <TextBox  Helpers:FocusExtension.IsFocused="{Binding IsFocused}"
+                  Name="First"
+                  Text="{Binding Key, ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
+                  Style="{StaticResource TextBoxStyle}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <Custom:EventToCommand Command="{Binding Search}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+
+        <ListBox FontSize="12"
+                 FontWeight="Bold"
+                 Background="LightYellow"
+                 SelectedValue="{Binding NewBillItem.ItemID}"
+                 SelectedValuePath="ID"
+                 DisplayMemberPath="Name"
+                 SelectedItem="{Binding SelectedItem,UpdateSourceTrigger=PropertyChanged}"
+                 ItemsSource="{Binding Items}"
+                 Margin="0,5">
+
+        </ListBox>
 
         <TextBlock VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" Margin="0,5">السعر</TextBlock>
         <Controls:NumericUpDown IsEnabled="False"   Value="{Binding SelectedItem.Price,ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NumericUpDownStyle}" Minimum="0.01">

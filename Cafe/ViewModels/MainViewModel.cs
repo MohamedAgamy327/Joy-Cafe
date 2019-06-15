@@ -50,8 +50,19 @@ namespace Cafe.ViewModels
             restoreBackupDialog = new RestoreBackupDialog();
             loginDialog = new Views.MainViews.LoginDialog();
             startShiftDialog = new StartShiftDialog();
-        }
 
+            // update points like bills
+
+            //using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+            //{
+            //    foreach (var client in unitOfWork.Clients.GetAll())
+            //    {
+            //        client.Points = unitOfWork.Bills.Find(f => f.ClientID == client.ID).Sum(s => s.EarnedPoints);
+            //        unitOfWork.Clients.Edit(client);
+            //    }
+            //    unitOfWork.Complete();
+            //}
+        }
         private bool _isFocused;
         public bool IsFocused
         {

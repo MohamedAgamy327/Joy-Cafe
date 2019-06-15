@@ -105,7 +105,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     SelectedBill.PlayedMinutes = BillDevices.Sum(s => s.Duration);
                     SelectedBill.ItemsSum = BillItems.Sum(s => Convert.ToDecimal(s.BillItem.Total));
                     SelectedBill.CurrentPoints = SelectedClient.Points ?? 0;
-                    SelectedBill.PointsAfterUsed = 0;
+                    SelectedBill.PointsAfterUsed = SelectedBill.CurrentPoints - BillPaid.UsedPoints;
 
                     foreach (var item in BillDevices)
                     {

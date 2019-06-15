@@ -88,6 +88,18 @@
 
                     <DataGridTextColumn IsReadOnly="True"  Header="الإجمالى" Width="1*" HeaderStyle="{StaticResource ColumnHeaderStyle3}"
                                     Binding="{Binding BillItem.Total,StringFormat={}{0:0.00;(0.00)}}"  />
+
+                    <DataGridTemplateColumn  Header="تجميع"
+                                             Width="1*"
+                                             HeaderStyle="{StaticResource ColumnHeaderStyle3}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Checked,UpdateSourceTrigger=PropertyChanged}">
+                                </CheckBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
                     <DataGridTemplateColumn  Header="حذف" Width="0.5*" HeaderStyle="{StaticResource ColumnHeaderStyle3}" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -98,6 +110,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    
                 </DataGrid.Columns>
                 <DataGrid.Style>
                     <Style BasedOn="{StaticResource MetroDataGrid}"

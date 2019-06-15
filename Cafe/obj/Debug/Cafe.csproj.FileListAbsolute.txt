@@ -827,11 +827,8 @@ D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\CrystalDecisions.Repo
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\stdole.dll
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\ShockwaveFlashObjects.dll
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\BLL.pdb
-D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\BLL.dll.config
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\DAL.pdb
-D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\DAL.dll.config
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\Utilities.pdb
-D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\Utilities.dll.config
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\ControlzEx.pdb
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\DTO.pdb
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\EntityFramework.xml
@@ -857,7 +854,6 @@ D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\ko\Microsoft.Expressi
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\ru\Microsoft.Expression.Interactions.resources.dll
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\zh-Hans\Microsoft.Expression.Interactions.resources.dll
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\zh-Hant\Microsoft.Expression.Interactions.resources.dll
-D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csprojAssemblyReference.cache
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.ResolveComReference.cache
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Reports\ReportWindow.baml
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\BillViews\BillDayUserControl.baml
@@ -998,7 +994,11 @@ D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\UserViews\UserW
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.g.resources
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.Properties.Resources.resources
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.GenerateResource.cache
-D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.CoreCompileInputs.cache
-D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.CopyComplete
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.exe
 D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.pdb
+D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\BLL.dll.config
+D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\DAL.dll.config
+D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\Utilities.dll.config
+D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csprojAssemblyReference.cache
+D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.CoreCompileInputs.cache
+D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.CopyComplete

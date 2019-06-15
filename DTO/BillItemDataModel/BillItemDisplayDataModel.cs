@@ -5,6 +5,13 @@ namespace DTO.BillItemDataModel
 {
     public class BillItemDisplayDataModel : ValidatableBindableBase
     {
+        private bool _checked;
+        public bool Checked
+        {
+            get { return _checked; }
+            set { SetProperty(ref _checked, value); }
+        }
+
         private BillItem _billItem;
         public BillItem BillItem
         {

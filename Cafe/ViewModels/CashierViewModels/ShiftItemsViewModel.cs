@@ -25,6 +25,7 @@ namespace Cafe.ViewModels.CashierViewModels
         MetroWindow currentWindow;
 
         private readonly ShiftItemAddDialog _shiftItemAddDialog;
+        private List<Item> items;
 
         private void Load()
         {
@@ -47,6 +48,13 @@ namespace Cafe.ViewModels.CashierViewModels
         {
             get { return _isFocused; }
             set { SetProperty(ref _isFocused, value); }
+        }
+
+        private string _key;
+        public string Key
+        {
+            get { return _key; }
+            set { SetProperty(ref _key, value); }
         }
 
         private decimal _itemsSum;
@@ -131,7 +139,7 @@ namespace Cafe.ViewModels.CashierViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    Items = new ObservableCollection<Item>(unitOfWork.Items.Find(f => f.IsAvailable == true).OrderByDescending(o => o.BillsItems.Count).ThenBy(o => o.Name));
+                    items = unitOfWork.Items.Find(f => f.IsAvailable == true).OrderByDescending(o => o.BillsItems.Count).ThenBy(o => o.Name).ToList();
                 }
                 Load();
             }
@@ -247,6 +255,35 @@ namespace Cafe.ViewModels.CashierViewModels
 
         // Add
 
+        private RelayCommand _search;
+        public RelayCommand Search
+        {
+            get
+            {
+                return _search
+                    ?? (_search = new RelayCommand(SearchMethod));
+            }
+        }
+        private void SearchMethod()
+        {
+            try
+            {
+                if (_key == string.Empty)
+                {
+                    Items = new ObservableCollection<Item>();
+                }
+                else
+                {
+                    Items = new ObservableCollection<Item>(items.Where(w => w.Name.Contains(_key)).Take(5));
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
         private RelayCommand _showAdd;
         public RelayCommand ShowAdd
         {
@@ -260,6 +297,7 @@ namespace Cafe.ViewModels.CashierViewModels
         {
             try
             {
+                Key = string.Empty;
                 NewShiftItem = new ShiftItemAddDataModel();
                 _newItems = new List<ItemPrintDataModel>();
                 _shiftItemAddDialog.DataContext = this;
@@ -313,6 +351,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     unitOfWork.Complete();
                 }
                 _newItems.Add(new ItemPrintDataModel { Qty = _newShiftItem.Qty, Name = _selectedItem.Name });
+                Key = string.Empty;
                 Load();
                 NewShiftItem = new ShiftItemAddDataModel();
             }
@@ -347,34 +386,9 @@ namespace Cafe.ViewModels.CashierViewModels
         {
             try
             {
-                // Account Print
-                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
-                {
-                    Mouse.OverrideCursor = Cursors.Wait;
-                    DS ds = new DS();
-                    ds.BillItems.Rows.Clear();
-                    int i = 0;
-
-                    foreach (var item in _shiftItems)
-                    {
-                        ds.BillItems.Rows.Add();
-                        ds.BillItems[i]["Cashier"] = UserData.Name;
-                        ds.BillItems[i]["Time"] = DateTime.Now.ToString(" h:mm tt");
-                        ds.BillItems[i]["Device"] = "طلبات خارجية";
-                        ds.BillItems[i]["Qty"] = item.BillItem.Qty;
-                        ds.BillItems[i]["Item"] = item.Item.Name;
-                        i++;
-                    }
-
-                    //ReportWindow rpt = new ReportWindow();
-                    ItemsOnlyReport itemsOnlyReport = new ItemsOnlyReport();
-                    itemsOnlyReport.SetDataSource(ds.Tables["BillItems"]);
-                    //rpt.crv.ViewerCore.ReportSource = itemsOnlyReport;
-                    Mouse.OverrideCursor = null;
-                    //rpt.ShowDialog();
-                    itemsOnlyReport.PrintToPrinter(1, false, 0, 15);
-
-                }
+                var itemsPrint = _shiftItems.Where(w => w.Checked == true).Select(s => new ItemPrintDataModel { Name = s.Item.Name, Qty = s.BillItem.Qty }).ToList();
+                if (itemsPrint.Count != 0)
+                    PrintItems(itemsPrint);
             }
             catch (Exception ex)
             {
@@ -403,7 +417,8 @@ namespace Cafe.ViewModels.CashierViewModels
                 {
                     case "Add":
                         await currentWindow.HideMetroDialogAsync(_shiftItemAddDialog);
-                        PrintNewItems();
+                        if (_newItems.Count != 0)
+                            PrintItems(_newItems);
                         break;
                     default:
                         break;
@@ -415,39 +430,34 @@ namespace Cafe.ViewModels.CashierViewModels
             }
         }
 
-        private void PrintNewItems()
+        private void PrintItems(List<ItemPrintDataModel> items)
         {
             try
             {
-                if (_newItems.Count == 0)
-                    return;
-                // Account Print
-                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                Mouse.OverrideCursor = Cursors.Wait;
+                DS ds = new DS();
+                ds.BillItems.Rows.Clear();
+                int i = 0;
+
+                foreach (var item in items)
                 {
-                    Mouse.OverrideCursor = Cursors.Wait;
-                    DS ds = new DS();
-                    ds.BillItems.Rows.Clear();
-                    int i = 0;
-
-                    foreach (var item in _newItems)
-                    {
-                        ds.BillItems.Rows.Add();
-                        ds.BillItems[i]["Cashier"] = UserData.Name;
-                        ds.BillItems[i]["Time"] = DateTime.Now.ToString(" h:mm tt");
-                        ds.BillItems[i]["Device"] = "طلبات خارجية";
-                        ds.BillItems[i]["Qty"] = item.Qty;
-                        ds.BillItems[i]["Item"] = item.Name;
-                        i++;
-                    }
-
-                    //ReportWindow rpt = new ReportWindow();
-                    ItemsOnlyReport itemsOnlyReport = new ItemsOnlyReport();
-                    itemsOnlyReport.SetDataSource(ds.Tables["BillItems"]);
-                    //rpt.crv.ViewerCore.ReportSource = itemsOnlyReport;
-                    Mouse.OverrideCursor = null;
-                    //rpt.ShowDialog();
-                    itemsOnlyReport.PrintToPrinter(1, false, 0, 15);
+                    ds.BillItems.Rows.Add();
+                    ds.BillItems[i]["Cashier"] = UserData.Name;
+                    ds.BillItems[i]["Time"] = DateTime.Now.ToString(" h:mm tt");
+                    ds.BillItems[i]["Device"] = "طلبات خارجية";
+                    ds.BillItems[i]["Qty"] = item.Qty;
+                    ds.BillItems[i]["Item"] = item.Name;
+                    i++;
                 }
+
+                //ReportWindow rpt = new ReportWindow();
+                ItemsOnlyReport itemsOnlyReport = new ItemsOnlyReport();
+                itemsOnlyReport.SetDataSource(ds.Tables["BillItems"]);
+                //rpt.crv.ViewerCore.ReportSource = itemsOnlyReport;
+                Mouse.OverrideCursor = null;
+                //rpt.ShowDialog();
+                itemsOnlyReport.PrintToPrinter(1, false, 0, 15);
+
             }
             catch (Exception ex)
             {

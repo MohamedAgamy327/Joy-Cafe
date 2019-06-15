@@ -59,10 +59,5 @@ namespace Cafe.ViewModels.CashierViewModels
             }
         }
 
-        public void ChangeTitle()
-        {
-
-        }
-
     }
 }

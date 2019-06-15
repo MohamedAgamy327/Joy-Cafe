@@ -56,6 +56,7 @@ namespace Cafe.ViewModels.BillViewModels
                         DeletedCount = unitOfWork.Bills.GetRecordsNumber(w => w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo);
                         CanceledCount = 0;
                     }
+                    GetSum();
                 }
                 else
                 {
@@ -65,6 +66,10 @@ namespace Cafe.ViewModels.BillViewModels
                     AvailableCount = 0;
                     DeletedCount = 0;
                     CanceledCount = 0;
+                    DevicesSum = 0;
+                    ItemsSum = 0;
+                    Discount = 0;
+                    TotalAfterDiscount = 0;
                 }
             }
         }
@@ -110,6 +115,34 @@ namespace Cafe.ViewModels.BillViewModels
         {
             get { return _canceledCount; }
             set { SetProperty(ref _canceledCount, value); }
+        }
+
+        private decimal? _devicesSum;
+        public decimal? DevicesSum
+        {
+            get { return _devicesSum; }
+            set { SetProperty(ref _devicesSum, value); }
+        }
+
+        private decimal? _itemsSum;
+        public decimal? ItemsSum
+        {
+            get { return _itemsSum; }
+            set { SetProperty(ref _itemsSum, value); }
+        }
+
+        private decimal? _discount;
+        public decimal? Discount
+        {
+            get { return _discount; }
+            set { SetProperty(ref _discount, value); }
+        }
+
+        private decimal? _totalAfterDiscount;
+        public decimal? TotalAfterDiscount
+        {
+            get { return _totalAfterDiscount; }
+            set { SetProperty(ref _totalAfterDiscount, value); }
         }
 
         private DateTime _dateTo;
@@ -422,5 +455,38 @@ namespace Cafe.ViewModels.BillViewModels
             }
         }
 
+
+        private void GetSum()
+        {
+            using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+            {
+                List<Bill> bills = null;
+                switch (_selectedBillCase.Key)
+                {
+                    case BillCaseText.All:
+                        bills = unitOfWork.Bills.Find(w => w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
+                        break;
+
+                    case BillCaseText.Available:
+                        bills = unitOfWork.Bills.Find(w => w.Deleted == false && w.Canceled == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
+                        break;
+
+                    case BillCaseText.Canceled:
+                        bills = unitOfWork.Bills.Find(w => w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
+                        break;
+
+                    case BillCaseText.Deleted:
+                        bills = unitOfWork.Bills.Find(w => w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
+                        break;
+
+                    default:
+                        break;
+                }
+                DevicesSum = bills.Where(w => w.DevicesSum != null).Sum(s => Convert.ToDecimal(s.DevicesSum));
+                ItemsSum = bills.Where(w => w.ItemsSum != null).Sum(s => Convert.ToDecimal(s.ItemsSum));
+                Discount = bills.Where(w => w.Discount != null).Sum(s => Convert.ToDecimal(s.Discount));
+                TotalAfterDiscount = bills.Where(w => w.TotalAfterDiscount != null).Sum(s => Convert.ToDecimal(s.TotalAfterDiscount));
+            }
+        }
     }
 }
