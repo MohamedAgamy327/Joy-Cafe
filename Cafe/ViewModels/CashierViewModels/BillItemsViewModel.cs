@@ -246,7 +246,7 @@ namespace Cafe.ViewModels.CashierViewModels
                 }
                 else
                 {
-                    Items = new ObservableCollection<Item>(items.Where(w => w.Name.Contains(_key)).Take(5));
+                    Items = new ObservableCollection<Item>(items.Where(w => w.Name.Contains(_key)));
                 }
 
             }

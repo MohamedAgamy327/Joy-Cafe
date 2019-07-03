@@ -12,8 +12,9 @@
                       mc:Ignorable="d"
                       Title="تسجيل دخول"
                       FlowDirection="RightToLeft"
+                      Height="600"
                       >
-    <StackPanel Name="pnl" Margin="10" >
+    <StackPanel Name="pnl" Margin="10" VerticalAlignment="Center">
         <StackPanel.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>

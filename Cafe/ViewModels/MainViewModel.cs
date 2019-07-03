@@ -582,6 +582,7 @@ namespace Cafe.ViewModels
                         break;
                     case "Login":
                         await currentWindow.HideMetroDialogAsync(loginDialog);
+                        currentWindow.Hide();
                         currentWindow.Close();
                         break;
                     default:

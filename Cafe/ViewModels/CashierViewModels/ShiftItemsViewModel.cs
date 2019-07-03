@@ -57,13 +57,12 @@ namespace Cafe.ViewModels.CashierViewModels
             set { SetProperty(ref _key, value); }
         }
 
-        private decimal _itemsSum;
         public decimal ItemsSum
         {
             get
             {
                 if (ShiftItems != null && ShiftItems.Count > 0)
-                    return _itemsSum = ShiftItems.Sum(s => Convert.ToDecimal(s.BillItem.Total));
+                    return  ShiftItems.Sum(s => Convert.ToDecimal(s.BillItem.Total));
                 else
                     return 0;
             }
@@ -274,7 +273,7 @@ namespace Cafe.ViewModels.CashierViewModels
                 }
                 else
                 {
-                    Items = new ObservableCollection<Item>(items.Where(w => w.Name.Contains(_key)).Take(5));
+                    Items = new ObservableCollection<Item>(items.Where(w => w.Name.Contains(_key)));
                 }
 
             }

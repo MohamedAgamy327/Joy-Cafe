@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\
+D:\Projects\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\
 Cafe
 none
 false
 CODE_ANALYSIS;DEBUG;TRACE
-D:\Work\Project\Freelance\Joy Cafe\Joy-Cafe\Cafe\App.xaml
+D:\Projects\Freelance\Joy Cafe\Joy-Cafe\Cafe\App.xaml
 6655646548
 
-123-1880607559
-942136582109
+1231672391080
+93-1064430603
 Reports\ReportWindow.xaml;SplashScreen\SplashScreenWindow.xaml;Views\BillViews\BillDayUserControl.xaml;Views\BillViews\BillDisplayUserControl.xaml;Views\BillViews\BillShowWindow.xaml;Views\BillViews\BillWindow.xaml;Views\CashierViews\AccountPaidViews\AccountPaidWindow.xaml;Views\CashierViews\BillItemsViews\BillItemAddDialog.xaml;Views\CashierViews\BillItemsViews\BillItemsWindow.xaml;Views\CashierViews\CancelBillViews\CancelReasonDialog.xaml;Views\CashierViews\FinishShiftViews\FinishShiftConfirmDialog.xaml;Views\CashierViews\ShiftItemsViews\ShiftItemAddDialog.xaml;Views\CashierViews\CashierWindow.xaml;Views\CashierViews\BillClientViews\ClientAddDialog.xaml;Views\CashierViews\BillClientViews\ClientCheckDialog.xaml;Views\CashierViews\DevicesUserControl.xaml;Views\CashierViews\FinishShiftViews\FinishShiftDialog.xaml;Views\CashierViews\ShiftItemsViews\ShiftItemsWindow.xaml;Views\CashierViews\ShiftSpendingViews\ShiftSpendingAddDialog.xaml;Views\CashierViews\ShiftSpendingViews\ShiftSpendingWindow.xaml;Views\CashierViews\ShiftSpendingViews\ShiftSpendingUpdateDialog.xaml;Views\ClientViews\ClientAddDialog.xaml;Views\ClientViews\ClientDisplayUserControl.xaml;Views\MembershipViews\ClientMembershipAddDialog.xaml;Views\MembershipViews\ClientMembershipMinuteUserControl.xaml;Views\MembershipViews\ClientMembershipUserControl.xaml;Views\ClientViews\ClientPointUserControl.xaml;Views\ClientViews\ClientUpdateDialog.xaml;Views\ClientViews\ClientWindow.xaml;Views\MembershipViews\MembershipWindow.xaml;Views\MembershipViews\MembershipAddDialog.xaml;Views\MembershipViews\MembershipUpdateDialog.xaml;Views\MembershipViews\MembershipDisplayUserControl.xaml;Views\DeviceViews\DeviceAddDialog.xaml;Views\DeviceViews\DeviceDisplayUserControl.xaml;Views\DeviceViews\DeviceTypeAddDialog.xaml;Views\DeviceViews\DeviceTypeDisplayUserControl.xaml;Views\DeviceViews\DeviceTypeUpdateDialog.xaml;Views\DeviceViews\DeviceUpdateDialog.xaml;Views\DeviceViews\DeviceWindow.xaml;Views\MainViews\BackupDialog.xaml;Views\MainViews\LoginDialog.xaml;Views\MainViews\MainWindow.xaml;Skins\MainSkin.xaml;Views\MainViews\RestoreBackupDialog.xaml;Views\MainViews\StartShiftDialog.xaml;Views\ReportViews\ReportWindow.xaml;Views\SafeViews\SafeAddDialog.xaml;Views\SafeViews\SafeDisplayUserControl.xaml;Views\SafeViews\SafeReportUserControl.xaml;Views\SafeViews\SafeWindow.xaml;Views\ShiftViews\ShiftDisplayUserControl.xaml;Views\ShiftViews\ShiftShowDialog.xaml;Views\ShiftViews\ShiftWindow.xaml;Views\SpendingViews\SpendingAddDialog.xaml;Views\SpendingViews\SpendingDisplayUserControl.xaml;Views\SpendingViews\SpendingReportUserControl.xaml;Views\SpendingViews\SpendingWindow.xaml;Views\ItemViews\ItemAddDialog.xaml;Views\ItemViews\ItemUpdateDialog.xaml;Views\ItemViews\ItemDisplayUserControl.xaml;Views\ItemViews\ItemWindow.xaml;Views\UserViews\UserAddDialog.xaml;Views\UserViews\UserDisplayUserControl.xaml;Views\UserViews\UserUpdateDialog.xaml;Views\UserViews\UserWindow.xaml;
 
-True
+False
 

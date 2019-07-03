@@ -45,7 +45,7 @@
             </i:Interaction.Triggers>
         </TextBox>
 
-        <ListBox FontSize="12"
+        <ListBox  FontSize="12"
                  FontWeight="Bold"
                  Background="LightYellow"
                  SelectedValue="{Binding NewShiftItem.ItemID}"
@@ -53,6 +53,9 @@
                  DisplayMemberPath="Name"
                  SelectedItem="{Binding SelectedItem,UpdateSourceTrigger=PropertyChanged}"
                  ItemsSource="{Binding Items}"
+                 Height="150"
+                 ScrollViewer.CanContentScroll="True"
+                 ScrollViewer.VerticalScrollBarVisibility="Visible"
                  Margin="0,5">
             
         </ListBox>
