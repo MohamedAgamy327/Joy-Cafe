@@ -64,6 +64,11 @@ namespace BLL.RepositoryService
             return _entities.Where(predicate).AsNoTracking().ToList();
         }
 
+        public IEnumerable<TEntity> FindSum(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _entities.Where(predicate).AsNoTracking();
+        }
+
         public IEnumerable<TEntity> GetAll()
         {
             return _entities.AsNoTracking().ToList();

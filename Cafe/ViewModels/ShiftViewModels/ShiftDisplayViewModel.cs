@@ -18,8 +18,9 @@ namespace Cafe.ViewModels.ShiftViewModels
 {
     public class ShiftDisplayViewModel : ValidatableBindableBase
     {
-        private MetroWindow currentWindow;
+        private readonly MetroWindow currentWindow;
         private readonly ShiftShowDialog shiftShowDialog;
+        private readonly ShiftsReportDialog shiftsReportDialog;
 
         private void Load()
         {
@@ -37,7 +38,9 @@ namespace Cafe.ViewModels.ShiftViewModels
             _dateTo = DateTime.Now;
             _dateFrom = DateTime.Now;
             _paging = new PagingWPF();
+            _shiftsReport = new ShiftsReportDataModel();
             shiftShowDialog = new ShiftShowDialog();
+            shiftsReportDialog = new ShiftsReportDialog();
             currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
@@ -81,6 +84,13 @@ namespace Cafe.ViewModels.ShiftViewModels
         {
             get { return _selectedShift; }
             set { SetProperty(ref _selectedShift, value); }
+        }
+
+        private ShiftsReportDataModel _shiftsReport;
+        public ShiftsReportDataModel ShiftsReport
+        {
+            get { return _shiftsReport; }
+            set { SetProperty(ref _shiftsReport, value); }
         }
 
         private ObservableCollection<ShiftDisplayDataModel> _shifts;
@@ -331,6 +341,47 @@ namespace Cafe.ViewModels.ShiftViewModels
             }
         }
 
+        private RelayCommand _showReport;
+        public RelayCommand ShowReport
+        {
+            get
+            {
+                return _showReport
+                    ?? (_showReport = new RelayCommand(ShowReportMethodAsync, CanExecuteShowReport));
+            }
+        }
+        private async void ShowReportMethodAsync()
+        {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
+                {
+                    ShiftsReport.TotalMinimum = unitOfWork.Bills.FindSum(f => f.Minimum != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.Minimum) ?? 0;
+                    ShiftsReport.TotalDevices = unitOfWork.Bills.FindSum(f => f.DevicesSum != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.DevicesSum) ?? 0;
+                    ShiftsReport.TotalItems = unitOfWork.Bills.FindSum(f => f.ItemsSum != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.ItemsSum) ?? 0;
+                    ShiftsReport.TotalDiscount = unitOfWork.Bills.FindSum(f => f.Discount != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.Discount) ?? 0;
+                    ShiftsReport.TotalSpending = unitOfWork.Spendings.FindSum(f => f.Amount != null && f.RegistrationDate >= _dateFrom && f.RegistrationDate <= _dateTo).Sum(s => s.Amount) ?? 0;
+                    ShiftsReport.TotalIncome = unitOfWork.Safes.FindSum(f => f.Amount != null && f.Type == true && f.RegistrationDate >= _dateFrom && f.RegistrationDate <= _dateTo).Sum(s => s.Amount) ?? 0;
+                    ShiftsReport.TotalNet = unitOfWork.Safes.FindSum(f => f.Amount != null && f.Type == true && f.RegistrationDate >= _dateFrom && f.RegistrationDate <= _dateTo).Sum(s => s.Amount) - unitOfWork.Safes.FindSum(f => f.Amount != null && f.Type == false && f.RegistrationDate >= _dateFrom && f.RegistrationDate <= _dateTo).Sum(s => s.Amount) ;
+                    shiftsReportDialog.DataContext = this;
+                    await currentWindow.ShowMetroDialogAsync(shiftsReportDialog);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private bool CanExecuteShowReport()
+        {
+            if (Shifts == null || Shifts.Count == 0)
+                return false;
+            else
+                return true;
+        }
+
+
+
         private RelayCommand<string> _closeDialog;
         public RelayCommand<string> CloseDialog
         {
@@ -348,6 +399,9 @@ namespace Cafe.ViewModels.ShiftViewModels
                 {
                     case "show":
                         await currentWindow.HideMetroDialogAsync(shiftShowDialog);
+                        break;
+                    case "report":
+                        await currentWindow.HideMetroDialogAsync(shiftsReportDialog);
                         break;
                     default:
                         break;

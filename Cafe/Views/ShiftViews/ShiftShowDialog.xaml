@@ -1,11 +1,8 @@
 ﻿
 <dialogs:CustomDialog x:Class="Cafe.Views.ShiftViews.ShiftShowDialog"
-                      xmlns:Helpers="clr-namespace:Cafe.Helpers"
-                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                      xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
                       xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
                          xml:lang="ar-EG"
                       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"

@@ -22,6 +22,7 @@ namespace BLL.RepositoryService
         TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate);
 
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+        IEnumerable<TEntity> FindSum(Expression<Func<TEntity, bool>> predicate);
         IEnumerable<TEntity> GetAll();
     }
 }

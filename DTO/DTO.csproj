@@ -94,6 +94,7 @@
     <Compile Include="MainDataModel\RestoreBackupDataModel.cs" />
     <Compile Include="ShiftDataModel\FinishShiftDataModel.cs" />
     <Compile Include="ShiftDataModel\ShiftDisplayDataModel.cs" />
+    <Compile Include="ShiftDataModel\ShiftsReportDataModel.cs" />
     <Compile Include="ShiftDataModel\StartShiftDataModel.cs" />
     <Compile Include="MembershipDataModel\MembershipAddDataModel.cs" />
     <Compile Include="MembershipDataModel\MembershipDisplayDataModel.cs" />
