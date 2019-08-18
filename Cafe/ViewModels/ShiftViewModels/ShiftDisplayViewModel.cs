@@ -356,13 +356,13 @@ namespace Cafe.ViewModels.ShiftViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    ShiftsReport.TotalMinimum = unitOfWork.Bills.FindSum(f => f.Minimum != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.Minimum) ?? 0;
-                    ShiftsReport.TotalDevices = unitOfWork.Bills.FindSum(f => f.DevicesSum != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.DevicesSum) ?? 0;
-                    ShiftsReport.TotalItems = unitOfWork.Bills.FindSum(f => f.ItemsSum != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.ItemsSum) ?? 0;
-                    ShiftsReport.TotalDiscount = unitOfWork.Bills.FindSum(f => f.Discount != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.Discount) ?? 0;
-                    ShiftsReport.TotalSpending = unitOfWork.Spendings.FindSum(f => f.Amount != null && f.RegistrationDate >= _dateFrom && f.RegistrationDate <= _dateTo).Sum(s => s.Amount) ?? 0;
-                    ShiftsReport.TotalIncome = unitOfWork.Safes.FindSum(f => f.Amount != null && f.Type == true && f.RegistrationDate >= _dateFrom && f.RegistrationDate <= _dateTo).Sum(s => s.Amount) ?? 0;
-                    ShiftsReport.TotalNet = unitOfWork.Safes.FindSum(f => f.Amount != null && f.Type == true && f.RegistrationDate >= _dateFrom && f.RegistrationDate <= _dateTo).Sum(s => s.Amount) - unitOfWork.Safes.FindSum(f => f.Amount != null && f.Type == false && f.RegistrationDate >= _dateFrom && f.RegistrationDate <= _dateTo).Sum(s => s.Amount) ;
+                    ShiftsReport.TotalMinimum = unitOfWork.Shifts.FindSum(f => f.TotalMinimum != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.TotalMinimum) ?? 0;
+                    ShiftsReport.TotalDevices = unitOfWork.Shifts.FindSum(f => f.TotalDevices != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.TotalDevices) ?? 0;
+                    ShiftsReport.TotalItems = unitOfWork.Shifts.FindSum(f => f.TotalItems != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.TotalItems) ?? 0;
+                    ShiftsReport.TotalDiscount = unitOfWork.Shifts.FindSum(f => f.TotalDiscount != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.TotalDiscount) ?? 0;
+                    ShiftsReport.TotalSpending = unitOfWork.Shifts.FindSum(f => f.Spending != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.Spending) ?? 0;
+                    ShiftsReport.TotalIncome = unitOfWork.Shifts.FindSum(f => f.Income != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.Income) ?? 0;
+                    ShiftsReport.TotalNet = ShiftsReport.TotalIncome - ShiftsReport.TotalSpending;
                     shiftsReportDialog.DataContext = this;
                     await currentWindow.ShowMetroDialogAsync(shiftsReportDialog);
                 }
@@ -379,8 +379,6 @@ namespace Cafe.ViewModels.ShiftViewModels
             else
                 return true;
         }
-
-
 
         private RelayCommand<string> _closeDialog;
         public RelayCommand<string> CloseDialog

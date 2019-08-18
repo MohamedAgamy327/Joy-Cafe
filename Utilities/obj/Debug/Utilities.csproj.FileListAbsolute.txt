@@ -105,7 +105,6 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\bin\Debug\GalaSoft.MvvmLight.Platform
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\bin\Debug\System.Windows.Interactivity.dll
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\bin\Debug\EntityFramework.dll
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\bin\Debug\DAL.pdb
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\bin\Debug\DAL.dll.config
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\bin\Debug\GalaSoft.MvvmLight.pdb
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\bin\Debug\GalaSoft.MvvmLight.xml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\bin\Debug\GalaSoft.MvvmLight.Extras.pdb
@@ -113,8 +112,6 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\bin\Debug\GalaSoft.MvvmLight.Extras.x
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\bin\Debug\GalaSoft.MvvmLight.Platform.pdb
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\bin\Debug\GalaSoft.MvvmLight.Platform.xml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\bin\Debug\EntityFramework.xml
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\obj\Debug\Utilities.csprojAssemblyReference.cache
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\obj\Debug\Utilities.csproj.CoreCompileInputs.cache
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\obj\Debug\Utilities.csproj.CopyComplete
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\obj\Debug\Utilities.dll
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\obj\Debug\Utilities.pdb
+D:\Projects\Me\Joy Cafe\Joy-Cafe\Utilities\obj\Debug\Utilities.csprojResolveAssemblyReference.cache

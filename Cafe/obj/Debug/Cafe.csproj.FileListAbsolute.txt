@@ -1219,9 +1219,4 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.Properties.Resources.resour
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.GenerateResource.Cache
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ShiftViews\ShiftsReportDialog.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ShiftViews\ShiftsReportDialog.g.cs
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\BLL.dll.config
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\DAL.dll.config
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\Utilities.dll.config
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csprojAssemblyReference.cache
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.CoreCompileInputs.cache
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.CopyComplete
+D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csprojResolveAssemblyReference.cache
