@@ -180,7 +180,6 @@ namespace BLL.BillService
                 return null;
         }
 
-
         public decimal? DevicesSum(string billCase, string key, DateTime dtFrom, DateTime dtTo)
         {
             if (UserData.Role == RoleText.Admin)
@@ -337,6 +336,46 @@ namespace BLL.BillService
             }
             else
                 return null;
+        }
+
+        public List<Bill> Search(string billCase, string key, DateTime dtFrom, DateTime dtTo)
+        {
+            if (UserData.Role == RoleText.Admin)
+            {
+                switch (billCase)
+                {
+                    case BillCaseText.All:
+                        return GeneralDBContext.Bills.Where(w => w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).OrderBy(o => o.ID).ToList();
+                    case BillCaseText.Available:
+                        return GeneralDBContext.Bills.Where(w => w.Deleted == false && w.Canceled == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).OrderBy(o => o.ID).ToList();
+                    case BillCaseText.Canceled:
+                        return GeneralDBContext.Bills.Where(w => w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).OrderBy(o => o.ID).ToList();
+                    case BillCaseText.Deleted:
+                        return GeneralDBContext.Bills.Where(w => w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).OrderBy(o => o.ID).ToList();
+                    default:
+                        return null;
+                }
+            }
+
+            else if (UserData.Role == RoleText.Tax)
+            {
+                switch (billCase)
+                {
+                    case BillCaseText.All:
+                        return GeneralDBContext.Bills.Where(w => w.TotalAfterDiscount <= 30 && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).OrderBy(o => o.ID).ToList();
+                    case BillCaseText.Available:
+                        return GeneralDBContext.Bills.Where(w => w.TotalAfterDiscount <= 30 && w.Deleted == false && w.Canceled == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).OrderBy(o => o.ID).ToList();
+                    case BillCaseText.Canceled:
+                        return GeneralDBContext.Bills.Where(w => w.TotalAfterDiscount <= 30 && w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).OrderBy(o => o.ID).ToList();
+                    case BillCaseText.Deleted:
+                        return GeneralDBContext.Bills.Where(w => w.TotalAfterDiscount <= 30 && w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(key) && w.Date >= dtFrom && w.Date <= dtTo).OrderBy(o => o.ID).ToList();
+                    default:
+                        return null;
+                }
+            }
+            else
+                return null;
+
         }
 
     }

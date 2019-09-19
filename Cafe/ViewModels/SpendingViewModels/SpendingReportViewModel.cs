@@ -215,7 +215,8 @@ namespace Cafe.ViewModels.SpendingViewModels
                 xlWorkSheet.Cells[1, 4] = "المبلغ";
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var spendings = unitOfWork.Spendings.Find(w => (w.Statement + w.User.Name).Contains(_key) && w.RegistrationDate >= _dateFrom && w.RegistrationDate <= _dateTo).OrderByDescending(o => o.RegistrationDate);
+                    var spendings = unitOfWork.Spendings.Search(_key,_dateFrom,_dateTo);
+
                     foreach (var item in spendings)
                     {
                         xlWorkSheet.Cells[i, 2].NumberFormat = "@";

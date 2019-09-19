@@ -366,28 +366,7 @@ namespace Cafe.ViewModels.BillViewModels
                 xlWorkSheet.Cells[1, 13] = "سبب الإلغاء";
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    List<Bill> bills = null;
-                    switch (_selectedBillCase.Key)
-                    {
-                        case BillCaseText.All:
-                            bills = unitOfWork.Bills.Find(w => w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
-                            break;
-
-                        case BillCaseText.Available:
-                            bills = unitOfWork.Bills.Find(w => w.Deleted == false && w.Canceled == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
-                            break;
-
-                        case BillCaseText.Canceled:
-                            bills = unitOfWork.Bills.Find(w => w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
-                            break;
-
-                        case BillCaseText.Deleted:
-                            bills = unitOfWork.Bills.Find(w => w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
-                            break;
-
-                        default:
-                            break;
-                    }
+                    var bills = unitOfWork.Bills.Search(_selectedBillCase.Key, _key, _dateFrom, _dateTo);
 
                     foreach (var item in bills)
                     {

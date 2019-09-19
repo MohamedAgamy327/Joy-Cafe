@@ -11,6 +11,7 @@ namespace BLL.BillService
         int GetRecordsNumber(string billCase, string key, DateTime dtFrom, DateTime dtTo);
         Bill GetLastBill(int deviceId);
         List<BillDayDataModel> Search(DateTime date);
+        List<Bill> Search(string billCase, string key, DateTime dtFrom, DateTime dtTo);
         List<BillDisplayDataModel> Search(string billCase,string key, DateTime dtFrom, DateTime dtTo, int pageNumber, int pageSize);
         decimal? DevicesSum(string billCase, string key, DateTime dtFrom, DateTime dtTo);
         decimal? ItemsSum(string billCase, string key, DateTime dtFrom, DateTime dtTo);
