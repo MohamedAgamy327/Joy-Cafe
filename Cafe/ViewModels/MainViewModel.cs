@@ -268,7 +268,7 @@ namespace Cafe.ViewModels
 
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var user = unitOfWork.Users.SingleOrDefault(s => s.Name == _loginModel.Name && s.Password == _loginModel.Password && s.IsWorked == true);
+                    var user = unitOfWork.Users.FirstOrDefault(s => s.Name == _loginModel.Name && s.Password == _loginModel.Password && s.IsWorked == true);
 
                     if (user != null)
                     {

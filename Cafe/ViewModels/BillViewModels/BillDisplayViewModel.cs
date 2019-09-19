@@ -464,19 +464,19 @@ namespace Cafe.ViewModels.BillViewModels
                 switch (_selectedBillCase.Key)
                 {
                     case BillCaseText.All:
-                        bills = unitOfWork.Bills.Find(w => w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
+                        bills = unitOfWork.Bills.Find(w => w.TotalAfterDiscount <= 30 && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
                         break;
 
                     case BillCaseText.Available:
-                        bills = unitOfWork.Bills.Find(w => w.Deleted == false && w.Canceled == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
+                        bills = unitOfWork.Bills.Find(w => w.TotalAfterDiscount <= 30 && w.Deleted == false && w.Canceled == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
                         break;
 
                     case BillCaseText.Canceled:
-                        bills = unitOfWork.Bills.Find(w => w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
+                        bills = unitOfWork.Bills.Find(w => w.TotalAfterDiscount <= 30 && w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
                         break;
 
                     case BillCaseText.Deleted:
-                        bills = unitOfWork.Bills.Find(w => w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
+                        bills = unitOfWork.Bills.Find(w => w.TotalAfterDiscount <= 30 && w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
                         break;
 
                     default:

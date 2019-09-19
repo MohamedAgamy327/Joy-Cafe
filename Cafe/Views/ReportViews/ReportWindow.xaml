@@ -67,7 +67,7 @@
                            Style="{StaticResource NormalTileStyle}">
             </Controls:Tile>
 
-            <Controls:Tile Background="#008000"
+            <!--<Controls:Tile Background="#008000"
                            Command="{Binding NavigateToView}"
                            CommandParameter="Shifts"
                            Title="الشيفتات"
@@ -75,7 +75,7 @@
                            VerticalTitleAlignment="Center"
                            Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
                            Style="{StaticResource NormalTileStyle}">
-            </Controls:Tile>
+            </Controls:Tile>-->
 
             <Controls:Tile Background="#800080"
                            Command="{Binding NavigateToView}"

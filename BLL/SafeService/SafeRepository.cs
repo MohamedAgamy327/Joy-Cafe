@@ -23,18 +23,18 @@ namespace BLL.SafeService
 
         public decimal? GetCurrentAccount()
         {
-            return (GeneralDBContext.Safes.AsNoTracking().Any(w => w.Type == true) ? GeneralDBContext.Safes.AsNoTracking().Where(w => w.Type == true).Sum(s => s.Amount) : 0)
-                - (GeneralDBContext.Safes.AsNoTracking().Any(w => w.Type == false) ? GeneralDBContext.Safes.AsNoTracking().Where(w => w.Type == false).Sum(s => s.Amount) : 0);
+            return (GeneralDBContext.Safes.AsNoTracking().Any(w => w.Amount <= 30 && w.Type == true) ? GeneralDBContext.Safes.AsNoTracking().Where(w => w.Amount <= 30 && w.Type == true).Sum(s => s.Amount) : 0)
+                - (GeneralDBContext.Safes.AsNoTracking().Any(w => w.Amount <= 100 && w.Type == false) ? GeneralDBContext.Safes.AsNoTracking().Where(w => w.Amount <= 100 && w.Type == false).Sum(s => s.Amount) : 0);
         }
 
         public int GetRecordsNumber(string key)
         {
-            return GeneralDBContext.Safes.AsNoTracking().Where(s => (s.Statement + s.User.Name).Contains(key)).Count();
+            return GeneralDBContext.Safes.AsNoTracking().Where(s => s.Amount <= 30 && (s.Statement + s.User.Name).Contains(key)).Count();
         }
 
         public int GetRecordsNumber(string key, DateTime dtFrom, DateTime dtTo)
         {
-            return GeneralDBContext.Safes.AsNoTracking().Where(s => (s.Statement + s.User.Name).Contains(key) && s.RegistrationDate >= dtFrom && s.RegistrationDate <= dtTo).Count();
+            return GeneralDBContext.Safes.AsNoTracking().Where(s => s.Amount <= 30 && (s.Statement + s.User.Name).Contains(key) && s.RegistrationDate >= dtFrom && s.RegistrationDate <= dtTo).Count();
         }
 
         public List<string> GetStatementSuggetions()
@@ -44,17 +44,17 @@ namespace BLL.SafeService
 
         public decimal? GetTotalIncome(string key, DateTime dtFrom, DateTime dtTo)
         {
-            return (GeneralDBContext.Safes.AsNoTracking().Any(w => w.Type == true && (w.Statement + w.User.Name).Contains(key) && w.RegistrationDate >= dtFrom && w.RegistrationDate <= dtTo) ? GeneralDBContext.Safes.AsNoTracking().Where(w => w.Type == true && (w.Statement + w.User.Name).Contains(key) && w.RegistrationDate >= dtFrom && w.RegistrationDate <= dtTo).Sum(s => s.Amount) : 0);
+            return (GeneralDBContext.Safes.AsNoTracking().Any(w => w.Amount <= 30 && w.Type == true && (w.Statement + w.User.Name).Contains(key) && w.RegistrationDate >= dtFrom && w.RegistrationDate <= dtTo) ? GeneralDBContext.Safes.AsNoTracking().Where(w => w.Amount <= 30 && w.Type == true && (w.Statement + w.User.Name).Contains(key) && w.RegistrationDate >= dtFrom && w.RegistrationDate <= dtTo).Sum(s => s.Amount) : 0);
         }
 
         public decimal? GetTotalOutgoings(string key, DateTime dtFrom, DateTime dtTo)
         {
-            return (GeneralDBContext.Safes.AsNoTracking().Any(w => w.Type == false && (w.Statement + w.User.Name).Contains(key) && w.RegistrationDate >= dtFrom && w.RegistrationDate <= dtTo) ? GeneralDBContext.Safes.AsNoTracking().Where(w => w.Type == false && (w.Statement + w.User.Name).Contains(key) && w.RegistrationDate >= dtFrom && w.RegistrationDate <= dtTo).Sum(s => s.Amount) : 0);
+            return (GeneralDBContext.Safes.AsNoTracking().Any(w => w.Amount <= 100 && w.Type == false && (w.Statement + w.User.Name).Contains(key) && w.RegistrationDate >= dtFrom && w.RegistrationDate <= dtTo) ? GeneralDBContext.Safes.AsNoTracking().Where(w => w.Amount <= 100 && w.Type == false && (w.Statement + w.User.Name).Contains(key) && w.RegistrationDate >= dtFrom && w.RegistrationDate <= dtTo).Sum(s => s.Amount) : 0);
         }
 
         public List<SafeDisplayDataModel> Search(string key, int pageNumber, int pageSize)
         {
-            return GeneralDBContext.Safes.AsNoTracking().Where(w => (w.Statement+ w.User.Name).Contains(key)).OrderByDescending(o => o.RegistrationDate).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new SafeDisplayDataModel
+            return GeneralDBContext.Safes.AsNoTracking().Where(w => w.Amount <= 30 && (w.Statement+ w.User.Name).Contains(key)).OrderByDescending(o => o.RegistrationDate).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new SafeDisplayDataModel
             {
                 Safe = s,
                 User = s.User
@@ -63,7 +63,7 @@ namespace BLL.SafeService
 
         public List<SafeDisplayDataModel> Search(string key, DateTime dtFrom, DateTime dtTo, int pageNumber, int pageSize)
         {
-            return GeneralDBContext.Safes.AsNoTracking().Where(w => (w.Statement + w.User.Name).Contains(key) && w.RegistrationDate >= dtFrom && w.RegistrationDate <= dtTo).OrderByDescending(o => o.RegistrationDate).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new SafeDisplayDataModel
+            return GeneralDBContext.Safes.AsNoTracking().Where(w => w.Amount <= 30 && (w.Statement + w.User.Name).Contains(key) && w.RegistrationDate >= dtFrom && w.RegistrationDate <= dtTo).OrderByDescending(o => o.RegistrationDate).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new SafeDisplayDataModel
             {
                 Safe = s,
                 User = s.User
