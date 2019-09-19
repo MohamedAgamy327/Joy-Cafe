@@ -44,6 +44,7 @@ namespace Cafe.ViewModels
         public MainViewModel()
         {
             _isFocused = true;
+            _taxVisibility = System.Windows.Visibility.Collapsed;
             _loginModel = new LoginDataModel();
             currentWindow = System.Windows.Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
             backupDialog = new BackupDialog();
@@ -63,11 +64,19 @@ namespace Cafe.ViewModels
             //    unitOfWork.Complete();
             //}
         }
+
         private bool _isFocused;
         public bool IsFocused
         {
             get { return _isFocused; }
             set { SetProperty(ref _isFocused, value); }
+        }
+
+        private System.Windows.Visibility _taxVisibility;
+        public System.Windows.Visibility TaxVisibility
+        {
+            get { return _taxVisibility; }
+            set { SetProperty(ref _taxVisibility, value); }
         }
 
         private LoginDataModel _loginModel;
@@ -280,9 +289,15 @@ namespace Cafe.ViewModels
                         if (UserData.Role == RoleText.Admin)
                         {
                             Mouse.OverrideCursor = null;
+                            TaxVisibility = System.Windows.Visibility.Visible;
                             await currentWindow.HideMetroDialogAsync(loginDialog);
                         }
-
+                       else if (UserData.Role == RoleText.Tax)
+                        {
+                            Mouse.OverrideCursor = null;
+                            TaxVisibility = System.Windows.Visibility.Collapsed;
+                            await currentWindow.HideMetroDialogAsync(loginDialog);
+                        }
                         else
                         {
                             if (unitOfWork.Shifts.SingleOrDefault(s => s.UserID == user.ID && s.EndDate == null) != null)

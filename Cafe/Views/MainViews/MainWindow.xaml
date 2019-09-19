@@ -101,9 +101,9 @@
             <Controls:Tile Command="{Binding NavigateToView}" CommandParameter="User" Title="المستخدمين"   Background="#bb6475" Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource SmallTileStyle}" >
                 <iconPacks:PackIconMaterial Kind="AccountMultiple" Width="50" Height="50" />
             </Controls:Tile>
-            <!--<Controls:Tile Command="{Binding NavigateToView}" CommandParameter="Shifts" Title="الشيفتات" Background="#ffb38a"  Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource SmallTileStyle}" >
+            <Controls:Tile Visibility="{Binding TaxVisibility}" Command="{Binding NavigateToView}" CommandParameter="Shifts" Title="الشيفتات" Background="#ffb38a"  Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource SmallTileStyle}" >
                 <iconPacks:PackIconMaterial Kind="Timetable" Width="50" Height="50" />
-            </Controls:Tile>-->
+            </Controls:Tile>
 
             <Controls:Tile Command="{Binding NavigateToView}"
                            CommandParameter="Reports"
