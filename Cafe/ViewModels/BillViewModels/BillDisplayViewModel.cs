@@ -34,13 +34,13 @@ namespace Cafe.ViewModels.BillViewModels
 
                     if (_selectedBillCase.Key == BillCaseText.All)
                     {
-                        AvailableCount = unitOfWork.Bills.GetRecordsNumber(w => w.Canceled == false && w.Deleted == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo);
-                        DeletedCount = unitOfWork.Bills.GetRecordsNumber(w => w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo);
-                        CanceledCount = unitOfWork.Bills.GetRecordsNumber(w => w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo);
+                        AvailableCount = unitOfWork.Bills.GetRecordsNumber(BillCaseText.Available, _key, _dateFrom, _dateTo);
+                        DeletedCount = unitOfWork.Bills.GetRecordsNumber(BillCaseText.Deleted, _key, _dateFrom, _dateTo);
+                        CanceledCount = unitOfWork.Bills.GetRecordsNumber(BillCaseText.Canceled, _key, _dateFrom, _dateTo);
                     }
                     else if (_selectedBillCase.Key == BillCaseText.Available)
                     {
-                        AvailableCount = unitOfWork.Bills.GetRecordsNumber(w => w.Canceled == false && w.Deleted == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo);
+                        AvailableCount = unitOfWork.Bills.GetRecordsNumber(BillCaseText.Available, _key, _dateFrom, _dateTo);
                         DeletedCount = 0;
                         CanceledCount = 0;
                     }
@@ -48,12 +48,12 @@ namespace Cafe.ViewModels.BillViewModels
                     {
                         AvailableCount = 0;
                         DeletedCount = 0;
-                        CanceledCount = unitOfWork.Bills.GetRecordsNumber(w => w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo);
+                        CanceledCount = unitOfWork.Bills.GetRecordsNumber(BillCaseText.Canceled, _key, _dateFrom, _dateTo); ;
                     }
                     else if (_selectedBillCase.Key == BillCaseText.Deleted)
                     {
                         AvailableCount = 0;
-                        DeletedCount = unitOfWork.Bills.GetRecordsNumber(w => w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo);
+                        DeletedCount = unitOfWork.Bills.GetRecordsNumber(BillCaseText.Deleted, _key, _dateFrom, _dateTo);
                         CanceledCount = 0;
                     }
                     GetSum();
@@ -455,37 +455,43 @@ namespace Cafe.ViewModels.BillViewModels
             }
         }
 
-
         private void GetSum()
         {
             using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
             {
-                List<Bill> bills = null;
                 switch (_selectedBillCase.Key)
                 {
                     case BillCaseText.All:
-                        bills = unitOfWork.Bills.Find(w => w.TotalAfterDiscount <= 30 && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
+                        DevicesSum = unitOfWork.Bills.DevicesSum(BillCaseText.All, _key, _dateFrom, _dateTo);
+                        ItemsSum = unitOfWork.Bills.ItemsSum(BillCaseText.All, _key, _dateFrom, _dateTo);
+                        Discount = unitOfWork.Bills.DiscountSum(BillCaseText.All, _key, _dateFrom, _dateTo);
+                        TotalAfterDiscount = unitOfWork.Bills.TotalAfterDiscountSum(BillCaseText.All, _key, _dateFrom, _dateTo);
                         break;
 
                     case BillCaseText.Available:
-                        bills = unitOfWork.Bills.Find(w => w.TotalAfterDiscount <= 30 && w.Deleted == false && w.Canceled == false && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
+                        DevicesSum = unitOfWork.Bills.DevicesSum(BillCaseText.Available, _key, _dateFrom, _dateTo);
+                        ItemsSum = unitOfWork.Bills.ItemsSum(BillCaseText.Available, _key, _dateFrom, _dateTo);
+                        Discount = unitOfWork.Bills.DiscountSum(BillCaseText.Available, _key, _dateFrom, _dateTo);
+                        TotalAfterDiscount = unitOfWork.Bills.TotalAfterDiscountSum(BillCaseText.Available, _key, _dateFrom, _dateTo);
                         break;
 
                     case BillCaseText.Canceled:
-                        bills = unitOfWork.Bills.Find(w => w.TotalAfterDiscount <= 30 && w.Canceled == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
+                        DevicesSum = unitOfWork.Bills.DevicesSum(BillCaseText.Canceled, _key, _dateFrom, _dateTo);
+                        ItemsSum = unitOfWork.Bills.ItemsSum(BillCaseText.Canceled, _key, _dateFrom, _dateTo);
+                        Discount = unitOfWork.Bills.DiscountSum(BillCaseText.Canceled, _key, _dateFrom, _dateTo);
+                        TotalAfterDiscount = unitOfWork.Bills.TotalAfterDiscountSum(BillCaseText.Canceled, _key, _dateFrom, _dateTo);
                         break;
 
                     case BillCaseText.Deleted:
-                        bills = unitOfWork.Bills.Find(w => w.TotalAfterDiscount <= 30 && w.Deleted == true && w.EndDate != null && w.Type == BillTypeText.Devices && (w.ID.ToString() + w.Client.Name + w.User.Name + w.ID.ToString()).Contains(_key) && w.Date >= _dateFrom && w.Date <= _dateTo).OrderBy(o => o.ID).ToList();
+                        DevicesSum = unitOfWork.Bills.DevicesSum(BillCaseText.Deleted, _key, _dateFrom, _dateTo);
+                        ItemsSum = unitOfWork.Bills.ItemsSum(BillCaseText.Deleted, _key, _dateFrom, _dateTo);
+                        Discount = unitOfWork.Bills.DiscountSum(BillCaseText.Deleted, _key, _dateFrom, _dateTo);
+                        TotalAfterDiscount = unitOfWork.Bills.TotalAfterDiscountSum(BillCaseText.Deleted, _key, _dateFrom, _dateTo);
                         break;
 
                     default:
                         break;
                 }
-                DevicesSum = bills.Where(w => w.DevicesSum != null).Sum(s => Convert.ToDecimal(s.DevicesSum));
-                ItemsSum = bills.Where(w => w.ItemsSum != null).Sum(s => Convert.ToDecimal(s.ItemsSum));
-                Discount = bills.Where(w => w.Discount != null).Sum(s => Convert.ToDecimal(s.Discount));
-                TotalAfterDiscount = bills.Where(w => w.TotalAfterDiscount != null).Sum(s => Convert.ToDecimal(s.TotalAfterDiscount));
             }
         }
     }
