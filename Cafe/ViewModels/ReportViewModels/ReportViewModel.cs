@@ -3,8 +3,11 @@ using Cafe.ViewModels.ClientViewModels;
 using Cafe.ViewModels.ShiftViewModels;
 using Cafe.ViewModels.SpendingViewModels;
 using DAL.BindableBaseService;
+using DAL.ConstString;
+using DTO.UserDataModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using System.Windows;
 
 namespace Cafe.ViewModels.ReportViewModels
 {
@@ -16,6 +19,21 @@ namespace Cafe.ViewModels.ReportViewModels
         {
             Destination = "Clients";
             _currentViewModel = new ClientDisplayViewModel();
+            if (UserData.Role == RoleText.Admin)
+            {
+                _taxVisibility = Visibility.Visible;
+            }
+            else if (UserData.Role == RoleText.Tax)
+            {
+                _taxVisibility = Visibility.Collapsed;
+            }
+        }
+
+        private Visibility _taxVisibility;
+        public Visibility TaxVisibility
+        {
+            get { return _taxVisibility; }
+            set { SetProperty(ref _taxVisibility, value); }
         }
 
         private ViewModelBase _currentViewModel;
