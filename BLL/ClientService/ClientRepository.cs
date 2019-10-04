@@ -27,6 +27,11 @@ namespace BLL.ClientService
             return GeneralDBContext.Clients.Where(s => (s.Name + s.Telephone + s.Code).Contains(key)).Count();
         }
 
+        public List<string> GetTelephoneSuggetions()
+        {
+            return GeneralDBContext.Clients.AsNoTracking().OrderBy(o => o.Telephone).Select(s => s.Telephone).Distinct().ToList();
+        }
+
         public List<ClientDisplayDataModel> Search(string key, int pageNumber, int pageSize)
         {
             return GeneralDBContext.Clients.Where(w => (w.Name + w.Telephone + w.Code).Contains(key)).OrderBy(o => o.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).
@@ -48,9 +53,5 @@ namespace BLL.ClientService
                      .ToList();
         }
 
-        public List<string> GetTelephoneSuggetions()
-        {
-            return GeneralDBContext.Clients.AsNoTracking().OrderBy(o => o.Telephone).Select(s => s.Telephone).Distinct().ToList();
-        }
     }
 }

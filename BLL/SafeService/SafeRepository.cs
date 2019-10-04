@@ -23,23 +23,6 @@ namespace BLL.SafeService
             get { return Context as GeneralDBContext; }
         }
 
-        public decimal? GetCurrentAccount()
-        {
-            if (UserData.Role == RoleText.Admin)
-            {
-                return (GeneralDBContext.Safes.AsNoTracking().Any(w => w.Type == true) ? GeneralDBContext.Safes.AsNoTracking().Where(w => w.Type == true).Sum(s => s.Amount) : 0)
-                       - (GeneralDBContext.Safes.AsNoTracking().Any(w => w.Type == false) ? GeneralDBContext.Safes.AsNoTracking().Where(w => w.Type == false).Sum(s => s.Amount) : 0);
-            }
-            else if (UserData.Role == RoleText.Tax)
-            {
-                return (GeneralDBContext.Safes.AsNoTracking().Any(w => w.Amount <= 30 && w.Type == true) ? GeneralDBContext.Safes.AsNoTracking().Where(w => w.Amount <= 30 && w.Type == true).Sum(s => s.Amount) : 0)
-       - (GeneralDBContext.Safes.AsNoTracking().Any(w => w.Amount <= 100 && w.Type == false) ? GeneralDBContext.Safes.AsNoTracking().Where(w => w.Amount <= 100 && w.Type == false).Sum(s => s.Amount) : 0);
-            }
-            else
-                return null;
-
-        }
-
         public int GetRecordsNumber(string key)
         {
             if (UserData.Role == RoleText.Admin)
@@ -71,9 +54,21 @@ namespace BLL.SafeService
 
         }
 
-        public List<string> GetStatementSuggetions()
+        public decimal? GetCurrentAccount()
         {
-            return GeneralDBContext.Safes.AsNoTracking().Where(w => w.CanDelete == true).OrderBy(o => o.Statement).Select(s => s.Statement).Distinct().ToList();
+            if (UserData.Role == RoleText.Admin)
+            {
+                return (GeneralDBContext.Safes.AsNoTracking().Any(w => w.Type == true) ? GeneralDBContext.Safes.AsNoTracking().Where(w => w.Type == true).Sum(s => s.Amount) : 0)
+                       - (GeneralDBContext.Safes.AsNoTracking().Any(w => w.Type == false) ? GeneralDBContext.Safes.AsNoTracking().Where(w => w.Type == false).Sum(s => s.Amount) : 0);
+            }
+            else if (UserData.Role == RoleText.Tax)
+            {
+                return (GeneralDBContext.Safes.AsNoTracking().Any(w => w.Amount <= 30 && w.Type == true) ? GeneralDBContext.Safes.AsNoTracking().Where(w => w.Amount <= 30 && w.Type == true).Sum(s => s.Amount) : 0)
+       - (GeneralDBContext.Safes.AsNoTracking().Any(w => w.Amount <= 100 && w.Type == false) ? GeneralDBContext.Safes.AsNoTracking().Where(w => w.Amount <= 100 && w.Type == false).Sum(s => s.Amount) : 0);
+            }
+            else
+                return null;
+
         }
 
         public decimal? GetTotalIncome(string key, DateTime dtFrom, DateTime dtTo)
@@ -104,6 +99,11 @@ namespace BLL.SafeService
             else
                 return null;
 
+        }
+
+        public List<string> GetStatementSuggetions()
+        {
+            return GeneralDBContext.Safes.AsNoTracking().Where(w => w.CanDelete == true).OrderBy(o => o.Statement).Select(s => s.Statement).Distinct().ToList();
         }
 
         public List<SafeDisplayDataModel> Search(string key, int pageNumber, int pageSize)

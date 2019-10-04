@@ -18,6 +18,9 @@
             <DataTemplate DataType = "{x:Type viewModels:ItemDisplayViewModel}">
                 <views:ItemUserControl/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:ItemReportViewModel}">
+                <views:ItemReportUserControl />
+            </DataTemplate>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\..\Skins\MainSkin.xaml"/>
             </ResourceDictionary.MergedDictionaries>
@@ -32,8 +35,17 @@
 
         <StackPanel Orientation="Horizontal" Margin="5">
 
-
             <Controls:Tile Background="#808000" Command="{Binding NavigateToView}" CommandParameter="ItemDisplay" Title="الأصناف" HorizontalTitleAlignment="Center" VerticalTitleAlignment="Center"   Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource NormalTileStyle}"  >
+            </Controls:Tile>
+
+            <Controls:Tile Background="#708090"
+                           Command="{Binding NavigateToView}"
+                           CommandParameter="ItemReport"
+                           Title="التقارير"
+                           HorizontalTitleAlignment="Center"
+                           VerticalTitleAlignment="Center"
+                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
+                           Style="{StaticResource NormalTileStyle}">
             </Controls:Tile>
 
         </StackPanel>

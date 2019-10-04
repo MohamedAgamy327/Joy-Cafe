@@ -1,5 +1,6 @@
 ﻿using Cafe.ViewModels.BillViewModels;
 using Cafe.ViewModels.ClientViewModels;
+using Cafe.ViewModels.ItemViewModels;
 using Cafe.ViewModels.ShiftViewModels;
 using Cafe.ViewModels.SpendingViewModels;
 using DAL.BindableBaseService;
@@ -70,6 +71,9 @@ namespace Cafe.ViewModels.ReportViewModels
                         break;
                     case "Spendings":
                         CurrentViewModel = new SpendingReportViewModel();
+                        break;
+                    case "Items":
+                        CurrentViewModel = new ItemReportViewModel();
                         break;
                     default:
                         break;

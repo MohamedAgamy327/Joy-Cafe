@@ -1582,7 +1582,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     if (!_shift.NewShift)
                     {
                         currentWindow.Close();
-                        new MainViewModel().NavigateToViewMethodAsync("SignOut");
+                        new MainViewModel().ExecuteShutdown();
                     }
                     else
                     {

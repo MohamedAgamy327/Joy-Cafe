@@ -6,10 +6,12 @@
                       xmlns:billViews="clr-namespace:Cafe.Views.BillViews"
                       xmlns:shiftViews="clr-namespace:Cafe.Views.ShiftViews"
                       xmlns:spendingViews="clr-namespace:Cafe.Views.SpendingViews"
+                      xmlns:itemViews="clr-namespace:Cafe.Views.ItemViews"
                       xmlns:clientViewModels="clr-namespace:Cafe.ViewModels.ClientViewModels"
                       xmlns:billViewModels="clr-namespace:Cafe.ViewModels.BillViewModels"
                       xmlns:shiftViewModels="clr-namespace:Cafe.ViewModels.ShiftViewModels"
                       xmlns:spendingViewModels="clr-namespace:Cafe.ViewModels.SpendingViewModels"
+                      xmlns:itemViewModels="clr-namespace:Cafe.ViewModels.ItemViewModels"
                       Title="التقارير"
                       Height="1000"
                       Width="1024"
@@ -31,6 +33,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type spendingViewModels:SpendingReportViewModel}">
                 <spendingViews:SpendingReportUserControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type itemViewModels:ItemReportViewModel}">
+                <itemViews:ItemReportUserControl />
             </DataTemplate>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\..\Skins\MainSkin.xaml" />
@@ -81,6 +86,16 @@
                            Command="{Binding NavigateToView}"
                            CommandParameter="Spendings"
                            Title="المصاريف"
+                           HorizontalTitleAlignment="Center"
+                           VerticalTitleAlignment="Center"
+                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
+                           Style="{StaticResource NormalTileStyle}">
+            </Controls:Tile>
+
+            <Controls:Tile Background="#708090"
+                           Command="{Binding NavigateToView}"
+                           CommandParameter="Items"
+                           Title="التقارير"
                            HorizontalTitleAlignment="Center"
                            VerticalTitleAlignment="Center"
                            Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"

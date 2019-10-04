@@ -37,6 +37,15 @@ namespace DAL.Migrations
                     new DeviceType() { Name = DeviceTypeText.Royal, MultiHourPrice = 0, MultiMinutePrice = 0, SingleHourPrice = 0, SingleMinutePrice = 0 },
                     new DeviceType() { Name = DeviceTypeText.VR, MultiHourPrice = 0, MultiMinutePrice = 0, SingleHourPrice = 0, SingleMinutePrice = 0 }
                 });
+                
+                base.Seed(context);
+            }
+            if (context.Roles.Count() < 3)
+            {
+                context.Roles.Add(new Role
+                {
+                    Name = RoleText.Tax
+                });
                 base.Seed(context);
             }
         }

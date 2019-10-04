@@ -9,12 +9,10 @@ using DAL;
 using DAL.ConstString;
 using System.Windows;
 using System.Linq;
-using DAL.Entities;
 using Excel = Microsoft.Office.Interop.Excel;
 using Cafe.Views.BillViews;
 using MahApps.Metro.Controls;
 using System.Windows.Input;
-using System.Collections.Generic;
 
 namespace Cafe.ViewModels.BillViewModels
 {

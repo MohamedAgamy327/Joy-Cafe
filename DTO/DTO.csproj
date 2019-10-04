@@ -88,6 +88,7 @@
     <Compile Include="DeviceTypeDataModel\DeviceTypeUpdateDataModel.cs" />
     <Compile Include="ItemDataModel\ItemAddDataModel.cs" />
     <Compile Include="ItemDataModel\ItemDisplayDataModel.cs" />
+    <Compile Include="ItemDataModel\ItemReportDataModel.cs" />
     <Compile Include="ItemDataModel\ItemUpdateDataModel.cs" />
     <Compile Include="MainDataModel\BackupDataModel.cs" />
     <Compile Include="MainDataModel\LoginDataModel.cs" />

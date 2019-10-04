@@ -43,11 +43,6 @@ namespace BLL.SpendingService
 
         }
 
-        public List<string> GetStatementSuggetions()
-        {
-            return GeneralDBContext.Spendings.AsNoTracking().OrderBy(o => o.Statement).Select(s => s.Statement).Distinct().ToList();
-        }
-
         public decimal? GetTotalAmount(string key, DateTime dtFrom, DateTime dtTo)
         {
             if (UserData.Role == RoleText.Admin)
@@ -62,26 +57,18 @@ namespace BLL.SpendingService
                 return null;
         }
 
+        public List<string> GetStatementSuggetions()
+        {
+            return GeneralDBContext.Spendings.AsNoTracking().OrderBy(o => o.Statement).Select(s => s.Statement).Distinct().ToList();
+        }
+
         public List<SpendingDisplayDataModel> Search(string key, int userID)
         {
-            if (UserData.Role == RoleText.Admin)
+            return GeneralDBContext.Spendings.AsNoTracking().Where(w => w.UserID == userID && w.Statement.Contains(key) && w.RegistrationDate >= w.User.Shifts.FirstOrDefault(f => f.EndDate == null).StartDate && w.RegistrationDate <= DateTime.Now).OrderByDescending(o => o.RegistrationDate).Select(s => new SpendingDisplayDataModel
             {
-                return GeneralDBContext.Spendings.AsNoTracking().Where(w => w.UserID == userID && w.Statement.Contains(key) && w.RegistrationDate >= w.User.Shifts.FirstOrDefault(f => f.EndDate == null).StartDate && w.RegistrationDate <= DateTime.Now).OrderByDescending(o => o.RegistrationDate).Select(s => new SpendingDisplayDataModel
-                {
-                    Spending = s,
-                    User = s.User
-                }).ToList();
-            }
-            else if (UserData.Role == RoleText.Tax)
-            {
-                return GeneralDBContext.Spendings.AsNoTracking().Where(w => w.Amount <= 100 && w.UserID == userID && w.Statement.Contains(key) && w.RegistrationDate >= w.User.Shifts.FirstOrDefault(f => f.EndDate == null).StartDate && w.RegistrationDate <= DateTime.Now).OrderByDescending(o => o.RegistrationDate).Select(s => new SpendingDisplayDataModel
-                {
-                    Spending = s,
-                    User = s.User
-                }).ToList();
-            }
-            else
-                return null;
+                Spending = s,
+                User = s.User
+            }).ToList();
 
         }
 

@@ -30,6 +30,7 @@ namespace Cafe.ViewModels
             SimpleIoc.Default.Register<DeviceDisplayViewModel>();
             SimpleIoc.Default.Register<ItemViewModel>();
             SimpleIoc.Default.Register<ItemDisplayViewModel>();
+            SimpleIoc.Default.Register<ItemReportViewModel>();
             SimpleIoc.Default.Register<ClientViewModel>();
             SimpleIoc.Default.Register<ClientDisplayViewModel>();
             SimpleIoc.Default.Register<ClientPointViewModel>();
@@ -133,6 +134,14 @@ namespace Cafe.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<ItemDisplayViewModel>();
+            }
+        }
+
+        public ItemReportViewModel ItemReport
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ItemReportViewModel>();
             }
         }
 
@@ -379,6 +388,11 @@ namespace Cafe.ViewModels
                 case "ItemDisplay":
                     SimpleIoc.Default.Unregister<ItemDisplayViewModel>();
                     SimpleIoc.Default.Register<ItemDisplayViewModel>();
+                    break;
+
+                case "ItemReport":
+                    SimpleIoc.Default.Unregister<ItemReportViewModel>();
+                    SimpleIoc.Default.Register<ItemReportViewModel>();
                     break;
 
                 case "Client":

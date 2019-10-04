@@ -17,11 +17,6 @@ namespace BLL.RepositoryService
             _entities = context.Set<TEntity>();
         }
 
-        public TEntity Add(TEntity entity)
-        {
-            return _entities.Add(entity);
-        }
-
         public void AddRange(IEnumerable<TEntity> entities)
         {
             _entities.AddRange(entities);
@@ -42,6 +37,21 @@ namespace BLL.RepositoryService
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
             _entities.RemoveRange(entities);
+        }
+
+        public int GetRecordsNumber()
+        {
+            return _entities.Count();
+        }
+
+        public int GetRecordsNumber(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _entities.Where(predicate).Count();
+        }
+
+        public TEntity Add(TEntity entity)
+        {
+            return _entities.Add(entity);
         }
 
         public TEntity Get(int id)
@@ -74,13 +84,5 @@ namespace BLL.RepositoryService
             return _entities.AsNoTracking().ToList();
         }
 
-        public int GetRecordsNumber()
-        {
-            return _entities.Count();
-        }
-        public int GetRecordsNumber(Expression<Func<TEntity, bool>> predicate)
-        {
-            return _entities.Where(predicate).Count();
-        }
     }
 }

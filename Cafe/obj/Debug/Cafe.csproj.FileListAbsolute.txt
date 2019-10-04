@@ -1220,3 +1220,5 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.GenerateResource.Cac
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ShiftViews\ShiftsReportDialog.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ShiftViews\ShiftsReportDialog.g.cs
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csprojResolveAssemblyReference.cache
+D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ItemViews\ItemReportUserControl.g.cs
+D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ItemViews\ItemReportUserControl.baml

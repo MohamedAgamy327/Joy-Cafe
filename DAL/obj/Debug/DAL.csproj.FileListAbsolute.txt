@@ -199,4 +199,3 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.Migrations.addpointuse.resour
 D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.csproj.GenerateResource.cache
 D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.dll
 D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.pdb
-D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
