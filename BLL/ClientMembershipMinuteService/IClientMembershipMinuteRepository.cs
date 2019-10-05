@@ -9,6 +9,8 @@ namespace BLL.ClientMembershipMinuteService
     {
         int GetRecordsNumber(string key);
 
-        List<ClientMembershipMinutesDisplayDataModel> Search(string key, int pageNumber, int pageSize);
+        ClientMembershipMinute GetByDeviceTypeClient(int deviceTypeID, int clientId);
+
+        IEnumerable<ClientMembershipMinutesDisplayDataModel> Search(string key, int pageNumber, int pageSize);
     }
 }

@@ -178,6 +178,7 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\bin\Debug\GalaSoft.MvvmLight.Extras.pdb
 D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\bin\Debug\GalaSoft.MvvmLight.Extras.xml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\bin\Debug\GalaSoft.MvvmLight.Platform.pdb
 D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\bin\Debug\GalaSoft.MvvmLight.Platform.xml
+D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.Migrations.StartDB.resources
 D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.Migrations.newUpdate.resources
 D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.Migrations.client.resources
@@ -196,6 +197,6 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.Migrations.updatediscount.res
 D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.Migrations.addpoints.resources
 D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.Migrations.addpointssystem.resources
 D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.Migrations.addpointuse.resources
-D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.csproj.GenerateResource.cache
+D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.csproj.GenerateResource.Cache
 D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.dll
 D:\Projects\Me\Joy Cafe\Joy-Cafe\DAL\obj\Debug\DAL.pdb

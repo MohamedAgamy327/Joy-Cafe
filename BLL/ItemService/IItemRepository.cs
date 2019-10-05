@@ -16,10 +16,16 @@ namespace BLL.ItemService
 
         decimal? TotalAmount(string key, DateTime dtFrom, DateTime dtTo);
 
-        List<ItemDisplayDataModel> Search(string key, int pageNumber, int pageSize);
+        Item GetByName(string name);
 
-        List<ItemReportDataModel> Search(string key, DateTime dtFrom, DateTime dtTo);
+        Item GetByIdName(int id, string name);
 
-        List<ItemReportDataModel> Search(string key, int pageNumber, int pageSize, DateTime dtFrom, DateTime dtTo);
+        IEnumerable<Item> Search();
+
+        IEnumerable<ItemDisplayDataModel> Search(string key, int pageNumber, int pageSize);
+
+        IEnumerable<ItemReportDataModel> Search(string key, DateTime dtFrom, DateTime dtTo);
+
+        IEnumerable<ItemReportDataModel> Search(string key, int pageNumber, int pageSize, DateTime dtFrom, DateTime dtTo);
     }
 }

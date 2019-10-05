@@ -6,6 +6,7 @@ using DTO.DeviceDataModel;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System;
 
 namespace BLL.DeviceService
 {
@@ -16,19 +17,49 @@ namespace BLL.DeviceService
         {
         }
 
-        public GeneralDBContext GeneralDBContext
+        public new GeneralDBContext GeneralDBContext
         {
             get { return Context as GeneralDBContext; }
         }
 
         public int GetRecordsNumber(string key)
         {
-            return GeneralDBContext.Devices.Where(s => (s.Name + s.DeviceType.Name).Contains(key)).Count();
+            return GeneralDBContext.Devices.AsNoTracking().Where(s => (s.Name + s.DeviceType.Name).Contains(key)).Count();
         }
 
-        public List<DeviceDisplayDataModel> Search(string key, int pageNumber, int pageSize)
+        public Device GetById(int id)
         {
-            return GeneralDBContext.Devices.Where(w => (w.Name + w.DeviceType.Name).Contains(key)).OrderBy(o => o.Order).ThenBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new DeviceDisplayDataModel
+            return GeneralDBContext.Devices.Find(id);
+        }
+
+        public Device GetByBill(int billId)
+        {
+            return GeneralDBContext.Devices.AsNoTracking().SingleOrDefault(s => s.BillID == billId);
+        }
+
+        public Device GetByOrder(int order)
+        {
+            return GeneralDBContext.Devices.AsNoTracking().SingleOrDefault(s => s.Order == order);
+        }
+
+        public Device GetByIdOrder(int id, int order)
+        {
+            return GeneralDBContext.Devices.AsNoTracking().SingleOrDefault(s => s.ID != id && s.Order == order);
+        }
+
+        public Device GetByNameDeviceType(string name, int deviceTypeId)
+        {
+            return GeneralDBContext.Devices.AsNoTracking().SingleOrDefault(s => s.Name == name && s.DeviceTypeID == deviceTypeId);
+        }
+
+        public Device GetByIdNameDeviceType(int id, string name, int deviceTypeId)
+        {
+            return GeneralDBContext.Devices.AsNoTracking().SingleOrDefault(s => s.ID != id && s.Name == name && s.DeviceTypeID == deviceTypeId);
+        }
+
+        public IEnumerable<DeviceDisplayDataModel> Search(string key, int pageNumber, int pageSize)
+        {
+            return GeneralDBContext.Devices.AsNoTracking().Where(w => (w.Name + w.DeviceType.Name).Contains(key)).OrderBy(o => o.Order).ThenBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new DeviceDisplayDataModel
             {
                 Device = s,
                 DeviceType = s.DeviceType,
@@ -37,7 +68,7 @@ namespace BLL.DeviceService
             }).ToList();
         }
 
-        public List<DevicePlayDataModel> GetAvailable()
+        public IEnumerable<DevicePlayDataModel> GetAvailable()
         {
             string url = @"../../Resources/Icons/";
             return GeneralDBContext.Devices.AsNoTracking().Where(w => w.IsAvailable == true).OrderBy(o => o.Order).ThenBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Select(s => new DevicePlayDataModel
@@ -53,7 +84,7 @@ namespace BLL.DeviceService
 
         }
 
-        public List<DeviceFreeDataModel> GetFree(string gameType)
+        public IEnumerable<DeviceFreeDataModel> GetFree(string gameType)
         {
             string url = @"../../Resources/Icons/";
             if (gameType == GamePlayTypeText.Birthday)

@@ -9,6 +9,14 @@ namespace BLL.UserService
     {
         int GetRecordsNumber(string key);
 
-        List<UserDisplayDataModel> Search(string key, int pageNumber, int pageSize);
+        int GetWorkedUsers(string role);
+
+        User GetByName(string name);
+
+        User GetByIdName(int id, string name);
+
+        User Login(string name, string password);
+
+        IEnumerable<UserDisplayDataModel> Search(string key, int pageNumber, int pageSize);
     }
 }

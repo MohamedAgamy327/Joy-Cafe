@@ -107,7 +107,7 @@ namespace Cafe.ViewModels.SafeViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    _statementSuggestions = unitOfWork.Safes.GetStatementSuggetions();
+                    _statementSuggestions = unitOfWork.Safes.GetStatementSuggetions().ToList();
                 }
                 Load();
             }

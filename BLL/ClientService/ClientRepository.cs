@@ -17,24 +17,54 @@ namespace BLL.ClientService
         {
         }
 
-        public GeneralDBContext GeneralDBContext
+        public new GeneralDBContext GeneralDBContext
         {
             get { return Context as GeneralDBContext; }
         }
 
         public int GetRecordsNumber(string key)
         {
-            return GeneralDBContext.Clients.Where(s => (s.Name + s.Telephone + s.Code).Contains(key)).Count();
+            return GeneralDBContext.Clients.AsNoTracking().Where(s => (s.Name + s.Telephone + s.Code).Contains(key)).Count();
         }
 
-        public List<string> GetTelephoneSuggetions()
+        public Client GetById(int id)
+        {
+            return GeneralDBContext.Clients.Find(id);
+        }
+
+        public Client GetByTelephone(string telephone)
+        {
+            return GeneralDBContext.Clients.AsNoTracking().SingleOrDefault(s => s.Telephone == telephone);
+        }
+
+        public Client GetByCodeTelephone(string code, string telephone)
+        {
+            return GeneralDBContext.Clients.AsNoTracking().SingleOrDefault(s => s.Code == code || s.Telephone == telephone);
+        }
+
+        public Client GetByIdCodeTelephone(int id, string code, string telephone)
+        {
+            return GeneralDBContext.Clients.AsNoTracking().SingleOrDefault(s => s.ID != id && (s.Code == code || s.Telephone == telephone));
+        }
+
+        public IEnumerable<string> GetTelephoneSuggetions()
         {
             return GeneralDBContext.Clients.AsNoTracking().OrderBy(o => o.Telephone).Select(s => s.Telephone).Distinct().ToList();
         }
 
-        public List<ClientDisplayDataModel> Search(string key, int pageNumber, int pageSize)
+        public IEnumerable<Client> Search()
         {
-            return GeneralDBContext.Clients.Where(w => (w.Name + w.Telephone + w.Code).Contains(key)).OrderBy(o => o.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).
+            return GeneralDBContext.Clients.AsNoTracking().Where(w => w.Code != null).OrderBy(o => o.Name).ToList();
+        }
+
+        public IEnumerable<Client> Search(string key)
+        {
+            return GeneralDBContext.Clients.AsNoTracking().Where(w => (w.Name + w.Telephone + w.Code).Contains(key)).OrderBy(o => o.Name).ToList();
+        }
+
+        public IEnumerable<ClientDisplayDataModel> Search(string key, int pageNumber, int pageSize)
+        {
+            return GeneralDBContext.Clients.AsNoTracking().Where(w => (w.Name + w.Telephone + w.Code).Contains(key)).OrderBy(o => o.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).
       Select(s => new ClientDisplayDataModel
       {
           Client = s,
@@ -42,7 +72,7 @@ namespace BLL.ClientService
       }).ToList();
         }
 
-        public List<ClientPointDataModel> Search(string key, int pageNumber, int pageSize, DateTime dtFrom, DateTime dtTo)
+        public IEnumerable<ClientPointDataModel> Search(string key, int pageNumber, int pageSize, DateTime dtFrom, DateTime dtTo)
         {
             return GeneralDBContext.Clients.AsNoTracking().Where(w => (w.Name + w.Telephone + w.Code).Contains(key)).OrderBy(o => o.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize)
                    .Select(s => new ClientPointDataModel

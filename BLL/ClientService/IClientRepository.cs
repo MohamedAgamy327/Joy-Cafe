@@ -10,10 +10,22 @@ namespace BLL.ClientService
     {
         int GetRecordsNumber(string key);
 
-        List<string> GetTelephoneSuggetions();
+        Client GetById(int id);
 
-        List<ClientDisplayDataModel> Search(string key, int pageNumber, int pageSize);
+        Client GetByCodeTelephone(string code, string telephone);
 
-        List<ClientPointDataModel> Search(string key, int pageNumber, int pageSize, DateTime dtFrom, DateTime dtTo);
+        Client GetByTelephone(string telephone);
+
+        Client GetByIdCodeTelephone(int id, string code, string telephone);
+
+        IEnumerable<string> GetTelephoneSuggetions();
+
+        IEnumerable<Client> Search();
+
+        IEnumerable<Client> Search(string key);
+
+        IEnumerable<ClientDisplayDataModel> Search(string key, int pageNumber, int pageSize);
+
+        IEnumerable<ClientPointDataModel> Search(string key, int pageNumber, int pageSize, DateTime dtFrom, DateTime dtTo);
     }
 }

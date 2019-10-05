@@ -271,7 +271,7 @@ namespace Cafe.ViewModels.MembershipViewModels
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var membership = unitOfWork.Memberships.SingleOrDefault(s => s.Name == _newMembership.Name && s.DeviceTypeID == _newMembership.DeviceTypeID);
+                    var membership = unitOfWork.Memberships.GetByNameDeviceType(_newMembership.Name, _newMembership.DeviceTypeID);
                     if (membership != null)
                     {
                         await currentWindow.ShowMessageAsync("فشل الإضافة", "هذه العضوية موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
@@ -359,7 +359,7 @@ namespace Cafe.ViewModels.MembershipViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var membership = unitOfWork.Devices.SingleOrDefault(s => s.Name == _membershipUpdate.Name && s.DeviceTypeID == _membershipUpdate.DeviceTypeID && s.ID != _membershipUpdate.ID);
+                    var membership = unitOfWork.Memberships.GetByIdNameDeviceType(_membershipUpdate.ID, _membershipUpdate.Name, _membershipUpdate.DeviceTypeID);
                     if (membership != null)
                     {
                         await currentWindow.ShowMessageAsync("فشل الإضافة", "هذه العضوية موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()

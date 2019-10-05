@@ -7,8 +7,10 @@ namespace BLL.BillItemService
 {
     public interface IBillItemRepository : IGenericRepository<BillItem>
     {
-        List<ShiftItemDisplayDataModel> GetShiftItems();
+        decimal GetBillItemsTotal();
 
-        List<BillItemDisplayDataModel> GetBillItems(int billID);
+        IEnumerable<ShiftItemDisplayDataModel> GetShiftItems();
+
+        IEnumerable<BillItemDisplayDataModel> GetBillItems(int billID);
     }
 }

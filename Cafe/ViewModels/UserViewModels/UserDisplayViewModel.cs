@@ -274,7 +274,7 @@ namespace Cafe.ViewModels.UserViewModels
 
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var user = unitOfWork.Users.SingleOrDefault(s => s.Name == _newUser.Name);
+                    var user = unitOfWork.Users.GetByName(_newUser.Name);
 
                     if (user != null)
                     {
@@ -364,7 +364,7 @@ namespace Cafe.ViewModels.UserViewModels
 
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var user = unitOfWork.Users.SingleOrDefault(s => s.Name == UserUpdate.Name && s.ID != UserUpdate.ID);
+                    var user = unitOfWork.Users.GetByIdName(_userUpdate.ID, _userUpdate.Name);
                     if (user != null)
                     {
                         await currentWindow.ShowMessageAsync("فشل التعديل", "هذا المستخدم موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
@@ -374,7 +374,7 @@ namespace Cafe.ViewModels.UserViewModels
                             DialogTitleFontSize = 30
                         });
                     }
-                    else if (UserUpdate.IsWorked == false && UserUpdate.Role.Name == RoleText.Admin && unitOfWork.Users.Find(f => f.Role.Name == RoleText.Admin && f.IsWorked == true).Count() == 1)
+                    else if (_userUpdate.IsWorked == false && _userUpdate.Role.Name == RoleText.Admin && unitOfWork.Users.GetWorkedUsers(RoleText.Admin) == 1)
                     {
                         await currentWindow.ShowMessageAsync("فشل التعديل", "لا يوجد مستخدم آخر لديه نفس الصلاحيات يجب اضافة مستخدم اخر بنفس الصلاحيات ثم تعديل هذا المستخدم", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {
@@ -383,7 +383,7 @@ namespace Cafe.ViewModels.UserViewModels
                             DialogTitleFontSize = 30
                         });
                     }
-                    else if (UserUpdate.IsWorked == false && UserUpdate.Role.Name == RoleText.Cashier && unitOfWork.Users.Find(f => f.Role.Name == RoleText.Cashier && f.IsWorked == true).Count() == 2)
+                    else if (_userUpdate.IsWorked == false && _userUpdate.Role.Name == RoleText.Cashier && unitOfWork.Users.GetWorkedUsers(RoleText.Cashier) == 2)
                     {
                         await currentWindow.ShowMessageAsync("فشل التعديل", "يجب ان يكون لديك مستخدمين على الاقل لهم نفس الصلاحيات لكى تستطيع تعديل هذا المستخدم", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                         {

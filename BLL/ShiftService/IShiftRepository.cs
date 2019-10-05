@@ -10,6 +10,22 @@ namespace BLL.ShiftService
     {
         int GetRecordsNumber(string key, DateTime dtFrom, DateTime dtTo);
 
-        List<ShiftDisplayDataModel> Search(string key, DateTime dtFrom, DateTime dtTo, int pageNumber, int pageSize);
+        decimal? GetTotalMinimum(DateTime dtFrom, DateTime dtTo);
+
+        decimal? GetTotalDevices(DateTime dtFrom, DateTime dtTo);
+
+        decimal? GetTotalItems(DateTime dtFrom, DateTime dtTo);
+
+        decimal? GetTotalDiscount(DateTime dtFrom, DateTime dtTo);
+
+        decimal? GetTotalSpending(DateTime dtFrom, DateTime dtTo);
+
+        decimal? GetTotalIncome(DateTime dtFrom, DateTime dtTo);
+
+        Shift GetActive();
+
+        IEnumerable<Shift> Search(string key, DateTime dtFrom, DateTime dtTo);
+
+        IEnumerable<ShiftDisplayDataModel> Search(string key, DateTime dtFrom, DateTime dtTo, int pageNumber, int pageSize);
     }
 }

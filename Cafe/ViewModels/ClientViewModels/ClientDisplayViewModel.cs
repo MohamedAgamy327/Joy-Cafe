@@ -256,7 +256,7 @@ namespace Cafe.ViewModels.ClientViewModels
                 xlWorkSheet.Cells[1, 3] = "النقاط";
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var clients = unitOfWork.Clients.Find(w => (w.Name + w.Telephone + w.Code).Contains(_key)).OrderBy(o => o.Name);
+                    var clients = unitOfWork.Clients.Search(_key);
                     foreach (var item in clients)
                     {
                         xlWorkSheet.Cells[i, 2].NumberFormat = "@";
@@ -348,7 +348,7 @@ namespace Cafe.ViewModels.ClientViewModels
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var client = unitOfWork.Clients.SingleOrDefault(s => s.Code == _newClient.Code || s.Telephone == _newClient.Telephone);
+                    var client = unitOfWork.Clients.GetByCodeTelephone(_newClient.Code, _newClient.Telephone);
                     if (client != null)
                     {
                         await currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالعميل موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
@@ -432,7 +432,7 @@ namespace Cafe.ViewModels.ClientViewModels
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var client = unitOfWork.Clients.SingleOrDefault(s => (s.Telephone == _clientUpdate.Telephone || s.Code == _clientUpdate.Code) && s.ID != _clientUpdate.ID);
+                    var client = unitOfWork.Clients.GetByIdCodeTelephone(_clientUpdate.ID, _clientUpdate.Code, _clientUpdate.Telephone);
                     if (client != null)
                     {
                         await currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالعميل موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()

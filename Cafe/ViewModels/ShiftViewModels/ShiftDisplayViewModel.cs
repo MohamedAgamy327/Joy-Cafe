@@ -280,7 +280,7 @@ namespace Cafe.ViewModels.ShiftViewModels
 
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var shifts = unitOfWork.Shifts.Find(w => (w.User.Name).Contains(_key) && w.StartDate >= _dateFrom && w.StartDate <= _dateTo).OrderByDescending(o => o.StartDate);
+                    var shifts = unitOfWork.Shifts.Search(_key,_dateFrom,_dateTo);
                     foreach (var item in shifts)
                     {
                         xlWorkSheet.Cells[i, 2].NumberFormat = "@";
@@ -356,12 +356,12 @@ namespace Cafe.ViewModels.ShiftViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    ShiftsReport.TotalMinimum = unitOfWork.Shifts.FindSum(f => f.TotalMinimum != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.TotalMinimum) ?? 0;
-                    ShiftsReport.TotalDevices = unitOfWork.Shifts.FindSum(f => f.TotalDevices != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.TotalDevices) ?? 0;
-                    ShiftsReport.TotalItems = unitOfWork.Shifts.FindSum(f => f.TotalItems != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.TotalItems) ?? 0;
-                    ShiftsReport.TotalDiscount = unitOfWork.Shifts.FindSum(f => f.TotalDiscount != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.TotalDiscount) ?? 0;
-                    ShiftsReport.TotalSpending = unitOfWork.Shifts.FindSum(f => f.Spending != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.Spending) ?? 0;
-                    ShiftsReport.TotalIncome = unitOfWork.Shifts.FindSum(f => f.Income != null && f.EndDate >= _dateFrom && f.EndDate <= _dateTo).Sum(s => s.Income) ?? 0;
+                    ShiftsReport.TotalMinimum = unitOfWork.Shifts.GetTotalMinimum(_dateFrom,_dateTo);
+                    ShiftsReport.TotalDevices = unitOfWork.Shifts.GetTotalDevices(_dateFrom, _dateTo);
+                    ShiftsReport.TotalItems = unitOfWork.Shifts.GetTotalItems(_dateFrom, _dateTo);
+                    ShiftsReport.TotalDiscount = unitOfWork.Shifts.GetTotalDiscount(_dateFrom, _dateTo);
+                    ShiftsReport.TotalSpending = unitOfWork.Shifts.GetTotalSpending(_dateFrom, _dateTo);
+                    ShiftsReport.TotalIncome = unitOfWork.Shifts.GetTotalIncome(_dateFrom, _dateTo);
                     ShiftsReport.TotalNet = ShiftsReport.TotalIncome - ShiftsReport.TotalSpending;
                     shiftsReportDialog.DataContext = this;
                     await currentWindow.ShowMetroDialogAsync(shiftsReportDialog);

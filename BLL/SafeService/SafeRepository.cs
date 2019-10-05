@@ -18,7 +18,7 @@ namespace BLL.SafeService
         {
         }
 
-        public GeneralDBContext GeneralDBContext
+        public new GeneralDBContext GeneralDBContext
         {
             get { return Context as GeneralDBContext; }
         }
@@ -71,6 +71,16 @@ namespace BLL.SafeService
 
         }
 
+        public decimal GetTotalIncome(int userId, DateTime dtStart)
+        {
+            return GeneralDBContext.Safes.AsNoTracking().Where(f => f.UserID == UserData.ID && f.Type == true && f.RegistrationDate >= dtStart && f.RegistrationDate <= DateTime.Now).Sum(s => s.Amount) ?? 0;
+        }
+
+        public decimal GetTotalSpendings(int userId, DateTime dtStart)
+        {
+          return  GeneralDBContext.Safes.AsNoTracking().Where(f => f.UserID == UserData.ID && f.Type == false && f.RegistrationDate >= dtStart && f.RegistrationDate <= DateTime.Now).Sum(s => s.Amount) ?? 0;
+        }
+
         public decimal? GetTotalIncome(string key, DateTime dtFrom, DateTime dtTo)
         {
             if (UserData.Role == RoleText.Admin)
@@ -101,12 +111,17 @@ namespace BLL.SafeService
 
         }
 
-        public List<string> GetStatementSuggetions()
+        public Safe GetByDateTime(DateTime registrationDate)
+        {
+            return GeneralDBContext.Safes.AsNoTracking().SingleOrDefault(s => s.RegistrationDate == registrationDate);
+        }
+
+        public IEnumerable<string> GetStatementSuggetions()
         {
             return GeneralDBContext.Safes.AsNoTracking().Where(w => w.CanDelete == true).OrderBy(o => o.Statement).Select(s => s.Statement).Distinct().ToList();
         }
 
-        public List<SafeDisplayDataModel> Search(string key, int pageNumber, int pageSize)
+        public IEnumerable<SafeDisplayDataModel> Search(string key, int pageNumber, int pageSize)
         {
             if (UserData.Role == RoleText.Admin)
             {
@@ -128,7 +143,7 @@ namespace BLL.SafeService
                 return null;
         }
 
-        public List<SafeDisplayDataModel> Search(string key, DateTime dtFrom, DateTime dtTo, int pageNumber, int pageSize)
+        public IEnumerable<SafeDisplayDataModel> Search(string key, DateTime dtFrom, DateTime dtTo, int pageNumber, int pageSize)
         {
             if (UserData.Role == RoleText.Admin)
             {
@@ -149,5 +164,6 @@ namespace BLL.SafeService
             else
                 return null;
         }
+
     }
 }

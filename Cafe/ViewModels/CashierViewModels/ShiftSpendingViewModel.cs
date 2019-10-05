@@ -134,7 +134,7 @@ namespace Cafe.ViewModels.CashierViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    _statementSuggestions = unitOfWork.Spendings.GetStatementSuggetions();
+                    _statementSuggestions = unitOfWork.Spendings.GetStatementSuggetions().ToList();
                 }
                 Load();
             }
@@ -180,8 +180,8 @@ namespace Cafe.ViewModels.CashierViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    unitOfWork.Spendings.Remove(unitOfWork.Spendings.SingleOrDefault(s => s.RegistrationDate == _selectedSpending.Spending.RegistrationDate));
-                    unitOfWork.Safes.Remove(unitOfWork.Safes.SingleOrDefault(s => s.RegistrationDate == _selectedSpending.Spending.RegistrationDate));
+                    unitOfWork.Spendings.Remove(unitOfWork.Spendings.GetByDateTime(_selectedSpending.Spending.RegistrationDate));
+                    unitOfWork.Safes.Remove(unitOfWork.Safes.GetByDateTime(_selectedSpending.Spending.RegistrationDate));
                     unitOfWork.Complete();
                     Load();
                 }
@@ -318,7 +318,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     _selectedSpending.Spending.Statement = _spendingUpdate.Statement;
                     _selectedSpending.Spending.Amount = _spendingUpdate.Amount;
                     unitOfWork.Spendings.Edit(_selectedSpending.Spending);
-                    var safe = unitOfWork.Safes.SingleOrDefault(s => s.RegistrationDate == _selectedSpending.Spending.RegistrationDate);
+                    var safe = unitOfWork.Safes.GetByDateTime(_selectedSpending.Spending.RegistrationDate);
                     safe.Amount = _spendingUpdate.Amount;
                     safe.Statement = _spendingUpdate.Statement;
                     unitOfWork.Safes.Edit(safe);

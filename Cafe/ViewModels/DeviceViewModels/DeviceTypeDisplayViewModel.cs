@@ -253,7 +253,7 @@ namespace Cafe.ViewModels.DeviceViewModels
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var deviceType = unitOfWork.DevicesTypes.SingleOrDefault(s => s.Name == _newDeviceType.Name);
+                    var deviceType = unitOfWork.DevicesTypes.GetByName(_newDeviceType.Name);
 
                     if (deviceType != null)
                     {
@@ -360,7 +360,7 @@ namespace Cafe.ViewModels.DeviceViewModels
                 }
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var deviceType = unitOfWork.DevicesTypes.SingleOrDefault(s => s.Name == _deviceTypeUpdate.Name && s.ID != _deviceTypeUpdate.ID);
+                    var deviceType = unitOfWork.DevicesTypes.GetByIdName(_deviceTypeUpdate.ID, _deviceTypeUpdate.Name);
 
                     if (deviceType != null)
                     {

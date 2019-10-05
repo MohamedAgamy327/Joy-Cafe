@@ -14,19 +14,24 @@ namespace BLL.ClientMembershipMinuteService
         {
         }
 
-        public GeneralDBContext GeneralDBContext
+        public new GeneralDBContext GeneralDBContext
         {
             get { return Context as GeneralDBContext; }
         }
 
         public int GetRecordsNumber(string key)
         {
-            return GeneralDBContext.ClientMembershipMinutes.Where(w => (w.Client.Name + w.DeviceType.Name).Contains(key)).OrderBy(o => o.Client.Name).Count();
+            return GeneralDBContext.ClientMembershipMinutes.AsNoTracking().Where(w => (w.Client.Name + w.DeviceType.Name).Contains(key)).OrderBy(o => o.Client.Name).Count();
         }
 
-        public List<ClientMembershipMinutesDisplayDataModel> Search(string key, int pageNumber, int pageSize)
+        public ClientMembershipMinute GetByDeviceTypeClient(int deviceTypeID, int clientId)
         {
-            return GeneralDBContext.ClientMembershipMinutes.Where(w => (w.Client.Name + w.DeviceType.Name).Contains(key)).OrderBy(o => o.Client.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize)
+            return GeneralDBContext.ClientMembershipMinutes.AsNoTracking().SingleOrDefault(s => s.DeviceTypeID == deviceTypeID && s.ClientID == clientId);
+        }
+
+        public IEnumerable<ClientMembershipMinutesDisplayDataModel> Search(string key, int pageNumber, int pageSize)
+        {
+            return GeneralDBContext.ClientMembershipMinutes.AsNoTracking().Where(w => (w.Client.Name + w.DeviceType.Name).Contains(key)).OrderBy(o => o.Client.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize)
                 .Select(s => new ClientMembershipMinutesDisplayDataModel
                 {
                     Client = s.Client,

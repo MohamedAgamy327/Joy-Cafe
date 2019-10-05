@@ -138,7 +138,7 @@ namespace Cafe.ViewModels.CashierViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    items = unitOfWork.Items.Find(f => f.IsAvailable == true).OrderByDescending(o => o.BillsItems.Count).ThenBy(o => o.Name).ToList();
+                    items = unitOfWork.Items.Search().ToList();
                 }
                 Load();
             }
@@ -326,7 +326,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var bill = unitOfWork.Bills.FirstOrDefault(f => f.Type == BillTypeText.Items && f.EndDate == null);
+                    var bill = unitOfWork.Bills.GetItemsBill();
                     if (bill == null)
                     {
                         bill = new Bill

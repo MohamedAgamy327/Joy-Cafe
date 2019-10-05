@@ -18,7 +18,7 @@ namespace BLL.SpendingService
         {
         }
 
-        public GeneralDBContext GeneralDBContext
+        public new GeneralDBContext GeneralDBContext
         {
             get { return Context as GeneralDBContext; }
         }
@@ -57,12 +57,17 @@ namespace BLL.SpendingService
                 return null;
         }
 
-        public List<string> GetStatementSuggetions()
+        public Spending GetByDateTime(DateTime registrationDate)
+        {
+            return GeneralDBContext.Spendings.AsNoTracking().SingleOrDefault(s => s.RegistrationDate == registrationDate);
+        }
+
+        public IEnumerable<string> GetStatementSuggetions()
         {
             return GeneralDBContext.Spendings.AsNoTracking().OrderBy(o => o.Statement).Select(s => s.Statement).Distinct().ToList();
         }
 
-        public List<SpendingDisplayDataModel> Search(string key, int userID)
+        public IEnumerable<SpendingDisplayDataModel> Search(string key, int userID)
         {
             return GeneralDBContext.Spendings.AsNoTracking().Where(w => w.UserID == userID && w.Statement.Contains(key) && w.RegistrationDate >= w.User.Shifts.FirstOrDefault(f => f.EndDate == null).StartDate && w.RegistrationDate <= DateTime.Now).OrderByDescending(o => o.RegistrationDate).Select(s => new SpendingDisplayDataModel
             {
@@ -72,7 +77,7 @@ namespace BLL.SpendingService
 
         }
 
-        public List<Spending> Search(string key, DateTime dtFrom, DateTime dtTo)
+        public IEnumerable<Spending> Search(string key, DateTime dtFrom, DateTime dtTo)
         {
             if (UserData.Role == RoleText.Admin)
             {
@@ -87,7 +92,7 @@ namespace BLL.SpendingService
 
         }
 
-        public List<SpendingDisplayDataModel> Search(string key, int pageNumber, int pageSize)
+        public IEnumerable<SpendingDisplayDataModel> Search(string key, int pageNumber, int pageSize)
         {
             if (UserData.Role == RoleText.Admin)
             {
@@ -110,7 +115,7 @@ namespace BLL.SpendingService
 
         }
 
-        public List<SpendingDisplayDataModel> Search(string key, DateTime dtFrom, DateTime dtTo, int pageNumber, int pageSize)
+        public IEnumerable<SpendingDisplayDataModel> Search(string key, DateTime dtFrom, DateTime dtTo, int pageNumber, int pageSize)
         {
             if (UserData.Role == RoleText.Admin)
             {
@@ -131,5 +136,6 @@ namespace BLL.SpendingService
             else
                 return null;
         }
+
     }
 }

@@ -98,9 +98,9 @@ namespace Cafe.ViewModels.CashierViewModels
                     IsMembership = Visibility.Visible;
                     BillDevices = new ObservableCollection<BillDeviceDisplayDataModel>(unitOfWork.BillsDevices.GetBillDevices(BillData.BillID));
                     BillItems = new ObservableCollection<BillItemDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(BillData.BillID));
-                    SelectedClient = unitOfWork.Clients.Get(BillData.ClientID);
-                    SelectedBill = unitOfWork.Bills.Get(BillData.BillID);
-                    Device device = unitOfWork.Devices.Get(BillData.DeviceID);
+                    SelectedClient = unitOfWork.Clients.GetById(BillData.ClientID);
+                    SelectedBill = unitOfWork.Bills.GetById(BillData.BillID);
+                    Device device = unitOfWork.Devices.GetById(BillData.DeviceID);
 
                     SelectedBill.PlayedMinutes = BillDevices.Sum(s => s.Duration);
                     SelectedBill.ItemsSum = BillItems.Sum(s => Convert.ToDecimal(s.BillItem.Total));
@@ -117,7 +117,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     }
 
                     var billDevicesCount = BillDevices.Select(k => new { k.DeviceType.Name }).Distinct().Count();
-                    var cmm = unitOfWork.ClientMembershipMinutes.FirstOrDefault(f => f.ClientID == BillData.ClientID && f.DeviceTypeID == device.DeviceTypeID);
+                    var cmm = unitOfWork.ClientMembershipMinutes.GetByDeviceTypeClient(device.DeviceTypeID,BillData.ClientID);
                     if (billDevicesCount > 1 || cmm == null || cmm.Minutes == 0)
                         IsMembership = Visibility.Collapsed;
 
@@ -240,10 +240,10 @@ namespace Cafe.ViewModels.CashierViewModels
                     if (BillPaid.Minimum == null && (SelectedBill.TotalAfterDiscount == null || BillPaid.Discount > SelectedBill.Total))
                         return;
 
-                    Device device = unitOfWork.Devices.Get(BillData.DeviceID);
+                    Device device = unitOfWork.Devices.GetById(BillData.DeviceID);
                     if (device.Case == DeviceCaseText.Busy)
                     {
-                        BillDevice billDevice = unitOfWork.BillsDevices.SingleOrDefault(f => f.BillID == BillData.BillID && f.EndDate == null);
+                        BillDevice billDevice = unitOfWork.BillsDevices.GetByBill(BillData.BillID);
                         billDevice.EndDate = BillData.EndDate;
                         billDevice.Duration = Convert.ToInt32((Convert.ToDateTime(billDevice.EndDate) - billDevice.StartDate).TotalMinutes);
                         unitOfWork.BillsDevices.Edit(billDevice);
@@ -285,7 +285,7 @@ namespace Cafe.ViewModels.CashierViewModels
                         _selectedBill.Ratio = _billPaid.Ratio;
                         if (IsMembership != Visibility.Collapsed)
                         {
-                            var cmm = unitOfWork.ClientMembershipMinutes.FirstOrDefault(f => f.ClientID == BillData.ClientID && f.DeviceTypeID == device.DeviceTypeID);
+                            var cmm = unitOfWork.ClientMembershipMinutes.GetByDeviceTypeClient(device.DeviceTypeID,BillData.ClientID);
                             cmm.Minutes = (int)_selectedBill.MembershipMinutesAfterPaid;
                             unitOfWork.ClientMembershipMinutes.Edit(cmm);
                             _selectedBill.MembershipMinutesPaid = _selectedBill.CurrentMembershipMinutes - _selectedBill.MembershipMinutesAfterPaid;

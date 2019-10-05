@@ -1,6 +1,8 @@
-﻿using BLL.RepositoryService;
+﻿using System.Collections.Generic;
+using BLL.RepositoryService;
 using DAL;
 using DAL.Entities;
+using System.Linq;
 
 namespace BLL.RoleService
 {
@@ -11,9 +13,14 @@ namespace BLL.RoleService
         {
         }
 
-        public GeneralDBContext GeneralDBContext
+        public new GeneralDBContext GeneralDBContext
         {
             get { return Context as GeneralDBContext; }
+        }
+
+        public IEnumerable<Role> GetAll()
+        {
+            return GeneralDBContext.Roles.AsNoTracking().ToList();
         }
     }
 }

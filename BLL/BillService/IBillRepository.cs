@@ -10,6 +10,14 @@ namespace BLL.BillService
     {
         int GetRecordsNumber(string billCase, string key, DateTime dtFrom, DateTime dtTo);
 
+        decimal GetTotalMinimum(int userId, DateTime dtStart);
+
+        decimal GetTotalDevices(int userId, DateTime dtStart);
+
+        decimal GetTotalItems(int userId, DateTime dtStart);
+
+        decimal GetTotalDiscount(int userId, DateTime dtStart);
+
         decimal? DevicesSum(string billCase, string key, DateTime dtFrom, DateTime dtTo);
 
         decimal? ItemsSum(string billCase, string key, DateTime dtFrom, DateTime dtTo);
@@ -18,12 +26,16 @@ namespace BLL.BillService
 
         decimal? TotalAfterDiscountSum(string billCase, string key, DateTime dtFrom, DateTime dtTo);
 
+        Bill GetItemsBill();
+
+        Bill GetById(int id);
+
         Bill GetLastBill(int deviceId);
 
-        List<BillDayDataModel> Search(DateTime date);
+        IEnumerable<BillDayDataModel> Search(DateTime date);
 
-        List<Bill> Search(string billCase, string key, DateTime dtFrom, DateTime dtTo);
+        IEnumerable<Bill> Search(string billCase, string key, DateTime dtFrom, DateTime dtTo);
 
-        List<BillDisplayDataModel> Search(string billCase,string key, DateTime dtFrom, DateTime dtTo, int pageNumber, int pageSize);
+        IEnumerable<BillDisplayDataModel> Search(string billCase, string key, DateTime dtFrom, DateTime dtTo, int pageNumber, int pageSize);
     }
 }

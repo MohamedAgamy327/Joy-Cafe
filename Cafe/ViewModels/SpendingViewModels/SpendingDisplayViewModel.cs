@@ -107,7 +107,7 @@ namespace Cafe.ViewModels.SpendingViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    _statementSuggestions = unitOfWork.Spendings.GetStatementSuggetions();
+                    _statementSuggestions = unitOfWork.Spendings.GetStatementSuggetions().ToList();
                 }
                 Load();
             }
@@ -204,8 +204,8 @@ namespace Cafe.ViewModels.SpendingViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    unitOfWork.Spendings.Remove(unitOfWork.Spendings.SingleOrDefault(s => s.RegistrationDate == _selectedSpending.Spending.RegistrationDate));
-                    unitOfWork.Safes.Remove(unitOfWork.Safes.SingleOrDefault(s => s.RegistrationDate == _selectedSpending.Spending.RegistrationDate));
+                    unitOfWork.Spendings.Remove(unitOfWork.Spendings.GetByDateTime(_selectedSpending.Spending.RegistrationDate));
+                    unitOfWork.Safes.Remove(unitOfWork.Safes.GetByDateTime(_selectedSpending.Spending.RegistrationDate));
                     unitOfWork.Complete();
                     Load();
                 }

@@ -67,7 +67,7 @@ namespace Cafe.ViewModels.BillViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    SelectedBill = unitOfWork.Bills.Get(BillID);
+                    SelectedBill = unitOfWork.Bills.GetById(BillID);
                     BillDevices = new ObservableCollection<BillDeviceDisplayDataModel>(unitOfWork.BillsDevices.GetBillDevices(BillID));
                     BillItems = new ObservableCollection<BillItemDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(BillID));
                 }

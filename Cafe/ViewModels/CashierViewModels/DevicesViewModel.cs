@@ -517,7 +517,7 @@ namespace Cafe.ViewModels.CashierViewModels
                 {
                     if (_selectedDevice.Device.Case == DeviceCaseText.Busy)
                     {
-                        BillDevice selectedBillDevice = unitOfWork.BillsDevices.FirstOrDefault(w => w.BillID == _selectedDevice.Device.BillID && w.EndDate == null);
+                        BillDevice selectedBillDevice = unitOfWork.BillsDevices.GetByBill((int)_selectedDevice.Device.BillID);
                         selectedBillDevice.EndDate = DateTime.Now;
                         selectedBillDevice.Duration = Convert.ToInt32((Convert.ToDateTime(selectedBillDevice.EndDate) - selectedBillDevice.StartDate).TotalMinutes);
                         unitOfWork.BillsDevices.Edit(selectedBillDevice);
@@ -604,7 +604,7 @@ namespace Cafe.ViewModels.CashierViewModels
                 {
                     _selectedDevice.Device.Case = DeviceCaseText.Paused;
                     unitOfWork.Devices.Edit(_selectedDevice.Device);
-                    BillDevice selectedBillDevice = unitOfWork.BillsDevices.FirstOrDefault(s => s.BillID == _selectedDevice.Device.BillID && s.EndDate == null);
+                    BillDevice selectedBillDevice = unitOfWork.BillsDevices.GetByBill((int)_selectedDevice.Device.BillID);
                     selectedBillDevice.EndDate = DateTime.Now;
                     selectedBillDevice.Duration = Convert.ToInt32((Convert.ToDateTime(selectedBillDevice.EndDate) - selectedBillDevice.StartDate).TotalMinutes);
                     unitOfWork.BillsDevices.Edit(selectedBillDevice);
@@ -640,7 +640,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     _selectedDevice.Device.Case = DeviceCaseText.Busy;
                     unitOfWork.Devices.Edit(_selectedDevice.Device);
 
-                    BillDevice selectedBillDevice = unitOfWork.BillsDevices.GetLast((int)_selectedDevice.Device.BillID);
+                    BillDevice selectedBillDevice = unitOfWork.BillsDevices.GetLastBill((int)_selectedDevice.Device.BillID);
                     BillDevice newBillDevice = null;
 
                     switch (selectedBillDevice.GameType)
@@ -826,7 +826,7 @@ namespace Cafe.ViewModels.CashierViewModels
 
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    TelephoneSuggestions = unitOfWork.Clients.GetTelephoneSuggetions();
+                    TelephoneSuggestions = unitOfWork.Clients.GetTelephoneSuggetions().ToList();
                     BillDevices = new ObservableCollection<BillDeviceDisplayDataModel>(unitOfWork.BillsDevices.GetBillDevices(Convert.ToInt32(_selectedDevice.Device.BillID)));
                     BillItems = new ObservableCollection<BillItemDisplayDataModel>(unitOfWork.BillsItems.GetBillItems(Convert.ToInt32(_selectedDevice.Device.BillID)));
                 }
@@ -858,7 +858,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var client = unitOfWork.Clients.SingleOrDefault(s => s.Telephone == _clientCheck.Telephone);
+                    var client = unitOfWork.Clients.GetByTelephone(_clientCheck.Telephone);
                     await currentWindow.HideMetroDialogAsync(clientCheckDialog);
                     if (client == null)
                     {
@@ -981,12 +981,12 @@ namespace Cafe.ViewModels.CashierViewModels
                 {
                     if (SelectedDevice.Device.Case == DeviceCaseText.Busy)
                     {
-                        BillDevice selectedBillDevice = unitOfWork.BillsDevices.FirstOrDefault(s => s.BillID == _selectedDevice.Device.BillID && s.EndDate == null);
+                        BillDevice selectedBillDevice = unitOfWork.BillsDevices.GetByBill((int)_selectedDevice.Device.BillID);
                         selectedBillDevice.EndDate = DateTime.Now;
                         selectedBillDevice.Duration = Convert.ToInt32((Convert.ToDateTime(selectedBillDevice.EndDate) - selectedBillDevice.StartDate).TotalMinutes);
                         unitOfWork.BillsDevices.Edit(selectedBillDevice);
                     }
-                    var bill = unitOfWork.Bills.Get((int)_selectedDevice.Device.BillID);
+                    var bill = unitOfWork.Bills.GetById((int)_selectedDevice.Device.BillID);
                     bill.UserID = UserData.ID;
                     bill.EndDate = DateTime.Now;
                     bill.Date = DateTime.Now;
@@ -1082,14 +1082,14 @@ namespace Cafe.ViewModels.CashierViewModels
 
                     if (_selectedDevice.Device.Case == DeviceCaseText.Busy)
                     {
-                        selectedBillDevice = unitOfWork.BillsDevices.FirstOrDefault(s => s.BillID == _selectedDevice.Device.BillID && s.EndDate == null);
+                        selectedBillDevice = unitOfWork.BillsDevices.GetByBill((int)_selectedDevice.Device.BillID);
                         selectedBillDevice.EndDate = DateTime.Now;
                         selectedBillDevice.Duration = Convert.ToInt32((Convert.ToDateTime(selectedBillDevice.EndDate) - selectedBillDevice.StartDate).TotalMinutes);
                         unitOfWork.BillsDevices.Edit(selectedBillDevice);
                     }
                     else
                     {
-                        selectedBillDevice = unitOfWork.BillsDevices.GetLast((int)_selectedDevice.Device.BillID);
+                        selectedBillDevice = unitOfWork.BillsDevices.GetLastBill((int)_selectedDevice.Device.BillID);
                     }
 
                     selectedFreeDevice.Device.Case = DeviceCaseText.Busy;
@@ -1356,21 +1356,21 @@ namespace Cafe.ViewModels.CashierViewModels
                 {
                     using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                     {
-                        Shift shift = unitOfWork.Shifts.FirstOrDefault(s => s.EndDate == null);
+                        Shift shift = unitOfWork.Shifts.GetActive();
 
-                        decimal safeIncome = unitOfWork.Safes.Find(f => f.UserID == UserData.ID && f.Type == true && f.RegistrationDate >= shift.StartDate && f.RegistrationDate <= DateTime.Now).Sum(s => s.Amount) ?? 0;
+                        decimal safeIncome = unitOfWork.Safes.GetTotalIncome(UserData.ID, shift.StartDate);
 
-                        decimal itemsBillTotal = unitOfWork.BillsItems.Find(f => f.Bill.Type == BillTypeText.Items && f.Bill.EndDate == null).Sum(s => s.Total) ?? 0;
+                        decimal itemsBillTotal = unitOfWork.BillsItems.GetBillItemsTotal();
 
-                        decimal spending = unitOfWork.Safes.Find(f => f.UserID == UserData.ID && f.Type == false && f.RegistrationDate >= shift.StartDate && f.RegistrationDate <= DateTime.Now).Sum(s => s.Amount) ?? 0;
+                        decimal spending = unitOfWork.Safes.GetTotalSpendings(UserData.ID, shift.StartDate);
 
-                        decimal totalMinimum = unitOfWork.Bills.Find(f => f.UserID == UserData.ID && f.Minimum != null && f.EndDate >= shift.StartDate && f.EndDate <= DateTime.Now).Sum(s => s.Minimum) ?? 0;
+                        decimal totalMinimum = unitOfWork.Bills.GetTotalMinimum(UserData.ID, shift.StartDate);
 
-                        decimal totalDevices = unitOfWork.Bills.Find(f => f.UserID == UserData.ID && f.EndDate >= shift.StartDate && f.EndDate <= DateTime.Now).Sum(s => s.DevicesSum) ?? 0;
+                        decimal totalDevices = unitOfWork.Bills.GetTotalDevices(UserData.ID, shift.StartDate);
 
-                        decimal totalItems = (unitOfWork.Bills.Find(f => f.UserID == UserData.ID && f.EndDate >= shift.StartDate && f.EndDate <= DateTime.Now).Sum(s => s.ItemsSum) ?? 0) + itemsBillTotal;
+                        decimal totalItems = (unitOfWork.Bills.GetTotalItems(UserData.ID, shift.StartDate)) + itemsBillTotal;
 
-                        decimal totalDiscount = unitOfWork.Bills.Find(f => f.UserID == UserData.ID && f.EndDate >= shift.StartDate && f.EndDate <= DateTime.Now).Sum(s => s.Discount) ?? 0;
+                        decimal totalDiscount = unitOfWork.Bills.GetTotalDiscount(UserData.ID, shift.StartDate);
 
                         Shift = new FinishShiftDataModel
                         {
@@ -1442,7 +1442,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     string oldUSer = UserData.Name;
                     if (_shift.NewShift)
                     {
-                        var user = unitOfWork.Users.SingleOrDefault(s => s.Name == _shift.UserName && s.Password == _shift.Password && s.IsWorked == true);
+                        var user = unitOfWork.Users.Login(_shift.UserName, _shift.Password);
 
                         if (user == null)
                         {
@@ -1477,11 +1477,11 @@ namespace Cafe.ViewModels.CashierViewModels
                     }
 
                     DateTime endDate = DateTime.Now;
-                    Bill bill = unitOfWork.Bills.SingleOrDefault(s => s.EndDate == null && s.Type == BillTypeText.Items);
+                    Bill bill = unitOfWork.Bills.GetItemsBill();
                     if (bill != null)
                     {
                         bill.UserID = UserData.ID;
-                        bill.ItemsSum = unitOfWork.BillsItems.Find(f => f.BillID == bill.ID).Sum(s => s.Total) ?? 0;
+                        bill.ItemsSum = bill.BillItems.Sum(s => s.Total) ?? 0;
                         bill.Total = bill.ItemsSum;
                         bill.TotalAfterDiscount = bill.ItemsSum;
                         bill.Discount = 0;
@@ -1509,7 +1509,7 @@ namespace Cafe.ViewModels.CashierViewModels
                         }
                     }
 
-                    var shift = unitOfWork.Shifts.SingleOrDefault(s => s.EndDate == null);
+                    var shift = unitOfWork.Shifts.GetActive();
                     shift.EndDate = endDate;
                     shift.Income = _shift.Income;
                     shift.SafeEnd = _shift.SafeEnd;

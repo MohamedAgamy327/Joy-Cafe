@@ -132,7 +132,7 @@ namespace Cafe.ViewModels.CashierViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    items = unitOfWork.Items.Find(f => f.IsAvailable == true).OrderByDescending(o => o.BillsItems.Count).ThenBy(o => o.Name).ToList();
+                    items = unitOfWork.Items.Search().ToList();
                 }
                 Load();
             }
@@ -401,7 +401,7 @@ namespace Cafe.ViewModels.CashierViewModels
                     ds.BillItems.Rows.Clear();
                     int i = 0;
 
-                    Device device = unitOfWork.Devices.FirstOrDefault(s => s.BillID == BillID);
+                    Device device = unitOfWork.Devices.GetByBill(BillID);
                     foreach (var item in items)
                     {
                         ds.BillItems.Rows.Add();

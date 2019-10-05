@@ -11,17 +11,23 @@ namespace BLL.SafeService
         int GetRecordsNumber(string key);
 
         int GetRecordsNumber(string key, DateTime dtFrom, DateTime dtTo);
-
+     
         decimal? GetCurrentAccount();
+
+        decimal GetTotalIncome(int userId, DateTime dtStart);
+
+        decimal GetTotalSpendings(int userId, DateTime dtStart);
 
         decimal? GetTotalIncome(string key, DateTime dtFrom, DateTime dtTo);
 
         decimal? GetTotalOutgoings(string key, DateTime dtFrom, DateTime dtTo);
 
-        List<string> GetStatementSuggetions();
-    
-        List<SafeDisplayDataModel> Search(string key, int pageNumber, int pageSize);
+        Safe GetByDateTime(DateTime registrationDate);
 
-        List<SafeDisplayDataModel> Search(string key, DateTime dtFrom, DateTime dtTo, int pageNumber, int pageSize);
+        IEnumerable<string> GetStatementSuggetions();
+
+        IEnumerable<SafeDisplayDataModel> Search(string key, int pageNumber, int pageSize);
+
+        IEnumerable<SafeDisplayDataModel> Search(string key, DateTime dtFrom, DateTime dtTo, int pageNumber, int pageSize);
     }
 }

@@ -9,10 +9,22 @@ namespace BLL.DeviceService
     {
         int GetRecordsNumber(string key);
 
-        List<DeviceDisplayDataModel> Search(string key, int pageNumber, int pageSize);
+        Device GetById(int id);
 
-        List<DevicePlayDataModel> GetAvailable();
+        Device GetByBill(int billId);
 
-        List<DeviceFreeDataModel> GetFree(string gameType);
+        Device GetByOrder(int order);
+
+        Device GetByIdOrder(int id,int order);
+
+        Device GetByNameDeviceType(string name, int deviceTypeId);
+
+        Device GetByIdNameDeviceType(int id,string name, int deviceTypeId);
+
+        IEnumerable<DeviceDisplayDataModel> Search(string key, int pageNumber, int pageSize);
+
+        IEnumerable<DevicePlayDataModel> GetAvailable();
+
+        IEnumerable<DeviceFreeDataModel> GetFree(string gameType);
     }
 }

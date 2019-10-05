@@ -14,14 +14,16 @@ namespace BLL.SpendingService
 
         decimal? GetTotalAmount(string key, DateTime dtFrom, DateTime dtTo);
 
-        List<string> GetStatementSuggetions();
+        Spending GetByDateTime(DateTime registrationDate);
 
-        List<SpendingDisplayDataModel> Search(string key, int userID);
+        IEnumerable<string> GetStatementSuggetions();
 
-        List<Spending> Search(string key, DateTime dtFrom, DateTime dtTo);
+        IEnumerable<SpendingDisplayDataModel> Search(string key, int userID);
 
-        List<SpendingDisplayDataModel> Search(string key, int pageNumber, int pageSize);
+        IEnumerable<Spending> Search(string key, DateTime dtFrom, DateTime dtTo);
 
-        List<SpendingDisplayDataModel> Search(string key, DateTime dtFrom, DateTime dtTo, int pageNumber, int pageSize);
+        IEnumerable<SpendingDisplayDataModel> Search(string key, int pageNumber, int pageSize);
+
+        IEnumerable<SpendingDisplayDataModel> Search(string key, DateTime dtFrom, DateTime dtTo, int pageNumber, int pageSize);
     }
 }

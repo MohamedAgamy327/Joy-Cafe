@@ -9,6 +9,12 @@ namespace BLL.MembershipService
     {
         int GetRecordsNumber(string key);
 
-        List<MembershipDisplayDataModel> Search(string key, int pageNumber, int pageSize);
+        Membership GetByNameDeviceType(string name, int deviceTypeId);
+
+        Membership GetByIdNameDeviceType(int id, string name, int deviceTypeId);
+
+        IEnumerable<Membership> Search(int deviceTypeId);
+
+        IEnumerable<MembershipDisplayDataModel> Search(string key, int pageNumber, int pageSize);
     }
 }

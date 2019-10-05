@@ -38,7 +38,7 @@ namespace Cafe.ViewModels.MembershipViewModels
             _paging = new PagingWPF();
             clientMembershipAddDialog = new ClientMembershipAddDialog();
             _dateTo = Convert.ToDateTime(DateTime.Now.ToShortDateString());
-            _dateFrom = Convert.ToDateTime(DateTime.Now.ToShortDateString());                   
+            _dateFrom = Convert.ToDateTime(DateTime.Now.ToShortDateString());
             currentWindow = Application.Current.Windows.OfType<MetroWindow>().LastOrDefault();
         }
 
@@ -158,7 +158,7 @@ namespace Cafe.ViewModels.MembershipViewModels
             {
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    _clients = new ObservableCollection<Client>(unitOfWork.Clients.Find(f => f.Code != null).OrderBy(o => o.Name));
+                    _clients = new ObservableCollection<Client>(unitOfWork.Clients.Search());
                     _devicesTypes = new ObservableCollection<DeviceType>(unitOfWork.DevicesTypes.GetAll().OrderBy(o => o.Name));
                 }
                 Load();
@@ -256,8 +256,8 @@ namespace Cafe.ViewModels.MembershipViewModels
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
                     unitOfWork.ClientsMemberships.Remove(_selectedClientMembership.ClientMembership);
-                    unitOfWork.Safes.Remove(unitOfWork.Safes.SingleOrDefault(w => w.RegistrationDate == _selectedClientMembership.ClientMembership.RegistrationDate));
-                    var clientMembershipMinute = unitOfWork.ClientMembershipMinutes.SingleOrDefault(s => s.DeviceTypeID == _selectedClientMembership.Membership.DeviceTypeID && s.ClientID == _selectedClientMembership.Client.ID);
+                    unitOfWork.Safes.Remove(unitOfWork.Safes.GetByDateTime(_selectedClientMembership.ClientMembership.RegistrationDate));
+                    var clientMembershipMinute = unitOfWork.ClientMembershipMinutes.GetByDeviceTypeClient(_selectedClientMembership.Membership.DeviceTypeID, _selectedClientMembership.Client.ID);
                     clientMembershipMinute.Minutes -= (int)_selectedClientMembership.Membership.Minutes;
                     unitOfWork.ClientMembershipMinutes.Edit(clientMembershipMinute);
                     unitOfWork.Complete();
@@ -312,7 +312,7 @@ namespace Cafe.ViewModels.MembershipViewModels
                 {
                     using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                     {
-                        Memberships = new ObservableCollection<Membership>(unitOfWork.Memberships.Find(f => f.DeviceTypeID == _selectedDeviceType.ID && f.IsAvailable == true));
+                        Memberships = new ObservableCollection<Membership>(unitOfWork.Memberships.Search(_selectedDeviceType.ID));
                     }
 
                 }
@@ -347,7 +347,7 @@ namespace Cafe.ViewModels.MembershipViewModels
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
                     DateTime dt = DateTime.Now;
-                    var clientMembershipMinute = unitOfWork.ClientMembershipMinutes.SingleOrDefault(s => s.DeviceTypeID == _selectedDeviceType.ID && s.ClientID == _selectedClient.ID);
+                    var clientMembershipMinute = unitOfWork.ClientMembershipMinutes.GetByDeviceTypeClient(_selectedDeviceType.ID,_selectedClient.ID);
                     if (clientMembershipMinute == null)
                     {
                         ClientMembershipMinute cmm = new ClientMembershipMinute

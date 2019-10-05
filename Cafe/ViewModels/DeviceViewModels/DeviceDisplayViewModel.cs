@@ -279,7 +279,7 @@ namespace Cafe.ViewModels.DeviceViewModels
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var device = unitOfWork.Devices.SingleOrDefault(s => s.Name == _newDevice.Name && s.DeviceTypeID == _newDevice.DeviceTypeID);
+                    var device = unitOfWork.Devices.GetByNameDeviceType(_newDevice.Name, _newDevice.DeviceTypeID);
                     if (device != null)
                     {
                         await currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالجهاز موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
@@ -290,7 +290,7 @@ namespace Cafe.ViewModels.DeviceViewModels
                         });
                         return;
                     }
-                    device = unitOfWork.Devices.SingleOrDefault(s => s.Order == _newDevice.Order);
+                    device = unitOfWork.Devices.GetByOrder((int)_newDevice.Order);
                     if (device != null)
                     {
                         await currentWindow.ShowMessageAsync("فشل الإضافة", "هذا الترتيب موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
@@ -380,7 +380,7 @@ namespace Cafe.ViewModels.DeviceViewModels
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var device = unitOfWork.Devices.SingleOrDefault(s => s.Name == _deviceUpdate.Name && s.DeviceTypeID == _deviceUpdate.DeviceTypeID && s.ID != _deviceUpdate.ID);
+                    var device = unitOfWork.Devices.GetByIdNameDeviceType(_deviceUpdate.ID, _deviceUpdate.Name, _deviceUpdate.DeviceTypeID);
                     if (device != null)
                     {
                         await currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالجهاز موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
@@ -391,7 +391,7 @@ namespace Cafe.ViewModels.DeviceViewModels
                         });
                         return;
                     }
-                     device = unitOfWork.Devices.SingleOrDefault(s => s.Order == _deviceUpdate.Order && s.ID != _deviceUpdate.ID);
+                    device = unitOfWork.Devices.GetByIdOrder(_deviceUpdate.ID, (int)_deviceUpdate.Order);
                     if (device != null)
                     {
                         await currentWindow.ShowMessageAsync("فشل الإضافة", "هذا الترتيب موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()

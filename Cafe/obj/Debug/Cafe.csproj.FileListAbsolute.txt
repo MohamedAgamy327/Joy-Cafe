@@ -1006,6 +1006,7 @@ D:\Projects\Freelance\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\Cafe.exe.config
 D:\Projects\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.ResolveComReference.cache
 D:\Projects\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.exe
 D:\Projects\Freelance\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.pdb
+D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csprojResolveAssemblyReference.cache
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.ResolveComReference.cache
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Reports\ReportWindow.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\BillViews\BillDayUserControl.baml
@@ -1016,6 +1017,7 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\CashierViews\DevicesUserCo
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\CashierViews\ShiftItemsViews\ShiftItemsWindow.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\CashierViews\ShiftSpendingViews\ShiftSpendingWindow.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ClientViews\ClientDisplayUserControl.baml
+D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ItemViews\ItemReportUserControl.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\MembershipViews\ClientMembershipMinuteUserControl.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\MembershipViews\ClientMembershipUserControl.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ClientViews\ClientPointUserControl.baml
@@ -1029,6 +1031,8 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\MainViews\RestoreBackupDia
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\SafeViews\SafeDisplayUserControl.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\SafeViews\SafeReportUserControl.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ShiftViews\ShiftDisplayUserControl.baml
+D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ShiftViews\ShiftsReportDialog.baml
+D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ShiftViews\ShiftShowDialog.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\SpendingViews\SpendingDisplayUserControl.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\SpendingViews\SpendingReportUserControl.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ItemViews\ItemDisplayUserControl.baml
@@ -1056,6 +1060,7 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\CashierViews\ShiftSpending
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\CashierViews\ShiftSpendingViews\ShiftSpendingUpdateDialog.g.cs
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ClientViews\ClientAddDialog.g.cs
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ClientViews\ClientDisplayUserControl.g.cs
+D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ItemViews\ItemReportUserControl.g.cs
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\MembershipViews\ClientMembershipAddDialog.g.cs
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\MembershipViews\ClientMembershipMinuteUserControl.g.cs
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\MembershipViews\ClientMembershipUserControl.g.cs
@@ -1084,6 +1089,7 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\SafeViews\SafeDisplayUserC
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\SafeViews\SafeReportUserControl.g.cs
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\SafeViews\SafeWindow.g.cs
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ShiftViews\ShiftDisplayUserControl.g.cs
+D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ShiftViews\ShiftsReportDialog.g.cs
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ShiftViews\ShiftShowDialog.g.cs
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ShiftViews\ShiftWindow.g.cs
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\SpendingViews\SpendingAddDialog.g.cs
@@ -1102,8 +1108,6 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\App.g.cs
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe_MarkupCompile.cache
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe_MarkupCompile.lref
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.exe
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.pdb
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\Cafe.exe.config
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\Cafe.exe
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\bin\Debug\Cafe.pdb
@@ -1204,7 +1208,6 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\MainViews\StartShiftDialog
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ReportViews\ReportWindow.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\SafeViews\SafeAddDialog.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\SafeViews\SafeWindow.baml
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ShiftViews\ShiftShowDialog.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ShiftViews\ShiftWindow.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\SpendingViews\SpendingAddDialog.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\SpendingViews\SpendingWindow.baml
@@ -1217,8 +1220,5 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\UserViews\UserWindow.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.g.resources
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.Properties.Resources.resources
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.GenerateResource.Cache
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ShiftViews\ShiftsReportDialog.baml
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ShiftViews\ShiftsReportDialog.g.cs
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csprojResolveAssemblyReference.cache
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ItemViews\ItemReportUserControl.g.cs
-D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ItemViews\ItemReportUserControl.baml
+D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.exe
+D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.pdb

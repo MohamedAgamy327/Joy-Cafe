@@ -181,7 +181,7 @@ namespace Cafe.ViewModels
                     case "Cashier":
                         using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                         {
-                            if (unitOfWork.DevicesTypes.FirstOrDefault(f => f.SingleHourPrice == 0) != null)
+                            if (unitOfWork.DevicesTypes.GetNotPriced() != null)
                             {
                                 await currentWindow.ShowMessageAsync("تنبيه", "يجب وضع اسعار الانواع اولاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
                                 {
@@ -277,7 +277,7 @@ namespace Cafe.ViewModels
 
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var user = unitOfWork.Users.FirstOrDefault(s => s.Name == _loginModel.Name && s.Password == _loginModel.Password && s.IsWorked == true);
+                    var user = unitOfWork.Users.Login(_loginModel.Name, _loginModel.Password);
 
                     if (user != null)
                     {
@@ -292,7 +292,7 @@ namespace Cafe.ViewModels
                             TaxVisibility = System.Windows.Visibility.Visible;
                             await currentWindow.HideMetroDialogAsync(loginDialog);
                         }
-                       else if (UserData.Role == RoleText.Tax)
+                        else if (UserData.Role == RoleText.Tax)
                         {
                             Mouse.OverrideCursor = null;
                             TaxVisibility = System.Windows.Visibility.Collapsed;
@@ -300,13 +300,14 @@ namespace Cafe.ViewModels
                         }
                         else
                         {
-                            if (unitOfWork.Shifts.SingleOrDefault(s => s.UserID == user.ID && s.EndDate == null) != null)
+                            var shift = unitOfWork.Shifts.GetActive();
+                            if (shift != null && shift.UserID == user.ID)
                             {
                                 Mouse.OverrideCursor = null;
                                 await currentWindow.HideMetroDialogAsync(loginDialog);
                                 NavigateToViewMethodAsync("Cashier");
                             }
-                            else if (unitOfWork.Shifts.SingleOrDefault(s => s.UserID != user.ID && s.EndDate == null) != null)
+                            else if (shift != null && shift.UserID != user.ID)
                             {
                                 Mouse.OverrideCursor = null;
                                 await currentWindow.HideMetroDialogAsync(loginDialog);

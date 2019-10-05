@@ -15,17 +15,22 @@ namespace BLL.BillDeviceService
         {
         }
 
-        public GeneralDBContext GeneralDBContext
+        public new GeneralDBContext GeneralDBContext
         {
             get { return Context as GeneralDBContext; }
         }
 
-        public BillDevice GetLast(int billID)
+        public BillDevice GetLastBill(int billID)
         {
             return GeneralDBContext.BillsDevices.AsNoTracking().OrderByDescending(o => o.EndDate).FirstOrDefault(f => f.BillID == billID);
         }
 
-        List<BillDeviceDisplayDataModel> IBillDeviceRepository.GetBillDevices(int billID)
+        public BillDevice GetByBill(int billID)
+        {
+            return GeneralDBContext.BillsDevices.AsNoTracking().SingleOrDefault(f => f.BillID == billID && f.EndDate == null);
+        }
+
+        IEnumerable<BillDeviceDisplayDataModel> IBillDeviceRepository.GetBillDevices(int billID)
         {
             return GeneralDBContext.BillsDevices.AsNoTracking().Where(w => w.BillID == billID).OrderByDescending(o => o.StartDate).Select(s => new BillDeviceDisplayDataModel
             {

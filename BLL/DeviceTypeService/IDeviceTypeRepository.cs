@@ -9,6 +9,14 @@ namespace BLL.DeviceTypeService
     {
         int GetRecordsNumber(string key);
 
-        List<DeviceTypeDisplayDataModel> Search(string key, int pageNumber, int pageSize);
+        DeviceType GetByName(string name);
+
+        DeviceType GetByIdName(int id, string name);
+
+        DeviceType GetNotPriced();
+
+        IEnumerable<DeviceType> GetAll();
+
+        IEnumerable<DeviceTypeDisplayDataModel> Search(string key, int pageNumber, int pageSize);
     }
 }

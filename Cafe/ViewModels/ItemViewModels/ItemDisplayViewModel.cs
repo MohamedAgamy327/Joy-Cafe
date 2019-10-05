@@ -259,7 +259,7 @@ namespace Cafe.ViewModels.ItemViewModels
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var item = unitOfWork.Items.SingleOrDefault(s => s.Name == _newItem.Name);
+                    var item = unitOfWork.Items.GetByName(_newItem.Name);
 
                     if (item != null)
                     {
@@ -349,7 +349,7 @@ namespace Cafe.ViewModels.ItemViewModels
                     return;
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var item = unitOfWork.Items.SingleOrDefault(s => s.Name == ItemUpdate.Name && s.ID != ItemUpdate.ID);
+                    var item = unitOfWork.Items.GetByIdName(_itemUpdate.ID,_itemUpdate.Name);
                     if (item != null)
                     {
                         await currentWindow.ShowMessageAsync("فشل الإضافة", "هذاالصنف موجود مسبقاً", MessageDialogStyle.Affirmative, new MetroDialogSettings()
