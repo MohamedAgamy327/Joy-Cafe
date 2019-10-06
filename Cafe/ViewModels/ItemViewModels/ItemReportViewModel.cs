@@ -18,11 +18,11 @@ namespace Cafe.ViewModels.ItemViewModels
         {
             using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
             {
-                Paging.TotalRecords = unitOfWork.Items.GetRecordsNumber(_key, _dateFrom, _dateTo);
-                TotalAmount = unitOfWork.Items.TotalAmount(_key, _dateFrom, _dateTo);
-                TotalQty = unitOfWork.Items.TotalQty(_key, _dateFrom, _dateTo);
+                Paging.TotalRecords = unitOfWork.BillsItems.GetRecordsNumber(_key, _dateFrom, _dateTo);
+                TotalAmount = unitOfWork.BillsItems.TotalAmount(_key, _dateFrom, _dateTo);
+                TotalQty = unitOfWork.BillsItems.TotalQty(_key, _dateFrom, _dateTo);
                 Paging.GetFirst();
-                Items = new ObservableCollection<ItemReportDataModel>(unitOfWork.Items.Search(_key, Paging.CurrentPage, PagingWPF.PageSize, _dateFrom, _dateTo));
+                Items = new ObservableCollection<ItemReportDataModel>(unitOfWork.BillsItems.Search(_key, Paging.CurrentPage, PagingWPF.PageSize, _dateFrom, _dateTo));
             }
         }
 
@@ -30,8 +30,8 @@ namespace Cafe.ViewModels.ItemViewModels
         {
             _key = "";
             _paging = new PagingWPF();
-            _dateFrom = Convert.ToDateTime(DateTime.Now.ToShortDateString());
-            _dateTo = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+            _dateFrom =DateTime.Now;
+            _dateTo = DateTime.Now;
         }
 
         private string _key;
@@ -143,7 +143,7 @@ namespace Cafe.ViewModels.ItemViewModels
                 Paging.Next();
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    Items = new ObservableCollection<ItemReportDataModel>(unitOfWork.Items.Search(_key, Paging.CurrentPage, PagingWPF.PageSize, _dateFrom, _dateTo));
+                    Items = new ObservableCollection<ItemReportDataModel>(unitOfWork.BillsItems.Search(_key, Paging.CurrentPage, PagingWPF.PageSize, _dateFrom, _dateTo));
                 }
             }
             catch (Exception ex)
@@ -168,7 +168,7 @@ namespace Cafe.ViewModels.ItemViewModels
                 Paging.Previous();
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    Items = new ObservableCollection<ItemReportDataModel>(unitOfWork.Items.Search(_key, Paging.CurrentPage, PagingWPF.PageSize, _dateFrom, _dateTo));
+                    Items = new ObservableCollection<ItemReportDataModel>(unitOfWork.BillsItems.Search(_key, Paging.CurrentPage, PagingWPF.PageSize, _dateFrom, _dateTo));
                 }
             }
             catch (Exception ex)
@@ -222,7 +222,7 @@ namespace Cafe.ViewModels.ItemViewModels
 
                 using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
                 {
-                    var items = unitOfWork.Items.Search(_key, _dateFrom, _dateTo);
+                    var items = unitOfWork.BillsItems.Search(_key, _dateFrom, _dateTo);
 
                     foreach (var item in items)
                     {

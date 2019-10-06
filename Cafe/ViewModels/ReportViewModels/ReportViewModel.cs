@@ -75,6 +75,9 @@ namespace Cafe.ViewModels.ReportViewModels
                     case "Items":
                         CurrentViewModel = new ItemReportViewModel();
                         break;
+                    case "DevicesItems":
+                        CurrentViewModel = new DevicesItemsReportViewModel();
+                        break;
                     default:
                         break;
                 }

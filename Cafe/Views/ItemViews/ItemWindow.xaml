@@ -21,6 +21,9 @@
             <DataTemplate DataType="{x:Type viewModels:ItemReportViewModel}">
                 <views:ItemReportUserControl />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:DevicesItemsReportViewModel}">
+                <views:DevicesItemsReportUserControl />
+            </DataTemplate>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\..\Skins\MainSkin.xaml"/>
             </ResourceDictionary.MergedDictionaries>
@@ -41,7 +44,17 @@
             <Controls:Tile Background="#708090"
                            Command="{Binding NavigateToView}"
                            CommandParameter="ItemReport"
-                           Title="التقارير"
+                           Title="البار"
+                           HorizontalTitleAlignment="Center"
+                           VerticalTitleAlignment="Center"
+                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
+                           Style="{StaticResource NormalTileStyle}">
+            </Controls:Tile>
+
+            <Controls:Tile Background="#351f39"
+                           Command="{Binding NavigateToView}"
+                           CommandParameter="DevicesItemsReport"
+                           Title="البار والاجهزه"
                            HorizontalTitleAlignment="Center"
                            VerticalTitleAlignment="Center"
                            Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"

@@ -21,9 +21,11 @@ namespace BLL.DeviceService
 
         Device GetByIdNameDeviceType(int id,string name, int deviceTypeId);
 
-        IEnumerable<DeviceDisplayDataModel> Search(string key, int pageNumber, int pageSize);
+        IEnumerable<Device> GetAll();
 
         IEnumerable<DevicePlayDataModel> GetAvailable();
+
+        IEnumerable<DeviceDisplayDataModel> Search(string key, int pageNumber, int pageSize); 
 
         IEnumerable<DeviceFreeDataModel> GetFree(string gameType);
     }

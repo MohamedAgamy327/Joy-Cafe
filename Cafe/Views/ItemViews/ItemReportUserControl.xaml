@@ -28,34 +28,13 @@
                 <ResourceDictionary Source="..\..\Skins\MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Style TargetType="{x:Type DatePickerTextBox}">
-                <Setter Property="Control.Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <TextBox x:Name="PART_TextBox"
-                                     Text="{Binding Path=SelectedDate, StringFormat='yyyy/MM/dd', 
-     RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-            <Style   TargetType="DatePicker">
-                <Setter Property="FontFamily"
-                        Value="calibri" />
-                <Setter Property="FontWeight"
-                        Value="Bold" />
-                <Setter Property="FontSize"
-                        Value="16" />
-                <Setter Property="Height"
-                        Value="30" />
-            </Style>
 
         </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid Grid.Column="1">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1.2*" />
+            <RowDefinition Height="1.3*" />
             <RowDefinition Height="9*" />
             <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
@@ -63,7 +42,7 @@
         </Grid.RowDefinitions>
         <Grid Margin="0,10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="2.5*" />
                 <ColumnDefinition Width="1.5*" />
             </Grid.ColumnDefinitions>
 
@@ -100,25 +79,28 @@
                 <TextBlock Margin="5,0"
                            Style="{StaticResource TextBlockAddUpdateStyle}"> من</TextBlock>
 
-                <DatePicker SelectedDate="{Binding DateFrom,UpdateSourceTrigger=PropertyChanged}"
-                            Margin="5,0">
+                <Controls:DateTimePicker Style="{StaticResource DatePickerStyle}"
+                                         SelectedDate="{Binding DateFrom,UpdateSourceTrigger=PropertyChanged}"
+                                         Margin="5,0">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedDateChanged">
                             <Custom:EventToCommand Command="{Binding Search}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                </DatePicker>
+                </Controls:DateTimePicker>
+
                 <TextBlock Style="{StaticResource TextBlockStyle}"
                            VerticalAlignment="Center"
                            Margin="5,0">إلى</TextBlock>
-                <DatePicker     SelectedDate="{Binding DateTo,UpdateSourceTrigger=PropertyChanged}"
-                                Margin="5,0">
+                <Controls:DateTimePicker Style="{StaticResource DatePickerStyle}"
+                                         SelectedDate="{Binding DateTo,UpdateSourceTrigger=PropertyChanged}"
+                                         Margin="5,0">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedDateChanged">
                             <Custom:EventToCommand Command="{Binding Search}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                </DatePicker>
+                </Controls:DateTimePicker>
             </StackPanel>
         </Grid>
         <DataGrid ItemsSource="{Binding Items}"

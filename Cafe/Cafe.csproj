@@ -179,6 +179,7 @@
     <Compile Include="ViewModels\CashierViewModels\ShiftItemsViewModel.cs" />
     <Compile Include="ViewModels\CashierViewModels\ShiftSpendingViewModel.cs" />
     <Compile Include="ViewModels\ClientViewModels\ClientDisplayViewModel.cs" />
+    <Compile Include="ViewModels\ItemViewModels\DevicesItemsReportViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModels\ItemReportViewModel.cs" />
     <Compile Include="ViewModels\MembershipViewModels\ClientMembershipMinuteViewModel.cs" />
     <Compile Include="ViewModels\MembershipViewModels\ClientMembershipViewModel.cs" />
@@ -266,6 +267,9 @@
     </Compile>
     <Compile Include="Views\ClientViews\ClientDisplayUserControl.xaml.cs">
       <DependentUpon>ClientDisplayUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemViews\DevicesItemsReportUserControl.xaml.cs">
+      <DependentUpon>DevicesItemsReportUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ItemViews\ItemReportUserControl.xaml.cs">
       <DependentUpon>ItemReportUserControl.xaml</DependentUpon>
@@ -487,6 +491,10 @@
     <Page Include="Views\ClientViews\ClientDisplayUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ItemViews\DevicesItemsReportUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ItemViews\ItemReportUserControl.xaml">
       <SubType>Designer</SubType>

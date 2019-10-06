@@ -1222,3 +1222,5 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.Properties.Resources.resour
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.csproj.GenerateResource.Cache
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.exe
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.pdb
+D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ItemViews\DevicesItemsReportUserControl.baml
+D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ItemViews\DevicesItemsReportUserControl.g.cs

@@ -57,15 +57,9 @@ namespace BLL.DeviceService
             return GeneralDBContext.Devices.AsNoTracking().SingleOrDefault(s => s.ID != id && s.Name == name && s.DeviceTypeID == deviceTypeId);
         }
 
-        public IEnumerable<DeviceDisplayDataModel> Search(string key, int pageNumber, int pageSize)
+        public IEnumerable<Device> GetAll()
         {
-            return GeneralDBContext.Devices.AsNoTracking().Where(w => (w.Name + w.DeviceType.Name).Contains(key)).OrderBy(o => o.Order).ThenBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new DeviceDisplayDataModel
-            {
-                Device = s,
-                DeviceType = s.DeviceType,
-                Status = s.IsAvailable == true ? GeneralText.Available : GeneralText.Unavailable,
-                CanDelete = s.BillsDevices.Count > 0 ? false : true
-            }).ToList();
+            return GeneralDBContext.Devices.AsNoTracking().OrderBy(o => o.Order).ToList();
         }
 
         public IEnumerable<DevicePlayDataModel> GetAvailable()
@@ -82,6 +76,17 @@ namespace BLL.DeviceService
                 GameType = s.Case != DeviceCaseText.Free ? s.BillsDevices.OrderByDescending(o => o.StartDate).FirstOrDefault().GameType : ""
             }).ToList();
 
+        }
+
+        public IEnumerable<DeviceDisplayDataModel> Search(string key, int pageNumber, int pageSize)
+        {
+            return GeneralDBContext.Devices.AsNoTracking().Where(w => (w.Name + w.DeviceType.Name).Contains(key)).OrderBy(o => o.Order).ThenBy(o => o.DeviceType.Name).ThenBy(t => t.Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(s => new DeviceDisplayDataModel
+            {
+                Device = s,
+                DeviceType = s.DeviceType,
+                Status = s.IsAvailable == true ? GeneralText.Available : GeneralText.Unavailable,
+                CanDelete = s.BillsDevices.Count > 0 ? false : true
+            }).ToList();
         }
 
         public IEnumerable<DeviceFreeDataModel> GetFree(string gameType)
