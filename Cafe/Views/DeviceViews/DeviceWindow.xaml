@@ -20,7 +20,10 @@
             </DataTemplate>
             <DataTemplate DataType = "{x:Type viewModels:DeviceDisplayViewModel}">
                 <views:DeviceDisplayUserControl/>
-            </DataTemplate>  
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:DeviceReportViewModel}">
+                <views:DeviceReportUserControl />
+            </DataTemplate>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\..\Skins\MainSkin.xaml"/>
             </ResourceDictionary.MergedDictionaries>
@@ -40,6 +43,17 @@
 
             <Controls:Tile Background="#008000" Command="{Binding NavigateToView}" CommandParameter="DeviceDisplay" Title="الأجهزة" HorizontalTitleAlignment="Center" VerticalTitleAlignment="Center"   Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource NormalTileStyle}"  >
             </Controls:Tile>
+
+            <Controls:Tile Background="#800000"
+                           Command="{Binding NavigateToView}"
+                           CommandParameter="DeviceReport"
+                           Title="تقارير الاجهزه"
+                           HorizontalTitleAlignment="Center"
+                           VerticalTitleAlignment="Center"
+                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
+                           Style="{StaticResource NormalTileStyle}">
+            </Controls:Tile>
+
 
         </StackPanel>
 

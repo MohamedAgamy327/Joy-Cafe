@@ -1224,3 +1224,5 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.exe
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Cafe.pdb
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ItemViews\DevicesItemsReportUserControl.baml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\ItemViews\DevicesItemsReportUserControl.g.cs
+D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\DeviceViews\DeviceReportUserControl.baml
+D:\Projects\Me\Joy Cafe\Joy-Cafe\Cafe\obj\Debug\Views\DeviceViews\DeviceReportUserControl.g.cs

@@ -47,6 +47,9 @@ namespace Cafe.ViewModels.DeviceViewModels
                         case "DeviceDisplay":
                             CurrentViewModel = new DeviceDisplayViewModel();
                             break;
+                        case "DeviceReport":
+                            CurrentViewModel = new DeviceReportViewModel();
+                            break;
                         default:
                             break;
                     }

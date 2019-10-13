@@ -7,11 +7,13 @@
                       xmlns:shiftViews="clr-namespace:Cafe.Views.ShiftViews"
                       xmlns:spendingViews="clr-namespace:Cafe.Views.SpendingViews"
                       xmlns:itemViews="clr-namespace:Cafe.Views.ItemViews"
+                      xmlns:deviceViews="clr-namespace:Cafe.Views.DeviceViews"
                       xmlns:clientViewModels="clr-namespace:Cafe.ViewModels.ClientViewModels"
                       xmlns:billViewModels="clr-namespace:Cafe.ViewModels.BillViewModels"
                       xmlns:shiftViewModels="clr-namespace:Cafe.ViewModels.ShiftViewModels"
                       xmlns:spendingViewModels="clr-namespace:Cafe.ViewModels.SpendingViewModels"
                       xmlns:itemViewModels="clr-namespace:Cafe.ViewModels.ItemViewModels"
+                      xmlns:deviceViewModels="clr-namespace:Cafe.ViewModels.DeviceViewModels"
                       Title="التقارير"
                       Height="1000"
                       Width="1024"
@@ -39,6 +41,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type itemViewModels:DevicesItemsReportViewModel}">
                 <itemViews:DevicesItemsReportUserControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type deviceViewModels:DeviceReportViewModel}">
+                <deviceViews:DeviceReportUserControl />
             </DataTemplate>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\..\Skins\MainSkin.xaml" />
@@ -109,6 +114,16 @@
                            Command="{Binding NavigateToView}"
                            CommandParameter="DevicesItems"
                            Title="البار والاجهزه"
+                           HorizontalTitleAlignment="Center"
+                           VerticalTitleAlignment="Center"
+                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
+                           Style="{StaticResource NormalTileStyle}">
+            </Controls:Tile>
+
+            <Controls:Tile Background="#800000"
+                           Command="{Binding NavigateToView}"
+                           CommandParameter="Devices"
+                           Title="الاجهزه"
                            HorizontalTitleAlignment="Center"
                            VerticalTitleAlignment="Center"
                            Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"

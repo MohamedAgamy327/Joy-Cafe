@@ -1,5 +1,6 @@
 ﻿using Cafe.ViewModels.BillViewModels;
 using Cafe.ViewModels.ClientViewModels;
+using Cafe.ViewModels.DeviceViewModels;
 using Cafe.ViewModels.ItemViewModels;
 using Cafe.ViewModels.ShiftViewModels;
 using Cafe.ViewModels.SpendingViewModels;
@@ -77,6 +78,9 @@ namespace Cafe.ViewModels.ReportViewModels
                         break;
                     case "DevicesItems":
                         CurrentViewModel = new DevicesItemsReportViewModel();
+                        break;
+                    case "Devices":
+                        CurrentViewModel = new DeviceReportViewModel();
                         break;
                     default:
                         break;
