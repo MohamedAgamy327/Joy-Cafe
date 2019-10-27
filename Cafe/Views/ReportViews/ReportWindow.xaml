@@ -100,7 +100,7 @@
                            Style="{StaticResource NormalTileStyle}">
             </Controls:Tile>
 
-            <Controls:Tile Background="#708090"
+            <Controls:Tile Visibility="{Binding TaxVisibility}" Background="#708090"
                            Command="{Binding NavigateToView}"
                            CommandParameter="Items"
                            Title="البار"
@@ -110,7 +110,7 @@
                            Style="{StaticResource NormalTileStyle}">
             </Controls:Tile>
 
-            <Controls:Tile Background="#351f39"
+            <Controls:Tile Visibility="{Binding TaxVisibility}" Background="#351f39"
                            Command="{Binding NavigateToView}"
                            CommandParameter="DevicesItems"
                            Title="البار والاجهزه"
@@ -120,7 +120,7 @@
                            Style="{StaticResource NormalTileStyle}">
             </Controls:Tile>
 
-            <Controls:Tile Background="#800000"
+            <Controls:Tile Visibility="{Binding TaxVisibility}" Background="#800000"
                            Command="{Binding NavigateToView}"
                            CommandParameter="Devices"
                            Title="الاجهزه"

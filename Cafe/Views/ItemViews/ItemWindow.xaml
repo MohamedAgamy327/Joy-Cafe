@@ -41,7 +41,7 @@
             <Controls:Tile Background="#808000" Command="{Binding NavigateToView}" CommandParameter="ItemDisplay" Title="الأصناف" HorizontalTitleAlignment="Center" VerticalTitleAlignment="Center"   Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource NormalTileStyle}"  >
             </Controls:Tile>
 
-            <Controls:Tile Background="#708090"
+            <Controls:Tile Visibility="{Binding TaxVisibility}" Background="#708090"
                            Command="{Binding NavigateToView}"
                            CommandParameter="ItemReport"
                            Title="البار"
@@ -51,7 +51,7 @@
                            Style="{StaticResource NormalTileStyle}">
             </Controls:Tile>
 
-            <Controls:Tile Background="#351f39"
+            <Controls:Tile Visibility="{Binding TaxVisibility}" Background="#351f39"
                            Command="{Binding NavigateToView}"
                            CommandParameter="DevicesItemsReport"
                            Title="البار والاجهزه"

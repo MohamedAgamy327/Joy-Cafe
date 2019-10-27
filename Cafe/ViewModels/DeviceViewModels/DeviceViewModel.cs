@@ -1,4 +1,6 @@
 ﻿using DAL.BindableBaseService;
+using DAL.ConstString;
+using DTO.UserDataModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using System;
@@ -14,6 +16,14 @@ namespace Cafe.ViewModels.DeviceViewModels
         {
             Destination = "DeviceTypeDisplay";
             _currentViewModel = new DeviceTypeDisplayViewModel();
+            if (UserData.Role == RoleText.Admin)
+            {
+                _taxVisibility = Visibility.Visible;
+            }
+            else if (UserData.Role == RoleText.Tax)
+            {
+                _taxVisibility = Visibility.Collapsed;
+            }
         }
 
         private ViewModelBase _currentViewModel;
@@ -21,6 +31,13 @@ namespace Cafe.ViewModels.DeviceViewModels
         {
             get { return _currentViewModel; }
             set { SetProperty(ref _currentViewModel, value); }
+        }
+
+        private Visibility _taxVisibility;
+        public Visibility TaxVisibility
+        {
+            get { return _taxVisibility; }
+            set { SetProperty(ref _taxVisibility, value); }
         }
 
         private RelayCommand<string> _navigateToView;

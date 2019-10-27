@@ -98,6 +98,8 @@ D:\Projects\Me\Joy Cafe\Joy-Cafe\BLL\bin\Debug\DAL.pdb
 D:\Projects\Me\Joy Cafe\Joy-Cafe\BLL\bin\Debug\DTO.pdb
 D:\Projects\Me\Joy Cafe\Joy-Cafe\BLL\bin\Debug\EntityFramework.xml
 D:\Projects\Me\Joy Cafe\Joy-Cafe\BLL\bin\Debug\EntityFramework.SqlServer.xml
-D:\Projects\Me\Joy Cafe\Joy-Cafe\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
 D:\Projects\Me\Joy Cafe\Joy-Cafe\BLL\obj\Debug\BLL.dll
 D:\Projects\Me\Joy Cafe\Joy-Cafe\BLL\obj\Debug\BLL.pdb
+D:\Projects\Me\Joy Cafe\Joy-Cafe\BLL\bin\Debug\DAL.dll.config
+D:\Projects\Me\Joy Cafe\Joy-Cafe\BLL\obj\Debug\BLL.csprojAssemblyReference.cache
+D:\Projects\Me\Joy Cafe\Joy-Cafe\BLL\obj\Debug\BLL.csproj.CopyComplete

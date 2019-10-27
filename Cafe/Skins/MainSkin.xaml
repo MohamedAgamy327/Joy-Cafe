@@ -490,6 +490,13 @@
         <Setter Property="FontSize" Value="14"/>
     </Style>
 
+    <Style  x:Key="TextBlockReportStyle"  TargetType="TextBlock" >
+        <Setter Property="FontFamily" Value="calibri"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Margin" Value="5,0"/>
+    </Style>
+
     <Style  x:Key="TextBlockWindowStyle"  TargetType="TextBlock" >
         <Setter Property="FontFamily" Value="calibri"/>
         <Setter Property="FontWeight" Value="Bold"/>

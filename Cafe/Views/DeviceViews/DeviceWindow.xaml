@@ -44,7 +44,7 @@
             <Controls:Tile Background="#008000" Command="{Binding NavigateToView}" CommandParameter="DeviceDisplay" Title="الأجهزة" HorizontalTitleAlignment="Center" VerticalTitleAlignment="Center"   Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Style="{StaticResource NormalTileStyle}"  >
             </Controls:Tile>
 
-            <Controls:Tile Background="#800000"
+            <Controls:Tile Visibility="{Binding TaxVisibility}" Background="#800000"
                            Command="{Binding NavigateToView}"
                            CommandParameter="DeviceReport"
                            Title="تقارير الاجهزه"

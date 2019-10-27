@@ -24,6 +24,8 @@ namespace BLL.BillService
 
         decimal? DiscountSum(string billCase, string key, DateTime dtFrom, DateTime dtTo);
 
+        decimal? DiscountSum(int deviceId, DateTime dtFrom, DateTime dtTo);
+
         decimal? TotalAfterDiscountSum(string billCase, string key, DateTime dtFrom, DateTime dtTo);
 
         Bill GetItemsBill();

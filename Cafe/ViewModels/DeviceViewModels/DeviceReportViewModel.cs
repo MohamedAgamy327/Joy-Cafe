@@ -20,7 +20,9 @@ namespace Cafe.ViewModels.DeviceViewModels
             using (var unitOfWork = new UnitOfWork(new GeneralDBContext()))
             {
                 Types = new ObservableCollection<DeviceReportDataModel>(unitOfWork.BillsDevices.Search(_selectedDevice.ID, _dateFrom, _dateTo));
-                TotalAmount = _types.Sum(s => s.Amount);
+                TotalHoursAmount = _types.Sum(s => s.Amount);
+                TotalItemsAmount = unitOfWork.BillsItems.TotalAmount(_selectedDevice.ID, _dateFrom, _dateTo);
+                TotalDiscountsAmount = unitOfWork.Bills.DiscountSum(_selectedDevice.ID, _dateFrom, _dateTo);
                 var totalMinuts = _types.Sum(s => s.Minutes);
                 TotalHours = ((int)totalMinuts / 60).ToString("D2") + ":" + ((int)totalMinuts % 60).ToString("D2");
             }
@@ -39,11 +41,25 @@ namespace Cafe.ViewModels.DeviceViewModels
             set { SetProperty(ref _totalHours, value); }
         }
 
-        private decimal? _totalAmount;
-        public decimal? TotalAmount
+        private decimal? _totalHoursAmount;
+        public decimal? TotalHoursAmount
         {
-            get { return _totalAmount; }
-            set { SetProperty(ref _totalAmount, value); }
+            get { return _totalHoursAmount; }
+            set { SetProperty(ref _totalHoursAmount, value); }
+        }
+
+        private decimal? _totalItemsAmount;
+        public decimal? TotalItemsAmount
+        {
+            get { return _totalItemsAmount; }
+            set { SetProperty(ref _totalItemsAmount, value); }
+        }
+
+        private decimal? _totalDiscountsAmount;
+        public decimal? TotalDiscountsAmount
+        {
+            get { return _totalDiscountsAmount; }
+            set { SetProperty(ref _totalDiscountsAmount, value); }
         }
 
         private DateTime _dateTo;
@@ -188,7 +204,11 @@ namespace Cafe.ViewModels.DeviceViewModels
                     xlWorkSheet.Cells[i + 1, 3] = "إجمالى الساعات";
                     xlWorkSheet.Cells[i + 2, 3] = _totalHours;
                     xlWorkSheet.Cells[i + 1, 4] = "مجموع إجمالى المبلغ";
-                    xlWorkSheet.Cells[i + 2, 4] = _totalAmount;
+                    xlWorkSheet.Cells[i + 2, 4] = _totalHoursAmount;
+                    xlWorkSheet.Cells[i + 3, 3] = "مجموع إجمالى مبلغ الطلبات";
+                    xlWorkSheet.Cells[i + 4, 3] = _totalItemsAmount;
+                    xlWorkSheet.Cells[i + 5, 3] = "مجموع إجمالى مبلغ الخصومات";
+                    xlWorkSheet.Cells[i + 6, 3] = _totalDiscountsAmount;
                 }
                 xlWorkBook.SaveAs(dlg.FileName, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
                 xlWorkBook.Close(true, misValue, misValue);

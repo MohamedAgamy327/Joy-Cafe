@@ -3,6 +3,8 @@ using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Windows;
 using DAL.BindableBaseService;
+using DTO.UserDataModel;
+using DAL.ConstString;
 
 namespace Cafe.ViewModels.ItemViewModels
 {
@@ -14,6 +16,14 @@ namespace Cafe.ViewModels.ItemViewModels
         {
             Destination = "ItemDisplay";
             _currentViewModel = new ItemDisplayViewModel();
+            if (UserData.Role == RoleText.Admin)
+            {
+                _taxVisibility = Visibility.Visible;
+            }
+            else if (UserData.Role == RoleText.Tax)
+            {
+                _taxVisibility = Visibility.Collapsed;
+            }
         }
 
         private ViewModelBase _currentViewModel;
@@ -21,6 +31,13 @@ namespace Cafe.ViewModels.ItemViewModels
         {
             get { return _currentViewModel; }
             set { SetProperty(ref _currentViewModel, value); }
+        }
+
+        private Visibility _taxVisibility;
+        public Visibility TaxVisibility
+        {
+            get { return _taxVisibility; }
+            set { SetProperty(ref _taxVisibility, value); }
         }
 
         private RelayCommand<string> _navigateToView;

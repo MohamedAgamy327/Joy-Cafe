@@ -65,7 +65,7 @@ namespace BLL.BillService
 
         public decimal GetTotalMinimum(int userId, DateTime dtStart)
         {
-          return GeneralDBContext.Bills.AsNoTracking().Where(f => f.UserID == UserData.ID && f.Minimum != null && f.EndDate >= dtStart && f.EndDate <= DateTime.Now).Sum(s => s.Minimum) ?? 0;
+            return GeneralDBContext.Bills.AsNoTracking().Where(f => f.UserID == UserData.ID && f.Minimum != null && f.EndDate >= dtStart && f.EndDate <= DateTime.Now).Sum(s => s.Minimum) ?? 0;
         }
 
         public decimal GetTotalDevices(int userId, DateTime dtStart)
@@ -81,6 +81,11 @@ namespace BLL.BillService
         public decimal GetTotalDiscount(int userId, DateTime dtStart)
         {
             return GeneralDBContext.Bills.AsNoTracking().Where(f => f.UserID == UserData.ID && f.EndDate >= dtStart && f.EndDate <= DateTime.Now).Sum(s => s.Discount) ?? 0;
+        }
+
+        public decimal? DiscountSum(int deviceId, DateTime dtFrom, DateTime dtTo)
+        {
+            return GeneralDBContext.Bills.AsNoTracking().Where(w => w.EndDate != null && w.Type == BillTypeText.Devices && w.Canceled == false && w.Date >= dtFrom && w.Date <= dtTo && w.Discount != null && w.BillDevices.OrderByDescending(o => o.EndDate).FirstOrDefault().DeviceID == deviceId).Sum(s => s.Discount);
         }
 
         public decimal? DevicesSum(string billCase, string key, DateTime dtFrom, DateTime dtTo)
